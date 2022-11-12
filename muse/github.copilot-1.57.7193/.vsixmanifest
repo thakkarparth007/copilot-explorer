@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Language="en-US" Id="copilot" Version="1.57.7193" Publisher="GitHub"/>
+    <DisplayName>GitHub Copilot</DisplayName>
+    <Description xml:space="preserve">Your AI pair programmer</Description>
+    <Tags>keybindings</Tags>
+    <Categories>Other</Categories>
+    <GalleryFlags>Public</GalleryFlags>
+    <Badges><Badge Link="https://github.com/github-copilot/signup" ImgUri="https://img.shields.io/badge/GitHub%20Copilot-Subscription%20Required-orange" Description="Sign up for GitHub Copilot" /></Badges>
+    <Properties>
+      <Property Id="Microsoft.VisualStudio.Code.Engine" Value="^1.68.0" />
+      <Property Id="Microsoft.VisualStudio.Code.ExtensionDependencies" Value="" />
+      <Property Id="Microsoft.VisualStudio.Code.ExtensionPack" Value="" />
+      <Property Id="Microsoft.VisualStudio.Code.ExtensionKind" Value="workspace" />
+      <Property Id="Microsoft.VisualStudio.Code.LocalizedLanguages" Value="" />
+      
+      <Property Id="Microsoft.VisualStudio.Services.Links.Support" Value="https://github.com/community/community/discussions/categories/copilot" />
+      <Property Id="Microsoft.VisualStudio.Services.Links.Learn" Value="https://github.com/features/copilot" />
+      
+      
+      <Property Id="Microsoft.VisualStudio.Services.GitHubFlavoredMarkdown" Value="true" />
+      
+      <Property Id="Microsoft.VisualStudio.Services.CustomerQnALink" Value="https://github.com/github-community/community/discussions/categories/copilot" />
+      
+    </Properties>
+    
+    <Icon>extension/assets/Copilot-App-Icon.png</Icon>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Code"/>
+  </Installation>
+  <Dependencies/>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.Code.Manifest" Path="extension/package.json" Addressable="true" />
+    <Asset Type="Microsoft.VisualStudio.Services.Content.Details" Path="extension/README.md" Addressable="true" /><Asset Type="Microsoft.VisualStudio.Services.Content.Changelog" Path="extension/CHANGELOG.md" Addressable="true" /><Asset Type="Microsoft.VisualStudio.Services.Icons.Default" Path="extension/assets/Copilot-App-Icon.png" Addressable="true" />
+  </Assets>
+</PackageManifest>

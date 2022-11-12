@@ -1,0 +1,68 @@
+{
+    "cells": [
+        {
+            "language": "typescript",
+            "source": [
+                "var escope = require('escope');\r\nvar esprima = require('esprima');\r\nvar estraverse = require('estraverse');"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "const code = `\r\n    function foo() {\r\n        var a = 1;\r\n        var b = 2;\r\n        var c = 3;\r\n    }\r\n`;"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "var ast = esprima.parse(code);\r\nvar scopeManager = escope.analyze(ast);\r\n\r\nvar currentScope = scopeManager.acquire(ast);   // global scope\r\n\r\nestraverse.traverse(ast, {\r\n    enter: function(node, parent) {\r\n        // do stuff\r\n        \r\n        if (/Function/.test(node.type)) {\r\n            currentScope = scopeManager.acquire(node);  // get current function scope\r\n        }\r\n    },\r\n    leave: function(node, parent) {\r\n        if (/Function/.test(node.type)) {\r\n            currentScope = currentScope.upper;  // set to parent scope\r\n        }\r\n        \r\n        // do stuff\r\n    }\r\n});"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                ""
+            ],
+            "outputs": []
+        }
+    ]
+}
