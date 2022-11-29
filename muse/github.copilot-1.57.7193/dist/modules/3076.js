@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 exports.LRUCache = exports.keyForPrompt = undefined;
 const r = require(1354);
@@ -14,7 +14,9 @@ exports.LRUCache = class {
   }
   removeKeyFromLRU(e) {
     const t = this.lruKeys.indexOf(e);
-    -1 !== t && this.lruKeys.splice(t, 1);
+    if (-1 !== t) {
+      this.lruKeys.splice(t, 1);
+    }
   }
   touchKeyInLRU(e) {
     this.removeKeyFromLRU(e);
@@ -26,7 +28,9 @@ exports.LRUCache = class {
   }
   deleteKey(e) {
     this.removeKeyFromLRU(e);
-    undefined !== this.values.get(e) && this.values.delete(e);
+    if (undefined !== this.values.get(e)) {
+      this.values.delete(e);
+    }
   }
   get(e) {
     if (this.values.has(e)) {
@@ -37,7 +41,13 @@ exports.LRUCache = class {
   }
   put(e, t) {
     let n = [];
-    this.values.has(e) ? n = [e] : this.lruKeys.length >= this.size && (n = this.lruKeys.splice(0, 1));
+    if (this.values.has(e)) {
+      n = [e];
+    } else {
+      if (this.lruKeys.length >= this.size) {
+        n = this.lruKeys.splice(0, 1);
+      }
+    }
     for (const e of n) this.deleteKey(e);
     this.values.set(e, t);
     this.touchKeyInLRU(e);

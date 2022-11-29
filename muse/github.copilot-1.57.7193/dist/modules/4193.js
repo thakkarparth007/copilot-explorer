@@ -1,15 +1,13 @@
 const r = require(6214),
-  {
-    Headers: o
-  } = require(9872),
-  i = e => ({
+  { Headers: o } = require(9872),
+  i = (e) => ({
     url: e.url,
     method: e.method,
-    headers: e.headers.plain()
+    headers: e.headers.plain(),
   }),
-  s = e => ({
+  s = (e) => ({
     status: e.status,
-    headers: e.headers.plain()
+    headers: e.headers.plain(),
   });
 module.exports = class {
   constructor(e, t, n) {

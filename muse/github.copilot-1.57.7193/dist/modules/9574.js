@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 var r,
   o = require(894),
@@ -15,9 +15,12 @@ var r,
 exports.TelemetryClient = require(1259);
 exports.Contracts = require(5290);
 (function (e) {
-  e[e.AI = 0] = "AI";
-  e[e.AI_AND_W3C = 1] = "AI_AND_W3C";
-})(r = exports.DistributedTracingModes || (exports.DistributedTracingModes = {}));
+  e[(e.AI = 0)] = "AI";
+  e[(e.AI_AND_W3C = 1)] = "AI_AND_W3C";
+})(
+  (r =
+    exports.DistributedTracingModes || (exports.DistributedTracingModes = {}))
+);
 var f,
   m,
   g,
@@ -41,12 +44,40 @@ var f,
   M = undefined,
   L = !1;
 function start() {
-  exports.defaultClient ? (L = !0, g.enable(E, C), _.enable(S), y.enable(T), v.enable(N, m), b.useAutoCorrelation(A, f), b.enable(k), w.enable(I), exports.liveMetricsClient && O && exports.liveMetricsClient.enable(O)) : d.warn("Start cannot be called before setup");
+  if (exports.defaultClient) {
+    L = !0;
+    g.enable(E, C);
+    _.enable(S);
+    y.enable(T);
+    v.enable(N, m);
+    b.useAutoCorrelation(A, f);
+    b.enable(k);
+    w.enable(I);
+    if (exports.liveMetricsClient && O) {
+      exports.liveMetricsClient.enable(O);
+    }
+  } else {
+    d.warn("Start cannot be called before setup");
+  }
   return Configuration;
 }
 exports.setup = function (e) {
-  exports.defaultClient ? d.info("The default client is already setup") : (exports.defaultClient = new exports.TelemetryClient(e), g = new i(exports.defaultClient), _ = new s(exports.defaultClient), y = new a(exports.defaultClient), b = new l(exports.defaultClient), w = new c(exports.defaultClient), v || (v = new h.AutoCollectNativePerformance(exports.defaultClient)));
-  exports.defaultClient && exports.defaultClient.channel && exports.defaultClient.channel.setUseDiskRetryCaching(P, R, M);
+  if (exports.defaultClient) {
+    d.info("The default client is already setup");
+  } else {
+    exports.defaultClient = new exports.TelemetryClient(e);
+    g = new i(exports.defaultClient);
+    _ = new s(exports.defaultClient);
+    y = new a(exports.defaultClient);
+    b = new l(exports.defaultClient);
+    w = new c(exports.defaultClient);
+    if (v) {
+      v = new h.AutoCollectNativePerformance(exports.defaultClient);
+    }
+  }
+  if (exports.defaultClient && exports.defaultClient.channel) {
+    exports.defaultClient.channel.setUseDiskRetryCaching(P, R, M);
+  }
   return Configuration;
 };
 exports.start = start;
@@ -56,79 +87,135 @@ exports.getCorrelationContext = function () {
 exports.wrapWithCorrelationContext = function (e) {
   return o.CorrelationContextManager.wrapCallback(e);
 };
-var Configuration = function () {
+var Configuration = (function () {
   function e() {}
   e.setDistributedTracingMode = function (t) {
     u.w3cEnabled = t === r.AI_AND_W3C;
     return e;
   };
   e.setAutoCollectConsole = function (t, n) {
-    undefined === n && (n = !1);
+    if (undefined === n) {
+      n = !1;
+    }
     E = t;
     C = n;
-    L && g.enable(t, n);
+    if (L) {
+      g.enable(t, n);
+    }
     return e;
   };
   e.setAutoCollectExceptions = function (t) {
     S = t;
-    L && _.enable(t);
+    if (L) {
+      _.enable(t);
+    }
     return e;
   };
   e.setAutoCollectPerformance = function (t, n) {
-    undefined === n && (n = !0);
+    if (undefined === n) {
+      n = !0;
+    }
     T = t;
     var r = h.AutoCollectNativePerformance.parseEnabled(n);
     N = r.isEnabled;
     m = r.disabledMetrics;
-    L && (y.enable(t), v.enable(r.isEnabled, r.disabledMetrics));
+    if (L) {
+      y.enable(t);
+      v.enable(r.isEnabled, r.disabledMetrics);
+    }
     return e;
   };
   e.setAutoCollectRequests = function (t) {
     k = t;
-    L && b.enable(t);
+    if (L) {
+      b.enable(t);
+    }
     return e;
   };
   e.setAutoCollectDependencies = function (t) {
     I = t;
-    L && w.enable(t);
+    if (L) {
+      w.enable(t);
+    }
     return e;
   };
   e.setAutoDependencyCorrelation = function (t, n) {
     A = t;
     f = n;
-    L && b.useAutoCorrelation(t, n);
+    if (L) {
+      b.useAutoCorrelation(t, n);
+    }
     return e;
   };
   e.setUseDiskRetryCaching = function (n, r, o) {
     P = n;
     R = r;
     M = o;
-    exports.defaultClient && exports.defaultClient.channel && exports.defaultClient.channel.setUseDiskRetryCaching(n, r, o);
+    if (exports.defaultClient && exports.defaultClient.channel) {
+      exports.defaultClient.channel.setUseDiskRetryCaching(n, r, o);
+    }
     return e;
   };
   e.setInternalLogging = function (t, n) {
-    undefined === t && (t = !1);
-    undefined === n && (n = !0);
+    if (undefined === t) {
+      t = !1;
+    }
+    if (undefined === n) {
+      n = !0;
+    }
     d.enableDebug = t;
     d.disableWarnings = !n;
     return e;
   };
   e.setSendLiveMetrics = function (n) {
-    undefined === n && (n = !1);
-    return exports.defaultClient ? (!exports.liveMetricsClient && n ? (exports.liveMetricsClient = new p(exports.defaultClient.config.instrumentationKey), x = new a(exports.liveMetricsClient, 1e3, !0), exports.liveMetricsClient.addCollector(x), exports.defaultClient.quickPulseClient = exports.liveMetricsClient) : exports.liveMetricsClient && exports.liveMetricsClient.enable(n), O = n, e) : (d.warn("Live metrics client cannot be setup without the default client"), e);
+    if (undefined === n) {
+      n = !1;
+    }
+    return exports.defaultClient
+      ? (!exports.liveMetricsClient && n
+          ? ((exports.liveMetricsClient = new p(
+              exports.defaultClient.config.instrumentationKey
+            )),
+            (x = new a(exports.liveMetricsClient, 1e3, !0)),
+            exports.liveMetricsClient.addCollector(x),
+            (exports.defaultClient.quickPulseClient =
+              exports.liveMetricsClient))
+          : exports.liveMetricsClient && exports.liveMetricsClient.enable(n),
+        (O = n),
+        e)
+      : (d.warn(
+          "Live metrics client cannot be setup without the default client"
+        ),
+        e);
   };
   e.start = start;
   return e;
-}();
+})();
 exports.Configuration = Configuration;
 exports.dispose = function () {
   exports.defaultClient = null;
   L = !1;
-  g && g.dispose();
-  _ && _.dispose();
-  y && y.dispose();
-  v && v.dispose();
-  b && b.dispose();
-  w && w.dispose();
-  exports.liveMetricsClient && (exports.liveMetricsClient.enable(!1), O = !1, exports.liveMetricsClient = undefined);
+  if (g) {
+    g.dispose();
+  }
+  if (_) {
+    _.dispose();
+  }
+  if (y) {
+    y.dispose();
+  }
+  if (v) {
+    v.dispose();
+  }
+  if (b) {
+    b.dispose();
+  }
+  if (w) {
+    w.dispose();
+  }
+  if (exports.liveMetricsClient) {
+    exports.liveMetricsClient.enable(!1);
+    O = !1;
+    exports.liveMetricsClient = undefined;
+  }
 };

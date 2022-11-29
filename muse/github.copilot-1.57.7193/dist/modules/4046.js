@@ -24,84 +24,254 @@ function h(e) {
   process.namespaces[e] = null;
 }
 function f(e) {
-  process.env.DEBUG && process._rawDebug(e);
+  if (process.env.DEBUG) {
+    process._rawDebug(e);
+  }
 }
 function m(e) {
-  return e ? "function" == typeof e ? e.name ? e.name : (e.toString().trim().match(/^function\s*([^\s(]+)/) || [])[1] : e.constructor && e.constructor.name ? e.constructor.name : undefined : e;
+  return e
+    ? "function" == typeof e
+      ? e.name
+        ? e.name
+        : (e
+            .toString()
+            .trim()
+            .match(/^function\s*([^\s(]+)/) || [])[1]
+      : e.constructor && e.constructor.name
+      ? e.constructor.name
+      : undefined
+    : e;
 }
 module.exports = {
   getNamespace: p,
   createNamespace: function (e) {
     o.ok(e, "namespace must be given a name.");
-    l && f("CREATING NAMESPACE " + e);
+    if (l) {
+      f("CREATING NAMESPACE " + e);
+    }
     let t = new d(e);
     t.id = u;
     s.addHooks({
       init(n, o, i, s, a) {
         u = n;
-        s ? (t._contexts.set(n, t._contexts.get(s)), l && f("PARENTID: " + e + " uid:" + n + " parent:" + s + " provider:" + i)) : t._contexts.set(u, t.active);
-        l && f("INIT " + e + " uid:" + n + " parent:" + s + " provider:" + c[i] + " active:" + r.inspect(t.active, !0));
+        if (s) {
+          t._contexts.set(n, t._contexts.get(s));
+          if (l) {
+            f(
+              "PARENTID: " + e + " uid:" + n + " parent:" + s + " provider:" + i
+            );
+          }
+        } else {
+          t._contexts.set(u, t.active);
+        }
+        if (l) {
+          f(
+            "INIT " +
+              e +
+              " uid:" +
+              n +
+              " parent:" +
+              s +
+              " provider:" +
+              c[i] +
+              " active:" +
+              r.inspect(t.active, !0)
+          );
+        }
       },
       pre(n, o) {
         u = n;
         let i = t._contexts.get(n);
-        i ? (l && f(" PRE " + e + " uid:" + n + " handle:" + m(o) + " context:" + r.inspect(i)), t.enter(i)) : l && f(" PRE MISSING CONTEXT " + e + " uid:" + n + " handle:" + m(o));
+        if (i) {
+          if (l) {
+            f(
+              " PRE " +
+                e +
+                " uid:" +
+                n +
+                " handle:" +
+                m(o) +
+                " context:" +
+                r.inspect(i)
+            );
+          }
+          t.enter(i);
+        } else {
+          if (l) {
+            f(" PRE MISSING CONTEXT " + e + " uid:" + n + " handle:" + m(o));
+          }
+        }
       },
       post(n, o) {
         u = n;
         let i = t._contexts.get(n);
-        i ? (l && f(" POST " + e + " uid:" + n + " handle:" + m(o) + " context:" + r.inspect(i)), t.exit(i)) : l && f(" POST MISSING CONTEXT " + e + " uid:" + n + " handle:" + m(o));
+        if (i) {
+          if (l) {
+            f(
+              " POST " +
+                e +
+                " uid:" +
+                n +
+                " handle:" +
+                m(o) +
+                " context:" +
+                r.inspect(i)
+            );
+          }
+          t.exit(i);
+        } else {
+          if (l) {
+            f(" POST MISSING CONTEXT " + e + " uid:" + n + " handle:" + m(o));
+          }
+        }
       },
       destroy(n) {
         u = n;
-        l && f("DESTROY " + e + " uid:" + n + " context:" + r.inspect(t._contexts.get(u)) + " active:" + r.inspect(t.active, !0));
+        if (l) {
+          f(
+            "DESTROY " +
+              e +
+              " uid:" +
+              n +
+              " context:" +
+              r.inspect(t._contexts.get(u)) +
+              " active:" +
+              r.inspect(t.active, !0)
+          );
+        }
         t._contexts.delete(n);
-      }
+      },
     });
     process.namespaces[e] = t;
     return t;
   },
   destroyNamespace: h,
   reset: function () {
-    process.namespaces && Object.keys(process.namespaces).forEach(function (e) {
-      h(e);
-    });
+    if (process.namespaces) {
+      Object.keys(process.namespaces).forEach(function (e) {
+        h(e);
+      });
+    }
     process.namespaces = Object.create(null);
   },
-  ERROR_SYMBOL: a
+  ERROR_SYMBOL: a,
 };
 d.prototype.set = function (e, t) {
-  if (!this.active) throw new Error("No context available. ns.run() or ns.bind() must be called first.");
-  l && f("    SETTING KEY:" + e + "=" + t + " in ns:" + this.name + " uid:" + u + " active:" + r.inspect(this.active, !0));
+  if (!this.active)
+    throw new Error(
+      "No context available. ns.run() or ns.bind() must be called first."
+    );
+  if (l) {
+    f(
+      "    SETTING KEY:" +
+        e +
+        "=" +
+        t +
+        " in ns:" +
+        this.name +
+        " uid:" +
+        u +
+        " active:" +
+        r.inspect(this.active, !0)
+    );
+  }
   this.active[e] = t;
   return t;
 };
 d.prototype.get = function (e) {
   if (this.active) {
-    l && f("    GETTING KEY:" + e + "=" + this.active[e] + " " + this.name + " uid:" + u + " active:" + r.inspect(this.active, !0));
+    if (l) {
+      f(
+        "    GETTING KEY:" +
+          e +
+          "=" +
+          this.active[e] +
+          " " +
+          this.name +
+          " uid:" +
+          u +
+          " active:" +
+          r.inspect(this.active, !0)
+      );
+    }
     return this.active[e];
   }
-  l && f("    GETTING KEY:" + e + "=undefined " + this.name + " uid:" + u + " active:" + r.inspect(this.active, !0));
+  if (l) {
+    f(
+      "    GETTING KEY:" +
+        e +
+        "=undefined " +
+        this.name +
+        " uid:" +
+        u +
+        " active:" +
+        r.inspect(this.active, !0)
+    );
+  }
 };
 d.prototype.createContext = function () {
-  l && f("   CREATING Context: " + this.name + " uid:" + u + " len:" + this._set.length + "  active:" + r.inspect(this.active, !0, 2, !0));
+  if (l) {
+    f(
+      "   CREATING Context: " +
+        this.name +
+        " uid:" +
+        u +
+        " len:" +
+        this._set.length +
+        "  active:" +
+        r.inspect(this.active, !0, 2, !0)
+    );
+  }
   let e = Object.create(this.active ? this.active : Object.prototype);
   e._ns_name = this.name;
   e.id = u;
-  l && f("   CREATED Context: " + this.name + " uid:" + u + " len:" + this._set.length + "  context:" + r.inspect(e, !0, 2, !0));
+  if (l) {
+    f(
+      "   CREATED Context: " +
+        this.name +
+        " uid:" +
+        u +
+        " len:" +
+        this._set.length +
+        "  context:" +
+        r.inspect(e, !0, 2, !0)
+    );
+  }
   return e;
 };
 d.prototype.run = function (e) {
   let t = this.createContext();
   this.enter(t);
   try {
-    l && f(" BEFORE RUN: " + this.name + " uid:" + u + " len:" + this._set.length + " " + r.inspect(t));
+    if (l) {
+      f(
+        " BEFORE RUN: " +
+          this.name +
+          " uid:" +
+          u +
+          " len:" +
+          this._set.length +
+          " " +
+          r.inspect(t)
+      );
+    }
     e(t);
     return t;
   } catch (e) {
-    throw e && (e[a] = t), e;
+    throw (e && (e[a] = t), e);
   } finally {
-    l && f(" AFTER RUN: " + this.name + " uid:" + u + " len:" + this._set.length + " " + r.inspect(t));
+    if (l) {
+      f(
+        " AFTER RUN: " +
+          this.name +
+          " uid:" +
+          u +
+          " len:" +
+          this._set.length +
+          " " +
+          r.inspect(t)
+      );
+    }
     this.exit(t);
   }
 };
@@ -117,20 +287,66 @@ d.prototype.runPromise = function (e) {
   this.enter(t);
   let n = e(t);
   if (!n || !n.then || !n.catch) throw new Error("fn must return a promise.");
-  l && f(" BEFORE runPromise: " + this.name + " uid:" + u + " len:" + this._set.length + " " + r.inspect(t));
-  return n.then(e => (l && f(" AFTER runPromise: " + this.name + " uid:" + u + " len:" + this._set.length + " " + r.inspect(t)), this.exit(t), e)).catch(e => {
-    throw e[a] = t, l && f(" AFTER runPromise: " + this.name + " uid:" + u + " len:" + this._set.length + " " + r.inspect(t)), this.exit(t), e;
-  });
+  if (l) {
+    f(
+      " BEFORE runPromise: " +
+        this.name +
+        " uid:" +
+        u +
+        " len:" +
+        this._set.length +
+        " " +
+        r.inspect(t)
+    );
+  }
+  return n
+    .then(
+      (e) => (
+        l &&
+          f(
+            " AFTER runPromise: " +
+              this.name +
+              " uid:" +
+              u +
+              " len:" +
+              this._set.length +
+              " " +
+              r.inspect(t)
+          ),
+        this.exit(t),
+        e
+      )
+    )
+    .catch((e) => {
+      throw (
+        ((e[a] = t),
+        l &&
+          f(
+            " AFTER runPromise: " +
+              this.name +
+              " uid:" +
+              u +
+              " len:" +
+              this._set.length +
+              " " +
+              r.inspect(t)
+          ),
+        this.exit(t),
+        e)
+      );
+    });
 };
 d.prototype.bind = function (e, t) {
-  t || (t = this.active ? this.active : this.createContext());
+  if (t) {
+    t = this.active ? this.active : this.createContext();
+  }
   let n = this;
   return function () {
     n.enter(t);
     try {
       return e.apply(this, arguments);
     } catch (e) {
-      throw e && (e[a] = t), e;
+      throw (e && (e[a] = t), e);
     } finally {
       n.exit(t);
     }
@@ -138,42 +354,95 @@ d.prototype.bind = function (e, t) {
 };
 d.prototype.enter = function (e) {
   o.ok(e, "context must be provided for entering");
-  l && f("  ENTER " + this.name + " uid:" + u + " len:" + this._set.length + " context: " + r.inspect(e));
+  if (l) {
+    f(
+      "  ENTER " +
+        this.name +
+        " uid:" +
+        u +
+        " len:" +
+        this._set.length +
+        " context: " +
+        r.inspect(e)
+    );
+  }
   this._set.push(this.active);
   this.active = e;
 };
 d.prototype.exit = function (e) {
   o.ok(e, "context must be provided for exiting");
-  l && f("  EXIT " + this.name + " uid:" + u + " len:" + this._set.length + " context: " + r.inspect(e));
-  if (this.active === e) return o.ok(this._set.length, "can't remove top context"), void (this.active = this._set.pop());
+  if (l) {
+    f(
+      "  EXIT " +
+        this.name +
+        " uid:" +
+        u +
+        " len:" +
+        this._set.length +
+        " context: " +
+        r.inspect(e)
+    );
+  }
+  if (this.active === e)
+    return (
+      o.ok(this._set.length, "can't remove top context"),
+      void (this.active = this._set.pop())
+    );
   let t = this._set.lastIndexOf(e);
-  t < 0 ? (l && f("??ERROR?? context exiting but not entered - ignoring: " + r.inspect(e)), o.ok(t >= 0, "context not currently entered; can't exit. \n" + r.inspect(this) + "\n" + r.inspect(e))) : (o.ok(t, "can't remove top context"), this._set.splice(t, 1));
+  if (t < 0) {
+    if (l) {
+      f(
+        "??ERROR?? context exiting but not entered - ignoring: " + r.inspect(e)
+      );
+    }
+    o.ok(
+      t >= 0,
+      "context not currently entered; can't exit. \n" +
+        r.inspect(this) +
+        "\n" +
+        r.inspect(e)
+    );
+  } else {
+    o.ok(t, "can't remove top context");
+    this._set.splice(t, 1);
+  }
 };
 d.prototype.bindEmitter = function (e) {
   o.ok(e.on && e.addListener && e.emit, "can only bind real EEs");
   let t = this,
     n = "context@" + this.name;
-  i(e, function (e) {
-    e && (e["cls@contexts"] || (e["cls@contexts"] = Object.create(null)), e["cls@contexts"][n] = {
-      namespace: t,
-      context: t.active
-    });
-  }, function (e) {
-    if (!e || !e["cls@contexts"]) return e;
-    let t = e,
-      n = e["cls@contexts"];
-    Object.keys(n).forEach(function (e) {
-      let r = n[e];
-      t = r.namespace.bind(t, r.context);
-    });
-    return t;
-  });
+  i(
+    e,
+    function (e) {
+      if (e) {
+        if (e["cls@contexts"]) {
+          e["cls@contexts"] = Object.create(null);
+        }
+        e["cls@contexts"][n] = {
+          namespace: t,
+          context: t.active,
+        };
+      }
+    },
+    function (e) {
+      if (!e || !e["cls@contexts"]) return e;
+      let t = e,
+        n = e["cls@contexts"];
+      Object.keys(n).forEach(function (e) {
+        let r = n[e];
+        t = r.namespace.bind(t, r.context);
+      });
+      return t;
+    }
+  );
 };
 d.prototype.fromException = function (e) {
   return e[a];
 };
 process.namespaces = {};
-s._state && !s._state.enabled && s.enable();
+if (s._state && !s._state.enabled) {
+  s.enable();
+}
 if (l) {
   var g = require(2512);
   for (var _ in g.filter._modifiers) g.filter.deattach(_);

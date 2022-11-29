@@ -1,7 +1,38 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.editorVersionHeaders = exports.EditorAndPluginInfo = exports.formatNameAndVersion = exports.getTestVscInfo = exports.VscInfo = exports.getVersion = exports.getBuild = exports.getBuildType = exports.isProduction = exports.BuildInfo = exports.fimSuffixLengthThreshold = exports.suffixMatchThreshold = exports.suffixPercent = exports.getEnabledConfig = exports.getLanguageConfig = exports.dumpConfig = exports.getHiddenConfig = exports.isDefaultSettingOverwritten = exports.getConfig = exports.getConfigDefaultForObjectKey = exports.getConfigDefaultForKey = exports.InMemoryConfigProvider = exports.DefaultsOnlyConfigProvider = exports.ConfigProvider = exports.ConfigBlockModeConfig = exports.BlockModeConfig = exports.BuildType = exports.shouldDoServerTrimming = exports.shouldDoParsingTrimming = exports.BlockMode = exports.ConfigKey = undefined;
+exports.editorVersionHeaders =
+  exports.EditorAndPluginInfo =
+  exports.formatNameAndVersion =
+  exports.getTestVscInfo =
+  exports.VscInfo =
+  exports.getVersion =
+  exports.getBuild =
+  exports.getBuildType =
+  exports.isProduction =
+  exports.BuildInfo =
+  exports.fimSuffixLengthThreshold =
+  exports.suffixMatchThreshold =
+  exports.suffixPercent =
+  exports.getEnabledConfig =
+  exports.getLanguageConfig =
+  exports.dumpConfig =
+  exports.getHiddenConfig =
+  exports.isDefaultSettingOverwritten =
+  exports.getConfig =
+  exports.getConfigDefaultForObjectKey =
+  exports.getConfigDefaultForKey =
+  exports.InMemoryConfigProvider =
+  exports.DefaultsOnlyConfigProvider =
+  exports.ConfigProvider =
+  exports.ConfigBlockModeConfig =
+  exports.BlockModeConfig =
+  exports.BuildType =
+  exports.shouldDoServerTrimming =
+  exports.shouldDoParsingTrimming =
+  exports.BlockMode =
+  exports.ConfigKey =
+    undefined;
 const r = require(3055),
   o = require(4197),
   i = require(9189),
@@ -29,13 +60,13 @@ exports.ConfigKey = {
   DebugShowScores: ["advanced", "debug.showScores"],
   DebugOverrideLogLevels: ["advanced", "debug.overrideLogLevels"],
   DebugFilterLogCategories: ["advanced", "debug.filterLogCategories"],
-  DebugUseSuffix: ["advanced", "debug.useSuffix"]
+  DebugUseSuffix: ["advanced", "debug.useSuffix"],
 };
 (function (e) {
   e.Parsing = "parsing";
   e.Server = "server";
   e.ParsingAndServer = "parsingandserver";
-})(a = exports.BlockMode || (exports.BlockMode = {}));
+})((a = exports.BlockMode || (exports.BlockMode = {})));
 exports.shouldDoParsingTrimming = function (e) {
   return [a.Parsing, a.ParsingAndServer].includes(e);
 };
@@ -52,16 +83,25 @@ function u(e, t) {
 exports.BlockModeConfig = BlockModeConfig;
 exports.ConfigBlockModeConfig = class extends BlockModeConfig {
   async forLanguage(e, n) {
-    if (e.get(ConfigProvider).isDefaultSettingOverwritten(exports.ConfigKey.IndentationMode)) switch (e.get(ConfigProvider).getLanguageConfig(exports.ConfigKey.IndentationMode, n)) {
-      case "client":
-      case !0:
-      case "server":
-        return a.Server;
-      case "clientandserver":
-        return u(a.ParsingAndServer, n);
-      default:
-        return a.Parsing;
-    }
+    if (
+      e
+        .get(ConfigProvider)
+        .isDefaultSettingOverwritten(exports.ConfigKey.IndentationMode)
+    )
+      switch (
+        e
+          .get(ConfigProvider)
+          .getLanguageConfig(exports.ConfigKey.IndentationMode, n)
+      ) {
+        case "client":
+        case !0:
+        case "server":
+          return a.Server;
+        case "clientandserver":
+          return u(a.ParsingAndServer, n);
+        default:
+          return a.Parsing;
+      }
     const o = await e.get(i.Features).overrideBlockMode();
     return o ? u(o, n) : r.isSupportedLanguageId(n) ? a.Parsing : a.Server;
   }
@@ -69,20 +109,34 @@ exports.ConfigBlockModeConfig = class extends BlockModeConfig {
 class ConfigProvider {}
 function getConfigDefaultForKey(e) {
   try {
-    const t = s.contributes.configuration[0].properties[`${o.CopilotConfigPrefix}.${e}`].default;
-    if (undefined === t) throw new Error(`Missing config default value: ${o.CopilotConfigPrefix}.${e}`);
+    const t =
+      s.contributes.configuration[0].properties[`${o.CopilotConfigPrefix}.${e}`]
+        .default;
+    if (undefined === t)
+      throw new Error(
+        `Missing config default value: ${o.CopilotConfigPrefix}.${e}`
+      );
     return t;
   } catch (t) {
-    throw new Error(`Error inspecting config default value ${o.CopilotConfigPrefix}.${e}: ${t}`);
+    throw new Error(
+      `Error inspecting config default value ${o.CopilotConfigPrefix}.${e}: ${t}`
+    );
   }
 }
 function getConfigDefaultForObjectKey(e, t) {
   try {
-    const n = s.contributes.configuration[0].properties[`${o.CopilotConfigPrefix}.${e}`].properties[t].default;
-    if (undefined === n) throw new Error(`Missing config default value: ${o.CopilotConfigPrefix}.${e}`);
+    const n =
+      s.contributes.configuration[0].properties[`${o.CopilotConfigPrefix}.${e}`]
+        .properties[t].default;
+    if (undefined === n)
+      throw new Error(
+        `Missing config default value: ${o.CopilotConfigPrefix}.${e}`
+      );
     return n;
   } catch (n) {
-    throw new Error(`Error inspecting config default value ${o.CopilotConfigPrefix}.${e}.${t}: ${n}`);
+    throw new Error(
+      `Error inspecting config default value ${o.CopilotConfigPrefix}.${e}.${t}: ${n}`
+    );
   }
 }
 function getConfig(e, t) {
@@ -100,7 +154,9 @@ function getLanguageConfig(e, t, n) {
 exports.ConfigProvider = ConfigProvider;
 exports.DefaultsOnlyConfigProvider = class extends ConfigProvider {
   getConfig(e) {
-    return Array.isArray(e) ? getConfigDefaultForObjectKey(e[0], e[1]) : getConfigDefaultForKey(e);
+    return Array.isArray(e)
+      ? getConfigDefaultForObjectKey(e[0], e[1])
+      : getConfigDefaultForKey(e);
   }
   isDefaultSettingOverwritten(e) {
     return !1;
@@ -123,15 +179,22 @@ exports.InMemoryConfigProvider = class {
     return undefined !== t ? t : this.baseConfigProvider.getConfig(e);
   }
   setConfig(e, t) {
-    undefined !== t ? this.overrides.set(e, t) : this.overrides.delete(e);
+    if (undefined !== t) {
+      this.overrides.set(e, t);
+    } else {
+      this.overrides.delete(e);
+    }
   }
   setLanguageEnablement(e, n) {
     this.overrides.set(exports.ConfigKey.Enable, {
-      [e]: n
+      [e]: n,
     });
   }
   isDefaultSettingOverwritten(e) {
-    return !!this.overrides.has(e) || this.baseConfigProvider.isDefaultSettingOverwritten(e);
+    return (
+      !!this.overrides.has(e) ||
+      this.baseConfigProvider.isDefaultSettingOverwritten(e)
+    );
   }
   keyAsString(e) {
     return Array.isArray(e) ? e.join(".") : e;
@@ -145,7 +208,11 @@ exports.InMemoryConfigProvider = class {
   }
   getLanguageConfig(e, t) {
     const n = this.overrides.get(e);
-    return undefined !== n ? undefined !== t ? n[t] : n["*"] : this.baseConfigProvider.getLanguageConfig(e, t);
+    return undefined !== n
+      ? undefined !== t
+        ? n[t]
+        : n["*"]
+      : this.baseConfigProvider.getLanguageConfig(e, t);
   }
 };
 exports.getConfigDefaultForKey = getConfigDefaultForKey;
@@ -162,18 +229,24 @@ exports.getEnabledConfig = function (e, n) {
 };
 exports.suffixPercent = async function (e, n, r) {
   return getHiddenConfig(e, exports.ConfigKey.DebugUseSuffix, {
-    default: !1
-  }) ? 15 : e.get(i.Features).suffixPercent(n, r);
+    default: !1,
+  })
+    ? 15
+    : e.get(i.Features).suffixPercent(n, r);
 };
 exports.suffixMatchThreshold = async function (e, n, r) {
   return getHiddenConfig(e, exports.ConfigKey.DebugUseSuffix, {
-    default: !1
-  }) ? 0 : e.get(i.Features).suffixMatchThreshold(n, r);
+    default: !1,
+  })
+    ? 0
+    : e.get(i.Features).suffixMatchThreshold(n, r);
 };
 exports.fimSuffixLengthThreshold = async function (e, n, r) {
   return getHiddenConfig(e, exports.ConfigKey.DebugUseSuffix, {
-    default: !1
-  }) ? -1 : e.get(i.Features).fimSuffixLengthThreshold(n, r);
+    default: !1,
+  })
+    ? -1
+    : e.get(i.Features).fimSuffixLengthThreshold(n, r);
 };
 class BuildInfo {
   constructor() {
@@ -215,15 +288,16 @@ class VscInfo {
     this.vsCodeVersion = n;
   }
 }
-function formatNameAndVersion({
-  name: e,
-  version: t
-}) {
+function formatNameAndVersion({ name: e, version: t }) {
   return `${e}/${t}`;
 }
 exports.VscInfo = VscInfo;
 exports.getTestVscInfo = function () {
-  return new VscInfo("test-session-id", "test-machine-id", "test-vscode-version");
+  return new VscInfo(
+    "test-session-id",
+    "test-machine-id",
+    "test-vscode-version"
+  );
 };
 exports.formatNameAndVersion = formatNameAndVersion;
 class EditorAndPluginInfo {}
@@ -232,6 +306,6 @@ exports.editorVersionHeaders = function (e) {
   const t = e.get(EditorAndPluginInfo);
   return {
     "Editor-Version": formatNameAndVersion(t.getEditorInfo(e)),
-    "Editor-Plugin-Version": formatNameAndVersion(t.getEditorPluginInfo(e))
+    "Editor-Plugin-Version": formatNameAndVersion(t.getEditorPluginInfo(e)),
   };
 };

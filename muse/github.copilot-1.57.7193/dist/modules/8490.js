@@ -1,7 +1,12 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.ValueScope = exports.ValueScopeName = exports.Scope = exports.varKinds = exports.UsedValueState = undefined;
+exports.ValueScope =
+  exports.ValueScopeName =
+  exports.Scope =
+  exports.varKinds =
+  exports.UsedValueState =
+    undefined;
 const r = require(7023);
 class o extends Error {
   constructor(e) {
@@ -10,20 +15,17 @@ class o extends Error {
   }
 }
 var i;
-!function (e) {
-  e[e.Started = 0] = "Started";
-  e[e.Completed = 1] = "Completed";
-}(i = exports.UsedValueState || (exports.UsedValueState = {}));
+!(function (e) {
+  e[(e.Started = 0)] = "Started";
+  e[(e.Completed = 1)] = "Completed";
+})((i = exports.UsedValueState || (exports.UsedValueState = {})));
 exports.varKinds = {
   const: new r.Name("const"),
   let: new r.Name("let"),
-  var: new r.Name("var")
+  var: new r.Name("var"),
 };
 class Scope {
-  constructor({
-    prefixes: e,
-    parent: t
-  } = {}) {
+  constructor({ prefixes: e, parent: t } = {}) {
     this._names = {};
     this._prefixes = e;
     this._parent = t;
@@ -39,11 +41,21 @@ class Scope {
   }
   _nameGroup(e) {
     var t, n;
-    if ((null === (n = null === (t = this._parent) || undefined === t ? undefined : t._prefixes) || undefined === n ? undefined : n.has(e)) || this._prefixes && !this._prefixes.has(e)) throw new Error(`CodeGen: prefix "${e}" is not allowed in this scope`);
-    return this._names[e] = {
+    if (
+      (null ===
+        (n =
+          null === (t = this._parent) || undefined === t
+            ? undefined
+            : t._prefixes) || undefined === n
+        ? undefined
+        : n.has(e)) ||
+      (this._prefixes && !this._prefixes.has(e))
+    )
+      throw new Error(`CodeGen: prefix "${e}" is not allowed in this scope`);
+    return (this._names[e] = {
       prefix: e,
-      index: 0
-    };
+      index: 0,
+    });
   }
 }
 exports.Scope = Scope;
@@ -52,10 +64,7 @@ class ValueScopeName extends r.Name {
     super(t);
     this.prefix = e;
   }
-  setValue(e, {
-    property: t,
-    itemIndex: n
-  }) {
+  setValue(e, { property: t, itemIndex: n }) {
     this.value = e;
     this.scopePath = r._`.${new r.Name(t)}[${n}]`;
   }
@@ -69,7 +78,7 @@ exports.ValueScope = class extends Scope {
     this._scope = e.scope;
     this.opts = {
       ...e,
-      _n: e.lines ? c : r.nil
+      _n: e.lines ? c : r.nil,
     };
   }
   get() {
@@ -80,11 +89,10 @@ exports.ValueScope = class extends Scope {
   }
   value(e, t) {
     var n;
-    if (undefined === t.ref) throw new Error("CodeGen: ref must be passed in value");
+    if (undefined === t.ref)
+      throw new Error("CodeGen: ref must be passed in value");
     const r = this.toName(e),
-      {
-        prefix: o
-      } = r,
+      { prefix: o } = r,
       i = null !== (n = t.key) && undefined !== n ? n : t.ref;
     let s = this._values[o];
     if (s) {
@@ -97,7 +105,7 @@ exports.ValueScope = class extends Scope {
     a[c] = t.ref;
     r.setValue(t, {
       property: o,
-      itemIndex: c
+      itemIndex: c,
     });
     return r;
   }
@@ -106,29 +114,38 @@ exports.ValueScope = class extends Scope {
     if (n) return n.get(t);
   }
   scopeRefs(e, t = this._values) {
-    return this._reduceValues(t, t => {
-      if (undefined === t.scopePath) throw new Error(`CodeGen: name "${t}" has no value`);
+    return this._reduceValues(t, (t) => {
+      if (undefined === t.scopePath)
+        throw new Error(`CodeGen: name "${t}" has no value`);
       return r._`${e}${t.scopePath}`;
     });
   }
   scopeCode(e = this._values, t, n) {
-    return this._reduceValues(e, e => {
-      if (undefined === e.value) throw new Error(`CodeGen: name "${e}" has no value`);
-      return e.value.code;
-    }, t, n);
+    return this._reduceValues(
+      e,
+      (e) => {
+        if (undefined === e.value)
+          throw new Error(`CodeGen: name "${e}" has no value`);
+        return e.value.code;
+      },
+      t,
+      n
+    );
   }
   _reduceValues(e, n, s = {}, a) {
     let c = r.nil;
     for (const l in e) {
       const u = e[l];
       if (!u) continue;
-      const d = s[l] = s[l] || new Map();
-      u.forEach(e => {
+      const d = (s[l] = s[l] || new Map());
+      u.forEach((e) => {
         if (d.has(e)) return;
         d.set(e, i.Started);
         let s = n(e);
         if (s) {
-          const n = this.opts.es5 ? exports.varKinds.var : exports.varKinds.const;
+          const n = this.opts.es5
+            ? exports.varKinds.var
+            : exports.varKinds.const;
           c = r._`${c}${n} ${e} = ${s};${this.opts._n}`;
         } else {
           if (!(s = null == a ? undefined : a(e))) throw new o(e);

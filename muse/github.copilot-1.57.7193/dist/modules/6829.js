@@ -1,13 +1,11 @@
-const {
-    EventEmitter: r
-  } = require(2361),
+const { EventEmitter: r } = require(2361),
   o = Symbol("AbortSignal internals");
 class i {
   constructor() {
     this[o] = {
       eventEmitter: new r(),
       onabort: null,
-      aborted: !1
+      aborted: !1,
     };
   }
   get aborted() {
@@ -31,10 +29,12 @@ class i {
   dispatchEvent(e) {
     const t = {
         type: e,
-        target: this
+        target: this,
       },
       n = `on${e}`;
-    "function" == typeof this[o][n] && this[n](t);
+    if ("function" == typeof this[o][n]) {
+      this[n](t);
+    }
     this[o].eventEmitter.emit(e, t);
   }
   fire() {
@@ -44,24 +44,25 @@ class i {
 }
 Object.defineProperties(i.prototype, {
   addEventListener: {
-    enumerable: !0
+    enumerable: !0,
   },
   removeEventListener: {
-    enumerable: !0
+    enumerable: !0,
   },
   dispatchEvent: {
-    enumerable: !0
+    enumerable: !0,
   },
   aborted: {
-    enumerable: !0
+    enumerable: !0,
   },
   onabort: {
-    enumerable: !0
-  }
+    enumerable: !0,
+  },
 });
 class s extends i {
   constructor(e) {
-    if (!Number.isInteger(e)) throw new TypeError("Expected an integer, got " + typeof e);
+    if (!Number.isInteger(e))
+      throw new TypeError("Expected an integer, got " + typeof e);
     super();
     this[o].timerId = setTimeout(() => {
       this.fire();
@@ -73,14 +74,14 @@ class s extends i {
 }
 Object.defineProperties(s.prototype, {
   clear: {
-    enumerable: !0
-  }
+    enumerable: !0,
+  },
 });
 const a = Symbol("AbortController internals");
 class c {
   constructor() {
     this[a] = {
-      signal: new i()
+      signal: new i(),
     };
   }
   get signal() {
@@ -90,19 +91,21 @@ class c {
     return this.constructor.name;
   }
   abort() {
-    this[a].signal.aborted || this[a].signal.fire();
+    if (this[a].signal.aborted) {
+      this[a].signal.fire();
+    }
   }
 }
 Object.defineProperties(c.prototype, {
   signal: {
-    enumerable: !0
+    enumerable: !0,
   },
   abort: {
-    enumerable: !0
-  }
+    enumerable: !0,
+  },
 });
 module.exports = {
   AbortController: c,
   AbortSignal: i,
-  TimeoutSignal: s
+  TimeoutSignal: s,
 };

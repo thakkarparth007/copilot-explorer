@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 var r = require(5282);
 exports.IsInitialized = !process.env.APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL;
@@ -16,11 +16,23 @@ if (exports.IsInitialized) {
       redis: i.redis,
       pg: i.pg,
       pgPool: i.pgPool,
-      winston: i.winston
+      winston: i.winston,
     };
-  for (var c in a) -1 === s.indexOf(c) && (a[c].enable(), r.info(o, "Subscribed to " + c + " events"));
-  s.length > 0 && r.info(o, "Some modules will not be patched", s);
-} else r.info(o, "Not subscribing to dependency autocollection because APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL was set");
+  for (var c in a)
+    if (-1 === s.indexOf(c)) {
+      a[c].enable();
+      r.info(o, "Subscribed to " + c + " events");
+    }
+  if (s.length > 0) {
+    r.info(o, "Some modules will not be patched", s);
+  }
+} else
+  r.info(
+    o,
+    "Not subscribing to dependency autocollection because APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL was set"
+  );
 exports.registerContextPreservation = function (e) {
-  exports.IsInitialized && require(4953).channel.addContextPreservation(e);
+  if (exports.IsInitialized) {
+    require(4953).channel.addContextPreservation(e);
+  }
 };

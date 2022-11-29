@@ -1,12 +1,18 @@
 var r = require(2037),
   o = require(3580),
-  i = function () {
+  i = (function () {
     function e(t, n, r) {
-      undefined === n && (n = 6e4);
-      undefined === r && (r = !1);
+      if (undefined === n) {
+        n = 6e4;
+      }
+      if (undefined === r) {
+        r = !1;
+      }
       this._lastIntervalRequestExecutionTime = 0;
       this._lastIntervalDependencyExecutionTime = 0;
-      e.INSTANCE || (e.INSTANCE = this);
+      if (e.INSTANCE) {
+        e.INSTANCE = this;
+      }
       this._isInitialized = !1;
       this._client = t;
       this._collectionInterval = n;
@@ -15,31 +21,55 @@ var r = require(2037),
     e.prototype.enable = function (t, n) {
       var o = this;
       this._isEnabled = t;
-      this._isEnabled && !this._isInitialized && (this._isInitialized = !0);
-      t ? this._handle || (this._lastCpus = r.cpus(), this._lastRequests = {
-        totalRequestCount: e._totalRequestCount,
-        totalFailedRequestCount: e._totalFailedRequestCount,
-        time: +new Date()
-      }, this._lastDependencies = {
-        totalDependencyCount: e._totalDependencyCount,
-        totalFailedDependencyCount: e._totalFailedDependencyCount,
-        time: +new Date()
-      }, this._lastExceptions = {
-        totalExceptionCount: e._totalExceptionCount,
-        time: +new Date()
-      }, "function" == typeof process.cpuUsage && (this._lastAppCpuUsage = process.cpuUsage()), this._lastHrtime = process.hrtime(), this._collectionInterval = n || this._collectionInterval, this._handle = setInterval(function () {
-        return o.trackPerformance();
-      }, this._collectionInterval), this._handle.unref()) : this._handle && (clearInterval(this._handle), this._handle = undefined);
+      if (this._isEnabled && !this._isInitialized) {
+        this._isInitialized = !0;
+      }
+      if (t) {
+        if (this._handle) {
+          this._lastCpus = r.cpus();
+          this._lastRequests = {
+            totalRequestCount: e._totalRequestCount,
+            totalFailedRequestCount: e._totalFailedRequestCount,
+            time: +new Date(),
+          };
+          this._lastDependencies = {
+            totalDependencyCount: e._totalDependencyCount,
+            totalFailedDependencyCount: e._totalFailedDependencyCount,
+            time: +new Date(),
+          };
+          this._lastExceptions = {
+            totalExceptionCount: e._totalExceptionCount,
+            time: +new Date(),
+          };
+          if ("function" == typeof process.cpuUsage) {
+            this._lastAppCpuUsage = process.cpuUsage();
+          }
+          this._lastHrtime = process.hrtime();
+          this._collectionInterval = n || this._collectionInterval;
+          this._handle = setInterval(function () {
+            return o.trackPerformance();
+          }, this._collectionInterval);
+          this._handle.unref();
+        }
+      } else {
+        if (this._handle) {
+          clearInterval(this._handle);
+          this._handle = undefined;
+        }
+      }
     };
     e.countRequest = function (t, n) {
       var r;
       if (e.isEnabled()) {
-        if ("string" == typeof t) r = +new Date("1970-01-01T" + t + "Z");else {
+        if ("string" == typeof t) r = +new Date("1970-01-01T" + t + "Z");
+        else {
           if ("number" != typeof t) return;
           r = t;
         }
         e._intervalRequestExecutionTime += r;
-        !1 === n && e._totalFailedRequestCount++;
+        if (!1 === n) {
+          e._totalFailedRequestCount++;
+        }
         e._totalRequestCount++;
       }
     };
@@ -49,12 +79,15 @@ var r = require(2037),
     e.countDependency = function (t, n) {
       var r;
       if (e.isEnabled()) {
-        if ("string" == typeof t) r = +new Date("1970-01-01T" + t + "Z");else {
+        if ("string" == typeof t) r = +new Date("1970-01-01T" + t + "Z");
+        else {
           if ("number" != typeof t) return;
           r = t;
         }
         e._intervalDependencyExecutionTime += r;
-        !1 === n && e._totalFailedDependencyCount++;
+        if (!1 === n) {
+          e._totalFailedDependencyCount++;
+        }
         e._totalDependencyCount++;
       }
     };
@@ -73,8 +106,17 @@ var r = require(2037),
     };
     e.prototype._trackCpu = function () {
       var e = r.cpus();
-      if (e && e.length && this._lastCpus && e.length === this._lastCpus.length) {
-        for (var t = 0, n = 0, i = 0, s = 0, a = 0, c = 0; e && c < e.length; c++) {
+      if (
+        e &&
+        e.length &&
+        this._lastCpus &&
+        e.length === this._lastCpus.length
+      ) {
+        for (
+          var t = 0, n = 0, i = 0, s = 0, a = 0, c = 0;
+          e && c < e.length;
+          c++
+        ) {
           var l = e[c],
             u = this._lastCpus[c],
             d = (l.model, l.speed, l.times),
@@ -89,19 +131,28 @@ var r = require(2037),
         if ("function" == typeof process.cpuUsage) {
           var f = process.cpuUsage(),
             m = process.hrtime(),
-            g = f.user - this._lastAppCpuUsage.user + (f.system - this._lastAppCpuUsage.system) || 0;
-          undefined !== this._lastHrtime && 2 === this._lastHrtime.length && (h = 100 * g / ((1e6 * (m[0] - this._lastHrtime[0]) + (m[1] - this._lastHrtime[1]) / 1e3 || 0) * e.length));
+            g =
+              f.user -
+                this._lastAppCpuUsage.user +
+                (f.system - this._lastAppCpuUsage.system) || 0;
+          if (undefined !== this._lastHrtime && 2 === this._lastHrtime.length) {
+            h =
+              (100 * g) /
+              ((1e6 * (m[0] - this._lastHrtime[0]) +
+                (m[1] - this._lastHrtime[1]) / 1e3 || 0) *
+                e.length);
+          }
           this._lastAppCpuUsage = f;
           this._lastHrtime = m;
         }
         var _ = t + n + i + s + a || 1;
         this._client.trackMetric({
           name: o.PerformanceCounter.PROCESSOR_TIME,
-          value: (_ - s) / _ * 100
+          value: ((_ - s) / _) * 100,
         });
         this._client.trackMetric({
           name: o.PerformanceCounter.PROCESS_TIME,
-          value: h || t / _ * 100
+          value: h || (t / _) * 100,
         });
       }
       this._lastCpus = e;
@@ -112,43 +163,52 @@ var r = require(2037),
         n = r.totalmem() - e;
       this._client.trackMetric({
         name: o.PerformanceCounter.PRIVATE_BYTES,
-        value: t
+        value: t,
       });
       this._client.trackMetric({
         name: o.PerformanceCounter.AVAILABLE_BYTES,
-        value: e
+        value: e,
       });
-      this._enableLiveMetricsCounters && this._client.trackMetric({
-        name: o.QuickPulseCounter.COMMITTED_BYTES,
-        value: n
-      });
+      if (this._enableLiveMetricsCounters) {
+        this._client.trackMetric({
+          name: o.QuickPulseCounter.COMMITTED_BYTES,
+          value: n,
+        });
+      }
     };
     e.prototype._trackNetwork = function () {
       var t = this._lastRequests,
         n = {
           totalRequestCount: e._totalRequestCount,
           totalFailedRequestCount: e._totalFailedRequestCount,
-          time: +new Date()
+          time: +new Date(),
         },
         r = n.totalRequestCount - t.totalRequestCount || 0,
         i = n.totalFailedRequestCount - t.totalFailedRequestCount || 0,
         s = n.time - t.time,
         a = s / 1e3,
-        c = (e._intervalRequestExecutionTime - this._lastIntervalRequestExecutionTime) / r || 0;
+        c =
+          (e._intervalRequestExecutionTime -
+            this._lastIntervalRequestExecutionTime) /
+            r || 0;
       this._lastIntervalRequestExecutionTime = e._intervalRequestExecutionTime;
       if (s > 0) {
         var l = r / a,
           u = i / a;
         this._client.trackMetric({
           name: o.PerformanceCounter.REQUEST_RATE,
-          value: l
-        }), (!this._enableLiveMetricsCounters || r > 0) && this._client.trackMetric({
-          name: o.PerformanceCounter.REQUEST_DURATION,
-          value: c
-        }), this._enableLiveMetricsCounters && this._client.trackMetric({
-          name: o.QuickPulseCounter.REQUEST_FAILURE_RATE,
-          value: u
-        });
+          value: l,
+        }),
+          (!this._enableLiveMetricsCounters || r > 0) &&
+            this._client.trackMetric({
+              name: o.PerformanceCounter.REQUEST_DURATION,
+              value: c,
+            }),
+          this._enableLiveMetricsCounters &&
+            this._client.trackMetric({
+              name: o.QuickPulseCounter.REQUEST_FAILURE_RATE,
+              value: u,
+            });
       }
       this._lastRequests = n;
     };
@@ -158,27 +218,34 @@ var r = require(2037),
           n = {
             totalDependencyCount: e._totalDependencyCount,
             totalFailedDependencyCount: e._totalFailedDependencyCount,
-            time: +new Date()
+            time: +new Date(),
           },
           r = n.totalDependencyCount - t.totalDependencyCount || 0,
           i = n.totalFailedDependencyCount - t.totalFailedDependencyCount || 0,
           s = n.time - t.time,
           a = s / 1e3,
-          c = (e._intervalDependencyExecutionTime - this._lastIntervalDependencyExecutionTime) / r || 0;
-        this._lastIntervalDependencyExecutionTime = e._intervalDependencyExecutionTime;
+          c =
+            (e._intervalDependencyExecutionTime -
+              this._lastIntervalDependencyExecutionTime) /
+              r || 0;
+        this._lastIntervalDependencyExecutionTime =
+          e._intervalDependencyExecutionTime;
         if (s > 0) {
           var l = r / a,
             u = i / a;
           this._client.trackMetric({
             name: o.QuickPulseCounter.DEPENDENCY_RATE,
-            value: l
-          }), this._client.trackMetric({
-            name: o.QuickPulseCounter.DEPENDENCY_FAILURE_RATE,
-            value: u
-          }), (!this._enableLiveMetricsCounters || r > 0) && this._client.trackMetric({
-            name: o.QuickPulseCounter.DEPENDENCY_DURATION,
-            value: c
-          });
+            value: l,
+          }),
+            this._client.trackMetric({
+              name: o.QuickPulseCounter.DEPENDENCY_FAILURE_RATE,
+              value: u,
+            }),
+            (!this._enableLiveMetricsCounters || r > 0) &&
+              this._client.trackMetric({
+                name: o.QuickPulseCounter.DEPENDENCY_DURATION,
+                value: c,
+              });
         }
         this._lastDependencies = n;
       }
@@ -188,7 +255,7 @@ var r = require(2037),
         var t = this._lastExceptions,
           n = {
             totalExceptionCount: e._totalExceptionCount,
-            time: +new Date()
+            time: +new Date(),
           },
           r = n.totalExceptionCount - t.totalExceptionCount || 0,
           i = n.time - t.time;
@@ -196,7 +263,7 @@ var r = require(2037),
           var s = r / (i / 1e3);
           this._client.trackMetric({
             name: o.QuickPulseCounter.EXCEPTION_RATE,
-            value: s
+            value: s,
           });
         }
         this._lastExceptions = n;
@@ -217,5 +284,5 @@ var r = require(2037),
     e._intervalDependencyExecutionTime = 0;
     e._intervalRequestExecutionTime = 0;
     return e;
-  }();
+  })();
 module.exports = i;

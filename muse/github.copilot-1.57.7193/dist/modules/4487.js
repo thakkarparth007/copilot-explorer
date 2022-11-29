@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 var r = require(4953);
 exports.redis = {
@@ -15,16 +15,18 @@ exports.redis = {
             s = new Date();
           e.callback = r.channel.bindToContext(function (t, a) {
             var c = process.hrtime(i),
-              l = 1e3 * c[0] + c[1] / 1e6 | 0;
+              l = (1e3 * c[0] + c[1] / 1e6) | 0;
             r.channel.publish("redis", {
               duration: l,
               address: o,
               commandObj: e,
               err: t,
               result: a,
-              time: s
+              time: s,
             });
-            "function" == typeof n && n.apply(this, arguments);
+            if ("function" == typeof n) {
+              n.apply(this, arguments);
+            }
           });
           e.callback.pubsubBound = !0;
         }
@@ -32,7 +34,7 @@ exports.redis = {
       return t.call(this, e);
     };
     return e;
-  }
+  },
 };
 exports.enable = function () {
   r.channel.registerMonkeyPatch("redis", exports.redis);

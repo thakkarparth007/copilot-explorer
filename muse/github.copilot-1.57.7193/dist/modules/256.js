@@ -1,16 +1,22 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.decodeLocation = exports.encodeLocation = exports.completionContextForDocument = exports.CompletionContext = exports.completionTypeToString = exports.CompletionType = undefined;
+exports.decodeLocation =
+  exports.encodeLocation =
+  exports.completionContextForDocument =
+  exports.CompletionContext =
+  exports.completionTypeToString =
+  exports.CompletionType =
+    undefined;
 const r = require(7373),
   o = require(6403),
   i = require(4197);
 var s;
-!function (e) {
-  e[e.OPEN_COPILOT = 2] = "OPEN_COPILOT";
-  e[e.TODO_QUICK_FIX = 3] = "TODO_QUICK_FIX";
-  e[e.UNKNOWN_FUNCTION_QUICK_FIX = 4] = "UNKNOWN_FUNCTION_QUICK_FIX";
-}(s = exports.CompletionType || (exports.CompletionType = {}));
+!(function (e) {
+  e[(e.OPEN_COPILOT = 2)] = "OPEN_COPILOT";
+  e[(e.TODO_QUICK_FIX = 3)] = "TODO_QUICK_FIX";
+  e[(e.UNKNOWN_FUNCTION_QUICK_FIX = 4)] = "UNKNOWN_FUNCTION_QUICK_FIX";
+})((s = exports.CompletionType || (exports.CompletionType = {})));
 exports.completionTypeToString = function (e) {
   switch (e) {
     case s.OPEN_COPILOT:
@@ -29,11 +35,15 @@ class CompletionContext {
     this.appendToCompletion = "";
     this.indentation = null;
     this.completionType = s.OPEN_COPILOT;
-    this.insertPosition = e.get(o.LocationFactory).position(t.line, t.character);
+    this.insertPosition = e
+      .get(o.LocationFactory)
+      .position(t.line, t.character);
     this.completionType = n;
   }
   static fromJSONParse(e, t) {
-    const n = e.get(o.LocationFactory).position(t.insertPosition.line, t.insertPosition.character),
+    const n = e
+        .get(o.LocationFactory)
+        .position(t.insertPosition.line, t.insertPosition.character),
       r = new CompletionContext(e, n, t.completionType);
     r.prependToCompletion = t.prependToCompletion;
     r.appendToCompletion = t.appendToCompletion;
@@ -45,7 +55,9 @@ exports.CompletionContext = CompletionContext;
 exports.completionContextForDocument = function (e, t, n) {
   let r = n;
   const o = t.lineAt(n.line);
-  o.isEmptyOrWhitespace || (r = o.range.end);
+  if (o.isEmptyOrWhitespace) {
+    r = o.range.end;
+  }
   return new CompletionContext(e, r, s.OPEN_COPILOT);
 };
 let c = 0;
@@ -57,5 +69,8 @@ exports.encodeLocation = function (e, t) {
 };
 exports.decodeLocation = function (e, t) {
   const [n, o, i] = JSON.parse(t.query);
-  return [r.URI.parse(i.length > 0 ? n + "#" + i : n), CompletionContext.fromJSONParse(e, o)];
+  return [
+    r.URI.parse(i.length > 0 ? n + "#" + i : n),
+    CompletionContext.fromJSONParse(e, o),
+  ];
 };

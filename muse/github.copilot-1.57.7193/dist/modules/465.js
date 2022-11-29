@@ -1,16 +1,18 @@
 module.exports = function (e, t) {
   var n = [];
-  n.push(function (e) {
-    try {
-      return Error.prototype.toString.call(e);
-    } catch (e) {
+  n.push(
+    (function (e) {
       try {
-        return "<error: " + e + ">";
+        return Error.prototype.toString.call(e);
       } catch (e) {
-        return "<error>";
+        try {
+          return "<error: " + e + ">";
+        } catch (e) {
+          return "<error>";
+        }
       }
-    }
-  }(e));
+    })(e)
+  );
   for (var r = 0; r < t.length; r++) {
     var o,
       i = t[r];

@@ -6,8 +6,11 @@ function n(e, t, n) {
 function r(e, t, o, i) {
   if (o < i) {
     var s = o - 1;
-    n(e, (u = o, d = i, Math.round(u + Math.random() * (d - u))), i);
-    for (var a = e[i], c = o; c < i; c++) t(e[c], a) <= 0 && n(e, s += 1, c);
+    n(e, ((u = o), (d = i), Math.round(u + Math.random() * (d - u))), i);
+    for (var a = e[i], c = o; c < i; c++)
+      if (t(e[c], a) <= 0) {
+        n(e, (s += 1), c);
+      }
     n(e, s + 1, c);
     var l = s + 1;
     r(e, t, o, l - 1);

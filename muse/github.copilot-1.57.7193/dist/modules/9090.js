@@ -14,11 +14,14 @@ function u(e, t) {
   if (0 === r) return o;
   for (var s = 0; s < r; s++) {
     var a = !0;
-    for (i = 0; i < n; i++) if (e[i].uid === t[s].uid) {
-      a = !1;
-      break;
+    for (i = 0; i < n; i++)
+      if (e[i].uid === t[s].uid) {
+        a = !1;
+        break;
+      }
+    if (a) {
+      o.push(t[s]);
     }
-    a && o.push(t[s]);
   }
   return o;
 }
@@ -38,7 +41,9 @@ if (process._fatalException) {
       }
     }
     p = !1;
-    l.length > 0 && (s = l.pop());
+    if (l.length > 0) {
+      s = l.pop();
+    }
     d = undefined;
     return n && !c;
   };
@@ -59,10 +64,16 @@ if (process._fatalException) {
       l.push(s);
       s = u(t, s);
       c = !0;
-      for (var o = 0; o < n; ++o) (2 & t[o].flags) > 0 && t[o].before(this, r[t[o].uid]);
+      for (var o = 0; o < n; ++o)
+        if ((2 & t[o].flags) > 0) {
+          t[o].before(this, r[t[o].uid]);
+        }
       c = !1;
       var i = e.apply(this, arguments);
-      for (c = !0, o = 0; o < n; ++o) (4 & t[o].flags) > 0 && t[o].after(this, r[t[o].uid]);
+      for (c = !0, o = 0; o < n; ++o)
+        if ((4 & t[o].flags) > 0) {
+          t[o].after(this, r[t[o].uid]);
+        }
       c = !1;
       s = l.pop();
       d = undefined;
@@ -80,7 +91,9 @@ if (process._fatalException) {
     if (h) throw e;
     for (var t = !1, n = s.length, r = 0; r < n; ++r) {
       var o = s[r];
-      0 != (8 & o.flags) && (t = o.error(null, e) || t);
+      if (0 != (8 & o.flags)) {
+        t = o.error(null, e) || t;
+      }
     }
     if (!t && c) throw e;
   };
@@ -103,22 +116,35 @@ if (process._fatalException) {
       l.push(s);
       s = u(t, s);
       c = !0;
-      for (var p = 0; p < n; ++p) (2 & t[p].flags) > 0 && t[p].before(this, o[t[p].uid]);
+      for (var p = 0; p < n; ++p)
+        if ((2 & t[p].flags) > 0) {
+          t[p].before(this, o[t[p].uid]);
+        }
       c = !1;
       try {
         i = e.apply(this, arguments);
       } catch (e) {
-        for (a = !0, p = 0; p < n; ++p) if (0 != (8 & s[p].flags)) try {
-          d = s[p].error(o[t[p].uid], e) || d;
-        } catch (e) {
-          throw h = !0, e;
-        }
-        if (!d) throw process.removeListener("uncaughtException", r), process._originalNextTick(function () {
-          process.addListener("uncaughtException", r);
-        }), e;
+        for (a = !0, p = 0; p < n; ++p)
+          if (0 != (8 & s[p].flags))
+            try {
+              d = s[p].error(o[t[p].uid], e) || d;
+            } catch (e) {
+              throw ((h = !0), e);
+            }
+        if (!d)
+          throw (
+            (process.removeListener("uncaughtException", r),
+            process._originalNextTick(function () {
+              process.addListener("uncaughtException", r);
+            }),
+            e)
+          );
       } finally {
         if (!a || d) {
-          for (c = !0, p = 0; p < n; ++p) (4 & t[p].flags) > 0 && t[p].after(this, o[t[p].uid]);
+          for (c = !0, p = 0; p < n; ++p)
+            if ((4 & t[p].flags) > 0) {
+              t[p].after(this, o[t[p].uid]);
+            }
           c = !1;
         }
         s = l.pop();
@@ -129,15 +155,28 @@ if (process._fatalException) {
   process.addListener("uncaughtException", r);
 }
 function f(e, t) {
-  "function" == typeof e.create && (this.create = e.create, this.flags |= 1);
-  "function" == typeof e.before && (this.before = e.before, this.flags |= 2);
-  "function" == typeof e.after && (this.after = e.after, this.flags |= 4);
-  "function" == typeof e.error && (this.error = e.error, this.flags |= 8);
+  if ("function" == typeof e.create) {
+    this.create = e.create;
+    this.flags |= 1;
+  }
+  if ("function" == typeof e.before) {
+    this.before = e.before;
+    this.flags |= 2;
+  }
+  if ("function" == typeof e.after) {
+    this.after = e.after;
+    this.flags |= 4;
+  }
+  if ("function" == typeof e.error) {
+    this.error = e.error;
+    this.flags |= 8;
+  }
   this.uid = ++a;
   this.data = undefined === t ? null : t;
 }
 function m(e, t) {
-  if ("object" != typeof e || !e) throw new TypeError("callbacks argument must be an object");
+  if ("object" != typeof e || !e)
+    throw new TypeError("callbacks argument must be an object");
   return e instanceof f ? e : new f(e, t);
 }
 f.prototype.create = undefined;
@@ -151,28 +190,35 @@ process.createAsyncListener = m;
 process.addAsyncListener = function (e, t) {
   var n;
   n = e instanceof f ? e : m(e, t);
-  for (var r = !1, o = 0; o < s.length; o++) if (n === s[o]) {
-    r = !0;
-    break;
+  for (var r = !1, o = 0; o < s.length; o++)
+    if (n === s[o]) {
+      r = !0;
+      break;
+    }
+  if (r) {
+    s.push(n);
   }
-  r || s.push(n);
   return n;
 };
 process.removeAsyncListener = function (e) {
-  for (var t = 0; t < s.length; t++) if (e === s[t]) {
-    s.splice(t, 1);
-    break;
-  }
+  for (var t = 0; t < s.length; t++)
+    if (e === s[t]) {
+      s.splice(t, 1);
+      break;
+    }
 };
 module.exports = function (e) {
   var t = s.length;
   if (0 === t) return e;
-  for (var n = s.slice(), r = 0; r < t; ++r) if (n[r].flags > 0) return o(e, n, t);
-  return function (e, t, n) {
+  for (var n = s.slice(), r = 0; r < t; ++r)
+    if (n[r].flags > 0) return o(e, n, t);
+  return (function (e, t, n) {
     c = !0;
     for (var r = 0; r < n; ++r) {
       var o = t[r];
-      o.create && o.create(o.data);
+      if (o.create) {
+        o.create(o.data);
+      }
     }
     c = !1;
     return function () {
@@ -182,5 +228,5 @@ module.exports = function (e) {
       s = l.pop();
       return n;
     };
-  }(e, n, t);
+  })(e, n, t);
 };

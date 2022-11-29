@@ -15,12 +15,15 @@ module.exports = {
   FetchError: class extends t {
     constructor(e, t, n) {
       super(e, t);
-      n && (this.code = this.errno = n.code, this.erroredSysCall = n.syscall);
+      if (n) {
+        this.code = this.errno = n.code;
+        this.erroredSysCall = n.syscall;
+      }
     }
   },
   AbortError: class extends t {
     constructor(e, t = "aborted") {
       super(e, t);
     }
-  }
+  },
 };

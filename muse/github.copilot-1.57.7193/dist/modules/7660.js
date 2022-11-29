@@ -7,10 +7,13 @@ o = (r = i.lib.BlockCipherMode.extend()).Encryptor = r.extend({
       r = n.blockSize,
       o = this._iv,
       i = this._keystream;
-    o && (i = this._keystream = o.slice(0), this._iv = undefined);
+    if (o) {
+      i = this._keystream = o.slice(0);
+      this._iv = undefined;
+    }
     n.encryptBlock(i, 0);
     for (var s = 0; s < r; s++) e[t + s] ^= i[s];
-  }
+  },
 });
 r.Decryptor = o;
 i.mode.OFB = r;

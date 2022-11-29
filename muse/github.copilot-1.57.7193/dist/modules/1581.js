@@ -1,7 +1,14 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.CodeGen = exports.Name = exports.nil = exports.stringify = exports.str = exports._ = exports.KeywordCxt = undefined;
+exports.CodeGen =
+  exports.Name =
+  exports.nil =
+  exports.stringify =
+  exports.str =
+  exports._ =
+  exports.KeywordCxt =
+    undefined;
 const r = require(7159),
   o = require(3924),
   i = require(1240),
@@ -11,8 +18,10 @@ const r = require(7159),
 class l extends r.default {
   _addVocabularies() {
     super._addVocabularies();
-    o.default.forEach(e => this.addVocabulary(e));
-    this.opts.discriminator && this.addKeyword(i.default);
+    o.default.forEach((e) => this.addVocabulary(e));
+    if (this.opts.discriminator) {
+      this.addKeyword(i.default);
+    }
   }
   _addDefaultMetaSchema() {
     super._addDefaultMetaSchema();
@@ -22,12 +31,13 @@ class l extends r.default {
     this.refs["http://json-schema.org/schema"] = c;
   }
   defaultMeta() {
-    return this.opts.defaultMeta = super.defaultMeta() || (this.getSchema(c) ? c : undefined);
+    return (this.opts.defaultMeta =
+      super.defaultMeta() || (this.getSchema(c) ? c : undefined));
   }
 }
 module.exports = exports = l;
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 exports.default = l;
 var u = require(4815);

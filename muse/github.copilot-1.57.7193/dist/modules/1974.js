@@ -1,7 +1,9 @@
-var t = function () {
+var t = (function () {
   function e(e) {
     this.fieldmap = [];
-    e && (this.fieldmap = this.parseHeader(e));
+    if (e) {
+      this.fieldmap = this.parseHeader(e);
+    }
   }
   e.prototype.toString = function () {
     var e = this.fieldmap;
@@ -38,5 +40,5 @@ var t = function () {
   };
   e.strict = !0;
   return e;
-}();
+})();
 module.exports = t;

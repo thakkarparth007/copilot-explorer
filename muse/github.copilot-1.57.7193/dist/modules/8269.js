@@ -7,9 +7,19 @@ o.enc.Base64 = {
       n = e.sigBytes,
       r = this._map;
     e.clamp();
-    for (var o = [], i = 0; i < n; i += 3) for (var s = (t[i >>> 2] >>> 24 - i % 4 * 8 & 255) << 16 | (t[i + 1 >>> 2] >>> 24 - (i + 1) % 4 * 8 & 255) << 8 | t[i + 2 >>> 2] >>> 24 - (i + 2) % 4 * 8 & 255, a = 0; a < 4 && i + .75 * a < n; a++) o.push(r.charAt(s >>> 6 * (3 - a) & 63));
+    for (var o = [], i = 0; i < n; i += 3)
+      for (
+        var s =
+            (((t[i >>> 2] >>> (24 - (i % 4) * 8)) & 255) << 16) |
+            (((t[(i + 1) >>> 2] >>> (24 - ((i + 1) % 4) * 8)) & 255) << 8) |
+            ((t[(i + 2) >>> 2] >>> (24 - ((i + 2) % 4) * 8)) & 255),
+          a = 0;
+        a < 4 && i + 0.75 * a < n;
+        a++
+      )
+        o.push(r.charAt((s >>> (6 * (3 - a))) & 63));
     var c = r.charAt(64);
-    if (c) for (; o.length % 4;) o.push(c);
+    if (c) for (; o.length % 4; ) o.push(c);
     return o.join("");
   },
   parse: function (e) {
@@ -23,17 +33,22 @@ o.enc.Base64 = {
     var s = n.charAt(64);
     if (s) {
       var a = e.indexOf(s);
-      -1 !== a && (t = a);
-    }
-    return function (e, t, n) {
-      for (var r = [], o = 0, s = 0; s < t; s++) if (s % 4) {
-        var a = n[e.charCodeAt(s - 1)] << s % 4 * 2 | n[e.charCodeAt(s)] >>> 6 - s % 4 * 2;
-        r[o >>> 2] |= a << 24 - o % 4 * 8;
-        o++;
+      if (-1 !== a) {
+        t = a;
       }
+    }
+    return (function (e, t, n) {
+      for (var r = [], o = 0, s = 0; s < t; s++)
+        if (s % 4) {
+          var a =
+            (n[e.charCodeAt(s - 1)] << ((s % 4) * 2)) |
+            (n[e.charCodeAt(s)] >>> (6 - (s % 4) * 2));
+          r[o >>> 2] |= a << (24 - (o % 4) * 8);
+          o++;
+        }
       return i.create(r, o);
-    }(e, t, r);
+    })(e, t, r);
   },
-  _map: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+  _map: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
 };
 module.exports = r.enc.Base64;

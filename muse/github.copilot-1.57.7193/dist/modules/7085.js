@@ -10,7 +10,9 @@ function a(e, t, n, r, o) {
   this.source = null == n ? null : n;
   this.name = null == o ? null : o;
   this[s] = !0;
-  null != r && this.add(r);
+  if (null != r) {
+    this.add(r);
+  }
 }
 a.fromStringWithSourceMap = function (e, t, n) {
   var r = new a(),
@@ -38,7 +40,7 @@ a.fromStringWithSourceMap = function (e, t, n) {
       u++;
       d = 0;
     }
-    for (; u < e.generatedLine;) {
+    for (; u < e.generatedLine; ) {
       r.add(l());
       u++;
     }
@@ -50,42 +52,74 @@ a.fromStringWithSourceMap = function (e, t, n) {
     }
     p = e;
   }, this);
-  c < s.length && (p && h(p, l()), r.add(s.splice(c).join("")));
+  if (c < s.length) {
+    if (p) {
+      h(p, l());
+    }
+    r.add(s.splice(c).join(""));
+  }
   t.sources.forEach(function (e) {
     var i = t.sourceContentFor(e);
-    null != i && (null != n && (e = o.join(n, e)), r.setSourceContent(e, i));
+    if (null != i) {
+      if (null != n) {
+        e = o.join(n, e);
+      }
+      r.setSourceContent(e, i);
+    }
   });
   return r;
   function h(e, t) {
-    if (null === e || undefined === e.source) r.add(t);else {
+    if (null === e || undefined === e.source) r.add(t);
+    else {
       var i = n ? o.join(n, e.source) : e.source;
       r.add(new a(e.originalLine, e.originalColumn, i, t, e.name));
     }
   }
 };
 a.prototype.add = function (e) {
-  if (Array.isArray(e)) e.forEach(function (e) {
-    this.add(e);
-  }, this);else {
-    if (!e[s] && "string" != typeof e) throw new TypeError("Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + e);
-    e && this.children.push(e);
+  if (Array.isArray(e))
+    e.forEach(function (e) {
+      this.add(e);
+    }, this);
+  else {
+    if (!e[s] && "string" != typeof e)
+      throw new TypeError(
+        "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " +
+          e
+      );
+    if (e) {
+      this.children.push(e);
+    }
   }
   return this;
 };
 a.prototype.prepend = function (e) {
-  if (Array.isArray(e)) for (var t = e.length - 1; t >= 0; t--) this.prepend(e[t]);else {
-    if (!e[s] && "string" != typeof e) throw new TypeError("Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + e);
+  if (Array.isArray(e))
+    for (var t = e.length - 1; t >= 0; t--) this.prepend(e[t]);
+  else {
+    if (!e[s] && "string" != typeof e)
+      throw new TypeError(
+        "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " +
+          e
+      );
     this.children.unshift(e);
   }
   return this;
 };
 a.prototype.walk = function (e) {
-  for (var t, n = 0, r = this.children.length; n < r; n++) (t = this.children[n])[s] ? t.walk(e) : "" !== t && e(t, {
-    source: this.source,
-    line: this.line,
-    column: this.column,
-    name: this.name
-  });
+  for (var t, n = 0, r = this.children.length; n < r; n++)
+    if ((t = this.children[n])[s]) {
+      t.walk(e);
+    } else {
+      if ("" !== t) {
+        e(t, {
+          source: this.source,
+          line: this.line,
+          column: this.column,
+          name: this.name,
+        });
+      }
+    }
 };
 a.prototype.join = function (e) {
   var t,
@@ -103,16 +137,28 @@ a.prototype.join = function (e) {
 };
 a.prototype.replaceRight = function (e, t) {
   var n = this.children[this.children.length - 1];
-  n[s] ? n.replaceRight(e, t) : "string" == typeof n ? this.children[this.children.length - 1] = n.replace(e, t) : this.children.push("".replace(e, t));
+  if (n[s]) {
+    n.replaceRight(e, t);
+  } else {
+    if ("string" == typeof n) {
+      this.children[this.children.length - 1] = n.replace(e, t);
+    } else {
+      this.children.push("".replace(e, t));
+    }
+  }
   return this;
 };
 a.prototype.setSourceContent = function (e, t) {
   this.sourceContents[o.toSetString(e)] = t;
 };
 a.prototype.walkSourceContents = function (e) {
-  for (var t = 0, n = this.children.length; t < n; t++) this.children[t][s] && this.children[t].walkSourceContents(e);
+  for (var t = 0, n = this.children.length; t < n; t++)
+    if (this.children[t][s]) {
+      this.children[t].walkSourceContents(e);
+    }
   var r = Object.keys(this.sourceContents);
-  for (t = 0, n = r.length; t < n; t++) e(o.fromSetString(r[t]), this.sourceContents[r[t]]);
+  for (t = 0, n = r.length; t < n; t++)
+    e(o.fromSetString(r[t]), this.sourceContents[r[t]]);
 };
 a.prototype.toString = function () {
   var e = "";
@@ -125,7 +171,7 @@ a.prototype.toStringWithSourceMap = function (e) {
   var t = {
       code: "",
       line: 1,
-      column: 0
+      column: 0,
     },
     n = new r(e),
     o = !1,
@@ -135,41 +181,70 @@ a.prototype.toStringWithSourceMap = function (e) {
     c = null;
   this.walk(function (e, r) {
     t.code += e;
-    null !== r.source && null !== r.line && null !== r.column ? (i === r.source && s === r.line && a === r.column && c === r.name || n.addMapping({
-      source: r.source,
-      original: {
-        line: r.line,
-        column: r.column
-      },
-      generated: {
-        line: t.line,
-        column: t.column
-      },
-      name: r.name
-    }), i = r.source, s = r.line, a = r.column, c = r.name, o = !0) : o && (n.addMapping({
-      generated: {
-        line: t.line,
-        column: t.column
+    if (null !== r.source && null !== r.line && null !== r.column) {
+      if (i === r.source && s === r.line && a === r.column && c === r.name) {
+        n.addMapping({
+          source: r.source,
+          original: {
+            line: r.line,
+            column: r.column,
+          },
+          generated: {
+            line: t.line,
+            column: t.column,
+          },
+          name: r.name,
+        });
       }
-    }), i = null, o = !1);
-    for (var l = 0, u = e.length; l < u; l++) 10 === e.charCodeAt(l) ? (t.line++, t.column = 0, l + 1 === u ? (i = null, o = !1) : o && n.addMapping({
-      source: r.source,
-      original: {
-        line: r.line,
-        column: r.column
-      },
-      generated: {
-        line: t.line,
-        column: t.column
-      },
-      name: r.name
-    })) : t.column++;
+      i = r.source;
+      s = r.line;
+      a = r.column;
+      c = r.name;
+      o = !0;
+    } else {
+      if (o) {
+        n.addMapping({
+          generated: {
+            line: t.line,
+            column: t.column,
+          },
+        });
+        i = null;
+        o = !1;
+      }
+    }
+    for (var l = 0, u = e.length; l < u; l++)
+      if (10 === e.charCodeAt(l)) {
+        t.line++;
+        t.column = 0;
+        if (l + 1 === u) {
+          i = null;
+          o = !1;
+        } else {
+          if (o) {
+            n.addMapping({
+              source: r.source,
+              original: {
+                line: r.line,
+                column: r.column,
+              },
+              generated: {
+                line: t.line,
+                column: t.column,
+              },
+              name: r.name,
+            });
+          }
+        }
+      } else {
+        t.column++;
+      }
   });
   this.walkSourceContents(function (e, t) {
     n.setSourceContent(e, t);
   });
   return {
     code: t.code,
-    map: n
+    map: n,
   };
 };

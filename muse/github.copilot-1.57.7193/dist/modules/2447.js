@@ -14,7 +14,9 @@ module.exports = function (e) {
       r.curr = o;
       n = o;
       e[0] = t.coerce(e[0]);
-      "string" != typeof e[0] && e.unshift("%O");
+      if ("string" != typeof e[0]) {
+        e.unshift("%O");
+      }
       let s = 0;
       e[0] = e[0].replace(/%([a-zA-Z%])/g, (n, o) => {
         if ("%%" === n) return "%";
@@ -39,12 +41,17 @@ module.exports = function (e) {
     Object.defineProperty(a, "enabled", {
       enumerable: !0,
       configurable: !1,
-      get: () => null !== s ? s : (o !== t.namespaces && (o = t.namespaces, i = t.enabled(e)), i),
-      set: e => {
+      get: () =>
+        null !== s
+          ? s
+          : (o !== t.namespaces && ((o = t.namespaces), (i = t.enabled(e))), i),
+      set: (e) => {
         s = e;
-      }
+      },
     });
-    "function" == typeof t.init && t.init(a);
+    if ("function" == typeof t.init) {
+      t.init(a);
+    }
     return a;
   }
   function r(e, n) {
@@ -53,7 +60,10 @@ module.exports = function (e) {
     return r;
   }
   function o(e) {
-    return e.toString().substring(2, e.toString().length - 2).replace(/\.\*\?$/, "*");
+    return e
+      .toString()
+      .substring(2, e.toString().length - 2)
+      .replace(/\.\*\?$/, "*");
   }
   t.debug = t;
   t.default = t;
@@ -61,7 +71,9 @@ module.exports = function (e) {
     return e instanceof Error ? e.stack || e.message : e;
   };
   t.disable = function () {
-    const e = [...t.names.map(o), ...t.skips.map(o).map(e => "-" + e)].join(",");
+    const e = [...t.names.map(o), ...t.skips.map(o).map((e) => "-" + e)].join(
+      ","
+    );
     t.enable("");
     return e;
   };
@@ -73,20 +85,31 @@ module.exports = function (e) {
     t.skips = [];
     const r = ("string" == typeof e ? e : "").split(/[\s,]+/),
       o = r.length;
-    for (n = 0; n < o; n++) r[n] && ("-" === (e = r[n].replace(/\*/g, ".*?"))[0] ? t.skips.push(new RegExp("^" + e.slice(1) + "$")) : t.names.push(new RegExp("^" + e + "$")));
+    for (n = 0; n < o; n++)
+      if (r[n]) {
+        if ("-" === (e = r[n].replace(/\*/g, ".*?"))[0]) {
+          t.skips.push(new RegExp("^" + e.slice(1) + "$"));
+        } else {
+          t.names.push(new RegExp("^" + e + "$"));
+        }
+      }
   };
   t.enabled = function (e) {
     if ("*" === e[e.length - 1]) return !0;
     let n, r;
-    for (n = 0, r = t.skips.length; n < r; n++) if (t.skips[n].test(e)) return !1;
-    for (n = 0, r = t.names.length; n < r; n++) if (t.names[n].test(e)) return !0;
+    for (n = 0, r = t.skips.length; n < r; n++)
+      if (t.skips[n].test(e)) return !1;
+    for (n = 0, r = t.names.length; n < r; n++)
+      if (t.names[n].test(e)) return !0;
     return !1;
   };
   t.humanize = require(7824);
   t.destroy = function () {
-    console.warn("Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.");
+    console.warn(
+      "Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`."
+    );
   };
-  Object.keys(e).forEach(n => {
+  Object.keys(e).forEach((n) => {
     t[n] = e[n];
   });
   t.names = [];

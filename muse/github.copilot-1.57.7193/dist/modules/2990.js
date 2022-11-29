@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 exports.CopilotPanel = undefined;
 const r = require(9496),
@@ -14,11 +14,13 @@ exports.CopilotPanel = class {
     this._onDidChange = new r.EventEmitter();
     this._documents = new Map();
     this._editorDecoration = r.window.createTextEditorDecorationType({
-      textDecoration: "underline"
+      textDecoration: "underline",
     });
     this._ctx = e;
-    this._subscriptions = r.workspace.onDidCloseTextDocument(e => {
-      e.isClosed && e.uri.scheme == i.CopilotScheme && this._documents.delete(e.uri.toString());
+    this._subscriptions = r.workspace.onDidCloseTextDocument((e) => {
+      if (e.isClosed && e.uri.scheme == i.CopilotScheme) {
+        this._documents.delete(e.uri.toString());
+      }
     });
   }
   dispose() {
@@ -32,16 +34,26 @@ exports.CopilotPanel = class {
   }
   async provideTextDocumentContent(e) {
     var t;
-    let n = null === (t = this._documents.get(e.toString())) || undefined === t ? undefined : t.model;
+    let n =
+      null === (t = this._documents.get(e.toString())) || undefined === t
+        ? undefined
+        : t.model;
     if (n) return n.value;
     const i = new r.CancellationTokenSource(),
       [c, l] = s.decodeLocation(this._ctx, e),
       u = await r.workspace.openTextDocument(c);
-    n = new a.CopilotListDocument(this._ctx, e, u, l, o.getConfig(this._ctx, o.ConfigKey.ListCount), i.token);
-    n.onDidResultUpdated(e => this._onDidChange.fire(e));
+    n = new a.CopilotListDocument(
+      this._ctx,
+      e,
+      u,
+      l,
+      o.getConfig(this._ctx, o.ConfigKey.ListCount),
+      i.token
+    );
+    n.onDidResultUpdated((e) => this._onDidChange.fire(e));
     this._documents.set(e.toString(), {
       model: n,
-      cts: i
+      cts: i,
     });
     n.runQuery();
     return n.value;
@@ -54,24 +66,43 @@ exports.CopilotPanel = class {
     return t.solutions().map((a, u) => {
       const d = new r.Position(n + i, 0),
         p = new r.Position(n + a.displayLines.length - 1, 0),
-        h = t.savedTelemetryData.extendedBy({
-          choiceIndex: a.choiceIndex.toString()
-        }, {
-          compCharLen: a.completionText.length,
-          meanProb: a.meanProb,
-          rank: u
-        });
+        h = t.savedTelemetryData.extendedBy(
+          {
+            choiceIndex: a.choiceIndex.toString(),
+          },
+          {
+            compCharLen: a.completionText.length,
+            meanProb: a.meanProb,
+            rank: u,
+          }
+        );
       h.extendWithRequestId(a.requestId);
       h.markAsDisplayed();
       const f = new r.CodeLens(new r.Range(d, p), {
         title: "Accept Solution",
         tooltip: "Replace code with this solution",
         command: l.CMDAcceptPanelSolution,
-        arguments: [t.targetUri, o, a.completionText, t.completionContext.completionType === s.CompletionType.UNKNOWN_FUNCTION_QUICK_FIX, async () => {
-          const n = (await r.workspace.openTextDocument(t.targetUri)).offsetAt(o);
-          e.cts.cancel();
-          await c.postInsertionTasks(this._ctx, "solution", a.completionText, n, t.targetUri, h);
-        }]
+        arguments: [
+          t.targetUri,
+          o,
+          a.completionText,
+          t.completionContext.completionType ===
+            s.CompletionType.UNKNOWN_FUNCTION_QUICK_FIX,
+          async () => {
+            const n = (
+              await r.workspace.openTextDocument(t.targetUri)
+            ).offsetAt(o);
+            e.cts.cancel();
+            await c.postInsertionTasks(
+              this._ctx,
+              "solution",
+              a.completionText,
+              n,
+              t.targetUri,
+              h
+            );
+          },
+        ],
       });
       n += a.displayLines.length;
       return f;

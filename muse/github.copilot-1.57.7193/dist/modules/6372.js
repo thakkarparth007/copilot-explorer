@@ -8,11 +8,17 @@ function r(e, t, n) {
     configurable: !0,
     enumerable: r,
     writable: !0,
-    value: n
+    value: n,
   });
 }
 function o(e) {
-  e && e.logger && (t(e.logger) ? n = e.logger : n("new logger isn't a function, not replacing"));
+  if (e && e.logger) {
+    if (t(e.logger)) {
+      n = e.logger;
+    } else {
+      n("new logger isn't a function, not replacing");
+    }
+  }
 }
 function i(e, o, i) {
   if (e && e[o]) {
@@ -25,7 +31,9 @@ function i(e, o, i) {
         a = i(s, o);
       r(a, "__original", s);
       r(a, "__unwrap", function () {
-        e[o] === a && r(e, o, s);
+        if (e[o] === a) {
+          r(e, o, s);
+        }
       });
       r(a, "__wrapped", !0);
       r(e, o, a);
@@ -35,7 +43,13 @@ function i(e, o, i) {
   } else n("no original function " + o + " to wrap");
 }
 function s(e, t) {
-  return e && e[t] ? e[t].__unwrap ? e[t].__unwrap() : void n("no original to unwrap to -- has " + t + " already been unwrapped?") : (n("no function to unwrap."), void n(new Error().stack));
+  return e && e[t]
+    ? e[t].__unwrap
+      ? e[t].__unwrap()
+      : void n(
+          "no original to unwrap to -- has " + t + " already been unwrapped?"
+        )
+    : (n("no function to unwrap."), void n(new Error().stack));
 }
 o.wrap = i;
 o.massWrap = function (e, t, r) {
@@ -43,12 +57,18 @@ o.massWrap = function (e, t, r) {
     n("must provide one or more modules to patch");
     return void n(new Error().stack);
   }
-  Array.isArray(e) || (e = [e]);
-  t && Array.isArray(t) ? e.forEach(function (e) {
-    t.forEach(function (t) {
-      i(e, t, r);
+  if (Array.isArray(e)) {
+    e = [e];
+  }
+  if (t && Array.isArray(t)) {
+    e.forEach(function (e) {
+      t.forEach(function (t) {
+        i(e, t, r);
+      });
     });
-  }) : n("must provide one or more functions to wrap on modules");
+  } else {
+    n("must provide one or more functions to wrap on modules");
+  }
 };
 o.unwrap = s;
 o.massUnwrap = function (e, t) {
@@ -56,11 +76,17 @@ o.massUnwrap = function (e, t) {
     n("must provide one or more modules to patch");
     return void n(new Error().stack);
   }
-  Array.isArray(e) || (e = [e]);
-  t && Array.isArray(t) ? e.forEach(function (e) {
-    t.forEach(function (t) {
-      s(e, t);
+  if (Array.isArray(e)) {
+    e = [e];
+  }
+  if (t && Array.isArray(t)) {
+    e.forEach(function (e) {
+      t.forEach(function (t) {
+        s(e, t);
+      });
     });
-  }) : n("must provide one or more functions to unwrap on modules");
+  } else {
+    n("must provide one or more functions to unwrap on modules");
+  }
 };
 module.exports = o;

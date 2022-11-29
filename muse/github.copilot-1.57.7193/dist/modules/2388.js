@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 exports.launchSolutions = exports.normalizeCompletionText = undefined;
 const r = require(2277),
@@ -19,7 +19,7 @@ const r = require(2277),
   _ = require(6403),
   y = new a.Logger(a.LogLevel.INFO, "solutions");
 function v(e, t, n, r) {
-  return async o => {
+  return async (o) => {
     if (r instanceof Array) {
       const [i, s] = r;
       return d.isBlockBodyFinishedWithPrefix(e, t, n, o, s);
@@ -32,17 +32,20 @@ async function b(e, t, n) {
     e.removeProgress();
     return {
       status: "FinishedWithError",
-      error: "Cancelled"
+      error: "Cancelled",
     };
   }
   const r = await n.next();
-  return !0 === r.done ? (e.removeProgress(), {
-    status: "FinishedNormally"
-  }) : {
-    status: "Solution",
-    solution: r.value,
-    next: b(e, t, n)
-  };
+  return !0 === r.done
+    ? (e.removeProgress(),
+      {
+        status: "FinishedNormally",
+      })
+    : {
+        status: "Solution",
+        solution: r.value,
+        next: b(e, t, n),
+      };
 }
 exports.normalizeCompletionText = function (e) {
   return e.replace(/\s+/g, "");
@@ -59,23 +62,31 @@ exports.launchSolutions = async function (e, t) {
     t.reportCancelled();
     return {
       status: "FinishedWithError",
-      error: "Context too short"
+      error: "Context too short",
     };
   }
   const I = k.prompt,
     P = k.trailingWs;
-  P.length > 0 && (t.startPosition = S.position(t.startPosition.line, t.startPosition.character - P.length));
+  if (P.length > 0) {
+    t.startPosition = S.position(
+      t.startPosition.line,
+      t.startPosition.character - P.length
+    );
+  }
   const A = t.getCancellationToken(),
     O = r.v4();
-  t.savedTelemetryData = g.TelemetryData.createAndMarkAsIssued({
-    headerRequestId: O,
-    languageId: T.languageId,
-    source: s.completionTypeToString(t.completionContext.completionType)
-  }, {
-    ...g.telemetrizePromptLength(I),
-    solutionCount: t.solutionCountTarget,
-    promptEndPos: T.offsetAt(x)
-  });
+  t.savedTelemetryData = g.TelemetryData.createAndMarkAsIssued(
+    {
+      headerRequestId: O,
+      languageId: T.languageId,
+      source: s.completionTypeToString(t.completionContext.completionType),
+    },
+    {
+      ...g.telemetrizePromptLength(I),
+      solutionCount: t.solutionCountTarget,
+      promptEndPos: T.offsetAt(x),
+    }
+  );
   if (t.completionContext.completionType === s.CompletionType.TODO_QUICK_FIX) {
     const e = I.prefix.split("\n"),
       t = e.pop(),
@@ -89,7 +100,12 @@ exports.launchSolutions = async function (e, t) {
       }
     }
   }
-  t.completionContext.completionType === s.CompletionType.UNKNOWN_FUNCTION_QUICK_FIX && (I.prefix += t.completionContext.prependToCompletion);
+  if (
+    t.completionContext.completionType ===
+    s.CompletionType.UNKNOWN_FUNCTION_QUICK_FIX
+  ) {
+    I.prefix += t.completionContext.prependToCompletion;
+  }
   y.info(e, `prompt: ${JSON.stringify(I)}`);
   y.debug(e, `prependToCompletion: ${E}`);
   g.telemetry(e, "solution.requested", t.savedTelemetryData);
@@ -100,76 +116,119 @@ exports.launchSolutions = async function (e, t) {
       stream: !0,
       extra: {
         language: T.languageId,
-        next_indent: null !== (n = M.next) && undefined !== n ? n : 0
-      }
+        next_indent: null !== (n = M.next) && undefined !== n ? n : 0,
+      },
     };
-  "parsing" !== N || R || (L.stop = ["\n\n", "\r\n\r\n"]);
+  if ("parsing" !== N || R) {
+    L.stop = ["\n\n", "\r\n\r\n"];
+  }
   const $ = f.extractRepoInfoInBackground(e, T.fileName),
     D = {
       prompt: I,
       languageId: T.languageId,
       repoInfo: $,
       ourRequestId: O,
-      engineUrl: await c.getEngineURL(e, f.tryGetGitHubNWO($), T.languageId, f.getDogFood($), await f.getUserKind(e), t.savedTelemetryData),
+      engineUrl: await c.getEngineURL(
+        e,
+        f.tryGetGitHubNWO($),
+        T.languageId,
+        f.getDogFood($),
+        await f.getUserKind(e),
+        t.savedTelemetryData
+      ),
       count: t.solutionCountTarget,
       uiKind: l.CopilotUiKind.Panel,
       postOptions: L,
-      requestLogProbs: !0
+      requestLogProbs: !0,
     };
   let F;
-  const j = t.completionContext.completionType === s.CompletionType.UNKNOWN_FUNCTION_QUICK_FIX ? [s.CompletionType.UNKNOWN_FUNCTION_QUICK_FIX, t.completionContext.prependToCompletion] : t.completionContext.completionType;
+  const j =
+    t.completionContext.completionType ===
+    s.CompletionType.UNKNOWN_FUNCTION_QUICK_FIX
+      ? [
+          s.CompletionType.UNKNOWN_FUNCTION_QUICK_FIX,
+          t.completionContext.prependToCompletion,
+        ]
+      : t.completionContext.completionType;
   switch (N) {
     case i.BlockMode.Server:
-      F = async e => {};
+      F = async (e) => {};
       L.extra.force_indent = null !== (a = M.prev) && undefined !== a ? a : -1;
       L.extra.trim_by_indentation = !0;
       break;
     case i.BlockMode.ParsingAndServer:
-      F = R ? v(e, T, t.startPosition, j) : async e => {};
+      F = R ? v(e, T, t.startPosition, j) : async (e) => {};
       L.extra.force_indent = null !== (w = M.prev) && undefined !== w ? w : -1;
       L.extra.trim_by_indentation = !0;
       break;
     case i.BlockMode.Parsing:
     default:
-      F = R ? v(e, T, t.startPosition, j) : async e => {};
+      F = R ? v(e, T, t.startPosition, j) : async (e) => {};
   }
   e.get(u.StatusReporter).setProgress();
-  const q = await e.get(l.OpenAIFetcher).fetchAndStreamCompletions(e, D, g.TelemetryData.createAndMarkAsIssued(), F, A);
+  const q = await e
+    .get(l.OpenAIFetcher)
+    .fetchAndStreamCompletions(
+      e,
+      D,
+      g.TelemetryData.createAndMarkAsIssued(),
+      F,
+      A
+    );
   if ("failed" === q.type || "canceled" === q.type) {
     t.reportCancelled();
     e.get(u.StatusReporter).removeProgress();
     return {
       status: "FinishedWithError",
-      error: `${q.type}: ${q.reason}`
+      error: `${q.type}: ${q.reason}`,
     };
   }
   let B = q.choices;
-  B = async function* (e, t) {
+  B = (async function* (e, t) {
     for await (const n of e) {
       const e = {
-        ...n
+        ...n,
       };
       e.completionText = t + e.completionText.trimRight();
       yield e;
     }
-  }(B, E);
-  null !== C && (B = l.cleanupIndentChoices(B, C));
-  B = o.asyncIterableMapFilter(B, async t => m.postProcessChoice(e, "solution", T, x, t, !1, y));
-  const U = o.asyncIterableMapFilter(B, async n => {
+  })(B, E);
+  if (null !== C) {
+    B = l.cleanupIndentChoices(B, C);
+  }
+  B = o.asyncIterableMapFilter(B, async (t) =>
+    m.postProcessChoice(e, "solution", T, x, t, !1, y)
+  );
+  const U = o.asyncIterableMapFilter(B, async (n) => {
     let r = n.completionText;
     y.info(e, `Open Copilot completion: [${n.completionText}]`);
-    if (t.completionContext.completionType === s.CompletionType.OPEN_COPILOT || t.completionContext.completionType === s.CompletionType.TODO_QUICK_FIX) {
+    if (
+      t.completionContext.completionType === s.CompletionType.OPEN_COPILOT ||
+      t.completionContext.completionType === s.CompletionType.TODO_QUICK_FIX
+    ) {
       let t = "";
       const o = await (0, d.getNodeStart)(e, T, x, n.completionText);
-      if (o) [t] = (0, p.trimLastLine)(T.getText(S.range(S.position(o.line, o.character), x)));else {
+      if (o)
+        [t] = (0, p.trimLastLine)(
+          T.getText(S.range(S.position(o.line, o.character), x))
+        );
+      else {
         const e = S.position(x.line, 0);
         t = T.getText(S.range(e, x));
       }
       r = t + r;
     }
     let o = n.completionText;
-    t.completionContext.completionType === s.CompletionType.TODO_QUICK_FIX && (T.lineAt(x.line).isEmptyOrWhitespace || (o += "\n"));
-    P.length > 0 && o.startsWith(P) && (o = o.substring(P.length));
+    if (
+      t.completionContext.completionType === s.CompletionType.TODO_QUICK_FIX
+    ) {
+      if (T.lineAt(x.line).isEmptyOrWhitespace) {
+        o += "\n";
+      }
+    }
+    if (P.length > 0 && o.startsWith(P)) {
+      o = o.substring(P.length);
+    }
     const i = n.meanLogProb;
     return {
       displayText: r,
@@ -178,7 +237,7 @@ exports.launchSolutions = async function (e, t) {
       completionText: o,
       requestId: n.requestId,
       choiceIndex: n.choiceIndex,
-      prependToCompletion: E
+      prependToCompletion: E,
     };
   });
   return b(e.get(u.StatusReporter), A, U[Symbol.asyncIterator]());

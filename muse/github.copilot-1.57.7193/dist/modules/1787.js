@@ -7,5 +7,5 @@ class t extends Error {
   }
 }
 module.exports = {
-  RequestAbortedError: t
+  RequestAbortedError: t,
 };

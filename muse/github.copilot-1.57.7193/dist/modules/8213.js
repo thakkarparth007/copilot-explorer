@@ -16,8 +16,16 @@ I.prototype.add = function (e, t) {
   var n = i ? e : r.toSetString(e),
     s = i ? this.has(e) : o.call(this._set, n),
     a = this._array.length;
-  s && !t || this._array.push(e);
-  s || (i ? this._set.set(e, a) : this._set[n] = a);
+  if (s && !t) {
+    this._array.push(e);
+  }
+  if (s) {
+    if (i) {
+      this._set.set(e, a);
+    } else {
+      this._set[n] = a;
+    }
+  }
 };
 I.prototype.has = function (e) {
   if (i) return this._set.has(e);

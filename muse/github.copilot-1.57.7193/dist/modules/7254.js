@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 exports.CopilotStatusBar = undefined;
 const r = require(9496),
@@ -56,21 +56,34 @@ exports.CopilotStatusBar = class {
       case "Normal":
         this.item.text = "$(copilot-logo)";
         this.item.command = a.CMDToggleCopilot;
-        this.item.tooltip = this.enabled ? "Deactivate Copilot" : "Activate Copilot";
-        this.item.backgroundColor = this.enabled ? undefined : this.disabledColor;
+        this.item.tooltip = this.enabled
+          ? "Deactivate Copilot"
+          : "Activate Copilot";
+        this.item.backgroundColor = this.enabled
+          ? undefined
+          : this.disabledColor;
     }
   }
   getStatusBarItem() {
     return this.item;
   }
   setProgress() {
-    "Error" !== this.status && (this.status = "InProgress", this.delayedUpdateDisplay());
+    if ("Error" !== this.status) {
+      this.status = "InProgress";
+      this.delayedUpdateDisplay();
+    }
   }
   removeProgress() {
-    "Error" !== this.status && "Warning" !== this.status && (this.status = "Normal", this.delayedUpdateDisplay());
+    if ("Error" !== this.status && "Warning" !== this.status) {
+      this.status = "Normal";
+      this.delayedUpdateDisplay();
+    }
   }
   setWarning() {
-    "Error" !== this.status && (this.status = "Warning", this.updateDisplay());
+    if ("Error" !== this.status) {
+      this.status = "Warning";
+      this.updateDisplay();
+    }
   }
   setError(e, t) {
     this.status = "Error";
@@ -88,11 +101,14 @@ exports.CopilotStatusBar = class {
     var e;
     const t = this.ctx.get(i.ConfigProvider),
       n = this.enabled,
-      o = null === (e = r.window.activeTextEditor) || undefined === e ? undefined : e.document.languageId,
+      o =
+        null === (e = r.window.activeTextEditor) || undefined === e
+          ? undefined
+          : e.document.languageId,
       a = "editor.action.inlineSuggest.hide";
     if (this.showingMessage) return;
     const c = s.TelemetryData.createAndMarkAsIssued({
-      languageId: o || "*"
+      languageId: o || "*",
     });
     if (i.getEnabledConfig(this.ctx, "*") == i.getEnabledConfig(this.ctx, o)) {
       this.showingMessage = !0;
@@ -103,21 +119,35 @@ exports.CopilotStatusBar = class {
         i = `${e} Globally`,
         l = `${e} for ${o}`,
         u = o ? [i, l] : [i];
-      r.window.showInformationMessage(`Would you like to ${n ? "disable" : "enable"} Copilot?`, ...u).then(e => {
-        const l = e === i;
-        this.showingMessage = !1;
-        if (void 0 === e) return void (0, s.telemetry)(this.ctx, "statusBar.cancelToggle");
-        s.telemetry(this.ctx, "statusBar" + (l ? ".global" : ".language") + (n ? "Off" : "On"), c);
-        n && r.commands.executeCommand(a);
-        const u = l ? "*" : o;
-        t.updateEnabledConfig(this.ctx, u, !n).then(() => {
-          this.enabled = !n;
-          this.updateDisplay();
+      r.window
+        .showInformationMessage(
+          `Would you like to ${n ? "disable" : "enable"} Copilot?`,
+          ...u
+        )
+        .then((e) => {
+          const l = e === i;
+          this.showingMessage = !1;
+          if (void 0 === e)
+            return void (0, s.telemetry)(this.ctx, "statusBar.cancelToggle");
+          s.telemetry(
+            this.ctx,
+            "statusBar" + (l ? ".global" : ".language") + (n ? "Off" : "On"),
+            c
+          );
+          if (n) {
+            r.commands.executeCommand(a);
+          }
+          const u = l ? "*" : o;
+          t.updateEnabledConfig(this.ctx, u, !n).then(() => {
+            this.enabled = !n;
+            this.updateDisplay();
+          });
         });
-      });
     } else {
       s.telemetry(this.ctx, "statusBar.language" + (n ? "Off" : "On"), c);
-      n && r.commands.executeCommand(a);
+      if (n) {
+        r.commands.executeCommand(a);
+      }
       t.updateEnabledConfig(this.ctx, o || "*", !n).then(() => {
         this.enabled = !n;
         this.updateDisplay();
@@ -129,11 +159,17 @@ exports.CopilotStatusBar = class {
     if (this.showingMessage) return;
     this.showingMessage = !0;
     const t = ["Show output log"];
-    this.errorRetry && t.push("Retry");
-    r.window.showWarningMessage(this.errorMessage, ...t).then(t => {
+    if (this.errorRetry) {
+      t.push("Retry");
+    }
+    r.window.showWarningMessage(this.errorMessage, ...t).then((t) => {
       this.showingMessage = !1;
-      "Show Output log" === t && e.show();
-      "Retry" === t && this.errorRetry && this.errorRetry();
+      if ("Show Output log" === t) {
+        e.show();
+      }
+      if ("Retry" === t && this.errorRetry) {
+        this.errorRetry();
+      }
     });
   }
 };

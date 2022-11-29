@@ -7,12 +7,12 @@ const r = require(8104)("helix-fetch:core"),
     ALPN_HTTP2: c,
     ALPN_HTTP2C: l,
     ALPN_HTTP1_1: u,
-    ALPN_HTTP1_0: d
+    ALPN_HTTP1_0: d,
   } = require(9575);
 class p {
   constructor(e) {
     this.options = {
-      ...(e || {})
+      ...(e || {}),
     };
     i(this);
   }
@@ -25,7 +25,7 @@ class p {
       ALPN_HTTP2: c,
       ALPN_HTTP2C: l,
       ALPN_HTTP1_1: u,
-      ALPN_HTTP1_0: d
+      ALPN_HTTP1_0: d,
     };
   }
   async request(e, t) {

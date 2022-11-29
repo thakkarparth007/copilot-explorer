@@ -1,7 +1,17 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.parsesWithoutError = exports.getPrompt = exports.getNodeStart = exports.getFunctionPositions = exports.getBlockCloseToken = exports.isSupportedLanguageId = exports.isBlockBodyFinished = exports.isEmptyBlockStart = exports.terminate = exports.init = undefined;
+exports.parsesWithoutError =
+  exports.getPrompt =
+  exports.getNodeStart =
+  exports.getFunctionPositions =
+  exports.getBlockCloseToken =
+  exports.isSupportedLanguageId =
+  exports.isBlockBodyFinished =
+  exports.isEmptyBlockStart =
+  exports.terminate =
+  exports.init =
+    undefined;
 const r = require(3055);
 let o = null;
 const i = new Map();
@@ -13,23 +23,25 @@ exports.init = function (t, u, d) {
     return;
   }
   for (const n of a) module.exports[n] = l(t, d, n);
-  module.exports.getPrompt = function (e, t) {
+  module.exports.getPrompt = (function (e, t) {
     return function (n, ...r) {
       const a = s++;
       return new Promise((n, s) => {
         i.set(a, {
           resolve: n,
-          reject: s
+          reject: s,
         });
         t.debug(e, `Proxy getPrompt - ${a}`);
-        null == o || o.postMessage({
-          id: a,
-          fn: "getPrompt",
-          args: r
-        });
+        if (null == o) {
+          o.postMessage({
+            id: a,
+            fn: "getPrompt",
+            args: r,
+          });
+        }
       });
     };
-  }(t, d);
+  })(t, d);
   o = r.createWorker();
   i.clear();
   s = 0;
@@ -39,36 +51,60 @@ exports.init = function (t, u, d) {
     for (const t of i.values()) t.reject(e);
     i.clear();
   }
-  o.on("message", ({
-    id: e,
-    err: n,
-    res: r
-  }) => {
+  o.on("message", ({ id: e, err: n, res: r }) => {
     const o = i.get(e);
     d.debug(t, `Response ${e} - ${r}, ${n}`);
-    o && (i.delete(e), n ? o.reject(n) : o.resolve(r));
+    if (o) {
+      i.delete(e);
+      if (n) {
+        o.reject(n);
+      } else {
+        o.resolve(r);
+      }
+    }
   });
   o.on("error", h);
-  o.on("exit", e => {
-    0 !== e && h(new Error(`Worker thread exited with code ${e}.`));
+  o.on("exit", (e) => {
+    if (0 !== e) {
+      h(new Error(`Worker thread exited with code ${e}.`));
+    }
   });
-  o.on("readFileReq", e => {
+  o.on("readFileReq", (e) => {
     d.debug(t, `READ_FILE_REQ - ${e}`);
-    p.readFile(e).then(e => {
-      null == o || o.emit("readFileRes", e);
-    }).catch(h);
+    p.readFile(e)
+      .then((e) => {
+        if (null == o) {
+          o.emit("readFileRes", e);
+        }
+      })
+      .catch(h);
   });
-  o.on("mtimeRes", e => {
+  o.on("mtimeRes", (e) => {
     d.debug(t, `mTime_REQ - ${e}`);
-    p.mtime(e).then(e => {
-      null == o || o.emit("mtimeRes", e);
-    }).catch(h);
+    p.mtime(e)
+      .then((e) => {
+        if (null == o) {
+          o.emit("mtimeRes", e);
+        }
+      })
+      .catch(h);
   });
 };
 exports.terminate = function () {
-  o && (o.removeAllListeners(), o.terminate(), o = null, i.clear());
+  if (o) {
+    o.removeAllListeners();
+    o.terminate();
+    o = null;
+    i.clear();
+  }
 };
-const a = ["getFunctionPositions", "isEmptyBlockStart", "isBlockBodyFinished", "getNodeStart", "parsesWithoutError"],
+const a = [
+    "getFunctionPositions",
+    "isEmptyBlockStart",
+    "isBlockBodyFinished",
+    "getNodeStart",
+    "parsesWithoutError",
+  ],
   c = ["isSupportedLanguageId", "getBlockCloseToken"];
 function l(e, t, n) {
   return function (...r) {
@@ -76,14 +112,16 @@ function l(e, t, n) {
     return new Promise((s, c) => {
       i.set(a, {
         resolve: s,
-        reject: c
+        reject: c,
       });
       t.debug(e, `Proxy ${n}`);
-      null == o || o.postMessage({
-        id: a,
-        fn: n,
-        args: r
-      });
+      if (null == o) {
+        o.postMessage({
+          id: a,
+          fn: n,
+          args: r,
+        });
+      }
     });
   };
 }

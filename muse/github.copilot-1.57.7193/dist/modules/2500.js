@@ -1,12 +1,6 @@
-const {
-    Readable: r
-  } = require(2781),
-  {
-    Headers: o
-  } = require(9872),
-  {
-    Response: i
-  } = require(2981),
+const { Readable: r } = require(2781),
+  { Headers: o } = require(9872),
+  { Response: i } = require(2981),
   s = Symbol("CacheableResponse internals");
 class a extends i {
   constructor(e, t) {
@@ -14,7 +8,7 @@ class a extends i {
     const n = new o(t.headers);
     this[s] = {
       headers: n,
-      bufferedBody: e
+      bufferedBody: e,
     };
   }
   get headers() {
@@ -34,7 +28,10 @@ class a extends i {
     return this[s].bufferedBody;
   }
   async arrayBuffer() {
-    return (e = this[s].bufferedBody).buffer.slice(e.byteOffset, e.byteOffset + e.byteLength);
+    return (e = this[s].bufferedBody).buffer.slice(
+      e.byteOffset,
+      e.byteOffset + e.byteLength
+    );
     var e;
   }
   async text() {
@@ -51,7 +48,7 @@ class a extends i {
       headers: r,
       httpVersion: o,
       decoded: i,
-      counter: c
+      counter: c,
     } = this;
     return new a(this[s].bufferedBody, {
       url: e,
@@ -60,7 +57,7 @@ class a extends i {
       headers: r,
       httpVersion: o,
       decoded: i,
-      counter: c
+      counter: c,
     });
   }
   get [Symbol.toStringTag]() {
@@ -68,7 +65,7 @@ class a extends i {
   }
 }
 module.exports = {
-  cacheableResponse: async e => {
+  cacheableResponse: async (e) => {
     const t = await e.buffer(),
       {
         url: n,
@@ -77,7 +74,7 @@ module.exports = {
         headers: i,
         httpVersion: s,
         decoded: c,
-        counter: l
+        counter: l,
       } = e;
     return new a(t, {
       url: n,
@@ -86,7 +83,7 @@ module.exports = {
       headers: i,
       httpVersion: s,
       decoded: c,
-      counter: l
+      counter: l,
     });
-  }
+  },
 };

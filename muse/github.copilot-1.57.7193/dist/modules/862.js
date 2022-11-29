@@ -1,7 +1,10 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.TimeBucketGranularity = exports.DEFAULT_GRANULARITY = exports.GranularityImplementation = undefined;
+exports.TimeBucketGranularity =
+  exports.DEFAULT_GRANULARITY =
+  exports.GranularityImplementation =
+    undefined;
 class GranularityImplementation {
   constructor(e) {
     this.prefix = e;
@@ -19,22 +22,34 @@ class r extends GranularityImplementation {
     return [];
   }
 }
-exports.DEFAULT_GRANULARITY = e => new r(e);
+exports.DEFAULT_GRANULARITY = (e) => new r(e);
 exports.TimeBucketGranularity = class extends GranularityImplementation {
-  constructor(e, t = .5, n = new Date().setUTCHours(0, 0, 0, 0)) {
+  constructor(e, t = 0.5, n = new Date().setUTCHours(0, 0, 0, 0)) {
     super(e);
     this.prefix = e;
     this.fetchBeforeFactor = t;
     this.anchor = n;
   }
   setTimePeriod(e) {
-    isNaN(e) ? this.timePeriodLengthMs = undefined : this.timePeriodLengthMs = e;
+    if (isNaN(e)) {
+      this.timePeriodLengthMs = undefined;
+    } else {
+      this.timePeriodLengthMs = e;
+    }
   }
   setByCallBuckets(e) {
-    isNaN(e) ? this.numByCallBuckets = undefined : this.numByCallBuckets = e;
+    if (isNaN(e)) {
+      this.numByCallBuckets = undefined;
+    } else {
+      this.numByCallBuckets = e;
+    }
   }
   getValue(e) {
-    return this.prefix + this.getTimePeriodBucketString(e) + (this.numByCallBuckets ? this.timeHash(e) : "");
+    return (
+      this.prefix +
+      this.getTimePeriodBucketString(e) +
+      (this.numByCallBuckets ? this.timeHash(e) : "")
+    );
   }
   getTimePeriodBucketString(e) {
     return this.timePeriodLengthMs ? this.dateToTimePartString(e) : "";
@@ -48,19 +63,36 @@ exports.TimeBucketGranularity = class extends GranularityImplementation {
   }
   getUpcomingTimePeriodBucketStrings(e) {
     if (undefined === this.timePeriodLengthMs) return [""];
-    if ((e.getTime() - this.anchor) % this.timePeriodLengthMs < this.fetchBeforeFactor * this.timePeriodLengthMs) return [this.getTimePeriodBucketString(e)];
+    if (
+      (e.getTime() - this.anchor) % this.timePeriodLengthMs <
+      this.fetchBeforeFactor * this.timePeriodLengthMs
+    )
+      return [this.getTimePeriodBucketString(e)];
     {
       const t = new Date(e.getTime() + this.timePeriodLengthMs);
-      return [this.getTimePeriodBucketString(e), this.getTimePeriodBucketString(t)];
+      return [
+        this.getTimePeriodBucketString(e),
+        this.getTimePeriodBucketString(t),
+      ];
     }
   }
   getUpcomingByCallBucketStrings() {
-    return undefined === this.numByCallBuckets ? [""] : Array.from(Array(this.numByCallBuckets).keys()).map(e => e.toString());
+    return undefined === this.numByCallBuckets
+      ? [""]
+      : Array.from(Array(this.numByCallBuckets).keys()).map((e) =>
+          e.toString()
+        );
   }
   timeHash(e) {
-    return null == this.numByCallBuckets ? 0 : e.getTime() % this.numByCallBuckets * 7883 % this.numByCallBuckets;
+    return null == this.numByCallBuckets
+      ? 0
+      : ((e.getTime() % this.numByCallBuckets) * 7883) % this.numByCallBuckets;
   }
   dateToTimePartString(e) {
-    return null == this.timePeriodLengthMs ? "" : Math.floor((e.getTime() - this.anchor) / this.timePeriodLengthMs).toString();
+    return null == this.timePeriodLengthMs
+      ? ""
+      : Math.floor(
+          (e.getTime() - this.anchor) / this.timePeriodLengthMs
+        ).toString();
   }
 };

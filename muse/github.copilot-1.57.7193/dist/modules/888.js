@@ -9,14 +9,26 @@ l = a.EvpKDF = i.extend({
   cfg: i.extend({
     keySize: 4,
     hasher: c,
-    iterations: 1
+    iterations: 1,
   }),
   init: function (e) {
     this.cfg = this.cfg.extend(e);
   },
   compute: function (e, t) {
-    for (var n, r = this.cfg, o = r.hasher.create(), i = s.create(), a = i.words, c = r.keySize, l = r.iterations; a.length < c;) {
-      n && o.update(n);
+    for (
+      var n,
+        r = this.cfg,
+        o = r.hasher.create(),
+        i = s.create(),
+        a = i.words,
+        c = r.keySize,
+        l = r.iterations;
+      a.length < c;
+
+    ) {
+      if (n) {
+        o.update(n);
+      }
       n = o.update(e).finalize(t);
       o.reset();
       for (var u = 1; u < l; u++) {
@@ -27,7 +39,7 @@ l = a.EvpKDF = i.extend({
     }
     i.sigBytes = 4 * c;
     return i;
-  }
+  },
 });
 r.EvpKDF = function (e, t, n) {
   return l.create(n).compute(e, t);

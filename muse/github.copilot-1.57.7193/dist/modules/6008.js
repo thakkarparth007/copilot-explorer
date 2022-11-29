@@ -13,7 +13,7 @@ module.exports = function (e) {
     search: "",
     href: e,
     query: {},
-    parse_failed: !1
+    parse_failed: !1,
   };
   try {
     var n = new URL(e);

@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 exports.NoOpStatusReporter = exports.StatusReporter = undefined;
 class StatusReporter {}

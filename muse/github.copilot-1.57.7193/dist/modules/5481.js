@@ -1,6 +1,6 @@
 var n;
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 exports.telemetryTypeToBaseType = function (e) {
   switch (e) {
@@ -45,14 +45,14 @@ exports.TelemetryTypeString = {
   Metric: "MetricData",
   Request: "RequestData",
   Dependency: "RemoteDependencyData",
-  Availability: "AvailabilityData"
+  Availability: "AvailabilityData",
 };
 (function (e) {
-  e[e.Event = 0] = "Event";
-  e[e.Exception = 1] = "Exception";
-  e[e.Trace = 2] = "Trace";
-  e[e.Metric = 3] = "Metric";
-  e[e.Request = 4] = "Request";
-  e[e.Dependency = 5] = "Dependency";
-  e[e.Availability = 6] = "Availability";
-})(n = exports.TelemetryType || (exports.TelemetryType = {}));
+  e[(e.Event = 0)] = "Event";
+  e[(e.Exception = 1)] = "Exception";
+  e[(e.Trace = 2)] = "Trace";
+  e[(e.Metric = 3)] = "Metric";
+  e[(e.Request = 4)] = "Request";
+  e[(e.Dependency = 5)] = "Dependency";
+  e[(e.Availability = 6)] = "Availability";
+})((n = exports.TelemetryType || (exports.TelemetryType = {})));

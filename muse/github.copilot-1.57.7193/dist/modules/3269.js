@@ -8,7 +8,8 @@ module.exports = function () {
     const o = new Array(arguments.length);
     for (let e = 0; e < arguments.length; e++) o[e] = arguments[e];
     const i = o[0];
-    if ("function" != typeof i) throw new TypeError("callback is not a function");
+    if ("function" != typeof i)
+      throw new TypeError("callback is not a function");
     const s = new t(),
       a = --n.counter;
     e.init.call(s, a, 0, null, null);
@@ -19,10 +20,12 @@ module.exports = function () {
         i.apply(this, arguments);
         t = !1;
       } finally {
-        t && process.listenerCount("uncaughtException") > 0 && process.once("uncaughtException", function () {
-          e.post.call(s, a, !0);
-          e.destroy.call(null, a);
-        });
+        if (t && process.listenerCount("uncaughtException") > 0) {
+          process.once("uncaughtException", function () {
+            e.post.call(s, a, !0);
+            e.destroy.call(null, a);
+          });
+        }
       }
       e.post.call(s, a, !1);
       e.destroy.call(null, a);

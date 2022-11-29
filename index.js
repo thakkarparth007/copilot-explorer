@@ -4,9 +4,11 @@ const traverse = require('@babel/traverse').default;
 const generate = require('@babel/generator').default;
 const fs = require('fs');
 const path = require('path');
+const prettier = require("prettier");
 
 const rootPath = path.join(__dirname, "muse/github.copilot-1.57.7193/dist");
-const srcFile = path.join(rootPath, 'extension_expanded.js');
+// const srcFile = path.join(rootPath, 'extension_expanded.js');
+const srcFile = path.join(rootPath, 'extension_expanded_v2.js'); // this modifies module 3055 by splitting it into multiple modules (originally 3055 consisted of multiple nested modules which weren't being extracted automatically. So I extracted them manually)
 const mainModuleSrcFile = path.join(rootPath, "extension_expanded_main.js");
 const code = fs.readFileSync(srcFile, 'utf8');
 const mainCode = fs.readFileSync(mainModuleSrcFile, 'utf8');
@@ -162,6 +164,35 @@ function makeModuleReadable(moduleId, moduleCodeRaw) {
                         );
                         return;
                 }
+            }
+            if (path.node.expression.type == "ConditionalExpression") {
+                // handle cases like: `<test> ? c : d;`
+                // convert to: `if (<test>) { c; } else { d; }`
+                const test = path.node.expression.test;
+                const consequent = path.node.expression.consequent;
+                const alternate = path.node.expression.alternate;
+
+                const ifStmt = babel.types.ifStatement(
+                    test,
+                    babel.types.blockStatement([babel.types.expressionStatement(consequent)]),
+                    babel.types.blockStatement([babel.types.expressionStatement(alternate)])
+                );
+                path.replaceWith(ifStmt);
+                return;
+            }
+            if (path.node.expression.type == "LogicalExpression") {
+                // handle cases like: `a && b;`
+                // convert to: `if (a) { b; }`
+                const test = path.node.expression.left;
+                const consequent = path.node.expression.right;
+
+                const ifStmt = babel.types.ifStatement(
+                    test,
+                    babel.types.blockStatement([babel.types.expressionStatement(consequent)]),
+                    null
+                );
+                path.replaceWith(ifStmt);
+                return;
             }
         },
         IfStatement(path) {
@@ -392,8 +423,12 @@ function handleModule(moduleId, moduleAst, metadata) {
 
     const mainBody = moduleAst.program.body[0].expression.body.body;
     const moduleCode = generate(babel.types.Program(mainBody)).code;
+
+    const moduleCode2 = prettier.format(moduleCode, {
+        parser: "babel",
+    });
     
-    fs.writeFileSync(getModulePath(moduleId), moduleCode);
+    fs.writeFileSync(getModulePath(moduleId), moduleCode2);
 }
 
 const moduleDeps = {};
@@ -430,7 +465,8 @@ for (const moduleId in moduleDeps) {
     const metadata = moduleDeps[moduleId];
     metadata["importedBy"] = metadata["importedBy"] || [];
     for (const depId of metadata["deps"]) {
-        assert (depId in moduleDeps);
+        assert (depId in moduleDeps,
+                "Module " + moduleId + " depends on " + depId + " but it's not in the list of modules");
         moduleDeps[depId]["importedBy"] = moduleDeps[depId]["importedBy"] || [];
         moduleDeps[depId]["importedBy"].push(moduleId);
     }

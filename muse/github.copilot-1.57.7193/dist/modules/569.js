@@ -1,7 +1,10 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.computeScore = exports.IndentationBasedJaccardMatcher = exports.FixedWindowSizeJaccardMatcher = undefined;
+exports.computeScore =
+  exports.IndentationBasedJaccardMatcher =
+  exports.FixedWindowSizeJaccardMatcher =
+    undefined;
 const r = require(4855),
   o = require(1016);
 class FixedWindowSizeJaccardMatcher extends o.WindowedMatcher {
@@ -22,15 +25,19 @@ class FixedWindowSizeJaccardMatcher extends o.WindowedMatcher {
     return t;
   }
   trimDocument(e) {
-    return e.source.slice(0, e.offset).split("\n").slice(-this.windowLength).join("\n");
+    return e.source
+      .slice(0, e.offset)
+      .split("\n")
+      .slice(-this.windowLength)
+      .join("\n");
   }
   similarityScore(e, t) {
     return computeScore(e, t);
   }
 }
 exports.FixedWindowSizeJaccardMatcher = FixedWindowSizeJaccardMatcher;
-FixedWindowSizeJaccardMatcher.FACTORY = e => ({
-  to: t => new FixedWindowSizeJaccardMatcher(t, e)
+FixedWindowSizeJaccardMatcher.FACTORY = (e) => ({
+  to: (t) => new FixedWindowSizeJaccardMatcher(t, e),
 });
 class IndentationBasedJaccardMatcher extends o.WindowedMatcher {
   constructor(e, t, n) {
@@ -43,10 +50,19 @@ class IndentationBasedJaccardMatcher extends o.WindowedMatcher {
     return `indent:${this.indentationMinLength}:${this.indentationMaxLength}:${this.languageId}`;
   }
   getWindowsDelineations(e) {
-    return r.getWindowsDelineations(e, this.languageId, this.indentationMinLength, this.indentationMaxLength);
+    return r.getWindowsDelineations(
+      e,
+      this.languageId,
+      this.indentationMinLength,
+      this.indentationMaxLength
+    );
   }
   trimDocument(e) {
-    return e.source.slice(0, e.offset).split("\n").slice(-this.indentationMaxLength).join("\n");
+    return e.source
+      .slice(0, e.offset)
+      .split("\n")
+      .slice(-this.indentationMaxLength)
+      .join("\n");
   }
   similarityScore(e, t) {
     return computeScore(e, t);
@@ -54,13 +70,15 @@ class IndentationBasedJaccardMatcher extends o.WindowedMatcher {
 }
 function computeScore(e, t) {
   const n = new Set();
-  e.forEach(e => {
-    t.has(e) && n.add(e);
+  e.forEach((e) => {
+    if (t.has(e)) {
+      n.add(e);
+    }
   });
   return n.size / (e.size + t.size - n.size);
 }
 exports.IndentationBasedJaccardMatcher = IndentationBasedJaccardMatcher;
 IndentationBasedJaccardMatcher.FACTORY = (e, t) => ({
-  to: n => new IndentationBasedJaccardMatcher(n, e, t)
+  to: (n) => new IndentationBasedJaccardMatcher(n, e, t),
 });
 exports.computeScore = computeScore;

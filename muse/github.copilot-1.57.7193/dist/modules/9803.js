@@ -1,109 +1,161 @@
 const r = require(3685),
   o = require(5687),
-  {
-    Readable: i
-  } = require(2781),
+  { Readable: i } = require(2781),
   s = require(8104)("helix-fetch:h1"),
-  {
-    RequestAbortedError: a
-  } = require(1787),
-  {
-    decodeStream: c
-  } = require(4544);
+  { RequestAbortedError: a } = require(1787),
+  { decodeStream: c } = require(4544);
 module.exports = {
   request: async (e, t, n) => {
-    const {
-        request: l
-      } = "https:" === t.protocol ? o : r,
+    const { request: l } = "https:" === t.protocol ? o : r,
       u = ((e, t) => {
         const {
           h1: n,
-          options: {
-            h1: i,
-            rejectUnauthorized: s
-          }
+          options: { h1: i, rejectUnauthorized: s },
         } = e;
-        return "https:" === t ? n.httpsAgent ? n.httpsAgent : i || "boolean" == typeof s ? (n.httpsAgent = new o.Agent("boolean" == typeof s ? {
-          ...(i || {}),
-          rejectUnauthorized: s
-        } : i), n.httpsAgent) : undefined : n.httpAgent ? n.httpAgent : i ? (n.httpAgent = new r.Agent(i), n.httpAgent) : undefined;
+        return "https:" === t
+          ? n.httpsAgent
+            ? n.httpsAgent
+            : i || "boolean" == typeof s
+            ? ((n.httpsAgent = new o.Agent(
+                "boolean" == typeof s
+                  ? {
+                      ...(i || {}),
+                      rejectUnauthorized: s,
+                    }
+                  : i
+              )),
+              n.httpsAgent)
+            : undefined
+          : n.httpAgent
+          ? n.httpAgent
+          : i
+          ? ((n.httpAgent = new r.Agent(i)), n.httpAgent)
+          : undefined;
       })(e, t.protocol),
       d = {
         ...n,
-        agent: u
+        agent: u,
       },
-      {
-        socket: p,
-        body: h
-      } = d;
-    p && (delete d.socket, p.assigned || (p.assigned = !0, u ? d.agent = new Proxy(u, {
-      get: (e, t) => "createConnection" !== t || p.inUse ? e[t] : (e, t) => {
-        s(`agent reusing socket #${p.id} (${p.servername})`);
-        p.inUse = !0;
-        t(null, p);
+      { socket: p, body: h } = d;
+    if (p) {
+      delete d.socket;
+      if (p.assigned) {
+        p.assigned = !0;
+        if (u) {
+          d.agent = new Proxy(u, {
+            get: (e, t) =>
+              "createConnection" !== t || p.inUse
+                ? e[t]
+                : (e, t) => {
+                    s(`agent reusing socket #${p.id} (${p.servername})`);
+                    p.inUse = !0;
+                    t(null, p);
+                  },
+          });
+        } else {
+          d.createConnection = (e, t) => {
+            s(`reusing socket #${p.id} (${p.servername})`);
+            p.inUse = !0;
+            t(null, p);
+          };
+        }
       }
-    }) : d.createConnection = (e, t) => {
-      s(`reusing socket #${p.id} (${p.servername})`);
-      p.inUse = !0;
-      t(null, p);
-    }));
+    }
     return new Promise((e, n) => {
       let r;
       s(`${d.method} ${t.href}`);
-      const {
-          signal: o
-        } = d,
+      const { signal: o } = d,
         u = () => {
           o.removeEventListener("abort", u);
-          p && !p.inUse && (s(`discarding redundant socket used for ALPN: #${p.id} ${p.servername}`), p.destroy());
+          if (p && !p.inUse) {
+            s(
+              `discarding redundant socket used for ALPN: #${p.id} ${p.servername}`
+            );
+            p.destroy();
+          }
           n(new a());
-          r && r.abort();
+          if (r) {
+            r.abort();
+          }
         };
       if (o) {
         if (o.aborted) return void n(new a());
         o.addEventListener("abort", u);
       }
       r = l(t, d);
-      r.once("response", t => {
-        o && o.removeEventListener("abort", u);
-        p && !p.inUse && (s(`discarding redundant socket used for ALPN: #${p.id} ${p.servername}`), p.destroy());
-        e(((e, t, n) => {
-          const {
+      r.once("response", (t) => {
+        if (o) {
+          o.removeEventListener("abort", u);
+        }
+        if (p && !p.inUse) {
+          s(
+            `discarding redundant socket used for ALPN: #${p.id} ${p.servername}`
+          );
+          p.destroy();
+        }
+        e(
+          ((e, t, n) => {
+            const {
+                statusCode: r,
+                statusMessage: o,
+                httpVersion: i,
+                httpVersionMajor: s,
+                httpVersionMinor: a,
+                headers: l,
+              } = e,
+              u = t ? c(r, l, e, n) : e;
+            return {
               statusCode: r,
-              statusMessage: o,
+              statusText: o,
               httpVersion: i,
               httpVersionMajor: s,
               httpVersionMinor: a,
-              headers: l
-            } = e,
-            u = t ? c(r, l, e, n) : e;
-          return {
-            statusCode: r,
-            statusText: o,
-            httpVersion: i,
-            httpVersionMajor: s,
-            httpVersionMinor: a,
-            headers: l,
-            readable: u,
-            decoded: !(!t || u === e)
-          };
-        })(t, d.decode, n));
+              headers: l,
+              readable: u,
+              decoded: !(!t || u === e),
+            };
+          })(t, d.decode, n)
+        );
       });
-      r.once("error", e => {
-        o && o.removeEventListener("abort", u);
-        p && !p.inUse && (s(`discarding redundant socket used for ALPN: #${p.id} ${p.servername}`), p.destroy());
-        r.aborted || (s(`${d.method} ${t.href} failed with: ${e.message}`), r.abort(), n(e));
+      r.once("error", (e) => {
+        if (o) {
+          o.removeEventListener("abort", u);
+        }
+        if (p && !p.inUse) {
+          s(
+            `discarding redundant socket used for ALPN: #${p.id} ${p.servername}`
+          );
+          p.destroy();
+        }
+        if (r.aborted) {
+          s(`${d.method} ${t.href} failed with: ${e.message}`);
+          r.abort();
+          n(e);
+        }
       });
-      h instanceof i ? h.pipe(r) : (h && r.write(h), r.end());
+      if (h instanceof i) {
+        h.pipe(r);
+      } else {
+        if (h) {
+          r.write(h);
+        }
+        r.end();
+      }
     });
   },
-  setupContext: e => {
+  setupContext: (e) => {
     e.h1 = {};
   },
-  resetContext: async ({
-    h1: e
-  }) => {
-    e.httpAgent && (s("resetContext: destroying httpAgent"), e.httpAgent.destroy(), delete e.httpAgent);
-    e.httpsAgent && (s("resetContext: destroying httpsAgent"), e.httpsAgent.destroy(), delete e.httpsAgent);
-  }
+  resetContext: async ({ h1: e }) => {
+    if (e.httpAgent) {
+      s("resetContext: destroying httpAgent");
+      e.httpAgent.destroy();
+      delete e.httpAgent;
+    }
+    if (e.httpsAgent) {
+      s("resetContext: destroying httpsAgent");
+      e.httpsAgent.destroy();
+      delete e.httpsAgent;
+    }
+  },
 };

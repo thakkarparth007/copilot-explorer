@@ -3,7 +3,7 @@ var r = require(2037),
   i = require(1017),
   s = require(5290),
   a = require(5282),
-  c = function () {
+  c = (function () {
     function e(e) {
       this.keys = new s.ContextTagKeys();
       this.tags = {};
@@ -38,7 +38,9 @@ var r = require(2037),
         e.sdkVersion = "unknown";
         try {
           var n = JSON.parse(o.readFileSync(t, "utf8"));
-          n && "string" == typeof n.version && (e.sdkVersion = n.version);
+          if (n && "string" == typeof n.version) {
+            e.sdkVersion = n.version;
+          }
         } catch (e) {
           a.info("unable to read app version: ", e);
         }
@@ -49,5 +51,5 @@ var r = require(2037),
     e.appVersion = {};
     e.sdkVersion = null;
     return e;
-  }();
+  })();
 module.exports = c;

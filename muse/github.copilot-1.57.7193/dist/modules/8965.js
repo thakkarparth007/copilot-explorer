@@ -1,7 +1,10 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.contextualFilterScore = exports.getLastLineLength = exports.ContextualFilterManager = undefined;
+exports.contextualFilterScore =
+  exports.getLastLineLength =
+  exports.ContextualFilterManager =
+    undefined;
 const r = require(7744);
 class ContextualFilterManager {
   constructor() {
@@ -20,7 +23,12 @@ exports.contextualFilterScore = function (e, t, n) {
   const s = e.get(ContextualFilterManager),
     a = s.previousLabel;
   let c = 0;
-  "afterCursorWhitespace" in t.properties && "true" === t.properties.afterCursorWhitespace && (c = 1);
+  if (
+    "afterCursorWhitespace" in t.properties &&
+    "true" === t.properties.afterCursorWhitespace
+  ) {
+    c = 1;
+  }
   const l = (Date.now() - s.previousLabelTimestamp) / 1e3,
     u = Math.log(1 + l);
   let d = 0,
@@ -29,7 +37,9 @@ exports.contextualFilterScore = function (e, t, n) {
   if (h) {
     d = Math.log(1 + getLastLineLength(h));
     const e = h.slice(-1);
-    undefined !== r.contextualFilterCharacterMap[e] && (p = r.contextualFilterCharacterMap[e]);
+    if (undefined !== r.contextualFilterCharacterMap[e]) {
+      p = r.contextualFilterCharacterMap[e];
+    }
   }
   let f = 0,
     m = 0;
@@ -37,7 +47,9 @@ exports.contextualFilterScore = function (e, t, n) {
   if (g) {
     f = Math.log(1 + getLastLineLength(g));
     const e = g.slice(-1);
-    undefined !== r.contextualFilterCharacterMap[e] && (m = r.contextualFilterCharacterMap[e]);
+    if (undefined !== r.contextualFilterCharacterMap[e]) {
+      m = r.contextualFilterCharacterMap[e];
+    }
   }
   let _ = 0;
   if ("documentLength" in t.measurements) {
@@ -52,10 +64,12 @@ exports.contextualFilterScore = function (e, t, n) {
   let v = 0;
   if ("promptEndPos" in t.measurements && "documentLength" in t.measurements) {
     const e = t.measurements.documentLength;
-    v = (t.measurements.promptEndPos + .5) / (1 + e);
+    v = (t.measurements.promptEndPos + 0.5) / (1 + e);
   }
   let b = 0;
-  undefined !== r.contextualFilterLanguageMap[t.properties.languageId] && (b = r.contextualFilterLanguageMap[t.properties.languageId]);
+  if (undefined !== r.contextualFilterLanguageMap[t.properties.languageId]) {
+    b = r.contextualFilterLanguageMap[t.properties.languageId];
+  }
   let w = r.contextualFilterIntercept;
   w += r.contextualFilterWeights[0] * a;
   w += r.contextualFilterWeights[1] * c;

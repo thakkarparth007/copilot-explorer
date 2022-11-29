@@ -1,8 +1,12 @@
 var n, r;
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.FilterSettings = exports.telmetryNames = exports.TargetPopulation = exports.Filter = undefined;
+exports.FilterSettings =
+  exports.telmetryNames =
+  exports.TargetPopulation =
+  exports.Filter =
+    undefined;
 (function (e) {
   e.Market = "X-MSEdge-Market";
   e.CorpNet = "X-FD-Corpnet";
@@ -19,7 +23,7 @@ exports.FilterSettings = exports.telmetryNames = exports.TargetPopulation = expo
   e.CopilotFileType = "X-Copilot-FileType";
   e.CopilotUserKind = "X-Copilot-UserKind";
   e.CopilotDogfood = "X-Copilot-Dogfood";
-})(n = exports.Filter || (exports.Filter = {}));
+})((n = exports.Filter || (exports.Filter = {})));
 (r = exports.TargetPopulation || (exports.TargetPopulation = {})).Team = "team";
 r.Internal = "internal";
 r.Insiders = "insider";
@@ -29,37 +33,43 @@ exports.telmetryNames = {
   [n.CopilotOverrideEngine]: "engine",
   [n.CopilotRepository]: "repo",
   [n.CopilotFileType]: "fileType",
-  [n.CopilotUserKind]: "userKind"
+  [n.CopilotUserKind]: "userKind",
 };
 class FilterSettings {
   constructor(e) {
     this.filters = e;
-    for (const [e, t] of Object.entries(this.filters)) "" === t && delete this.filters[e];
+    for (const [e, t] of Object.entries(this.filters))
+      if ("" === t) {
+        delete this.filters[e];
+      }
   }
   extends(e) {
-    for (const [t, n] of Object.entries(e.filters)) if (this.filters[t] !== n) return !1;
+    for (const [t, n] of Object.entries(e.filters))
+      if (this.filters[t] !== n) return !1;
     return !0;
   }
   addToTelemetry(e) {
     for (const [n, r] of Object.entries(this.filters)) {
       const o = exports.telmetryNames[n];
-      undefined !== o && (e.properties[o] = r);
+      if (undefined !== o) {
+        e.properties[o] = r;
+      }
     }
   }
   stringify() {
     const e = Object.keys(this.filters);
     e.sort();
-    return e.map(e => `${e}:${this.filters[e]}`).join(";");
+    return e.map((e) => `${e}:${this.filters[e]}`).join(";");
   }
   toHeaders() {
     return {
-      ...this.filters
+      ...this.filters,
     };
   }
   withChange(e, t) {
     return new FilterSettings({
       ...this.filters,
-      [e]: t
+      [e]: t,
     });
   }
 }

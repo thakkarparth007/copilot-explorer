@@ -1,9 +1,16 @@
-var r = this && this.__assign || Object.assign || function (e) {
-  for (var t, n = 1, r = arguments.length; n < r; n++) for (var o in t = arguments[n]) Object.prototype.hasOwnProperty.call(t, o) && (e[o] = t[o]);
-  return e;
-};
+var r =
+  (this && this.__assign) ||
+  Object.assign ||
+  function (e) {
+    for (var t, n = 1, r = arguments.length; n < r; n++)
+      for (var o in (t = arguments[n]))
+        if (Object.prototype.hasOwnProperty.call(t, o)) {
+          e[o] = t[o];
+        }
+    return e;
+  };
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 var o = require(4953);
 exports.tedious = {
@@ -17,28 +24,28 @@ exports.tedious = {
             query: {},
             database: {
               host: null,
-              port: null
+              port: null,
             },
             result: null,
             error: null,
-            duration: 0
+            duration: 0,
           };
         return o.channel.bindToContext(function (i, s, a) {
           var c = process.hrtime(t);
           n = r({}, n, {
             database: {
               host: this.connection.config.server,
-              port: this.connection.config.options.port
+              port: this.connection.config.options.port,
             },
             result: !i && {
               rowCount: s,
-              rows: a
+              rows: a,
             },
             query: {
-              text: this.parametersByName.statement.value
+              text: this.parametersByName.statement.value,
             },
             error: i,
-            duration: Math.ceil(1e3 * c[0] + c[1] / 1e6)
+            duration: Math.ceil(1e3 * c[0] + c[1] / 1e6),
           });
           o.channel.publish("tedious", n);
           e.call(this, i, s, a);
@@ -49,7 +56,7 @@ exports.tedious = {
       t.apply(this, arguments);
     };
     return e;
-  }
+  },
 };
 exports.enable = function () {
   o.channel.registerMonkeyPatch("tedious", exports.tedious);

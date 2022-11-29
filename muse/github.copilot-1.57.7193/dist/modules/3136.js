@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 exports.TextDocumentManager = exports.getRelativePath = undefined;
 const r = require(1017);

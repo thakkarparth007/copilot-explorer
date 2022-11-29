@@ -1,7 +1,12 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.VSCodeEditorInfo = exports.makeVscInfo = exports.getExtension = exports.setExtension = exports.VSCodeConfigProvider = undefined;
+exports.VSCodeEditorInfo =
+  exports.makeVscInfo =
+  exports.getExtension =
+  exports.setExtension =
+  exports.VSCodeConfigProvider =
+    undefined;
 const r = require(9496),
   o = require(1133),
   i = require(4197),
@@ -14,8 +19,10 @@ class VSCodeConfigProvider extends o.ConfigProvider {
   constructor() {
     super();
     this.config = r.workspace.getConfiguration(i.CopilotConfigPrefix);
-    r.workspace.onDidChangeConfiguration(e => {
-      e.affectsConfiguration(i.CopilotConfigPrefix) && (this.config = r.workspace.getConfiguration(i.CopilotConfigPrefix));
+    r.workspace.onDidChangeConfiguration((e) => {
+      if (e.affectsConfiguration(i.CopilotConfigPrefix)) {
+        this.config = r.workspace.getConfiguration(i.CopilotConfigPrefix);
+      }
     });
   }
   getConfigKeyFromObject(e, t) {
@@ -25,21 +32,44 @@ class VSCodeConfigProvider extends o.ConfigProvider {
   getConfig(e) {
     if (Array.isArray(e)) return this.getConfigKeyFromObject(e[0], e[1]);
     const t = this.config.get(e);
-    if (undefined === t) throw new Error(`Missing config default value: ${i.CopilotConfigPrefix}.${e}`);
+    if (undefined === t)
+      throw new Error(
+        `Missing config default value: ${i.CopilotConfigPrefix}.${e}`
+      );
     return t;
   }
   isDefaultSettingOverwritten(e) {
     if (Array.isArray(e)) return undefined !== this.config[e[0]][e[1]];
     const t = this.config.inspect(e);
-    return !!t && !!(t.globalValue || t.workspaceValue || t.workspaceFolderValue || t.defaultLanguageValue || t.globalLanguageValue || t.workspaceLanguageValue || t.workspaceFolderLanguageValue);
+    return (
+      !!t &&
+      !!(
+        t.globalValue ||
+        t.workspaceValue ||
+        t.workspaceFolderValue ||
+        t.defaultLanguageValue ||
+        t.globalLanguageValue ||
+        t.workspaceLanguageValue ||
+        t.workspaceFolderLanguageValue
+      )
+    );
   }
   dumpConfig() {
     const e = {};
     try {
       const t = a.contributes.configuration[0].properties;
       for (const n in t) {
-        const t = n.replace(`${i.CopilotConfigPrefix}.`, "").split(".").reduce((e, t) => e[t], this.config);
-        "object" == typeof t && null !== t ? Object.keys(t).filter(e => "secret_key" !== e).forEach(r => e[`${n}.${r}`] = c(t[r])) : e[n] = c(t);
+        const t = n
+          .replace(`${i.CopilotConfigPrefix}.`, "")
+          .split(".")
+          .reduce((e, t) => e[t], this.config);
+        if ("object" == typeof t && null !== t) {
+          Object.keys(t)
+            .filter((e) => "secret_key" !== e)
+            .forEach((r) => (e[`${n}.${r}`] = c(t[r])));
+        } else {
+          e[n] = c(t);
+        }
       }
     } catch (e) {
       console.error(`Failed to retrieve configuration properties ${e}`);
@@ -66,7 +96,9 @@ exports.setExtension = function (e) {
   u = e;
 };
 exports.getExtension = function (e) {
-  !u && s.isRunningInTest(e) && (u = r.extensions.all.find(e => e.id.startsWith("GitHub.copilot")));
+  if (!u && s.isRunningInTest(e)) {
+    u = r.extensions.all.find((e) => e.id.startsWith("GitHub.copilot"));
+  }
   if (!u) throw new Error("No GitHub.copilot extension found");
   return u;
 };
@@ -77,13 +109,13 @@ class VSCodeEditorInfo extends o.EditorAndPluginInfo {
   getEditorInfo(e) {
     return {
       name: "vscode",
-      version: r.version
+      version: r.version,
     };
   }
   getEditorPluginInfo(e) {
     return {
       name: "copilot",
-      version: o.getVersion(e)
+      version: o.getVersion(e),
     };
   }
 }

@@ -1,65 +1,103 @@
-const t = "object" == typeof performance && performance && "function" == typeof performance.now ? performance : Date,
-  n = "function" == typeof AbortController ? AbortController : class {
-    constructor() {
-      this.signal = new i();
-    }
-    abort() {
-      this.signal.dispatchEvent("abort");
-    }
-  },
+const t =
+    "object" == typeof performance &&
+    performance &&
+    "function" == typeof performance.now
+      ? performance
+      : Date,
+  n =
+    "function" == typeof AbortController
+      ? AbortController
+      : class {
+          constructor() {
+            this.signal = new i();
+          }
+          abort() {
+            this.signal.dispatchEvent("abort");
+          }
+        },
   r = "function" == typeof AbortSignal,
   o = "function" == typeof n.AbortSignal,
-  i = r ? AbortSignal : o ? n.AbortController : class {
-    constructor() {
-      this.aborted = !1;
-      this._listeners = [];
-    }
-    dispatchEvent(e) {
-      if ("abort" === e) {
-        this.aborted = !0;
-        const t = {
-          type: e,
-          target: this
-        };
-        this.onabort(t);
-        this._listeners.forEach(e => e(t), this);
-      }
-    }
-    onabort() {}
-    addEventListener(e, t) {
-      "abort" === e && this._listeners.push(t);
-    }
-    removeEventListener(e, t) {
-      "abort" === e && (this._listeners = this._listeners.filter(e => e !== t));
-    }
-  },
+  i = r
+    ? AbortSignal
+    : o
+    ? n.AbortController
+    : class {
+        constructor() {
+          this.aborted = !1;
+          this._listeners = [];
+        }
+        dispatchEvent(e) {
+          if ("abort" === e) {
+            this.aborted = !0;
+            const t = {
+              type: e,
+              target: this,
+            };
+            this.onabort(t);
+            this._listeners.forEach((e) => e(t), this);
+          }
+        }
+        onabort() {}
+        addEventListener(e, t) {
+          if ("abort" === e) {
+            this._listeners.push(t);
+          }
+        }
+        removeEventListener(e, t) {
+          if ("abort" === e) {
+            this._listeners = this._listeners.filter((e) => e !== t);
+          }
+        }
+      },
   s = new Set(),
   a = (e, t) => {
     const n = `LRU_CACHE_OPTION_${e}`;
-    u(n) && d(n, `${e} option`, `options.${t}`, g);
+    if (u(n)) {
+      d(n, `${e} option`, `options.${t}`, g);
+    }
   },
   c = (e, t) => {
     const n = `LRU_CACHE_METHOD_${e}`;
     if (u(n)) {
-      const {
-          prototype: r
-        } = g,
-        {
-          get: o
-        } = Object.getOwnPropertyDescriptor(r, e);
+      const { prototype: r } = g,
+        { get: o } = Object.getOwnPropertyDescriptor(r, e);
       d(n, `${e} method`, `cache.${t}()`, o);
     }
   },
   l = (...e) => {
-    "object" == typeof process && process && "function" == typeof process.emitWarning ? process.emitWarning(...e) : console.error(...e);
+    if (
+      "object" == typeof process &&
+      process &&
+      "function" == typeof process.emitWarning
+    ) {
+      process.emitWarning(...e);
+    } else {
+      console.error(...e);
+    }
   },
-  u = e => !s.has(e),
+  u = (e) => !s.has(e),
   d = (e, t, n, r) => {
     s.add(e);
-    l(`The ${t} is deprecated. Please use ${n} instead.`, "DeprecationWarning", e, r);
+    l(
+      `The ${t} is deprecated. Please use ${n} instead.`,
+      "DeprecationWarning",
+      e,
+      r
+    );
   },
-  p = e => e && e === Math.floor(e) && e > 0 && isFinite(e),
-  h = e => p(e) ? e <= Math.pow(2, 8) ? Uint8Array : e <= Math.pow(2, 16) ? Uint16Array : e <= Math.pow(2, 32) ? Uint32Array : e <= Number.MAX_SAFE_INTEGER ? f : null : null;
+  p = (e) => e && e === Math.floor(e) && e > 0 && isFinite(e),
+  h = (e) =>
+    p(e)
+      ? e <= Math.pow(2, 8)
+        ? Uint8Array
+        : e <= Math.pow(2, 16)
+        ? Uint16Array
+        : e <= Math.pow(2, 32)
+        ? Uint32Array
+        : e <= Number.MAX_SAFE_INTEGER
+        ? f
+        : null
+      : null;
 class f extends Array {
   constructor(e) {
     super(e);
@@ -99,27 +137,30 @@ class g {
         fetchMethod: x,
         fetchContext: E,
         noDeleteOnFetchRejection: C,
-        noDeleteOnStaleGet: S
+        noDeleteOnStaleGet: S,
       } = e,
-      {
-        length: T,
-        maxAge: k,
-        stale: I
-      } = e instanceof g ? {} : e;
-    if (0 !== t && !p(t)) throw new TypeError("max option must be a nonnegative integer");
+      { length: T, maxAge: k, stale: I } = e instanceof g ? {} : e;
+    if (0 !== t && !p(t))
+      throw new TypeError("max option must be a nonnegative integer");
     const P = t ? h(t) : Array;
     if (!P) throw new Error("invalid max value: " + t);
     this.max = t;
     this.maxSize = b;
     this.sizeCalculation = w || T;
     if (this.sizeCalculation) {
-      if (!this.maxSize) throw new TypeError("cannot set sizeCalculation without setting maxSize");
-      if ("function" != typeof this.sizeCalculation) throw new TypeError("sizeCalculation set to non-function");
+      if (!this.maxSize)
+        throw new TypeError(
+          "cannot set sizeCalculation without setting maxSize"
+        );
+      if ("function" != typeof this.sizeCalculation)
+        throw new TypeError("sizeCalculation set to non-function");
     }
     this.fetchMethod = x || null;
-    if (this.fetchMethod && "function" != typeof this.fetchMethod) throw new TypeError("fetchMethod must be a function if specified");
+    if (this.fetchMethod && "function" != typeof this.fetchMethod)
+      throw new TypeError("fetchMethod must be a function if specified");
     this.fetchContext = E;
-    if (!this.fetchMethod && void 0 !== E) throw new TypeError("cannot set fetchContext without fetchMethod");
+    if (!this.fetchMethod && void 0 !== E)
+      throw new TypeError("cannot set fetchContext without fetchMethod");
     this.keyMap = new Map();
     this.keyList = new Array(t).fill(null);
     this.valList = new Array(t).fill(null);
@@ -130,13 +171,22 @@ class g {
     this.free = new m(t);
     this.initialFill = 1;
     this.size = 0;
-    "function" == typeof f && (this.dispose = f);
-    "function" == typeof _ ? (this.disposeAfter = _, this.disposed = []) : (this.disposeAfter = null, this.disposed = null);
+    if ("function" == typeof f) {
+      this.dispose = f;
+    }
+    if ("function" == typeof _) {
+      this.disposeAfter = _;
+      this.disposed = [];
+    } else {
+      this.disposeAfter = null;
+      this.disposed = null;
+    }
     this.noDisposeOnSet = !!y;
     this.noUpdateTTL = !!v;
     this.noDeleteOnFetchRejection = !!C;
     if (0 !== this.maxSize) {
-      if (!p(this.maxSize)) throw new TypeError("maxSize must be a positive integer if specified");
+      if (!p(this.maxSize))
+        throw new TypeError("maxSize must be a positive integer if specified");
       this.initializeSizeTracking();
     }
     this.allowStale = !!d || !!I;
@@ -147,22 +197,40 @@ class g {
     this.ttlAutopurge = !!o;
     this.ttl = n || k || 0;
     if (this.ttl) {
-      if (!p(this.ttl)) throw new TypeError("ttl must be a positive integer if specified");
+      if (!p(this.ttl))
+        throw new TypeError("ttl must be a positive integer if specified");
       this.initializeTTLTracking();
     }
-    if (0 === this.max && 0 === this.ttl && 0 === this.maxSize) throw new TypeError("At least one of max, maxSize, or ttl is required");
+    if (0 === this.max && 0 === this.ttl && 0 === this.maxSize)
+      throw new TypeError("At least one of max, maxSize, or ttl is required");
     if (!this.ttlAutopurge && !this.max && !this.maxSize) {
       const e = "LRU_CACHE_UNBOUNDED";
-      u(e) && (s.add(e), l("TTL caching without ttlAutopurge, max, or maxSize can result in unbounded memory consumption.", "UnboundedCacheWarning", e, g));
+      if (u(e)) {
+        s.add(e);
+        l(
+          "TTL caching without ttlAutopurge, max, or maxSize can result in unbounded memory consumption.",
+          "UnboundedCacheWarning",
+          e,
+          g
+        );
+      }
     }
-    I && a("stale", "allowStale");
-    k && a("maxAge", "ttl");
-    T && a("length", "sizeCalculation");
+    if (I) {
+      a("stale", "allowStale");
+    }
+    if (k) {
+      a("maxAge", "ttl");
+    }
+    if (T) {
+      a("length", "sizeCalculation");
+    }
   }
   getRemainingTTL(e) {
     return this.has(e, {
-      updateAgeOnHas: !1
-    }) ? 1 / 0 : 0;
+      updateAgeOnHas: !1,
+    })
+      ? 1 / 0
+      : 0;
   }
   initializeTTLTracking() {
     this.ttls = new f(this.max);
@@ -177,7 +245,7 @@ class g {
         t.unref && t.unref();
       }
     };
-    this.updateItemAge = e => {
+    this.updateItemAge = (e) => {
       this.starts[e] = 0 !== this.ttls[e] ? t.now() : 0;
     };
     let e = 0;
@@ -185,16 +253,25 @@ class g {
       const n = t.now();
       if (this.ttlResolution > 0) {
         e = n;
-        const t = setTimeout(() => e = 0, this.ttlResolution);
-        t.unref && t.unref();
+        const t = setTimeout(() => (e = 0), this.ttlResolution);
+        if (t.unref) {
+          t.unref();
+        }
       }
       return n;
     };
-    this.getRemainingTTL = t => {
+    this.getRemainingTTL = (t) => {
       const r = this.keyMap.get(t);
-      return undefined === r ? 0 : 0 === this.ttls[r] || 0 === this.starts[r] ? 1 / 0 : this.starts[r] + this.ttls[r] - (e || n());
+      return undefined === r
+        ? 0
+        : 0 === this.ttls[r] || 0 === this.starts[r]
+        ? 1 / 0
+        : this.starts[r] + this.ttls[r] - (e || n());
     };
-    this.isStale = t => 0 !== this.ttls[t] && 0 !== this.starts[t] && (e || n()) - this.starts[t] > this.ttls[t];
+    this.isStale = (t) =>
+      0 !== this.ttls[t] &&
+      0 !== this.starts[t] &&
+      (e || n()) - this.starts[t] > this.ttls[t];
   }
   updateItemAge(e) {}
   setItemTTL(e, t, n) {}
@@ -204,40 +281,56 @@ class g {
   initializeSizeTracking() {
     this.calculatedSize = 0;
     this.sizes = new f(this.max);
-    this.removeItemSize = e => {
+    this.removeItemSize = (e) => {
       this.calculatedSize -= this.sizes[e];
       this.sizes[e] = 0;
     };
     this.requireSize = (e, t, n, r) => {
       if (!p(n)) {
-        if (!r) throw new TypeError("invalid size value (must be positive integer)");
-        if ("function" != typeof r) throw new TypeError("sizeCalculation must be a function");
+        if (!r)
+          throw new TypeError("invalid size value (must be positive integer)");
+        if ("function" != typeof r)
+          throw new TypeError("sizeCalculation must be a function");
         n = r(t, e);
-        if (!p(n)) throw new TypeError("sizeCalculation return invalid (expect positive integer)");
+        if (!p(n))
+          throw new TypeError(
+            "sizeCalculation return invalid (expect positive integer)"
+          );
       }
       return n;
     };
     this.addItemSize = (e, t) => {
       this.sizes[e] = t;
       const n = this.maxSize - this.sizes[e];
-      for (; this.calculatedSize > n;) this.evict(!0);
+      for (; this.calculatedSize > n; ) this.evict(!0);
       this.calculatedSize += this.sizes[e];
     };
   }
   removeItemSize(e) {}
   addItemSize(e, t) {}
   requireSize(e, t, n, r) {
-    if (n || r) throw new TypeError("cannot set size without setting maxSize on cache");
+    if (n || r)
+      throw new TypeError("cannot set size without setting maxSize on cache");
   }
-  *indexes({
-    allowStale: e = this.allowStale
-  } = {}) {
-    if (this.size) for (let t = this.tail; this.isValidIndex(t) && (!e && this.isStale(t) || (yield t), t !== this.head);) t = this.prev[t];
+  *indexes({ allowStale: e = this.allowStale } = {}) {
+    if (this.size)
+      for (
+        let t = this.tail;
+        this.isValidIndex(t) &&
+        ((!e && this.isStale(t)) || (yield t), t !== this.head);
+
+      )
+        t = this.prev[t];
   }
-  *rindexes({
-    allowStale: e = this.allowStale
-  } = {}) {
-    if (this.size) for (let t = this.head; this.isValidIndex(t) && (!e && this.isStale(t) || (yield t), t !== this.tail);) t = this.next[t];
+  *rindexes({ allowStale: e = this.allowStale } = {}) {
+    if (this.size)
+      for (
+        let t = this.head;
+        this.isValidIndex(t) &&
+        ((!e && this.isStale(t)) || (yield t), t !== this.tail);
+
+      )
+        t = this.next[t];
   }
   isValidIndex(e) {
     return this.keyMap.get(this.keyList[e]) === e;
@@ -264,13 +357,17 @@ class g {
     return this.entries();
   }
   find(e, t = {}) {
-    for (const n of this.indexes()) if (e(this.valList[n], this.keyList[n], this)) return this.get(this.keyList[n], t);
+    for (const n of this.indexes())
+      if (e(this.valList[n], this.keyList[n], this))
+        return this.get(this.keyList[n], t);
   }
   forEach(e, t = this) {
-    for (const n of this.indexes()) e.call(t, this.valList[n], this.keyList[n], this);
+    for (const n of this.indexes())
+      e.call(t, this.valList[n], this.keyList[n], this);
   }
   rforEach(e, t = this) {
-    for (const n of this.rindexes()) e.call(t, this.valList[n], this.keyList[n], this);
+    for (const n of this.rindexes())
+      e.call(t, this.valList[n], this.keyList[n], this);
   }
   get prune() {
     c("prune", "purgeStale");
@@ -279,26 +376,32 @@ class g {
   purgeStale() {
     let e = !1;
     for (const t of this.rindexes({
-      allowStale: !0
-    })) this.isStale(t) && (this.delete(this.keyList[t]), e = !0);
+      allowStale: !0,
+    }))
+      if (this.isStale(t)) {
+        this.delete(this.keyList[t]);
+        e = !0;
+      }
     return e;
   }
   dump() {
     const e = [];
     for (const n of this.indexes({
-      allowStale: !0
+      allowStale: !0,
     })) {
       const r = this.keyList[n],
         o = this.valList[n],
         i = {
-          value: this.isBackgroundFetch(o) ? o.__staleWhileFetching : o
+          value: this.isBackgroundFetch(o) ? o.__staleWhileFetching : o,
         };
       if (this.ttls) {
         i.ttl = this.ttls[n];
         const e = t.now() - this.starts[n];
         i.start = Math.floor(Date.now() - e);
       }
-      this.sizes && (i.size = this.sizes[n]);
+      if (this.sizes) {
+        i.size = this.sizes[n];
+      }
       e.unshift([r, i]);
     }
     return e;
@@ -314,14 +417,18 @@ class g {
     }
   }
   dispose(e, t, n) {}
-  set(e, t, {
-    ttl: n = this.ttl,
-    start: r,
-    noDisposeOnSet: o = this.noDisposeOnSet,
-    size: i = 0,
-    sizeCalculation: s = this.sizeCalculation,
-    noUpdateTTL: a = this.noUpdateTTL
-  } = {}) {
+  set(
+    e,
+    t,
+    {
+      ttl: n = this.ttl,
+      start: r,
+      noDisposeOnSet: o = this.noDisposeOnSet,
+      size: i = 0,
+      sizeCalculation: s = this.sizeCalculation,
+      noUpdateTTL: a = this.noUpdateTTL,
+    } = {}
+  ) {
     i = this.requireSize(e, t, i, s);
     if (this.maxSize && i > this.maxSize) return this;
     let c = 0 === this.size ? undefined : this.keyMap.get(e);
@@ -338,16 +445,42 @@ class g {
       a = !1;
     } else {
       const n = this.valList[c];
-      t !== n && (this.isBackgroundFetch(n) ? n.__abortController.abort() : o || (this.dispose(n, e, "set"), this.disposeAfter && this.disposed.push([n, e, "set"])), this.removeItemSize(c), this.valList[c] = t, this.addItemSize(c, i));
+      if (t !== n) {
+        if (this.isBackgroundFetch(n)) {
+          n.__abortController.abort();
+        } else {
+          if (o) {
+            this.dispose(n, e, "set");
+            if (this.disposeAfter) {
+              this.disposed.push([n, e, "set"]);
+            }
+          }
+        }
+        this.removeItemSize(c);
+        this.valList[c] = t;
+        this.addItemSize(c, i);
+      }
       this.moveToTail(c);
     }
-    0 === n || 0 !== this.ttl || this.ttls || this.initializeTTLTracking();
-    a || this.setItemTTL(c, n, r);
-    if (this.disposeAfter) for (; this.disposed.length;) this.disposeAfter(...this.disposed.shift());
+    if (0 === n || 0 !== this.ttl || this.ttls) {
+      this.initializeTTLTracking();
+    }
+    if (a) {
+      this.setItemTTL(c, n, r);
+    }
+    if (this.disposeAfter)
+      for (; this.disposed.length; )
+        this.disposeAfter(...this.disposed.shift());
     return this;
   }
   newIndex() {
-    return 0 === this.size ? this.tail : this.size === this.max && 0 !== this.max ? this.evict(!1) : 0 !== this.free.length ? this.free.pop() : this.initialFill++;
+    return 0 === this.size
+      ? this.tail
+      : this.size === this.max && 0 !== this.max
+      ? this.evict(!1)
+      : 0 !== this.free.length
+      ? this.free.pop()
+      : this.initialFill++;
   }
   pop() {
     if (this.size) {
@@ -360,23 +493,32 @@ class g {
     const t = this.head,
       n = this.keyList[t],
       r = this.valList[t];
-    this.isBackgroundFetch(r) ? r.__abortController.abort() : (this.dispose(r, n, "evict"), this.disposeAfter && this.disposed.push([r, n, "evict"]));
+    if (this.isBackgroundFetch(r)) {
+      r.__abortController.abort();
+    } else {
+      this.dispose(r, n, "evict");
+      if (this.disposeAfter) {
+        this.disposed.push([r, n, "evict"]);
+      }
+    }
     this.removeItemSize(t);
-    e && (this.keyList[t] = null, this.valList[t] = null, this.free.push(t));
+    if (e) {
+      this.keyList[t] = null;
+      this.valList[t] = null;
+      this.free.push(t);
+    }
     this.head = this.next[t];
     this.keyMap.delete(n);
     this.size--;
     return t;
   }
-  has(e, {
-    updateAgeOnHas: t = this.updateAgeOnHas
-  } = {}) {
+  has(e, { updateAgeOnHas: t = this.updateAgeOnHas } = {}) {
     const n = this.keyMap.get(e);
-    return undefined !== n && !this.isStale(n) && (t && this.updateItemAge(n), !0);
+    return (
+      undefined !== n && !this.isStale(n) && (t && this.updateItemAge(n), !0)
+    );
   }
-  peek(e, {
-    allowStale: t = this.allowStale
-  } = {}) {
+  peek(e, { allowStale: t = this.allowStale } = {}) {
     const n = this.keyMap.get(e);
     if (undefined !== n && (t || !this.isStale(n))) {
       const e = this.valList[n];
@@ -390,39 +532,67 @@ class g {
       a = {
         signal: s.signal,
         options: r,
-        context: o
+        context: o,
       },
-      c = new Promise(t => t(this.fetchMethod(e, i, a))).then(t => (s.signal.aborted || this.set(e, t, a.options), t), n => {
-        this.valList[t] === c && (r.noDeleteOnFetchRejection && undefined !== c.__staleWhileFetching ? this.valList[t] = c.__staleWhileFetching : this.delete(e));
-        if (c.__returned === c) throw n;
-      });
+      c = new Promise((t) => t(this.fetchMethod(e, i, a))).then(
+        (t) => (s.signal.aborted || this.set(e, t, a.options), t),
+        (n) => {
+          if (this.valList[t] === c) {
+            if (
+              r.noDeleteOnFetchRejection &&
+              undefined !== c.__staleWhileFetching
+            ) {
+              this.valList[t] = c.__staleWhileFetching;
+            } else {
+              this.delete(e);
+            }
+          }
+          if (c.__returned === c) throw n;
+        }
+      );
     c.__abortController = s;
     c.__staleWhileFetching = i;
     c.__returned = null;
-    undefined === t ? (this.set(e, c, a.options), t = this.keyMap.get(e)) : this.valList[t] = c;
+    if (undefined === t) {
+      this.set(e, c, a.options);
+      t = this.keyMap.get(e);
+    } else {
+      this.valList[t] = c;
+    }
     return c;
   }
   isBackgroundFetch(e) {
-    return e && "object" == typeof e && "function" == typeof e.then && Object.prototype.hasOwnProperty.call(e, "__staleWhileFetching") && Object.prototype.hasOwnProperty.call(e, "__returned") && (e.__returned === e || null === e.__returned);
+    return (
+      e &&
+      "object" == typeof e &&
+      "function" == typeof e.then &&
+      Object.prototype.hasOwnProperty.call(e, "__staleWhileFetching") &&
+      Object.prototype.hasOwnProperty.call(e, "__returned") &&
+      (e.__returned === e || null === e.__returned)
+    );
   }
-  async fetch(e, {
-    allowStale: t = this.allowStale,
-    updateAgeOnGet: n = this.updateAgeOnGet,
-    noDeleteOnStaleGet: r = this.noDeleteOnStaleGet,
-    ttl: o = this.ttl,
-    noDisposeOnSet: i = this.noDisposeOnSet,
-    size: s = 0,
-    sizeCalculation: a = this.sizeCalculation,
-    noUpdateTTL: c = this.noUpdateTTL,
-    noDeleteOnFetchRejection: l = this.noDeleteOnFetchRejection,
-    fetchContext: u = this.fetchContext,
-    forceRefresh: d = !1
-  } = {}) {
-    if (!this.fetchMethod) return this.get(e, {
-      allowStale: t,
-      updateAgeOnGet: n,
-      noDeleteOnStaleGet: r
-    });
+  async fetch(
+    e,
+    {
+      allowStale: t = this.allowStale,
+      updateAgeOnGet: n = this.updateAgeOnGet,
+      noDeleteOnStaleGet: r = this.noDeleteOnStaleGet,
+      ttl: o = this.ttl,
+      noDisposeOnSet: i = this.noDisposeOnSet,
+      size: s = 0,
+      sizeCalculation: a = this.sizeCalculation,
+      noUpdateTTL: c = this.noUpdateTTL,
+      noDeleteOnFetchRejection: l = this.noDeleteOnFetchRejection,
+      fetchContext: u = this.fetchContext,
+      forceRefresh: d = !1,
+    } = {}
+  ) {
+    if (!this.fetchMethod)
+      return this.get(e, {
+        allowStale: t,
+        updateAgeOnGet: n,
+        noDeleteOnStaleGet: r,
+      });
     const p = {
       allowStale: t,
       updateAgeOnGet: n,
@@ -432,38 +602,55 @@ class g {
       size: s,
       sizeCalculation: a,
       noUpdateTTL: c,
-      noDeleteOnFetchRejection: l
+      noDeleteOnFetchRejection: l,
     };
     let h = this.keyMap.get(e);
     if (undefined === h) {
       const t = this.backgroundFetch(e, h, p, u);
-      return t.__returned = t;
+      return (t.__returned = t);
     }
     {
       const r = this.valList[h];
-      if (this.isBackgroundFetch(r)) return t && undefined !== r.__staleWhileFetching ? r.__staleWhileFetching : r.__returned = r;
+      if (this.isBackgroundFetch(r))
+        return t && undefined !== r.__staleWhileFetching
+          ? r.__staleWhileFetching
+          : (r.__returned = r);
       if (!d && !this.isStale(h)) {
         this.moveToTail(h);
-        n && this.updateItemAge(h);
+        if (n) {
+          this.updateItemAge(h);
+        }
         return r;
       }
       const o = this.backgroundFetch(e, h, p, u);
-      return t && undefined !== o.__staleWhileFetching ? o.__staleWhileFetching : o.__returned = o;
+      return t && undefined !== o.__staleWhileFetching
+        ? o.__staleWhileFetching
+        : (o.__returned = o);
     }
   }
-  get(e, {
-    allowStale: t = this.allowStale,
-    updateAgeOnGet: n = this.updateAgeOnGet,
-    noDeleteOnStaleGet: r = this.noDeleteOnStaleGet
-  } = {}) {
+  get(
+    e,
+    {
+      allowStale: t = this.allowStale,
+      updateAgeOnGet: n = this.updateAgeOnGet,
+      noDeleteOnStaleGet: r = this.noDeleteOnStaleGet,
+    } = {}
+  ) {
     const o = this.keyMap.get(e);
     if (undefined !== o) {
       const i = this.valList[o],
         s = this.isBackgroundFetch(i);
-      if (this.isStale(o)) return s ? t ? i.__staleWhileFetching : undefined : (r || this.delete(e), t ? i : undefined);
+      if (this.isStale(o))
+        return s
+          ? t
+            ? i.__staleWhileFetching
+            : undefined
+          : (r || this.delete(e), t ? i : undefined);
       if (s) return;
       this.moveToTail(o);
-      n && this.updateItemAge(o);
+      if (n) {
+        this.updateItemAge(o);
+      }
       return i;
     }
   }
@@ -472,7 +659,15 @@ class g {
     this.next[e] = t;
   }
   moveToTail(e) {
-    e !== this.tail && (e === this.head ? this.head = this.next[e] : this.connect(this.prev[e], this.next[e]), this.connect(this.tail, e), this.tail = e);
+    if (e !== this.tail) {
+      if (e === this.head) {
+        this.head = this.next[e];
+      } else {
+        this.connect(this.prev[e], this.next[e]);
+      }
+      this.connect(this.tail, e);
+      this.tail = e;
+    }
   }
   get del() {
     c("del", "delete");
@@ -484,45 +679,74 @@ class g {
       const n = this.keyMap.get(e);
       if (undefined !== n) {
         t = !0;
-        if (1 === this.size) this.clear();else {
+        if (1 === this.size) this.clear();
+        else {
           this.removeItemSize(n);
           const t = this.valList[n];
-          this.isBackgroundFetch(t) ? t.__abortController.abort() : (this.dispose(t, e, "delete"), this.disposeAfter && this.disposed.push([t, e, "delete"]));
+          if (this.isBackgroundFetch(t)) {
+            t.__abortController.abort();
+          } else {
+            this.dispose(t, e, "delete");
+            if (this.disposeAfter) {
+              this.disposed.push([t, e, "delete"]);
+            }
+          }
           this.keyMap.delete(e);
           this.keyList[n] = null;
           this.valList[n] = null;
-          n === this.tail ? this.tail = this.prev[n] : n === this.head ? this.head = this.next[n] : (this.next[this.prev[n]] = this.next[n], this.prev[this.next[n]] = this.prev[n]);
+          if (n === this.tail) {
+            this.tail = this.prev[n];
+          } else {
+            if (n === this.head) {
+              this.head = this.next[n];
+            } else {
+              this.next[this.prev[n]] = this.next[n];
+              this.prev[this.next[n]] = this.prev[n];
+            }
+          }
           this.size--;
           this.free.push(n);
         }
       }
     }
-    if (this.disposed) for (; this.disposed.length;) this.disposeAfter(...this.disposed.shift());
+    if (this.disposed)
+      for (; this.disposed.length; )
+        this.disposeAfter(...this.disposed.shift());
     return t;
   }
   clear() {
     for (const e of this.rindexes({
-      allowStale: !0
+      allowStale: !0,
     })) {
       const t = this.valList[e];
-      if (this.isBackgroundFetch(t)) t.__abortController.abort();else {
+      if (this.isBackgroundFetch(t)) t.__abortController.abort();
+      else {
         const n = this.keyList[e];
         this.dispose(t, n, "delete");
-        this.disposeAfter && this.disposed.push([t, n, "delete"]);
+        if (this.disposeAfter) {
+          this.disposed.push([t, n, "delete"]);
+        }
       }
     }
     this.keyMap.clear();
     this.valList.fill(null);
     this.keyList.fill(null);
-    this.ttls && (this.ttls.fill(0), this.starts.fill(0));
-    this.sizes && this.sizes.fill(0);
+    if (this.ttls) {
+      this.ttls.fill(0);
+      this.starts.fill(0);
+    }
+    if (this.sizes) {
+      this.sizes.fill(0);
+    }
     this.head = 0;
     this.tail = 0;
     this.initialFill = 1;
     this.free.length = 0;
     this.calculatedSize = 0;
     this.size = 0;
-    if (this.disposed) for (; this.disposed.length;) this.disposeAfter(...this.disposed.shift());
+    if (this.disposed)
+      for (; this.disposed.length; )
+        this.disposeAfter(...this.disposed.shift());
   }
   get reset() {
     c("reset", "clear");
@@ -532,12 +756,8 @@ class g {
     ((e, t) => {
       const n = "LRU_CACHE_PROPERTY_length";
       if (u(n)) {
-        const {
-            prototype: t
-          } = g,
-          {
-            get: r
-          } = Object.getOwnPropertyDescriptor(t, e);
+        const { prototype: t } = g,
+          { get: r } = Object.getOwnPropertyDescriptor(t, e);
         d(n, "length property", "cache.size", r);
       }
     })("length");

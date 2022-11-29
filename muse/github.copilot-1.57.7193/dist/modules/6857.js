@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 exports.extensionFileSystem = undefined;
 const r = require(9496);
@@ -12,5 +12,5 @@ exports.extensionFileSystem = {
   },
   stat: async function (e) {
     return await r.workspace.fs.stat(r.Uri.file(e));
-  }
+  },
 };

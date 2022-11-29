@@ -14,12 +14,24 @@ exports.qP = function (e) {
       duration: e.data.duration,
       success: o,
       resultCode: o ? "0" : "1",
-      dependencyTypeName: "mysql"
+      dependencyTypeName: "mysql",
     });
   });
 };
 exports.wp = function (e, n) {
-  e ? (0 === o.length && r.channel.subscribe("mysql", exports.qP), o.push(n)) : 0 === (o = o.filter(function (e) {
-    return e != n;
-  })).length && r.channel.unsubscribe("mysql", exports.qP);
+  if (e) {
+    if (0 === o.length) {
+      r.channel.subscribe("mysql", exports.qP);
+    }
+    o.push(n);
+  } else {
+    if (
+      0 ===
+      (o = o.filter(function (e) {
+        return e != n;
+      })).length
+    ) {
+      r.channel.unsubscribe("mysql", exports.qP);
+    }
+  }
 };

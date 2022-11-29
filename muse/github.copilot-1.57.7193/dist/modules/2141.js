@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 const r = require(3487),
   o = {
@@ -18,6 +18,6 @@ const r = require(3487),
     json: new r.Name("json"),
     jsonPos: new r.Name("jsonPos"),
     jsonLen: new r.Name("jsonLen"),
-    jsonPart: new r.Name("jsonPart")
+    jsonPart: new r.Name("jsonPart"),
   };
 exports.default = o;

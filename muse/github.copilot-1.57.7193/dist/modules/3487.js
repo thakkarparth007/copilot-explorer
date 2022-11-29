@@ -1,7 +1,24 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.or = exports.and = exports.not = exports.CodeGen = exports.operators = exports.varKinds = exports.ValueScopeName = exports.ValueScope = exports.Scope = exports.Name = exports.regexpCode = exports.stringify = exports.getProperty = exports.nil = exports.strConcat = exports.str = exports._ = undefined;
+exports.or =
+  exports.and =
+  exports.not =
+  exports.CodeGen =
+  exports.operators =
+  exports.varKinds =
+  exports.ValueScopeName =
+  exports.ValueScope =
+  exports.Scope =
+  exports.Name =
+  exports.regexpCode =
+  exports.stringify =
+  exports.getProperty =
+  exports.nil =
+  exports.strConcat =
+  exports.str =
+  exports._ =
+    undefined;
 const r = require(7023),
   o = require(8490);
 var i = require(7023);
@@ -28,7 +45,7 @@ exports.operators = {
   NOT: new r._Code("!"),
   OR: new r._Code("||"),
   AND: new r._Code("&&"),
-  ADD: new r._Code("+")
+  ADD: new r._Code("+"),
 };
 class a {
   optimizeNodes() {
@@ -45,17 +62,16 @@ class c extends a {
     this.name = t;
     this.rhs = n;
   }
-  render({
-    es5: e,
-    _n: t
-  }) {
+  render({ es5: e, _n: t }) {
     const n = e ? o.varKinds.var : this.varKind,
       r = undefined === this.rhs ? "" : ` = ${this.rhs}`;
     return `${n} ${this.name}${r};` + t;
   }
   optimizeNames(e, t) {
     if (e[this.name.str]) {
-      this.rhs && (this.rhs = O(this.rhs, e, t));
+      if (this.rhs) {
+        this.rhs = O(this.rhs, e, t);
+      }
       return this;
     }
   }
@@ -70,9 +86,7 @@ class l extends a {
     this.rhs = t;
     this.sideEffects = n;
   }
-  render({
-    _n: e
-  }) {
+  render({ _n: e }) {
     return `${this.lhs} = ${this.rhs};` + e;
   }
   optimizeNames(e, t) {
@@ -82,9 +96,14 @@ class l extends a {
     }
   }
   get names() {
-    return A(this.lhs instanceof r.Name ? {} : {
-      ...this.lhs.names
-    }, this.rhs);
+    return A(
+      this.lhs instanceof r.Name
+        ? {}
+        : {
+            ...this.lhs.names,
+          },
+      this.rhs
+    );
   }
 }
 class u extends l {
@@ -92,9 +111,7 @@ class u extends l {
     super(e, n, r);
     this.op = t;
   }
-  render({
-    _n: e
-  }) {
+  render({ _n: e }) {
     return `${this.lhs} ${this.op}= ${this.rhs};` + e;
   }
 }
@@ -104,9 +121,7 @@ class d extends a {
     this.label = e;
     this.names = {};
   }
-  render({
-    _n: e
-  }) {
+  render({ _n: e }) {
     return `${this.label}:` + e;
   }
 }
@@ -116,9 +131,7 @@ class p extends a {
     this.label = e;
     this.names = {};
   }
-  render({
-    _n: e
-  }) {
+  render({ _n: e }) {
     return `break${this.label ? ` ${this.label}` : ""};` + e;
   }
 }
@@ -127,9 +140,7 @@ class h extends a {
     super();
     this.error = e;
   }
-  render({
-    _n: e
-  }) {
+  render({ _n: e }) {
     return `throw ${this.error};` + e;
   }
   get names() {
@@ -141,9 +152,7 @@ class f extends a {
     super();
     this.code = e;
   }
-  render({
-    _n: e
-  }) {
+  render({ _n: e }) {
     return `${this.code};` + e;
   }
   optimizeNodes() {
@@ -166,24 +175,31 @@ class m extends a {
     return this.nodes.reduce((t, n) => t + n.render(e), "");
   }
   optimizeNodes() {
-    const {
-      nodes: e
-    } = this;
+    const { nodes: e } = this;
     let t = e.length;
-    for (; t--;) {
+    for (; t--; ) {
       const n = e[t].optimizeNodes();
-      Array.isArray(n) ? e.splice(t, 1, ...n) : n ? e[t] = n : e.splice(t, 1);
+      if (Array.isArray(n)) {
+        e.splice(t, 1, ...n);
+      } else {
+        if (n) {
+          e[t] = n;
+        } else {
+          e.splice(t, 1);
+        }
+      }
     }
     return e.length > 0 ? this : undefined;
   }
   optimizeNames(e, t) {
-    const {
-      nodes: n
-    } = this;
+    const { nodes: n } = this;
     let r = n.length;
-    for (; r--;) {
+    for (; r--; ) {
       const o = n[r];
-      o.optimizeNames(e, t) || (N(e, o.names), n.splice(r, 1));
+      if (o.optimizeNames(e, t)) {
+        N(e, o.names);
+        n.splice(r, 1);
+      }
     }
     return n.length > 0 ? this : undefined;
   }
@@ -206,7 +222,9 @@ class v extends g {
   }
   render(e) {
     let t = `if(${this.condition})` + super.render(e);
-    this.else && (t += "else " + this.else.render(e));
+    if (this.else) {
+      t += "else " + this.else.render(e);
+    }
     return t;
   }
   optimizeNodes() {
@@ -218,17 +236,33 @@ class v extends g {
       const e = t.optimizeNodes();
       t = this.else = Array.isArray(e) ? new y(e) : e;
     }
-    return t ? !1 === e ? t instanceof v ? t : t.nodes : this.nodes.length ? this : new v(not(e), t instanceof v ? [t] : t.nodes) : !1 !== e && this.nodes.length ? this : undefined;
+    return t
+      ? !1 === e
+        ? t instanceof v
+          ? t
+          : t.nodes
+        : this.nodes.length
+        ? this
+        : new v(not(e), t instanceof v ? [t] : t.nodes)
+      : !1 !== e && this.nodes.length
+      ? this
+      : undefined;
   }
   optimizeNames(e, t) {
     var n;
-    this.else = null === (n = this.else) || undefined === n ? undefined : n.optimizeNames(e, t);
-    if (super.optimizeNames(e, t) || this.else) return this.condition = O(this.condition, e, t), this;
+    this.else =
+      null === (n = this.else) || undefined === n
+        ? undefined
+        : n.optimizeNames(e, t);
+    if (super.optimizeNames(e, t) || this.else)
+      return (this.condition = O(this.condition, e, t)), this;
   }
   get names() {
     const e = super.names;
     A(e, this.condition);
-    this.else && P(e, this.else.names);
+    if (this.else) {
+      P(e, this.else.names);
+    }
     return e;
   }
 }
@@ -263,11 +297,7 @@ class x extends b {
   }
   render(e) {
     const t = e.es5 ? o.varKinds.var : this.varKind,
-      {
-        name: n,
-        from: r,
-        to: i
-      } = this;
+      { name: n, from: r, to: i } = this;
     return `for(${t} ${n}=${r}; ${n}<${i}; ${n}++)` + super.render(e);
   }
   get names() {
@@ -284,7 +314,10 @@ class E extends b {
     this.iterable = r;
   }
   render(e) {
-    return `for(${this.varKind} ${this.name} ${this.loop} ${this.iterable})` + super.render(e);
+    return (
+      `for(${this.varKind} ${this.name} ${this.loop} ${this.iterable})` +
+      super.render(e)
+    );
   }
   optimizeNames(e, t) {
     if (super.optimizeNames(e, t)) {
@@ -304,7 +337,10 @@ class C extends g {
     this.async = n;
   }
   render(e) {
-    return `${this.async ? "async " : ""}function ${this.name}(${this.args})` + super.render(e);
+    return (
+      `${this.async ? "async " : ""}function ${this.name}(${this.args})` +
+      super.render(e)
+    );
   }
 }
 C.kind = "func";
@@ -317,28 +353,44 @@ S.kind = "return";
 class T extends g {
   render(e) {
     let t = "try" + super.render(e);
-    this.catch && (t += this.catch.render(e));
-    this.finally && (t += this.finally.render(e));
+    if (this.catch) {
+      t += this.catch.render(e);
+    }
+    if (this.finally) {
+      t += this.finally.render(e);
+    }
     return t;
   }
   optimizeNodes() {
     var e, t;
     super.optimizeNodes();
-    null === (e = this.catch) || undefined === e || e.optimizeNodes();
-    null === (t = this.finally) || undefined === t || t.optimizeNodes();
+    if (null === (e = this.catch) || undefined === e) {
+      e.optimizeNodes();
+    }
+    if (null === (t = this.finally) || undefined === t) {
+      t.optimizeNodes();
+    }
     return this;
   }
   optimizeNames(e, t) {
     var n, r;
     super.optimizeNames(e, t);
-    null === (n = this.catch) || undefined === n || n.optimizeNames(e, t);
-    null === (r = this.finally) || undefined === r || r.optimizeNames(e, t);
+    if (null === (n = this.catch) || undefined === n) {
+      n.optimizeNames(e, t);
+    }
+    if (null === (r = this.finally) || undefined === r) {
+      r.optimizeNames(e, t);
+    }
     return this;
   }
   get names() {
     const e = super.names;
-    this.catch && P(e, this.catch.names);
-    this.finally && P(e, this.finally.names);
+    if (this.catch) {
+      P(e, this.catch.names);
+    }
+    if (this.finally) {
+      P(e, this.finally.names);
+    }
     return e;
   }
 }
@@ -365,7 +417,23 @@ function A(e, t) {
   return t instanceof r._CodeOrName ? P(e, t.names) : e;
 }
 function O(e, t, n) {
-  return e instanceof r.Name ? i(e) : (o = e) instanceof r._Code && o._items.some(e => e instanceof r.Name && 1 === t[e.str] && undefined !== n[e.str]) ? new r._Code(e._items.reduce((e, t) => (t instanceof r.Name && (t = i(t)), t instanceof r._Code ? e.push(...t._items) : e.push(t), e), [])) : e;
+  return e instanceof r.Name
+    ? i(e)
+    : (o = e) instanceof r._Code &&
+      o._items.some(
+        (e) => e instanceof r.Name && 1 === t[e.str] && undefined !== n[e.str]
+      )
+    ? new r._Code(
+        e._items.reduce(
+          (e, t) => (
+            t instanceof r.Name && (t = i(t)),
+            t instanceof r._Code ? e.push(...t._items) : e.push(t),
+            e
+          ),
+          []
+        )
+      )
+    : e;
   var o;
   function i(e) {
     const r = n[e.str];
@@ -376,7 +444,9 @@ function N(e, t) {
   for (const n in t) e[n] = (e[n] || 0) - (t[n] || 0);
 }
 function not(e) {
-  return "boolean" == typeof e || "number" == typeof e || null === e ? !e : r._`!${D(e)}`;
+  return "boolean" == typeof e || "number" == typeof e || null === e
+    ? !e
+    : r._`!${D(e)}`;
 }
 I.kind = "finally";
 exports.CodeGen = class {
@@ -386,11 +456,11 @@ exports.CodeGen = class {
     this._constants = {};
     this.opts = {
       ...t,
-      _n: t.lines ? "\n" : ""
+      _n: t.lines ? "\n" : "",
     };
     this._extScope = e;
     this._scope = new o.Scope({
-      parent: e
+      parent: e,
     });
     this._nodes = [new _()];
   }
@@ -419,7 +489,9 @@ exports.CodeGen = class {
   }
   _def(e, t, n, r) {
     const o = this._scope.toName(t);
-    undefined !== n && r && (this._constants[o.str] = n);
+    if (undefined !== n && r) {
+      this._constants[o.str] = n;
+    }
     this._leafNode(new c(e, o, n));
     return o;
   }
@@ -439,22 +511,35 @@ exports.CodeGen = class {
     return this._leafNode(new u(e, exports.operators.ADD, n));
   }
   code(e) {
-    "function" == typeof e ? e() : e !== r.nil && this._leafNode(new f(e));
+    if ("function" == typeof e) {
+      e();
+    } else {
+      if (e !== r.nil) {
+        this._leafNode(new f(e));
+      }
+    }
     return this;
   }
   object(...e) {
     const t = ["{"];
     for (const [n, o] of e) {
-      t.length > 1 && t.push(",");
+      if (t.length > 1) {
+        t.push(",");
+      }
       t.push(n);
-      (n !== o || this.opts.es5) && (t.push(":"), r.addCodeArg(t, o));
+      if (n !== o || this.opts.es5) {
+        t.push(":");
+        r.addCodeArg(t, o);
+      }
     }
     t.push("}");
     return new r._Code(t);
   }
   if(e, t, n) {
     this._blockNode(new v(e));
-    if (t && n) this.code(t).else().code(n).endIf();else if (t) this.code(t).endIf();else if (n) throw new Error('CodeGen: "else" body without "then" body');
+    if (t && n) this.code(t).else().code(n).endIf();
+    else if (t) this.code(t).endIf();
+    else if (n) throw new Error('CodeGen: "else" body without "then" body');
     return this;
   }
   elseIf(e) {
@@ -468,7 +553,9 @@ exports.CodeGen = class {
   }
   _for(e, t) {
     this._blockNode(e);
-    t && this.code(t).endFor();
+    if (t) {
+      this.code(t).endFor();
+    }
     return this;
   }
   for(e, t) {
@@ -482,7 +569,7 @@ exports.CodeGen = class {
     const s = this._scope.toName(e);
     if (this.opts.es5) {
       const e = t instanceof r.Name ? t : this.var("_arr", t);
-      return this.forRange("_i", 0, r._`${e}.length`, t => {
+      return this.forRange("_i", 0, r._`${e}.length`, (t) => {
         this.var(s, r._`${e}[${t}]`);
         n(s);
       });
@@ -490,7 +577,8 @@ exports.CodeGen = class {
     return this._for(new E("of", i, s, t), () => n(s));
   }
   forIn(e, t, n, i = this.opts.es5 ? o.varKinds.var : o.varKinds.const) {
-    if (this.opts.ownProperties) return this.forOf(e, r._`Object.keys(${t})`, n);
+    if (this.opts.ownProperties)
+      return this.forOf(e, r._`Object.keys(${t})`, n);
     const s = this._scope.toName(e);
     return this._for(new E("in", i, s, t), () => n(s));
   }
@@ -507,19 +595,24 @@ exports.CodeGen = class {
     const t = new S();
     this._blockNode(t);
     this.code(e);
-    if (1 !== t.nodes.length) throw new Error('CodeGen: "return" should have one node');
+    if (1 !== t.nodes.length)
+      throw new Error('CodeGen: "return" should have one node');
     return this._endBlockNode(S);
   }
   try(e, t, n) {
-    if (!t && !n) throw new Error('CodeGen: "try" without "catch" and "finally"');
+    if (!t && !n)
+      throw new Error('CodeGen: "try" without "catch" and "finally"');
     const r = new T();
     this._blockNode(r);
     this.code(e);
     if (t) {
       const e = this.name("e");
-      this._currNode = r.catch = new k(e), t(e);
+      (this._currNode = r.catch = new k(e)), t(e);
     }
-    n && (this._currNode = r.finally = new I(), this.code(n));
+    if (n) {
+      this._currNode = r.finally = new I();
+      this.code(n);
+    }
     return this._endBlockNode(k, I);
   }
   throw(e) {
@@ -527,27 +620,33 @@ exports.CodeGen = class {
   }
   block(e, t) {
     this._blockStarts.push(this._nodes.length);
-    e && this.code(e).endBlock(t);
+    if (e) {
+      this.code(e).endBlock(t);
+    }
     return this;
   }
   endBlock(e) {
     const t = this._blockStarts.pop();
-    if (undefined === t) throw new Error("CodeGen: not in self-balancing block");
+    if (undefined === t)
+      throw new Error("CodeGen: not in self-balancing block");
     const n = this._nodes.length - t;
-    if (n < 0 || undefined !== e && n !== e) throw new Error(`CodeGen: wrong number of nodes: ${n} vs ${e} expected`);
+    if (n < 0 || (undefined !== e && n !== e))
+      throw new Error(`CodeGen: wrong number of nodes: ${n} vs ${e} expected`);
     this._nodes.length = t;
     return this;
   }
   func(e, t = r.nil, n, o) {
     this._blockNode(new C(e, t, n));
-    o && this.code(o).endFunc();
+    if (o) {
+      this.code(o).endFunc();
+    }
     return this;
   }
   endFunc() {
     return this._endBlockNode(C);
   }
   optimize(e = 1) {
-    for (; e-- > 0;) {
+    for (; e-- > 0; ) {
       this._root.optimizeNodes();
       this._root.optimizeNames(this._root.names, this._constants);
     }
@@ -562,11 +661,13 @@ exports.CodeGen = class {
   }
   _endBlockNode(e, t) {
     const n = this._currNode;
-    if (n instanceof e || t && n instanceof t) {
+    if (n instanceof e || (t && n instanceof t)) {
       this._nodes.pop();
       return this;
     }
-    throw new Error(`CodeGen: not in block "${t ? `${e.kind}/${t.kind}` : e.kind}"`);
+    throw new Error(
+      `CodeGen: not in block "${t ? `${e.kind}/${t.kind}` : e.kind}"`
+    );
   }
   _elseNode(e) {
     const t = this._currNode;
@@ -593,7 +694,8 @@ exports.and = function (...e) {
 };
 const L = $(exports.operators.OR);
 function $(e) {
-  return (t, n) => t === r.nil ? n : n === r.nil ? t : r._`${D(t)} ${e} ${D(n)}`;
+  return (t, n) =>
+    t === r.nil ? n : n === r.nil ? t : r._`${D(t)} ${e} ${D(n)}`;
 }
 function D(e) {
   return e instanceof r.Name ? e : r._`(${e})`;

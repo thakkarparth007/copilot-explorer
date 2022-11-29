@@ -1,7 +1,7 @@
 var r = require(5290),
   o = require(5740),
   i = require(894),
-  s = function () {
+  s = (function () {
     function e() {}
     e.createEnvelope = function (t, n, i, s, a) {
       var c = null;
@@ -28,26 +28,42 @@ var r = require(5290),
           c = e.createAvailabilityData(t);
       }
       if (i && r.domainSupportsProperties(c.baseData)) {
-        if (c && c.baseData) if (c.baseData.properties) for (var l in i) c.baseData.properties[l] || (c.baseData.properties[l] = i[l]);else c.baseData.properties = i;
+        if (c && c.baseData)
+          if (c.baseData.properties) {
+            for (var l in i)
+              if (c.baseData.properties[l]) {
+                c.baseData.properties[l] = i[l];
+              }
+          } else c.baseData.properties = i;
         c.baseData.properties = o.validateStringMap(c.baseData.properties);
       }
-      var u = a && a.instrumentationKey || "",
+      var u = (a && a.instrumentationKey) || "",
         d = new r.Envelope();
       d.data = c;
       d.iKey = u;
-      d.name = "Microsoft.ApplicationInsights." + u.replace(/-/g, "") + "." + c.baseType.substr(0, c.baseType.length - 4);
+      d.name =
+        "Microsoft.ApplicationInsights." +
+        u.replace(/-/g, "") +
+        "." +
+        c.baseType.substr(0, c.baseType.length - 4);
       d.tags = this.getTags(s, t.tagOverrides);
       d.time = new Date().toISOString();
       d.ver = 1;
       d.sampleRate = a ? a.samplingPercentage : 100;
-      n === r.TelemetryType.Metric && (d.sampleRate = 100);
+      if (n === r.TelemetryType.Metric) {
+        d.sampleRate = 100;
+      }
       return d;
     };
     e.createTraceData = function (e) {
       var t = new r.MessageData();
       t.message = e.message;
       t.properties = e.properties;
-      isNaN(e.severity) ? t.severityLevel = r.SeverityLevel.Information : t.severityLevel = e.severity;
+      if (isNaN(e.severity)) {
+        t.severityLevel = r.SeverityLevel.Information;
+      } else {
+        t.severityLevel = e.severity;
+      }
       var n = new r.Data();
       n.baseType = r.telemetryTypeToBaseType(r.TelemetryType.Trace);
       n.baseData = t;
@@ -55,7 +71,9 @@ var r = require(5290),
     };
     e.createDependencyData = function (e) {
       var t = new r.RemoteDependencyData();
-      "string" == typeof e.name && (t.name = e.name.length > 1024 ? e.name.slice(0, 1021) + "..." : e.name);
+      if ("string" == typeof e.name) {
+        t.name = e.name.length > 1024 ? e.name.slice(0, 1021) + "..." : e.name;
+      }
       t.data = e.data;
       t.target = e.target;
       t.duration = o.msToTimeSpan(e.duration);
@@ -63,7 +81,11 @@ var r = require(5290),
       t.type = e.dependencyTypeName;
       t.properties = e.properties;
       t.resultCode = e.resultCode ? e.resultCode + "" : "";
-      e.id ? t.id = e.id : t.id = o.w3cTraceId();
+      if (e.id) {
+        t.id = e.id;
+      } else {
+        t.id = o.w3cTraceId();
+      }
       var n = new r.Data();
       n.baseType = r.telemetryTypeToBaseType(r.TelemetryType.Dependency);
       n.baseData = t;
@@ -82,7 +104,11 @@ var r = require(5290),
     e.createExceptionData = function (e) {
       var t = new r.ExceptionData();
       t.properties = e.properties;
-      isNaN(e.severity) ? t.severityLevel = r.SeverityLevel.Error : t.severityLevel = e.severity;
+      if (isNaN(e.severity)) {
+        t.severityLevel = r.SeverityLevel.Error;
+      } else {
+        t.severityLevel = e.severity;
+      }
       t.measurements = e.measurements;
       t.exceptions = [];
       var n = e.exception.stack,
@@ -99,7 +125,11 @@ var r = require(5290),
     };
     e.createRequestData = function (e) {
       var t = new r.RequestData();
-      e.id ? t.id = e.id : t.id = o.w3cTraceId();
+      if (e.id) {
+        t.id = e.id;
+      } else {
+        t.id = o.w3cTraceId();
+      }
       t.name = e.name;
       t.url = e.url;
       t.source = e.source;
@@ -132,7 +162,11 @@ var r = require(5290),
     };
     e.createAvailabilityData = function (e) {
       var t = new r.AvailabilityData();
-      e.id ? t.id = e.id : t.id = o.w3cTraceId();
+      if (e.id) {
+        t.id = e.id;
+      } else {
+        t.id = o.w3cTraceId();
+      }
       t.name = e.name;
       t.duration = o.msToTimeSpan(e.duration);
       t.success = e.success;
@@ -150,7 +184,12 @@ var r = require(5290),
         r = {};
       if (e && e.tags) for (var o in e.tags) r[o] = e.tags[o];
       if (t) for (var o in t) r[o] = t[o];
-      n && (r[e.keys.operationId] = r[e.keys.operationId] || n.operation.id, r[e.keys.operationName] = r[e.keys.operationName] || n.operation.name, r[e.keys.operationParentId] = r[e.keys.operationParentId] || n.operation.parentId);
+      if (n) {
+        r[e.keys.operationId] = r[e.keys.operationId] || n.operation.id;
+        r[e.keys.operationName] = r[e.keys.operationName] || n.operation.name;
+        r[e.keys.operationParentId] =
+          r[e.keys.operationParentId] || n.operation.parentId;
+      }
       return r;
     };
     e.parseStack = function (e) {
@@ -166,30 +205,35 @@ var r = require(5290),
             t.push(c);
           }
         }
-        if (o > 32768) for (var l = 0, u = t.length - 1, d = 0, p = l, h = u; l < u;) {
-          if ((d += t[l].sizeInBytes + t[u].sizeInBytes) > 32768) {
-            var f = h - p + 1;
-            t.splice(p, f);
-            break;
+        if (o > 32768)
+          for (var l = 0, u = t.length - 1, d = 0, p = l, h = u; l < u; ) {
+            if ((d += t[l].sizeInBytes + t[u].sizeInBytes) > 32768) {
+              var f = h - p + 1;
+              t.splice(p, f);
+              break;
+            }
+            p = l;
+            h = u;
+            l++;
+            u--;
           }
-          p = l;
-          h = u;
-          l++;
-          u--;
-        }
       }
       return t;
     };
     return e;
-  }(),
-  a = function () {
+  })(),
+  a = (function () {
     function e(t, n) {
       this.sizeInBytes = 0;
       this.level = n;
       this.method = "<no_method>";
       this.assembly = o.trim(t);
       var r = t.match(e.regex);
-      r && r.length >= 5 && (this.method = o.trim(r[2]) || this.method, this.fileName = o.trim(r[4]) || "<no_filename>", this.line = parseInt(r[5]) || 0);
+      if (r && r.length >= 5) {
+        this.method = o.trim(r[2]) || this.method;
+        this.fileName = o.trim(r[4]) || "<no_filename>";
+        this.line = parseInt(r[5]) || 0;
+      }
       this.sizeInBytes += this.method.length;
       this.sizeInBytes += this.fileName.length;
       this.sizeInBytes += this.assembly.length;
@@ -197,8 +241,9 @@ var r = require(5290),
       this.sizeInBytes += this.level.toString().length;
       this.sizeInBytes += this.line.toString().length;
     }
-    e.regex = /^([\s]+at)?(.*?)(\@|\s\(|\s)([^\(\@\n]+):([0-9]+):([0-9]+)(\)?)$/;
+    e.regex =
+      /^([\s]+at)?(.*?)(\@|\s\(|\s)([^\(\@\n]+):([0-9]+):([0-9]+)(\)?)$/;
     e.baseSize = 58;
     return e;
-  }();
+  })();
 module.exports = s;

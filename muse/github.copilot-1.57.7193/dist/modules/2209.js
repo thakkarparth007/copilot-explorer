@@ -10,8 +10,8 @@ r.format.Hex = {
   parse: function (e) {
     var t = i.parse(e);
     return o.create({
-      ciphertext: t
+      ciphertext: t,
     });
-  }
+  },
 };
 module.exports = s.format.Hex;

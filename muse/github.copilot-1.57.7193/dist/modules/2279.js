@@ -1,7 +1,13 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.postRequest = exports.Response = exports.HelixFetcher = exports.isAbortError = exports.Fetcher = exports.init = undefined;
+exports.postRequest =
+  exports.Response =
+  exports.HelixFetcher =
+  exports.isAbortError =
+  exports.Fetcher =
+  exports.init =
+    undefined;
 const r = require(9825),
   o = require(6149),
   i = require(3837),
@@ -12,7 +18,10 @@ let l,
   u = !1;
 exports.init = function (e) {
   if (u) {
-    if (e !== l) throw new Error(`Networking re-initialized with mismatched version (old: ${l}, new: ${e})`);
+    if (e !== l)
+      throw new Error(
+        `Networking re-initialized with mismatched version (old: ${l}, new: ${e})`
+      );
   } else {
     l = e;
     u = !0;
@@ -27,15 +36,16 @@ exports.HelixFetcher = class extends Fetcher {
   constructor(e) {
     super();
     this.ctx = e;
-    this.createSocketFactory = e => {
+    this.createSocketFactory = (e) => {
       const t = o.httpOverHttp({
-        proxy: e
+        proxy: e,
       });
-      return e => new Promise(n => {
-        t.createSocket(e, e => {
-          n(e);
+      return (e) =>
+        new Promise((n) => {
+          t.createSocket(e, (e) => {
+            n(e);
+          });
         });
-      });
     };
     this.fetchApi = this.createFetchApi(e);
   }
@@ -49,20 +59,36 @@ exports.HelixFetcher = class extends Fetcher {
   createFetchApi(e) {
     var t;
     const n = e.get(s.BuildInfo);
-    !1 === (null === (t = this._proxySettings) || undefined === t ? undefined : t.rejectUnauthorized) && (process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0");
+    if (
+      !1 ===
+      (null === (t = this._proxySettings) || undefined === t
+        ? undefined
+        : t.rejectUnauthorized)
+    ) {
+      process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+    }
     return r.context({
       userAgent: `GithubCopilot/${n.getVersion()}`,
-      socketFactory: this._proxySettings ? this.createSocketFactory(this._proxySettings) : undefined
+      socketFactory: this._proxySettings
+        ? this.createSocketFactory(this._proxySettings)
+        : undefined,
     });
   }
   async fetch(e, t) {
     const n = {
         ...t,
         body: t.body ? t.body : t.json,
-        signal: t.signal
+        signal: t.signal,
       },
       r = await this.fetchApi.fetch(e, n);
-    return new Response(r.status, r.statusText, r.headers, () => r.text(), () => r.json(), async () => r.body);
+    return new Response(
+      r.status,
+      r.statusText,
+      r.headers,
+      () => r.text(),
+      () => r.json(),
+      async () => r.body
+    );
   }
   disconnectAll() {
     return this.fetchApi.reset();
@@ -100,30 +126,43 @@ exports.postRequest = function (e, t, n, r, o, l, p) {
     "Openai-Organization": "github-copilot",
     "VScode-SessionId": e.get(s.VscInfo).sessionId,
     "VScode-MachineId": e.get(s.VscInfo).machineId,
-    ...s.editorVersionHeaders(e)
+    ...s.editorVersionHeaders(e),
   };
-  r && (h["OpenAI-Intent"] = r);
+  if (r) {
+    h["OpenAI-Intent"] = r;
+  }
   const f = e.get(a.GhostTextDebounceManager).forceDelayMs;
-  f && (h["X-Copilot-Force-Delay"] = f.toString());
+  if (f) {
+    h["X-Copilot-Force-Delay"] = f.toString();
+  }
   const m = {
       method: "POST",
       headers: h,
       json: l,
-      timeout: 3e4
+      timeout: 3e4,
     },
     g = e.get(Fetcher);
   if (p) {
     const t = g.makeAbortController();
     p.onCancellationRequested(() => {
-      c.telemetry(e, "networking.cancelRequest", c.TelemetryData.createAndMarkAsIssued({
-        headerRequestId: o
-      }));
+      c.telemetry(
+        e,
+        "networking.cancelRequest",
+        c.TelemetryData.createAndMarkAsIssued({
+          headerRequestId: o,
+        })
+      );
       t.abort();
     });
     m.signal = t.signal;
   }
-  return g.fetch(t, m).catch(n => {
-    if ("ECONNRESET" == n.code || "ETIMEDOUT" == n.code || "ERR_HTTP2_INVALID_SESSION" == n.code || "ERR_HTTP2_GOAWAY_SESSION" == n.message) {
+  return g.fetch(t, m).catch((n) => {
+    if (
+      "ECONNRESET" == n.code ||
+      "ETIMEDOUT" == n.code ||
+      "ERR_HTTP2_INVALID_SESSION" == n.code ||
+      "ERR_HTTP2_GOAWAY_SESSION" == n.message
+    ) {
       c.telemetry(e, "networking.disconnectAll");
       return g.disconnectAll().then(() => g.fetch(t, m));
     }

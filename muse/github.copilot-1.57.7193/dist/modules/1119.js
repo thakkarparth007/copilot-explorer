@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 const r = require(3487),
   o = require(6776),
@@ -11,28 +11,21 @@ const r = require(3487),
     schemaType: ["object", "boolean"],
     before: "uniqueItems",
     error: {
-      message: ({
-        params: {
-          len: e
-        }
-      }) => r.str`must NOT have more than ${e} items`,
-      params: ({
-        params: {
-          len: e
-        }
-      }) => r._`{limit: ${e}}`
+      message: ({ params: { len: e } }) =>
+        r.str`must NOT have more than ${e} items`,
+      params: ({ params: { len: e } }) => r._`{limit: ${e}}`,
     },
     code(e) {
-      const {
-          schema: t,
-          parentSchema: n,
-          it: r
-        } = e,
-        {
-          prefixItems: a
-        } = n;
+      const { schema: t, parentSchema: n, it: r } = e,
+        { prefixItems: a } = n;
       r.items = !0;
-      o.alwaysValidSchema(r, t) || (a ? s.validateAdditionalItems(e, a) : e.ok(i.validateArray(e)));
-    }
+      if (o.alwaysValidSchema(r, t)) {
+        if (a) {
+          s.validateAdditionalItems(e, a);
+        } else {
+          e.ok(i.validateArray(e));
+        }
+      }
+    },
   };
 exports.default = a;

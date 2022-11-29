@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 exports.getDebounceLimit = exports.GhostTextDebounceManager = undefined;
 const r = require(9189);
@@ -12,9 +12,12 @@ class GhostTextDebounceManager {
 exports.GhostTextDebounceManager = GhostTextDebounceManager;
 exports.getDebounceLimit = async function (e, t) {
   let n;
-  if ((await e.get(r.Features).debouncePredict()) && t.measurements.contextualFilterScore) {
+  if (
+    (await e.get(r.Features).debouncePredict()) &&
+    t.measurements.contextualFilterScore
+  ) {
     const e = t.measurements.contextualFilterScore,
-      r = .275,
+      r = 0.275,
       o = 6;
     n = 25 + 250 / (1 + Math.pow(e / r, o));
   } else n = await e.get(r.Features).debounceMs();

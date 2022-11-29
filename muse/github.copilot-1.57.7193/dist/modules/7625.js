@@ -9,7 +9,7 @@ var r = require(7310),
   d = require(5740),
   p = require(5282),
   h = require(9813),
-  f = function () {
+  f = (function () {
     function e(e) {
       this._telemetryProcessors = [];
       var t = new o(e);
@@ -17,13 +17,18 @@ var r = require(7310),
       this.context = new i();
       this.commonProperties = {};
       var n = new u(this.config);
-      this.channel = new a(function () {
-        return t.disableAppInsights;
-      }, function () {
-        return t.maxBatchSize;
-      }, function () {
-        return t.maxBatchIntervalMs;
-      }, n);
+      this.channel = new a(
+        function () {
+          return t.disableAppInsights;
+        },
+        function () {
+          return t.maxBatchSize;
+        },
+        function () {
+          return t.maxBatchIntervalMs;
+        },
+        n
+      );
     }
     e.prototype.trackAvailability = function (e) {
       this.track(e, s.TelemetryType.Availability);
@@ -35,7 +40,9 @@ var r = require(7310),
       this.track(e, s.TelemetryType.Metric);
     };
     e.prototype.trackException = function (e) {
-      e && e.exception && !d.isError(e.exception) && (e.exception = new Error(e.exception.toString()));
+      if (e && e.exception && !d.isError(e.exception)) {
+        e.exception = new Error(e.exception.toString());
+      }
       this.track(e, s.TelemetryType.Exception);
     };
     e.prototype.trackEvent = function (e) {
@@ -45,23 +52,43 @@ var r = require(7310),
       this.track(e, s.TelemetryType.Request);
     };
     e.prototype.trackDependency = function (e) {
-      e && !e.target && e.data && (e.target = r.parse(e.data).host);
+      if (e && !e.target && e.data) {
+        e.target = r.parse(e.data).host;
+      }
       this.track(e, s.TelemetryType.Dependency);
     };
     e.prototype.flush = function (e) {
-      this.channel.triggerSend(!!e && !!e.isAppCrashing, e ? e.callback : undefined);
+      this.channel.triggerSend(
+        !!e && !!e.isAppCrashing,
+        e ? e.callback : undefined
+      );
     };
     e.prototype.track = function (e, t) {
       if (e && s.telemetryTypeToBaseType(t)) {
-        var n = h.createEnvelope(e, t, this.commonProperties, this.context, this.config);
-        e.time && (n.time = e.time.toISOString());
+        var n = h.createEnvelope(
+          e,
+          t,
+          this.commonProperties,
+          this.context,
+          this.config
+        );
+        if (e.time) {
+          n.time = e.time.toISOString();
+        }
         var r = this.runTelemetryProcessors(n, e.contextObjects);
-        r = r && c.samplingTelemetryProcessor(n, {
-          correlationContext: l.CorrelationContextManager.getCurrentContext()
-        });
+        r =
+          r &&
+          c.samplingTelemetryProcessor(n, {
+            correlationContext: l.CorrelationContextManager.getCurrentContext(),
+          });
         c.performanceMetricsTelemetryProcessor(n, this.quickPulseClient);
-        r && this.channel.send(n);
-      } else p.warn("track() requires telemetry object and telemetryType to be specified.");
+        if (r) {
+          this.channel.send(n);
+        }
+      } else
+        p.warn(
+          "track() requires telemetry object and telemetryType to be specified."
+        );
     };
     e.prototype.addTelemetryProcessor = function (e) {
       this._telemetryProcessors.push(e);
@@ -73,19 +100,25 @@ var r = require(7310),
       var n = !0,
         r = this._telemetryProcessors.length;
       if (0 === r) return n;
-      (t = t || {}).correlationContext = l.CorrelationContextManager.getCurrentContext();
-      for (var o = 0; o < r; ++o) try {
-        var i = this._telemetryProcessors[o];
-        if (i && !1 === i.apply(null, [e, t])) {
-          n = !1;
-          break;
+      (t = t || {}).correlationContext =
+        l.CorrelationContextManager.getCurrentContext();
+      for (var o = 0; o < r; ++o)
+        try {
+          var i = this._telemetryProcessors[o];
+          if (i && !1 === i.apply(null, [e, t])) {
+            n = !1;
+            break;
+          }
+        } catch (t) {
+          n = !0;
+          p.warn(
+            "One of telemetry processors failed, telemetry item will be sent.",
+            t,
+            e
+          );
         }
-      } catch (t) {
-        n = !0;
-        p.warn("One of telemetry processors failed, telemetry item will be sent.", t, e);
-      }
       return n;
     };
     return e;
-  }();
+  })();
 module.exports = f;

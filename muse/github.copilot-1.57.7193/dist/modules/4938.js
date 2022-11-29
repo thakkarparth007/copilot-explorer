@@ -7,7 +7,7 @@ a = i.WordArray;
   init: function (e, t) {
     this.high = e;
     this.low = t;
-  }
+  },
 });
 c.WordArray = s.extend({
   init: function (e, t) {
@@ -23,8 +23,16 @@ c.WordArray = s.extend({
     return a.create(n, this.sigBytes);
   },
   clone: function () {
-    for (var e = s.clone.call(this), t = e.words = this.words.slice(0), n = t.length, r = 0; r < n; r++) t[r] = t[r].clone();
+    for (
+      var e = s.clone.call(this),
+        t = (e.words = this.words.slice(0)),
+        n = t.length,
+        r = 0;
+      r < n;
+      r++
+    )
+      t[r] = t[r].clone();
     return e;
-  }
+  },
 });
 module.exports = r;

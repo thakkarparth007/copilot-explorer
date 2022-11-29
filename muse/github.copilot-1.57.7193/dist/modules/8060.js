@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 var r = require(4953),
   o = require(2361);
@@ -14,21 +14,23 @@ exports.postgres6 = {
           query: {},
           database: {
             host: this.connectionParameters.host,
-            port: this.connectionParameters.port
+            port: this.connectionParameters.port,
           },
           result: null,
           error: null,
           duration: 0,
-          time: new Date()
+          time: new Date(),
         },
         l = process.hrtime();
       function u(e) {
-        e && e[i] && (e = e[i]);
+        if (e && e[i]) {
+          e = e[i];
+        }
         var t = r.channel.bindToContext(function (t, n) {
           var i = process.hrtime(l);
           c.result = n && {
             rowCount: n.rowCount,
-            command: n.command
+            command: n.command,
           };
           c.error = t;
           c.duration = Math.ceil(1e3 * i[0] + i[1] / 1e6);
@@ -40,7 +42,7 @@ exports.postgres6 = {
         });
         try {
           Object.defineProperty(t, i, {
-            value: e
+            value: e,
           });
           return t;
         } catch (t) {
@@ -48,13 +50,44 @@ exports.postgres6 = {
         }
       }
       try {
-        "string" == typeof e ? t instanceof Array ? (c.query.preparable = {
-          text: e,
-          args: t
-        }, s = u(s)) : (c.query.text = e, s ? s = u(s) : t = u(t)) : ("string" == typeof e.name ? c.query.plan = e.name : e.values instanceof Array ? c.query.preparable = {
-          text: e.text,
-          args: e.values
-        } : c.query.text = e.text, s ? s = u(s) : t ? t = u(t) : e.callback = u(e.callback));
+        if ("string" == typeof e) {
+          if (t instanceof Array) {
+            c.query.preparable = {
+              text: e,
+              args: t,
+            };
+            s = u(s);
+          } else {
+            c.query.text = e;
+            if (s) {
+              s = u(s);
+            } else {
+              t = u(t);
+            }
+          }
+        } else {
+          if ("string" == typeof e.name) {
+            c.query.plan = e.name;
+          } else {
+            if (e.values instanceof Array) {
+              c.query.preparable = {
+                text: e.text,
+                args: e.values,
+              };
+            } else {
+              c.query.text = e.text;
+            }
+          }
+          if (s) {
+            s = u(s);
+          } else {
+            if (t) {
+              t = u(t);
+            } else {
+              e.callback = u(e.callback);
+            }
+          }
+        }
       } catch (e) {
         return n.apply(this, arguments);
       }
@@ -62,10 +95,10 @@ exports.postgres6 = {
       arguments[1] = t;
       arguments[2] = s;
       arguments.length = arguments.length > 3 ? arguments.length : 3;
-      return a = n.apply(this, arguments);
+      return (a = n.apply(this, arguments));
     };
     return e;
-  }
+  },
 };
 exports.postgres7 = {
   versionSpecifier: ">=7.* <=8.*",
@@ -80,21 +113,23 @@ exports.postgres7 = {
           query: {},
           database: {
             host: this.connectionParameters.host,
-            port: this.connectionParameters.port
+            port: this.connectionParameters.port,
           },
           result: null,
           error: null,
           duration: 0,
-          time: new Date()
+          time: new Date(),
         },
         d = process.hrtime();
       function p(e) {
-        e && e[i] && (e = e[i]);
+        if (e && e[i]) {
+          e = e[i];
+        }
         var t = r.channel.bindToContext(function (t, n) {
           var i = process.hrtime(d);
           u.result = n && {
             rowCount: n.rowCount,
-            command: n.command
+            command: n.command,
           };
           u.error = t;
           u.duration = Math.ceil(1e3 * i[0] + i[1] / 1e6);
@@ -106,7 +141,7 @@ exports.postgres7 = {
         });
         try {
           Object.defineProperty(t, i, {
-            value: e
+            value: e,
           });
           return t;
         } catch (t) {
@@ -114,13 +149,46 @@ exports.postgres7 = {
         }
       }
       try {
-        "string" == typeof e ? t instanceof Array ? (u.query.preparable = {
-          text: e,
-          args: t
-        }, s = (l = "function" == typeof s) ? p(s) : s) : (u.query.text = e, s ? s = (l = "function" == typeof s) ? p(s) : s : t = (l = "function" == typeof t) ? p(t) : t) : ("string" == typeof e.name ? u.query.plan = e.name : e.values instanceof Array ? u.query.preparable = {
-          text: e.text,
-          args: e.values
-        } : u.query.text = e.text, s ? (l = "function" == typeof s, s = p(s)) : t ? t = (l = "function" == typeof t) ? p(t) : t : (l = "function" == typeof e.callback, e.callback = l ? p(e.callback) : e.callback));
+        if ("string" == typeof e) {
+          if (t instanceof Array) {
+            u.query.preparable = {
+              text: e,
+              args: t,
+            };
+            s = (l = "function" == typeof s) ? p(s) : s;
+          } else {
+            u.query.text = e;
+            if (s) {
+              s = (l = "function" == typeof s) ? p(s) : s;
+            } else {
+              t = (l = "function" == typeof t) ? p(t) : t;
+            }
+          }
+        } else {
+          if ("string" == typeof e.name) {
+            u.query.plan = e.name;
+          } else {
+            if (e.values instanceof Array) {
+              u.query.preparable = {
+                text: e.text,
+                args: e.values,
+              };
+            } else {
+              u.query.text = e.text;
+            }
+          }
+          if (s) {
+            l = "function" == typeof s;
+            s = p(s);
+          } else {
+            if (t) {
+              t = (l = "function" == typeof t) ? p(t) : t;
+            } else {
+              l = "function" == typeof e.callback;
+              e.callback = l ? p(e.callback) : e.callback;
+            }
+          }
+        }
       } catch (e) {
         return n.apply(this, arguments);
       }
@@ -129,20 +197,24 @@ exports.postgres7 = {
       arguments[2] = s;
       arguments.length = arguments.length > 3 ? arguments.length : 3;
       a = n.apply(this, arguments);
-      return l ? a : a.then(function (e) {
-        p()(undefined, e);
-        return new c._Promise(function (t, n) {
-          t(e);
-        });
-      }).catch(function (e) {
-        p()(e, undefined);
-        return new c._Promise(function (t, n) {
-          n(e);
-        });
-      });
+      return l
+        ? a
+        : a
+            .then(function (e) {
+              p()(undefined, e);
+              return new c._Promise(function (t, n) {
+                t(e);
+              });
+            })
+            .catch(function (e) {
+              p()(e, undefined);
+              return new c._Promise(function (t, n) {
+                n(e);
+              });
+            });
     };
     return e;
-  }
+  },
 };
 exports.enable = function () {
   r.channel.registerMonkeyPatch("pg", exports.postgres6);

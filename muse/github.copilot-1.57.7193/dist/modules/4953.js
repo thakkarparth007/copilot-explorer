@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 var r = require(7424),
   o = require(7424);
@@ -7,7 +7,7 @@ exports.makePatchingRequire = o.makePatchingRequire;
 var i = function (e) {
     return !0;
   },
-  s = function () {
+  s = (function () {
     function e() {
       this.version = require(130).i8;
       this.subscribers = {};
@@ -19,10 +19,13 @@ var i = function (e) {
     }
     e.prototype.shouldPublish = function (e) {
       var t = this.subscribers[e];
-      return !!t && t.some(function (e) {
-        var t = e.filter;
-        return !t || t(!1);
-      });
+      return (
+        !!t &&
+        t.some(function (e) {
+          var t = e.filter;
+          return !t || t(!1);
+        })
+      );
     };
     e.prototype.publish = function (e, t) {
       if (!this.currentlyPublishing) {
@@ -30,14 +33,16 @@ var i = function (e) {
         if (n) {
           var r = {
             timestamp: Date.now(),
-            data: t
+            data: t,
           };
           this.currentlyPublishing = !0;
           n.forEach(function (e) {
             var t = e.listener,
               n = e.filter;
             try {
-              n && n(!0) && t(r);
+              if (n && n(!0)) {
+                t(r);
+              }
             } catch (e) {}
           });
           this.currentlyPublishing = !1;
@@ -45,20 +50,28 @@ var i = function (e) {
       }
     };
     e.prototype.subscribe = function (e, t, n) {
-      undefined === n && (n = i);
-      this.subscribers[e] || (this.subscribers[e] = []);
+      if (undefined === n) {
+        n = i;
+      }
+      if (this.subscribers[e]) {
+        this.subscribers[e] = [];
+      }
       this.subscribers[e].push({
         listener: t,
-        filter: n
+        filter: n,
       });
     };
     e.prototype.unsubscribe = function (e, t, n) {
-      undefined === n && (n = i);
-      var r = this.subscribers[e];
-      if (r) for (var o = 0; o < r.length; ++o) if (r[o].listener === t && r[o].filter === n) {
-        r.splice(o, 1);
-        return !0;
+      if (undefined === n) {
+        n = i;
       }
+      var r = this.subscribers[e];
+      if (r)
+        for (var o = 0; o < r.length; ++o)
+          if (r[o].listener === t && r[o].filter === n) {
+            r.splice(o, 1);
+            return !0;
+          }
       return !1;
     };
     e.prototype.reset = function () {
@@ -81,13 +94,20 @@ var i = function (e) {
       };
     };
     e.prototype.registerMonkeyPatch = function (e, t) {
-      this.knownPatches[e] || (this.knownPatches[e] = []);
+      if (this.knownPatches[e]) {
+        this.knownPatches[e] = [];
+      }
       this.knownPatches[e].push(t);
     };
     e.prototype.getPatchesObject = function () {
       return this.knownPatches;
     };
     return e;
-  }();
-global.diagnosticsSource || (global.diagnosticsSource = new s(), require(8188).prototype.require = r.makePatchingRequire(global.diagnosticsSource.getPatchesObject()));
+  })();
+if (global.diagnosticsSource) {
+  global.diagnosticsSource = new s();
+  require(8188).prototype.require = r.makePatchingRequire(
+    global.diagnosticsSource.getPatchesObject()
+  );
+}
 exports.channel = global.diagnosticsSource;

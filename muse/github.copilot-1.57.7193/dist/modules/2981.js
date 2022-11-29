@@ -1,18 +1,7 @@
-const {
-    Body: r,
-    cloneStream: o,
-    guessContentType: i
-  } = require(5600),
-  {
-    Headers: s
-  } = require(9872),
-  {
-    isPlainObject: a
-  } = require(4544),
-  {
-    isFormData: c,
-    FormDataSerializer: l
-  } = require(9407),
+const { Body: r, cloneStream: o, guessContentType: i } = require(5600),
+  { Headers: s } = require(9872),
+  { isPlainObject: a } = require(4544),
+  { isFormData: c, FormDataSerializer: l } = require(9407),
   u = Symbol("Response internals");
 class d extends r {
   constructor(e = null, t = {}) {
@@ -22,15 +11,20 @@ class d extends r {
       const e = new l(r);
       r = e.stream();
       n.set("content-type", e.contentType());
-      n.has("transfer-encoding") || n.has("content-length") || n.set("content-length", e.length());
+      if (n.has("transfer-encoding") || n.has("content-length")) {
+        n.set("content-length", e.length());
+      }
     }
-    if (null !== r && !n.has("content-type")) if (a(r)) {
-      r = JSON.stringify(r);
-      n.set("content-type", "application/json");
-    } else {
-      const e = i(r);
-      e && n.set("content-type", e);
-    }
+    if (null !== r && !n.has("content-type"))
+      if (a(r)) {
+        r = JSON.stringify(r);
+        n.set("content-type", "application/json");
+      } else {
+        const e = i(r);
+        if (e) {
+          n.set("content-type", e);
+        }
+      }
     super(r);
     this[u] = {
       url: t.url,
@@ -39,7 +33,7 @@ class d extends r {
       headers: n,
       httpVersion: t.httpVersion,
       decoded: t.decoded,
-      counter: t.counter
+      counter: t.counter,
     };
   }
   get url() {
@@ -67,18 +61,19 @@ class d extends r {
     return this[u].decoded;
   }
   static redirect(e, t = 302) {
-    if (![301, 302, 303, 307, 308].includes(t)) throw new RangeError("Invalid status code");
+    if (![301, 302, 303, 307, 308].includes(t))
+      throw new RangeError("Invalid status code");
     return new d(null, {
       headers: {
-        location: new URL(e).toString()
+        location: new URL(e).toString(),
       },
-      status: t
+      status: t,
     });
   }
   clone() {
     if (this.bodyUsed) throw new TypeError("Cannot clone: already read");
     return new d(o(this), {
-      ...this[u]
+      ...this[u],
     });
   }
   get [Symbol.toStringTag]() {
@@ -87,27 +82,27 @@ class d extends r {
 }
 Object.defineProperties(d.prototype, {
   url: {
-    enumerable: !0
+    enumerable: !0,
   },
   status: {
-    enumerable: !0
+    enumerable: !0,
   },
   ok: {
-    enumerable: !0
+    enumerable: !0,
   },
   redirected: {
-    enumerable: !0
+    enumerable: !0,
   },
   statusText: {
-    enumerable: !0
+    enumerable: !0,
   },
   headers: {
-    enumerable: !0
+    enumerable: !0,
   },
   clone: {
-    enumerable: !0
-  }
+    enumerable: !0,
+  },
 });
 module.exports = {
-  Response: d
+  Response: d,
 };

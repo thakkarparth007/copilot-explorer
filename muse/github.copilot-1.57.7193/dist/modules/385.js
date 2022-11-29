@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 exports.ExtensionTextDocumentManager = undefined;
 const r = require(1017),
@@ -22,12 +22,26 @@ class ExtensionTextDocumentManager extends i.TextDocumentManager {
     const a = e;
     if (a) {
       if (a.isUntitled) return;
-      return null !== (s = i.getRelativePath(null !== (n = null === (t = o.workspace.workspaceFolders) || undefined === t ? undefined : t.map(e => e.uri)) && undefined !== n ? n : [], a.fileName)) && undefined !== s ? s : r.basename(a.fileName);
+      return null !==
+        (s = i.getRelativePath(
+          null !==
+            (n =
+              null === (t = o.workspace.workspaceFolders) || undefined === t
+                ? undefined
+                : t.map((e) => e.uri)) && undefined !== n
+            ? n
+            : [],
+          a.fileName
+        )) && undefined !== s
+        ? s
+        : r.basename(a.fileName);
     }
   }
   findNotebook(e) {
     const t = e;
-    return o.workspace.notebookDocuments.find(e => e.getCells().some(e => e.document === t));
+    return o.workspace.notebookDocuments.find((e) =>
+      e.getCells().some((e) => e.document === t)
+    );
   }
 }
 exports.ExtensionTextDocumentManager = ExtensionTextDocumentManager;

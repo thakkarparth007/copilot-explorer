@@ -1,7 +1,11 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.TestNotificationSender = exports.TestUrlOpener = exports.rangeToString = exports.positionToString = undefined;
+exports.TestNotificationSender =
+  exports.TestUrlOpener =
+  exports.rangeToString =
+  exports.positionToString =
+    undefined;
 const r = require(1547);
 function positionToString(e) {
   return `${e.line}:${e.character}`;

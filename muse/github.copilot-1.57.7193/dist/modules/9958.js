@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 exports.AvailabilityData = require(7220);
 exports.Base = require(4101);

@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 const r = {
   keyword: "anyOf",
@@ -7,7 +7,7 @@ const r = {
   trackErrors: !0,
   code: require(412).validateUnion,
   error: {
-    message: "must match a schema in anyOf"
-  }
+    message: "must match a schema in anyOf",
+  },
 };
 exports.default = r;

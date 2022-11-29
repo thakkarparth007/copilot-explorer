@@ -9,6 +9,6 @@ r.pad.Iso97971 = {
   unpad: function (e) {
     r.pad.ZeroPadding.unpad(e);
     e.sigBytes--;
-  }
+  },
 };
 module.exports = r.pad.Iso97971;

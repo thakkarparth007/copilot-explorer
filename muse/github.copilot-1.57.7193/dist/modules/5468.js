@@ -1,6 +1,6 @@
 require(1808);
 var debug,
-  o = require(4404),
+  o = require(3055_404),
   i = require(3685),
   s = require(5687),
   a = require(2361),
@@ -30,7 +30,7 @@ function u(e, t) {
     var i = e.request.getHeader("host"),
       s = p({}, n.options, {
         socket: r,
-        servername: i ? i.replace(/:.*$/, "") : e.host
+        servername: i ? i.replace(/:.*$/, "") : e.host,
       }),
       a = o.connect(0, s);
     n.sockets[n.sockets.indexOf(r)] = a;
@@ -38,19 +38,24 @@ function u(e, t) {
   });
 }
 function d(e, t, n) {
-  return "string" == typeof e ? {
-    host: e,
-    port: t,
-    localAddress: n
-  } : e;
+  return "string" == typeof e
+    ? {
+        host: e,
+        port: t,
+        localAddress: n,
+      }
+    : e;
 }
 function p(e) {
   for (var t = 1, n = arguments.length; t < n; ++t) {
     var r = arguments[t];
-    if ("object" == typeof r) for (var o = Object.keys(r), i = 0, s = o.length; i < s; ++i) {
-      var a = o[i];
-      undefined !== r[a] && (e[a] = r[a]);
-    }
+    if ("object" == typeof r)
+      for (var o = Object.keys(r), i = 0, s = o.length; i < s; ++i) {
+        var a = o[i];
+        if (undefined !== r[a]) {
+          e[a] = r[a];
+        }
+      }
   }
   return e;
 }
@@ -81,24 +86,32 @@ exports.httpsOverHttps = function (e) {
 c.inherits(l, a.EventEmitter);
 l.prototype.addRequest = function (e, t, n, r) {
   var o = this,
-    i = p({
-      request: e
-    }, o.options, d(t, n, r));
-  o.sockets.length >= this.maxSockets ? o.requests.push(i) : o.createSocket(i, function (t) {
-    function n() {
-      o.emit("free", t, i);
-    }
-    function r(e) {
-      o.removeSocket(t);
-      t.removeListener("free", n);
-      t.removeListener("close", r);
-      t.removeListener("agentRemove", r);
-    }
-    t.on("free", n);
-    t.on("close", r);
-    t.on("agentRemove", r);
-    e.onSocket(t);
-  });
+    i = p(
+      {
+        request: e,
+      },
+      o.options,
+      d(t, n, r)
+    );
+  if (o.sockets.length >= this.maxSockets) {
+    o.requests.push(i);
+  } else {
+    o.createSocket(i, function (t) {
+      function n() {
+        o.emit("free", t, i);
+      }
+      function r(e) {
+        o.removeSocket(t);
+        t.removeListener("free", n);
+        t.removeListener("close", r);
+        t.removeListener("agentRemove", r);
+      }
+      t.on("free", n);
+      t.on("close", r);
+      t.on("agentRemove", r);
+      e.onSocket(t);
+    });
+  }
 };
 l.prototype.createSocket = function (e, t) {
   var n = this,
@@ -109,18 +122,45 @@ l.prototype.createSocket = function (e, t) {
     path: e.host + ":" + e.port,
     agent: !1,
     headers: {
-      host: e.host + ":" + e.port
-    }
+      host: e.host + ":" + e.port,
+    },
   });
-  e.localAddress && (i.localAddress = e.localAddress);
-  i.proxyAuth && (i.headers = i.headers || {}, i.headers["Proxy-Authorization"] = "Basic " + new Buffer(i.proxyAuth).toString("base64"));
+  if (e.localAddress) {
+    i.localAddress = e.localAddress;
+  }
+  if (i.proxyAuth) {
+    i.headers = i.headers || {};
+    i.headers["Proxy-Authorization"] =
+      "Basic " + new Buffer(i.proxyAuth).toString("base64");
+  }
   debug("making CONNECT request");
   var s = n.request(i);
   function a(i, a, c) {
     var l;
     s.removeAllListeners();
     a.removeAllListeners();
-    return 200 !== i.statusCode ? (debug("tunneling socket could not be established, statusCode=%d", i.statusCode), a.destroy(), (l = new Error("tunneling socket could not be established, statusCode=" + i.statusCode)).code = "ECONNRESET", e.request.emit("error", l), void n.removeSocket(o)) : c.length > 0 ? (debug("got illegal response body from proxy"), a.destroy(), (l = new Error("got illegal response body from proxy")).code = "ECONNRESET", e.request.emit("error", l), void n.removeSocket(o)) : (debug("tunneling connection has established"), n.sockets[n.sockets.indexOf(o)] = a, t(a));
+    return 200 !== i.statusCode
+      ? (debug(
+          "tunneling socket could not be established, statusCode=%d",
+          i.statusCode
+        ),
+        a.destroy(),
+        ((l = new Error(
+          "tunneling socket could not be established, statusCode=" +
+            i.statusCode
+        )).code = "ECONNRESET"),
+        e.request.emit("error", l),
+        void n.removeSocket(o))
+      : c.length > 0
+      ? (debug("got illegal response body from proxy"),
+        a.destroy(),
+        ((l = new Error("got illegal response body from proxy")).code =
+          "ECONNRESET"),
+        e.request.emit("error", l),
+        void n.removeSocket(o))
+      : (debug("tunneling connection has established"),
+        (n.sockets[n.sockets.indexOf(o)] = a),
+        t(a));
   }
   s.useChunkedEncodingByDefault = !1;
   s.once("response", function (e) {
@@ -134,8 +174,14 @@ l.prototype.createSocket = function (e, t) {
   s.once("connect", a);
   s.once("error", function (t) {
     s.removeAllListeners();
-    debug("tunneling socket could not be established, cause=%s\n", t.message, t.stack);
-    var i = new Error("tunneling socket could not be established, cause=" + t.message);
+    debug(
+      "tunneling socket could not be established, cause=%s\n",
+      t.message,
+      t.stack
+    );
+    var i = new Error(
+      "tunneling socket could not be established, cause=" + t.message
+    );
     i.code = "ECONNRESET";
     e.request.emit("error", i);
     n.removeSocket(o);
@@ -147,14 +193,23 @@ l.prototype.removeSocket = function (e) {
   if (-1 !== t) {
     this.sockets.splice(t, 1);
     var n = this.requests.shift();
-    n && this.createSocket(n, function (e) {
-      n.request.onSocket(e);
-    });
+    if (n) {
+      this.createSocket(n, function (e) {
+        n.request.onSocket(e);
+      });
+    }
   }
 };
-debug = process.env.NODE_DEBUG && /\btunnel\b/.test(process.env.NODE_DEBUG) ? function () {
-  var e = Array.prototype.slice.call(arguments);
-  "string" == typeof e[0] ? e[0] = "TUNNEL: " + e[0] : e.unshift("TUNNEL:");
-  console.error.apply(console, e);
-} : function () {};
+debug =
+  process.env.NODE_DEBUG && /\btunnel\b/.test(process.env.NODE_DEBUG)
+    ? function () {
+        var e = Array.prototype.slice.call(arguments);
+        if ("string" == typeof e[0]) {
+          e[0] = "TUNNEL: " + e[0];
+        } else {
+          e.unshift("TUNNEL:");
+        }
+        console.error.apply(console, e);
+      }
+    : function () {};
 exports.debug = debug;

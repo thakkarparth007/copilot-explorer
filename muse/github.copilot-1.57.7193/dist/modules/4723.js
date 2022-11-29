@@ -1,22 +1,39 @@
-var r = this && this.__createBinding || (Object.create ? function (e, t, n, r) {
-    undefined === r && (r = n);
-    Object.defineProperty(e, r, {
-      enumerable: !0,
-      get: function () {
-        return t[n];
-      }
-    });
-  } : function (e, t, n, r) {
-    undefined === r && (r = n);
-    e[r] = t[n];
-  }),
-  o = this && this.__exportStar || function (e, t) {
-    for (var n in e) "default" === n || Object.prototype.hasOwnProperty.call(t, n) || r(t, e, n);
-  };
+var r =
+    (this && this.__createBinding) ||
+    (Object.create
+      ? function (e, t, n, r) {
+          if (undefined === r) {
+            r = n;
+          }
+          Object.defineProperty(e, r, {
+            enumerable: !0,
+            get: function () {
+              return t[n];
+            },
+          });
+        }
+      : function (e, t, n, r) {
+          if (undefined === r) {
+            r = n;
+          }
+          e[r] = t[n];
+        }),
+  o =
+    (this && this.__exportStar) ||
+    function (e, t) {
+      for (var n in e)
+        if ("default" === n || Object.prototype.hasOwnProperty.call(t, n)) {
+          r(t, e, n);
+        }
+    };
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.createWorker = exports.FileSystem = exports.comment = exports.languageCommentMarkers = undefined;
+exports.createWorker =
+  exports.FileSystem =
+  exports.comment =
+  exports.languageCommentMarkers =
+    undefined;
 const i = require(1017),
   s = require(1267);
 o(require(464), exports);

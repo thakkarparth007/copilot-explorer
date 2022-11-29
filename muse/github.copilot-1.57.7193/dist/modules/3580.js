@@ -1,6 +1,6 @@
 var n, r, o;
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 exports.DEFAULT_BREEZE_ENDPOINT = "https://dc.services.visualstudio.com";
 exports.DEFAULT_LIVEMETRICS_ENDPOINT = "https://rt.services.visualstudio.com";
@@ -12,18 +12,20 @@ exports.DEFAULT_LIVEMETRICS_HOST = "rt.services.visualstudio.com";
   e.REQUEST_FAILURE_RATE = "\\ApplicationInsights\\Requests Failed/Sec";
   e.REQUEST_DURATION = "\\ApplicationInsights\\Request Duration";
   e.DEPENDENCY_RATE = "\\ApplicationInsights\\Dependency Calls/Sec";
-  e.DEPENDENCY_FAILURE_RATE = "\\ApplicationInsights\\Dependency Calls Failed/Sec";
+  e.DEPENDENCY_FAILURE_RATE =
+    "\\ApplicationInsights\\Dependency Calls Failed/Sec";
   e.DEPENDENCY_DURATION = "\\ApplicationInsights\\Dependency Call Duration";
   e.EXCEPTION_RATE = "\\ApplicationInsights\\Exceptions/Sec";
-})(n = exports.QuickPulseCounter || (exports.QuickPulseCounter = {}));
+})((n = exports.QuickPulseCounter || (exports.QuickPulseCounter = {})));
 (function (e) {
   e.PRIVATE_BYTES = "\\Process(??APP_WIN32_PROC??)\\Private Bytes";
   e.AVAILABLE_BYTES = "\\Memory\\Available Bytes";
   e.PROCESSOR_TIME = "\\Processor(_Total)\\% Processor Time";
   e.PROCESS_TIME = "\\Process(??APP_WIN32_PROC??)\\% Processor Time";
   e.REQUEST_RATE = "\\ASP.NET Applications(??APP_W3SVC_PROC??)\\Requests/Sec";
-  e.REQUEST_DURATION = "\\ASP.NET Applications(??APP_W3SVC_PROC??)\\Request Execution Time";
-})(r = exports.PerformanceCounter || (exports.PerformanceCounter = {}));
+  e.REQUEST_DURATION =
+    "\\ASP.NET Applications(??APP_W3SVC_PROC??)\\Request Execution Time";
+})((r = exports.PerformanceCounter || (exports.PerformanceCounter = {})));
 (o = {})[r.PROCESSOR_TIME] = n.PROCESSOR_TIME;
 o[r.REQUEST_RATE] = n.REQUEST_RATE;
 o[r.REQUEST_DURATION] = n.REQUEST_DURATION;
@@ -41,7 +43,7 @@ exports.QuickPulseDocumentType = {
   Metric: "Metric",
   Request: "Request",
   Dependency: "RemoteDependency",
-  Availability: "Availability"
+  Availability: "Availability",
 };
 exports.QuickPulseType = {
   Event: "EventTelemetryDocument",
@@ -50,7 +52,7 @@ exports.QuickPulseType = {
   Metric: "MetricTelemetryDocument",
   Request: "RequestTelemetryDocument",
   Dependency: "DependencyTelemetryDocument",
-  Availability: "AvailabilityTelemetryDocument"
+  Availability: "AvailabilityTelemetryDocument",
 };
 exports.TelemetryTypeStringToQuickPulseType = {
   EventData: exports.QuickPulseType.Event,
@@ -59,7 +61,7 @@ exports.TelemetryTypeStringToQuickPulseType = {
   MetricData: exports.QuickPulseType.Metric,
   RequestData: exports.QuickPulseType.Request,
   RemoteDependencyData: exports.QuickPulseType.Dependency,
-  AvailabilityData: exports.QuickPulseType.Availability
+  AvailabilityData: exports.QuickPulseType.Availability,
 };
 exports.TelemetryTypeStringToQuickPulseDocumentType = {
   EventData: exports.QuickPulseDocumentType.Event,
@@ -68,5 +70,5 @@ exports.TelemetryTypeStringToQuickPulseDocumentType = {
   MetricData: exports.QuickPulseDocumentType.Metric,
   RequestData: exports.QuickPulseDocumentType.Request,
   RemoteDependencyData: exports.QuickPulseDocumentType.Dependency,
-  AvailabilityData: exports.QuickPulseDocumentType.Availability
+  AvailabilityData: exports.QuickPulseDocumentType.Availability,
 };

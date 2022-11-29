@@ -1,11 +1,12 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 exports.ExpConfig = exports.ExpTreatmentVariables = undefined;
 const r = require(6333),
   o = require(6500);
 var i;
-(i = exports.ExpTreatmentVariables || (exports.ExpTreatmentVariables = {})).AA = "copilotaa";
+(i = exports.ExpTreatmentVariables || (exports.ExpTreatmentVariables = {})).AA =
+  "copilotaa";
 i.CustomEngine = "copilotcustomengine";
 i.Fetcher = "copilotfetcher";
 i.OverrideBlockMode = "copilotoverrideblockmode";
@@ -33,7 +34,7 @@ class ExpConfig {
   }
   static createFallbackConfig(e, t) {
     r.telemetryExpProblem(e, {
-      reason: t
+      reason: t,
     });
     return this.createEmptyConfig();
   }
@@ -41,8 +42,11 @@ class ExpConfig {
     return new ExpConfig({}, "", "");
   }
   addToTelemetry(e) {
-    e.properties[o.ExpServiceTelemetryNames.featuresTelemetryPropertyName] = this.features;
-    e.properties[o.ExpServiceTelemetryNames.assignmentContextTelemetryPropertyName] = this.assignmentContext;
+    e.properties[o.ExpServiceTelemetryNames.featuresTelemetryPropertyName] =
+      this.features;
+    e.properties[
+      o.ExpServiceTelemetryNames.assignmentContextTelemetryPropertyName
+    ] = this.assignmentContext;
   }
 }
 exports.ExpConfig = ExpConfig;

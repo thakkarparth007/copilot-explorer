@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 var azuresdk = require(8604);
 exports.azuresdk = azuresdk;

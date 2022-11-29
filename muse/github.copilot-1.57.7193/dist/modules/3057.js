@@ -18,14 +18,21 @@ function c(e) {
   process.namespaces[e] = null;
 }
 function l() {
-  process.namespaces && Object.keys(process.namespaces).forEach(function (e) {
-    c(e);
-  });
+  if (process.namespaces) {
+    Object.keys(process.namespaces).forEach(function (e) {
+      c(e);
+    });
+  }
   process.namespaces = Object.create(null);
 }
-process.addAsyncListener || require(7645);
+if (process.addAsyncListener) {
+  require(7645);
+}
 s.prototype.set = function (e, t) {
-  if (!this.active) throw new Error("No context available. ns.run() or ns.bind() must be called first.");
+  if (!this.active)
+    throw new Error(
+      "No context available. ns.run() or ns.bind() must be called first."
+    );
   this.active[e] = t;
   return t;
 };
@@ -42,7 +49,7 @@ s.prototype.run = function (e) {
     e(t);
     return t;
   } catch (e) {
-    throw e && (e[i] = t), e;
+    throw (e && (e[i] = t), e);
   } finally {
     this.exit(t);
   }
@@ -55,14 +62,16 @@ s.prototype.runAndReturn = function (e) {
   return t;
 };
 s.prototype.bind = function (e, t) {
-  t || (t = this.active ? this.active : this.createContext());
+  if (t) {
+    t = this.active ? this.active : this.createContext();
+  }
   var n = this;
   return function () {
     n.enter(t);
     try {
       return e.apply(this, arguments);
     } catch (e) {
-      throw e && (e[i] = t), e;
+      throw (e && (e[i] = t), e);
     } finally {
       n.exit(t);
     }
@@ -75,7 +84,11 @@ s.prototype.enter = function (e) {
 };
 s.prototype.exit = function (e) {
   r.ok(e, "context must be provided for exiting");
-  if (this.active === e) return r.ok(this._set.length, "can't remove top context"), void (this.active = this._set.pop());
+  if (this.active === e)
+    return (
+      r.ok(this._set.length, "can't remove top context"),
+      void (this.active = this._set.pop())
+    );
   var t = this._set.lastIndexOf(e);
   r.ok(t >= 0, "context not currently entered; can't exit");
   r.ok(t, "can't remove top context");
@@ -85,26 +98,37 @@ s.prototype.bindEmitter = function (e) {
   r.ok(e.on && e.addListener && e.emit, "can only bind real EEs");
   var t = this,
     n = "context@" + this.name;
-  o(e, function (e) {
-    e && (e["cls@contexts"] || (e["cls@contexts"] = Object.create(null)), e["cls@contexts"][n] = {
-      namespace: t,
-      context: t.active
-    });
-  }, function (e) {
-    if (!e || !e["cls@contexts"]) return e;
-    var t = e,
-      n = e["cls@contexts"];
-    Object.keys(n).forEach(function (e) {
-      var r = n[e];
-      t = r.namespace.bind(t, r.context);
-    });
-    return t;
-  });
+  o(
+    e,
+    function (e) {
+      if (e) {
+        if (e["cls@contexts"]) {
+          e["cls@contexts"] = Object.create(null);
+        }
+        e["cls@contexts"][n] = {
+          namespace: t,
+          context: t.active,
+        };
+      }
+    },
+    function (e) {
+      if (!e || !e["cls@contexts"]) return e;
+      var t = e,
+        n = e["cls@contexts"];
+      Object.keys(n).forEach(function (e) {
+        var r = n[e];
+        t = r.namespace.bind(t, r.context);
+      });
+      return t;
+    }
+  );
 };
 s.prototype.fromException = function (e) {
   return e[i];
 };
-process.namespaces || l();
+if (process.namespaces) {
+  l();
+}
 module.exports = {
   getNamespace: a,
   createNamespace: function (e) {
@@ -115,18 +139,24 @@ module.exports = {
         return t.active;
       },
       before: function (e, n) {
-        n && t.enter(n);
+        if (n) {
+          t.enter(n);
+        }
       },
       after: function (e, n) {
-        n && t.exit(n);
+        if (n) {
+          t.exit(n);
+        }
       },
       error: function (e) {
-        e && t.exit(e);
-      }
+        if (e) {
+          t.exit(e);
+        }
+      },
     });
     process.namespaces[e] = t;
     return t;
   },
   destroyNamespace: c,
-  reset: l
+  reset: l,
 };

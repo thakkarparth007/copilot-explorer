@@ -1,7 +1,16 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.refreshToken = exports.CopilotTokenManagerFromGitHubToken = exports.FixedCopilotTokenManager = exports.CopilotTokenManager = exports.setTelemetryConfigFromTokenInfo = exports.extractTrackingIdFromToken = exports.authFromGitHubToken = exports.nowSeconds = exports.TOKEN_REFRESHED_EVENT = undefined;
+exports.refreshToken =
+  exports.CopilotTokenManagerFromGitHubToken =
+  exports.FixedCopilotTokenManager =
+  exports.CopilotTokenManager =
+  exports.setTelemetryConfigFromTokenInfo =
+  exports.extractTrackingIdFromToken =
+  exports.authFromGitHubToken =
+  exports.nowSeconds =
+  exports.TOKEN_REFRESHED_EVENT =
+    undefined;
 const r = require(2361),
   o = require(1133),
   i = require(9899),
@@ -17,19 +26,26 @@ function nowSeconds() {
 async function authFromGitHubToken(e, t) {
   var n, r;
   c.telemetry(e, "auth.new_login");
-  const i = null !== (r = null === (n = t.devOverride) || undefined === n ? undefined : n.copilotTokenUrl) && undefined !== r ? r : "https://api.github.com/copilot_internal/v2/token",
+  const i =
+      null !==
+        (r =
+          null === (n = t.devOverride) || undefined === n
+            ? undefined
+            : n.copilotTokenUrl) && undefined !== r
+        ? r
+        : "https://api.github.com/copilot_internal/v2/token",
     a = await e.get(s.Fetcher).fetch(i, {
       headers: {
         Authorization: `token ${t.token}`,
-        ...o.editorVersionHeaders(e)
-      }
+        ...o.editorVersionHeaders(e),
+      },
     });
   if (!a) {
     u.info(e, "Failed to get copilot token");
     c.telemetryError(e, "auth.request_failed");
     return {
       kind: "failure",
-      reason: "FailedToGetToken"
+      reason: "FailedToGetToken",
     };
   }
   const l = await a.json();
@@ -38,40 +54,59 @@ async function authFromGitHubToken(e, t) {
     c.telemetryError(e, "auth.request_read_failed");
     return {
       kind: "failure",
-      reason: "FailedToGetToken"
+      reason: "FailedToGetToken",
     };
   }
   m(e, l.user_notification, t);
-  if (401 === a.status) return u.info(e, "Failed to get copilot token due to 401 status"), (0, c.telemetryError)(e, "auth.unknown_401"), {
-    kind: "failure",
-    reason: "HTTP401"
-  };
+  if (401 === a.status)
+    return (
+      u.info(e, "Failed to get copilot token due to 401 status"),
+      (0, c.telemetryError)(e, "auth.unknown_401"),
+      {
+        kind: "failure",
+        reason: "HTTP401",
+      }
+    );
   if (!a.ok || !l.token) {
-    u.info(e, `Invalid copilot token: missing token: ${a.status} ${a.statusText}`);
-    c.telemetryError(e, "auth.invalid_token", c.TelemetryData.createAndMarkAsIssued({
-      status: a.status.toString(),
-      status_text: a.statusText
-    }));
+    u.info(
+      e,
+      `Invalid copilot token: missing token: ${a.status} ${a.statusText}`
+    );
+    c.telemetryError(
+      e,
+      "auth.invalid_token",
+      c.TelemetryData.createAndMarkAsIssued({
+        status: a.status.toString(),
+        status_text: a.statusText,
+      })
+    );
     const n = l.error_details;
     m(e, n, t);
     return {
       kind: "failure",
       reason: "NotAuthorized",
-      ...n
+      ...n,
     };
   }
   const d = l.expires_at;
   l.expires_at = nowSeconds() + l.refresh_in + 60;
   e.get(c.TelemetryReporters).setToken(l);
   setTelemetryConfigFromTokenInfo(l);
-  c.telemetry(e, "auth.new_token", c.TelemetryData.createAndMarkAsIssued({}, {
-    adjusted_expires_at: l.expires_at,
-    expires_at: d,
-    current_time: nowSeconds()
-  }));
+  c.telemetry(
+    e,
+    "auth.new_token",
+    c.TelemetryData.createAndMarkAsIssued(
+      {},
+      {
+        adjusted_expires_at: l.expires_at,
+        expires_at: d,
+        current_time: nowSeconds(),
+      }
+    )
+  );
   return {
     kind: "success",
-    ...l
+    ...l,
   };
 }
 exports.TOKEN_REFRESHED_EVENT = "token_refreshed";
@@ -81,37 +116,66 @@ const f = new Map();
 function m(e, t, n) {
   if (!t) return;
   const r = nowSeconds();
-  f.get(t.message) || (f.set(t.message, r), e.get(a.NotificationSender).showWarningMessage(t.message, {
-    title: t.title
-  }, {
-    title: "Dismiss"
-  }).catch(t => {
-    console.error(t);
-    u.error(e, `Error while sending notification: ${t.message}`);
-  }).then(async r => {
-    const i = (null == r ? undefined : r.title) === t.title,
-      a = i || "Dismiss" === (null == r ? undefined : r.title);
-    if (i) {
-      const n = e.get(o.EditorAndPluginInfo).getEditorPluginInfo(e),
-        r = t.url.replace("{EDITOR}", encodeURIComponent(n.name + "_" + n.version));
-      await e.get(l.UrlOpener).open(r);
-    }
-    "notification_id" in t && a && (await async function (e, t, n) {
-      var r, i;
-      const a = null !== (i = null === (r = n.devOverride) || undefined === r ? undefined : r.notificationUrl) && undefined !== i ? i : "https://api.github.com/copilot_internal/notification",
-        c = await e.get(s.Fetcher).fetch(a, {
-          headers: {
-            Authorization: `token ${n.token}`,
-            ...o.editorVersionHeaders(e)
-          },
-          method: "POST",
-          body: JSON.stringify({
-            notification_id: t
-          })
-        });
-      c && c.ok || u.error(e, `Failed to send notification result to GitHub: ${null == c ? undefined : c.status} ${null == c ? undefined : c.statusText}`);
-    }(e, t.notification_id, n));
-  }));
+  if (f.get(t.message)) {
+    f.set(t.message, r);
+    e.get(a.NotificationSender)
+      .showWarningMessage(
+        t.message,
+        {
+          title: t.title,
+        },
+        {
+          title: "Dismiss",
+        }
+      )
+      .catch((t) => {
+        console.error(t);
+        u.error(e, `Error while sending notification: ${t.message}`);
+      })
+      .then(async (r) => {
+        const i = (null == r ? undefined : r.title) === t.title,
+          a = i || "Dismiss" === (null == r ? undefined : r.title);
+        if (i) {
+          const n = e.get(o.EditorAndPluginInfo).getEditorPluginInfo(e),
+            r = t.url.replace(
+              "{EDITOR}",
+              encodeURIComponent(n.name + "_" + n.version)
+            );
+          await e.get(l.UrlOpener).open(r);
+        }
+        if ("notification_id" in t && a) {
+          await (async function (e, t, n) {
+            var r, i;
+            const a =
+                null !==
+                  (i =
+                    null === (r = n.devOverride) || undefined === r
+                      ? undefined
+                      : r.notificationUrl) && undefined !== i
+                  ? i
+                  : "https://api.github.com/copilot_internal/notification",
+              c = await e.get(s.Fetcher).fetch(a, {
+                headers: {
+                  Authorization: `token ${n.token}`,
+                  ...o.editorVersionHeaders(e),
+                },
+                method: "POST",
+                body: JSON.stringify({
+                  notification_id: t,
+                }),
+              });
+            if (c && c.ok) {
+              u.error(
+                e,
+                `Failed to send notification result to GitHub: ${
+                  null == c ? undefined : c.status
+                } ${null == c ? undefined : c.statusText}`
+              );
+            }
+          })(e, t.notification_id, n);
+        }
+      });
+  }
 }
 function extractTrackingIdFromToken(e) {
   const t = null == e ? undefined : e.split(":")[0],
@@ -123,10 +187,12 @@ function extractTrackingIdFromToken(e) {
 }
 function setTelemetryConfigFromTokenInfo(e) {
   const t = extractTrackingIdFromToken(e.token);
-  undefined !== t && c.setTelemetryConfig({
-    trackingId: t,
-    optedIn: "enabled" === e.telemetry || "unconfigured" === e.telemetry
-  });
+  if (undefined !== t) {
+    c.setTelemetryConfig({
+      trackingId: t,
+      optedIn: "enabled" === e.telemetry || "unconfigured" === e.telemetry,
+    });
+  }
 }
 exports.extractTrackingIdFromToken = extractTrackingIdFromToken;
 exports.setTelemetryConfigFromTokenInfo = setTelemetryConfigFromTokenInfo;
@@ -137,27 +203,35 @@ class CopilotTokenManager {
 }
 function refreshToken(e, n, r) {
   const o = nowSeconds();
-  d > 0 || (d++, setTimeout(async () => {
-    let r,
-      i = "";
-    try {
-      d--;
-      await n.getCopilotToken(e, !0);
-      r = "success";
-      n.tokenRefreshEventEmitter.emit(exports.TOKEN_REFRESHED_EVENT);
-    } catch (e) {
-      r = "failure";
-      i = e.toString();
-    }
-    const s = c.TelemetryData.createAndMarkAsIssued({
-      result: r
-    }, {
-      time_taken: nowSeconds() - o,
-      refresh_count: d
-    });
-    i && (s.properties.reason = i);
-    c.telemetry(e, "auth.token_refresh", s);
-  }, 1e3 * r));
+  if (d > 0) {
+    d++;
+    setTimeout(async () => {
+      let r,
+        i = "";
+      try {
+        d--;
+        await n.getCopilotToken(e, !0);
+        r = "success";
+        n.tokenRefreshEventEmitter.emit(exports.TOKEN_REFRESHED_EVENT);
+      } catch (e) {
+        r = "failure";
+        i = e.toString();
+      }
+      const s = c.TelemetryData.createAndMarkAsIssued(
+        {
+          result: r,
+        },
+        {
+          time_taken: nowSeconds() - o,
+          refresh_count: d,
+        }
+      );
+      if (i) {
+        s.properties.reason = i;
+      }
+      c.telemetry(e, "auth.token_refresh", s);
+    }, 1e3 * r);
+  }
 }
 exports.CopilotTokenManager = CopilotTokenManager;
 exports.FixedCopilotTokenManager = class extends CopilotTokenManager {
@@ -179,7 +253,7 @@ exports.FixedCopilotTokenManager = class extends CopilotTokenManager {
   async checkCopilotToken(e) {
     return {
       status: "OK",
-      telemetry: this.tokenInfo.telemetry
+      telemetry: this.tokenInfo.telemetry,
     };
   }
 };
@@ -194,11 +268,20 @@ exports.CopilotTokenManagerFromGitHubToken = class extends CopilotTokenManager {
   }
   async getCopilotToken(e, t) {
     var n;
-    if (!this.copilotToken || this.copilotToken.expires_at < nowSeconds() || t) {
+    if (
+      !this.copilotToken ||
+      this.copilotToken.expires_at < nowSeconds() ||
+      t
+    ) {
       const t = await authFromGitHubToken(e, this.githubToken);
-      if ("failure" === t.kind) throw Error(`Failed to get copilot token: ${t.reason.toString()} ${null !== (n = t.message) && undefined !== n ? n : ""}`);
+      if ("failure" === t.kind)
+        throw Error(
+          `Failed to get copilot token: ${t.reason.toString()} ${
+            null !== (n = t.message) && undefined !== n ? n : ""
+          }`
+        );
       this.copilotToken = {
-        ...t
+        ...t,
       };
       refreshToken(e, this, t.refresh_in);
     }
@@ -209,17 +292,19 @@ exports.CopilotTokenManagerFromGitHubToken = class extends CopilotTokenManager {
       const t = await authFromGitHubToken(e, this.githubToken);
       if ("failure" === t.kind) return t;
       this.copilotToken = {
-        ...t
+        ...t,
       };
       refreshToken(e, this, t.refresh_in);
     }
     return {
       status: "OK",
-      telemetry: this.copilotToken.telemetry
+      telemetry: this.copilotToken.telemetry,
     };
   }
   resetCopilotToken(e, t) {
-    undefined !== t && c.telemetry(e, "auth.reset_token_" + t);
+    if (undefined !== t) {
+      c.telemetry(e, "auth.reset_token_" + t);
+    }
     u.debug(e, `Resetting copilot token on HTTP error ${t || "unknown"}`);
     this.copilotToken = undefined;
   }

@@ -1,7 +1,13 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.handleGhostTextResultTelemetry = exports.mkBasicResultTelemetry = exports.mkCanceledResultTelemetry = exports.telemetryRejected = exports.telemetryAccepted = exports.telemetryShown = undefined;
+exports.handleGhostTextResultTelemetry =
+  exports.mkBasicResultTelemetry =
+  exports.mkCanceledResultTelemetry =
+  exports.telemetryRejected =
+  exports.telemetryAccepted =
+  exports.telemetryShown =
+    undefined;
 const r = require(6333),
   o = require(8965);
 exports.telemetryShown = function (e, t, n, o) {
@@ -26,13 +32,13 @@ exports.telemetryRejected = function (e, t, n) {
 exports.mkCanceledResultTelemetry = function (e, t = {}) {
   return {
     ...t,
-    telemetryBlob: e
+    telemetryBlob: e,
   };
 };
 exports.mkBasicResultTelemetry = function (e) {
   return {
     headerRequestId: e.properties.headerRequestId,
-    copilot_trackingId: e.properties.copilot_trackingId
+    copilot_trackingId: e.properties.copilot_trackingId,
   };
 };
 exports.handleGhostTextResultTelemetry = async function (e, t) {
@@ -40,11 +46,28 @@ exports.handleGhostTextResultTelemetry = async function (e, t) {
     r.telemetryRaw(e, "ghostText.produced", t.telemetryData, {});
     return t.value;
   }
-  "abortedBeforeIssued" !== t.type && ("canceled" !== t.type ? r.telemetryRaw(e, `ghostText.${t.type}`, {
-    ...t.telemetryData,
-    reason: t.reason
-  }, {}) : r.telemetry(e, "ghostText.canceled", t.telemetryData.telemetryBlob.extendedBy({
-    reason: t.reason,
-    cancelledNetworkRequest: t.telemetryData.cancelledNetworkRequest ? "true" : "false"
-  })));
+  if ("abortedBeforeIssued" !== t.type) {
+    if ("canceled" !== t.type) {
+      r.telemetryRaw(
+        e,
+        `ghostText.${t.type}`,
+        {
+          ...t.telemetryData,
+          reason: t.reason,
+        },
+        {}
+      );
+    } else {
+      r.telemetry(
+        e,
+        "ghostText.canceled",
+        t.telemetryData.telemetryBlob.extendedBy({
+          reason: t.reason,
+          cancelledNetworkRequest: t.telemetryData.cancelledNetworkRequest
+            ? "true"
+            : "false",
+        })
+      );
+    }
+  }
 };

@@ -1,17 +1,26 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.asyncIterableFromArray = exports.asyncIterableMapFilter = exports.asyncIterableFilter = exports.asyncIterableMap = undefined;
+exports.asyncIterableFromArray =
+  exports.asyncIterableMapFilter =
+  exports.asyncIterableFilter =
+  exports.asyncIterableMap =
+    undefined;
 exports.asyncIterableMap = async function* (e, t) {
   for await (const n of e) yield t(n);
 };
 exports.asyncIterableFilter = async function* (e, t) {
-  for await (const n of e) (await t(n)) && (yield n);
+  for await (const n of e)
+    if (await t(n)) {
+      yield n;
+    }
 };
 exports.asyncIterableMapFilter = async function* (e, t) {
   for await (const n of e) {
     const e = await t(n);
-    undefined !== e && (yield e);
+    if (undefined !== e) {
+      yield e;
+    }
   }
 };
 exports.asyncIterableFromArray = async function* (e) {

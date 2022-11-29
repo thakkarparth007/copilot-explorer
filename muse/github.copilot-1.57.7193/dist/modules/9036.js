@@ -7,5 +7,5 @@ module.exports = {
   rootIdHeader: "x-ms-request-root-id",
   correlationContextHeader: "correlation-context",
   traceparentHeader: "traceparent",
-  traceStateHeader: "tracestate"
+  traceStateHeader: "tracestate",
 };

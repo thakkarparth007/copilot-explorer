@@ -1,17 +1,27 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.logger = exports.toPlainText = exports.Logger = exports.MultiLog = exports.OutputChannelLog = exports.ConsoleLog = exports.LogTarget = exports.verboseLogging = exports.LogVerbose = exports.LogLevel = undefined;
+exports.logger =
+  exports.toPlainText =
+  exports.Logger =
+  exports.MultiLog =
+  exports.OutputChannelLog =
+  exports.ConsoleLog =
+  exports.LogTarget =
+  exports.verboseLogging =
+  exports.LogVerbose =
+  exports.LogLevel =
+    undefined;
 const r = require(299),
   o = require(1133),
   i = require(6333);
 var s;
-!function (e) {
-  e[e.DEBUG = 0] = "DEBUG";
-  e[e.INFO = 1] = "INFO";
-  e[e.WARN = 2] = "WARN";
-  e[e.ERROR = 3] = "ERROR";
-}(s = exports.LogLevel || (exports.LogLevel = {}));
+!(function (e) {
+  e[(e.DEBUG = 0)] = "DEBUG";
+  e[(e.INFO = 1)] = "INFO";
+  e[(e.WARN = 2)] = "WARN";
+  e[(e.ERROR = 3)] = "ERROR";
+})((s = exports.LogLevel || (exports.LogLevel = {})));
 class LogVerbose {
   constructor(e) {
     this.logVerbose = e;
@@ -32,7 +42,13 @@ exports.ConsoleLog = class extends LogTarget {
     this.console = e;
   }
   logIt(e, t, n, ...r) {
-    verboseLogging(e) || t == s.ERROR ? this.console.error(n, ...r) : t == s.WARN && this.console.warn(n, ...r);
+    if (verboseLogging(e) || t == s.ERROR) {
+      this.console.error(n, ...r);
+    } else {
+      if (t == s.WARN) {
+        this.console.warn(n, ...r);
+      }
+    }
   }
 };
 exports.OutputChannelLog = class extends LogTarget {
@@ -50,7 +66,7 @@ exports.MultiLog = class extends LogTarget {
     this.targets = e;
   }
   logIt(e, t, n, ...r) {
-    this.targets.forEach(o => o.logIt(e, t, n, ...r));
+    this.targets.forEach((o) => o.logIt(e, t, n, ...r));
   }
 };
 class Logger {
@@ -66,11 +82,18 @@ class Logger {
   }
   log(e, t, n, ...o) {
     const a = s[t];
-    t == s.ERROR && i.telemetryError(e, "log", i.TelemetryData.createAndMarkAsIssued({
-      context: this.context,
-      level: a,
-      message: o.length > 0 ? JSON.stringify(o) : "no msg"
-    }), n);
+    if (t == s.ERROR) {
+      i.telemetryError(
+        e,
+        "log",
+        i.TelemetryData.createAndMarkAsIssued({
+          context: this.context,
+          level: a,
+          message: o.length > 0 ? JSON.stringify(o) : "no msg",
+        }),
+        n
+      );
+    }
     const c = e.get(LogTarget),
       u = c.shouldLog(e, t);
     if (!1 === u) return;
@@ -86,7 +109,16 @@ class Logger {
     if (s.length > 0 && !s.includes(n)) return !1;
     if (o.isProduction(e)) return t >= this.minLoggedLevel;
     const a = o.getConfig(e, o.ConfigKey.DebugOverrideLogLevels);
-    return t >= (null !== (i = null !== (r = this.stringToLevel(a["*"])) && undefined !== r ? r : this.stringToLevel(a[this.context])) && undefined !== i ? i : this.minLoggedLevel);
+    return (
+      t >=
+      (null !==
+        (i =
+          null !== (r = this.stringToLevel(a["*"])) && undefined !== r
+            ? r
+            : this.stringToLevel(a[this.context])) && undefined !== i
+        ? i
+        : this.minLoggedLevel)
+    );
   }
   debug(e, ...t) {
     this.log(e, s.DEBUG, !1, ...t);

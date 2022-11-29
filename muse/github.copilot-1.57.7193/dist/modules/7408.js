@@ -1,36 +1,48 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
-exports.Priorities = exports.PromptWishlist = exports.PromptElementRanges = exports.PromptChoices = exports.PromptBackground = exports.PromptElementKind = undefined;
+exports.Priorities =
+  exports.PromptWishlist =
+  exports.PromptElementRanges =
+  exports.PromptChoices =
+  exports.PromptBackground =
+  exports.PromptElementKind =
+    undefined;
 const r = require(1747),
   o = require(9852);
 var i;
-!function (e) {
+!(function (e) {
   e.BeforeCursor = "BeforeCursor";
   e.AfterCursor = "AfterCursor";
   e.SimilarFile = "SimilarFile";
   e.ImportedFile = "ImportedFile";
   e.LanguageMarker = "LanguageMarker";
   e.PathMarker = "PathMarker";
-}(i = exports.PromptElementKind || (exports.PromptElementKind = {}));
+})((i = exports.PromptElementKind || (exports.PromptElementKind = {})));
 class PromptBackground {
   constructor() {
     this.used = new Map();
     this.unused = new Map();
   }
   markUsed(e) {
-    this.IsNeighboringTab(e) && this.used.set(e.id, this.convert(e));
+    if (this.IsNeighboringTab(e)) {
+      this.used.set(e.id, this.convert(e));
+    }
   }
   undoMarkUsed(e) {
-    this.IsNeighboringTab(e) && this.used.delete(e.id);
+    if (this.IsNeighboringTab(e)) {
+      this.used.delete(e.id);
+    }
   }
   markUnused(e) {
-    this.IsNeighboringTab(e) && this.unused.set(e.id, this.convert(e));
+    if (this.IsNeighboringTab(e)) {
+      this.unused.set(e.id, this.convert(e));
+    }
   }
   convert(e) {
     return {
       score: e.score.toFixed(4),
-      length: e.text.length
+      length: e.text.length,
     };
   }
   IsNeighboringTab(e) {
@@ -59,13 +71,20 @@ class PromptElementRanges {
     this.ranges = new Array();
     let t,
       n = 0;
-    for (const {
-      element: r
-    } of e) 0 !== r.text.length && (t === i.BeforeCursor && r.kind === i.BeforeCursor ? this.ranges[this.ranges.length - 1].end += r.text.length : this.ranges.push({
-      kind: r.kind,
-      start: n,
-      end: n + r.text.length
-    }), t = r.kind, n += r.text.length);
+    for (const { element: r } of e)
+      if (0 !== r.text.length) {
+        if (t === i.BeforeCursor && r.kind === i.BeforeCursor) {
+          this.ranges[this.ranges.length - 1].end += r.text.length;
+        } else {
+          this.ranges.push({
+            kind: r.kind,
+            start: n,
+            end: n + r.text.length,
+          });
+        }
+        t = r.kind;
+        n += r.text.length;
+      }
   }
 }
 exports.PromptElementRanges = PromptElementRanges;
@@ -78,7 +97,9 @@ exports.PromptWishlist = class {
     return [...this.content];
   }
   convertLineEndings(e) {
-    this.lineEndingOption === r.LineEndingOptions.ConvertToUnix && (e = e.replace(/\r\n/g, "\n").replace(/\r/g, "\n"));
+    if (this.lineEndingOption === r.LineEndingOptions.ConvertToUnix) {
+      e = e.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+    }
     return e;
   }
   append(e, t, n, r = o.tokenLength(e), i = NaN) {
@@ -92,7 +113,7 @@ exports.PromptWishlist = class {
       tokens: r,
       requires: [],
       excludes: [],
-      score: i
+      score: i,
     });
     return s;
   }
@@ -101,51 +122,94 @@ exports.PromptWishlist = class {
     for (let e = 0; e < r.length - 1; e++) r[e] += "\n";
     const o = [];
     r.forEach((e, t) => {
-      "\n" === e && o.length > 0 && !o[o.length - 1].endsWith("\n\n") ? o[o.length - 1] += "\n" : o.push(e);
+      if ("\n" === e && o.length > 0 && !o[o.length - 1].endsWith("\n\n")) {
+        o[o.length - 1] += "\n";
+      } else {
+        o.push(e);
+      }
     });
     const i = [];
     o.forEach((e, r) => {
-      "" !== e && (i.push(this.append(e, t, n)), r > 0 && (this.content[this.content.length - 2].requires = [this.content[this.content.length - 1]]));
+      if ("" !== e) {
+        i.push(this.append(e, t, n));
+        if (r > 0) {
+          this.content[this.content.length - 2].requires = [
+            this.content[this.content.length - 1],
+          ];
+        }
+      }
     });
     return i;
   }
   require(e, t) {
-    const n = this.content.find(t => t.id === e),
-      r = this.content.find(e => e.id === t);
-    n && r && n.requires.push(r);
+    const n = this.content.find((t) => t.id === e),
+      r = this.content.find((e) => e.id === t);
+    if (n && r) {
+      n.requires.push(r);
+    }
   }
   exclude(e, t) {
-    const n = this.content.find(t => t.id === e),
-      r = this.content.find(e => e.id === t);
-    n && r && n.excludes.push(r);
+    const n = this.content.find((t) => t.id === e),
+      r = this.content.find((e) => e.id === t);
+    if (n && r) {
+      n.excludes.push(r);
+    }
   }
   fulfill(e) {
     const t = new PromptChoices(),
       n = new PromptBackground(),
       r = this.content.map((e, t) => ({
         element: e,
-        index: t
+        index: t,
       }));
-    r.sort((e, t) => e.element.priority === t.element.priority ? t.index - e.index : t.element.priority - e.element.priority);
+    r.sort((e, t) =>
+      e.element.priority === t.element.priority
+        ? t.index - e.index
+        : t.element.priority - e.element.priority
+    );
     const i = new Set(),
       l = new Set();
     let u;
     const d = [];
     let p = e;
-    r.forEach(e => {
+    r.forEach((e) => {
       var r;
       const o = e.element,
         s = e.index;
-      if (p >= 0 && (p > 0 || undefined === u) && o.requires.every(e => i.has(e.id)) && !l.has(o.id)) {
+      if (
+        p >= 0 &&
+        (p > 0 || undefined === u) &&
+        o.requires.every((e) => i.has(e.id)) &&
+        !l.has(o.id)
+      ) {
         let a = o.tokens;
-        const c = null === (r = function (e, t) {
-          let n,
-            r = 1 / 0;
-          for (const o of e) o.index > t && o.index < r && (n = o, r = o.index);
-          return n;
-        }(d, s)) || undefined === r ? undefined : r.element;
-        o.text.endsWith("\n\n") && c && !c.text.match(/^\s/) && a++;
-        p >= a ? (p -= a, i.add(o.id), o.excludes.forEach(e => l.add(e.id)), t.markUsed(o), n.markUsed(o), d.push(e)) : u = null != u ? u : e;
+        const c =
+          null ===
+            (r = (function (e, t) {
+              let n,
+                r = 1 / 0;
+              for (const o of e)
+                if (o.index > t && o.index < r) {
+                  n = o;
+                  r = o.index;
+                }
+              return n;
+            })(d, s)) || undefined === r
+            ? undefined
+            : r.element;
+        if (o.text.endsWith("\n\n") && c && !c.text.match(/^\s/)) {
+          a++;
+        }
+        if (p >= a) {
+          p -= a;
+          i.add(o.id);
+          o.excludes.forEach((e) => l.add(e.id));
+          t.markUsed(o);
+          n.markUsed(o);
+          d.push(e);
+        } else {
+          u = null != u ? u : e;
+        }
       } else {
         t.markUnused(o);
         n.markUnused(o);
@@ -154,10 +218,20 @@ exports.PromptWishlist = class {
     d.sort((e, t) => e.index - t.index);
     let h = d.reduce((e, t) => e + t.element.text, ""),
       f = o.tokenLength(h);
-    for (; f > e;) {
-      d.sort((e, t) => t.element.priority === e.element.priority ? t.index - e.index : t.element.priority - e.element.priority);
+    for (; f > e; ) {
+      d.sort((e, t) =>
+        t.element.priority === e.element.priority
+          ? t.index - e.index
+          : t.element.priority - e.element.priority
+      );
       const e = d.pop();
-      e && (t.undoMarkUsed(e.element), t.markUnused(e.element), n.undoMarkUsed(e.element), n.markUnused(e.element), u = undefined);
+      if (e) {
+        t.undoMarkUsed(e.element);
+        t.markUnused(e.element);
+        n.undoMarkUsed(e.element);
+        n.markUnused(e.element);
+        u = undefined;
+      }
       d.sort((e, t) => e.index - t.index);
       h = d.reduce((e, t) => e + t.element.text, "");
       f = o.tokenLength(h);
@@ -179,7 +253,7 @@ exports.PromptWishlist = class {
           suffixLength: 0,
           promptChoices: t,
           promptBackground: n,
-          promptElementRanges: e
+          promptElementRanges: e,
         };
       }
       t.markUnused(u.element);
@@ -193,7 +267,7 @@ exports.PromptWishlist = class {
       suffixLength: 0,
       promptChoices: t,
       promptBackground: n,
-      promptElementRanges: g
+      promptElementRanges: g,
     };
   }
 };
@@ -202,22 +276,28 @@ class Priorities {
     this.registeredPriorities = [0, 1];
   }
   register(e) {
-    if (e > Priorities.TOP || e < Priorities.BOTTOM) throw new Error("Priority must be between 0 and 1");
+    if (e > Priorities.TOP || e < Priorities.BOTTOM)
+      throw new Error("Priority must be between 0 and 1");
     this.registeredPriorities.push(e);
     return e;
   }
   justAbove(...e) {
     const t = Math.max(...e),
-      n = Math.min(...this.registeredPriorities.filter(e => e > t));
+      n = Math.min(...this.registeredPriorities.filter((e) => e > t));
     return this.register((n + t) / 2);
   }
   justBelow(...e) {
     const t = Math.min(...e),
-      n = Math.max(...this.registeredPriorities.filter(e => e < t));
+      n = Math.max(...this.registeredPriorities.filter((e) => e < t));
     return this.register((n + t) / 2);
   }
   between(e, t) {
-    if (this.registeredPriorities.some(n => n > e && n < t) || !this.registeredPriorities.includes(e) || !this.registeredPriorities.includes(t)) throw new Error("Priorities must be adjacent in the list of priorities");
+    if (
+      this.registeredPriorities.some((n) => n > e && n < t) ||
+      !this.registeredPriorities.includes(e) ||
+      !this.registeredPriorities.includes(t)
+    )
+      throw new Error("Priorities must be adjacent in the list of priorities");
     return this.register((e + t) / 2);
   }
 }
