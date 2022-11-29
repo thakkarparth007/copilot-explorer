@@ -6,8 +6,10 @@ const fs = require('fs');
 const path = require('path');
 
 const rootPath = path.join(__dirname, "muse/github.copilot-1.57.7193/dist");
-const srcFile = path.join(rootPath, 'extension_expanded.js')
+const srcFile = path.join(rootPath, 'extension_expanded.js');
+const mainModuleSrcFile = path.join(rootPath, "extension_expanded_main.js");
 const code = fs.readFileSync(srcFile, 'utf8');
+const mainCode = fs.readFileSync(mainModuleSrcFile, 'utf8');
 
 // navigate the AST of var e = {...}. Every property is a module.
 // We want to separate each module into its own file.
@@ -417,6 +419,12 @@ traverse(ast, {
     }
 });
 
+// handle the main module - special case because it's not in the `e` object
+const mainModuleId = "main";
+const mainModuleAst = babel.parse(mainCode).program.body[0].expression;
+moduleDeps[mainModuleId] = {}
+handleModule(mainModuleId, mainModuleAst, moduleDeps[mainModuleId]);
+
 // add reverse dependencies
 for (const moduleId in moduleDeps) {
     const metadata = moduleDeps[moduleId];
@@ -428,16 +436,24 @@ for (const moduleId in moduleDeps) {
     }
 }
 
+const moduleCodes = {};
 // add line number info
 for (const moduleId in moduleDeps) {
     const metadata = moduleDeps[moduleId];
     const moduleCode = fs.readFileSync(getModulePath(moduleId), "utf8");
     const lines = moduleCode.split("\n");
     metadata["lines"] = lines.length;
+    moduleCodes[moduleId] = moduleCode;
 }
 
 // write the module dependency graph
 fs.writeFileSync(
     path.join(rootPath, "module_deps.json"),
     JSON.stringify(moduleDeps, null, 2)
+);
+
+// write the module codes
+fs.writeFileSync(
+    path.join(rootPath, "module_codes.json"),
+    JSON.stringify(moduleCodes, null, 2)
 );

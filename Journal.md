@@ -46,3 +46,14 @@
      - 3197 depends on 9334
      - 6267 (says copilot requires codelens - check who imports this to see what parts of codelens are used)
      - 9496 (`vscode` - things that import it are likely important)
+     - 3197 (no module imports this. seems to be the main module)
+     - 1862 (VSCodeCopilotTokenManager!)
+
+   - Color coded:
+     - Red nodes: modules that aren't imported by anyone. These are likely top level modules.
+     - Orange nodes: modules that don't import anyone. These are likely leaf nodes.
+     - Green nodes: modules that import and are imported by others. These are intermediate nodes.
+
+   The color coding is based on my dependency extraction code. That's not perfect yet. So the color coding is not perfect either. But it's a great starting point.
+
+3. IMPORTANT PIECE MISSING: So far I've only extracted modules, but the REAL top level code is still untouched. That's in extension_expanded.js. Gotta work on that next.

@@ -38,17 +38,12 @@
         }
     </style>
 
-    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-    
+    <!-- Select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
     <!-- monaco -->
     <link rel="stylesheet" data-name="vs/editor/editor.main"
     href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/editor/editor.main.min.css">
-    <script>var require = { paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs' } };</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/loader.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/editor/editor.main.nls.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/editor/editor.main.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/basic-languages/javascript/javascript.min.js"></script>
 </head>
 
 <body>
@@ -70,28 +65,50 @@
         </div>
     </div>
     <script type="text/javascript" src="/data/module_deps.js"></script>
+    <script type="text/javascript" src="/data/module_codes.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Select2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script type="text/javascript">
-        function $id(id) {
-            return document.getElementById(id);
-        }
+        // function $(i#d) {
+        //     return document.getElementById(id);
+        // }
         
         // fill the select box with the module names
-        var moduleDropdown = $id('module-name');
+        var moduleDropdown = $('#module-name');
         for (let module_id of Object.keys(module_deps_data)) {
-            var option = document.createElement('option');
-            option.value = module_id;
-            // right now modules are not named
-            option.text = module_id + "(" + module_deps_data[module_id].lines + " LOC)";
-            moduleDropdown.appendChild(option);
+            // var option = document.createElement('option');
+            // option.value = module_id;
+            // // right now modules are not named
+            // option.text = module_id + "(" + module_deps_data[module_id].lines + " LOC)";
+            // moduleDropdown.appendChild(option);
+
+            var newOption = new Option(
+                module_id + "(" + module_deps_data[module_id].lines + " LOC)", module_id, false, false
+            );
+            moduleDropdown.append(newOption)
         }
+
+        $(moduleDropdown).select2();
     </script>
+    <!-- viz.js -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <!-- monaco -->
+    <script>var require = { paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs' } };</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/loader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/editor/editor.main.nls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/editor/editor.main.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/basic-languages/javascript/javascript.min.js"></script>
     <script type="text/javascript">
         /* Graph data */
         var raw_nodes = Object.entries(module_deps_data).map(
             ([key, value]) => ({
-                id: parseInt(key),
+                id: key,
                 label: key,
-                color: value.exports.length == 0 ? 'red' : 'green',
+                color: value.importedBy.length == 0 ? "red"
+                        : value.deps.length == 0 ? 'orange'
+                        : 'green',
             })
         );
 
@@ -101,7 +118,7 @@
         for (const [key, value] of Object.entries(module_deps_data)) {
             for (const dep of value.deps) {
                 edges.push({
-                    from: parseInt(key),
+                    from: key,
                     to: dep,
                     arrows: 'to'
                 });
@@ -132,7 +149,8 @@
                     iterations: 10,
                 },
                 // enabled: false,
-            }
+            },
+            nodes: { font: { size: 14 }},
         };
         var network = new vis.Network(container, data, options);
 
@@ -146,21 +164,54 @@
             displayModule(selectedNode + "", true);
         });
 
+        function highlightSelectedModule(module_id, old_module_id) {
+            if (old_module_id !== undefined) {
+                var old_node = network.body.nodes[old_module_id];
+                old_node.setOptions({
+                    font: {
+                        size: options.nodes.font.size
+                    }
+                });
+            }
+
+            var node = network.body.nodes[module_id];
+            node.setOptions({
+                font: {
+                    size: 20
+                },
+                color: {
+                    // background: 'yellow',
+                    border: 'black',
+                    highlight: {
+                        background: 'yellow',
+                        border: 'black'
+                    }
+                }
+            });
+        }
+
+        let curSelectedModule = "main";
         function displayModule(moduleId, viaClick = false) {
             if (viaClick) {
                 // update url
                 window.history.pushState({}, '', `#m${moduleId}`);
             }
             else {
-                network.selectNodes([parseInt(moduleId)]);
+                network.selectNodes([moduleId]);
             }
-            $id("module-name").value = moduleId;
+            if ($("#module-name").val() != moduleId) {
+                $("#module-name").val(moduleId).trigger('change');
+            }
 
-            fetch(`/data/module_code/${moduleId}`)
-                .then(response => response.text())
-                .then(text => {
-                    editor.setValue(text);
-                });
+            highlightSelectedModule(moduleId, curSelectedModule);
+            curSelectedModule = moduleId;
+
+            // fetch(`/data/module_code/${moduleId}`)
+            //     .then(response => response.text())
+            //     .then(text => {
+            //         editor.setValue(text);
+            //     });
+            editor.setValue(module_codes_data[moduleId]);
             
             // update module info using module_deps_data
             // show module's exports, imports and modules that import this module
@@ -194,16 +245,16 @@
                 </div>
             `;
 
-            $id("module-info").innerHTML = moduleInfoHtml;
+            $("#module-info").html(moduleInfoHtml);
         };
 
-        moduleDropdown.addEventListener('change', function () {
+        moduleDropdown.on('change', function () {
             displayModule(this.value);
         });
 
         
         /********** Code Viewer **********/
-        let editor = monaco.editor.create($id('code-block'), {
+        let editor = monaco.editor.create($('#code-block').get(0), {
             value: "function hello() {\n\talert('Hello world!');\n}",
             language: 'javascript',
             theme: 'vs-dark',

@@ -95,7 +95,8 @@
       "1124",
       "6333",
       "9334",
-      "9425"
+      "9425",
+      "main"
     ],
     "lines": 43
   },
@@ -184,7 +185,8 @@
     ],
     "importedBy": [
       "9189",
-      "9899"
+      "9899",
+      "main"
     ],
     "lines": 9
   },
@@ -238,7 +240,8 @@
       "766",
       "956",
       "1862",
-      "4419"
+      "4419",
+      "main"
     ],
     "lines": 227
   },
@@ -251,7 +254,9 @@
     "exports": [
       "ExtensionTextDocumentManager"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 33
   },
   "406": {
@@ -259,7 +264,9 @@
       6252
     ],
     "exports": [],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 1
   },
   "412": {
@@ -548,7 +555,8 @@
       "2388",
       "4419",
       "4969",
-      "9334"
+      "9334",
+      "main"
     ],
     "lines": 151
   },
@@ -702,7 +710,9 @@
       "readTestingGitHubToken",
       "makeTestingCopilotTokenManager"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 26
   },
   "966": {
@@ -888,7 +898,8 @@
       "9334",
       "9380",
       "9425",
-      "9899"
+      "9899",
+      "main"
     ],
     "lines": 237
   },
@@ -1018,7 +1029,8 @@
     ],
     "importedBy": [
       "362",
-      "8771"
+      "8771",
+      "main"
     ],
     "lines": 5
   },
@@ -1191,7 +1203,8 @@
       "sortByAccessTimes"
     ],
     "importedBy": [
-      "4969"
+      "4969",
+      "main"
     ],
     "lines": 16
   },
@@ -1226,7 +1239,9 @@
       "setExtensionContext",
       "telemetryAcceptanceKey"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 97
   },
   "1906": {
@@ -1248,7 +1263,9 @@
     "exports": [
       "OpenCopilotActionProvider"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 72
   },
   "1974": {
@@ -1484,7 +1501,8 @@
       "4419",
       "9334",
       "9408",
-      "9748"
+      "9748",
+      "main"
     ],
     "lines": 132
   },
@@ -1685,7 +1703,8 @@
       "1124",
       "2388",
       "4969",
-      "7727"
+      "7727",
+      "main"
     ],
     "lines": 97
   },
@@ -1909,7 +1928,9 @@
     "exports": [
       "CopilotPanel"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 84
   },
   "3054": {
@@ -1936,7 +1957,8 @@
       "2533",
       "4969",
       "9189",
-      "9334"
+      "9334",
+      "main"
     ],
     "lines": 4462
   },
@@ -1971,7 +1993,8 @@
     "importedBy": [
       "1929",
       "2990",
-      "7254"
+      "7254",
+      "main"
     ],
     "lines": 11
   },
@@ -2043,7 +2066,8 @@
       "1839",
       "4969",
       "6881",
-      "7017"
+      "7017",
+      "main"
     ],
     "lines": 12
   },
@@ -2079,7 +2103,9 @@
       "ghostTextLogger",
       "getInsertionTextFromCompletion"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 140
   },
   "3223": {
@@ -2673,7 +2699,8 @@
       "1133",
       "2990",
       "4540",
-      "9425"
+      "9425",
+      "main"
     ],
     "lines": 6
   },
@@ -2822,7 +2849,8 @@
     ],
     "importedBy": [
       "937",
-      "9334"
+      "9334",
+      "main"
     ],
     "lines": 197
   },
@@ -2836,7 +2864,9 @@
     "exports": [
       "activate"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 23
   },
   "4431": {
@@ -3412,7 +3442,8 @@
     "importedBy": [
       "2279",
       "4419",
-      "9334"
+      "9334",
+      "main"
     ],
     "lines": 22
   },
@@ -3719,7 +3750,9 @@
       "commandOpenPanel",
       "completionContextForEditor"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 24
   },
   "6279": {
@@ -3812,7 +3845,8 @@
       "7254",
       "9334",
       "9408",
-      "9899"
+      "9899",
+      "main"
     ],
     "lines": 371
   },
@@ -3859,7 +3893,8 @@
       "2388",
       "7727",
       "8129",
-      "9334"
+      "9334",
+      "main"
     ],
     "lines": 5
   },
@@ -3969,7 +4004,8 @@
     "importedBy": [
       "2388",
       "4419",
-      "9334"
+      "9334",
+      "main"
     ],
     "lines": 13
   },
@@ -4081,7 +4117,9 @@
     "exports": [
       "extensionFileSystem"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 16
   },
   "6881": {
@@ -4180,7 +4218,8 @@
       "UrlOpener"
     ],
     "importedBy": [
-      "362"
+      "362",
+      "main"
     ],
     "lines": 11
   },
@@ -4296,7 +4335,9 @@
     "exports": [
       "CopilotStatusBar"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 139
   },
   "7262": {
@@ -4585,7 +4626,9 @@
     "exports": [
       "Context"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 41
   },
   "7886": {
@@ -4713,7 +4756,9 @@
     "exports": [
       "ExtensionLocationFactory"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 15
   },
   "8142": {
@@ -5064,7 +5109,9 @@
       "rangeToString",
       "positionToString"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 31
   },
   "8859": {
@@ -5119,7 +5166,8 @@
     ],
     "importedBy": [
       "750",
-      "9334"
+      "9334",
+      "main"
     ],
     "lines": 74
   },
@@ -5296,7 +5344,8 @@
       "5413",
       "6333",
       "9334",
-      "9380"
+      "9380",
+      "main"
     ],
     "lines": 255
   },
@@ -5462,7 +5511,9 @@
     "exports": [
       "registerDefaultHandlers"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 35
   },
   "9425": {
@@ -5480,7 +5531,9 @@
       "setExtension",
       "VSCodeConfigProvider"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 90
   },
   "9428": {
@@ -5527,7 +5580,9 @@
     "exports": [
       "initProxyEnvironment"
     ],
-    "importedBy": [],
+    "importedBy": [
+      "main"
+    ],
     "lines": 49
   },
   "9491": {
@@ -5558,7 +5613,8 @@
       "8129",
       "9380",
       "9425",
-      "9477"
+      "9477",
+      "main"
     ],
     "lines": 1
   },
@@ -5741,7 +5797,8 @@
       "ExpConfigMaker"
     ],
     "importedBy": [
-      "9189"
+      "9189",
+      "main"
     ],
     "lines": 36
   },
@@ -5953,7 +6010,8 @@
       "4419",
       "7017",
       "9334",
-      "9380"
+      "9380",
+      "main"
     ],
     "lines": 113
   },
@@ -6063,5 +6121,57 @@
       "1354"
     ],
     "lines": 37
+  },
+  "main": {
+    "deps": [
+      3055,
+      406,
+      9496,
+      362,
+      299,
+      1133,
+      4197,
+      7870,
+      9408,
+      1839,
+      9189,
+      9748,
+      8965,
+      5413,
+      9899,
+      2279,
+      1547,
+      4419,
+      6722,
+      2533,
+      766,
+      6333,
+      956,
+      70,
+      8771,
+      6403,
+      3136,
+      7057,
+      3197,
+      1862,
+      9425,
+      3060,
+      1929,
+      6267,
+      2990,
+      6857,
+      9477,
+      7254,
+      4428,
+      8129,
+      385
+    ],
+    "exports": [
+      "deactivate",
+      "activate",
+      "init"
+    ],
+    "importedBy": [],
+    "lines": 163
   }
 }
