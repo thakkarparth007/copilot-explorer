@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Network</title>
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        #main {
+            display: flex;
+            flex-direction: row;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+        #mynetwork {
+            width: 50%;
+            height: 100vh;
+            border-right: 1px solid darkgray;
+        }
+        #info-panel {
+            width: 50%;
+            height: 100vh;
+            display: flex;
+        }
+        #code-block {
+            width: 75%;
+            height: 100%;
+            overflow: auto;
+        }
+        #module-info-wrapper {
+            width: 25%;
+            height: 100%;
+            overflow: auto;
+        }
+    </style>
+
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    
+    <!-- monaco -->
+    <link rel="stylesheet" data-name="vs/editor/editor.main"
+    href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/editor/editor.main.min.css">
+    <script>var require = { paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs' } };</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/loader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/editor/editor.main.nls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/editor/editor.main.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/basic-languages/javascript/javascript.min.js"></script>
+</head>
+
+<body>
+    <div id="main">
+        <div id="mynetwork"></div>
+        <div id="info-panel">
+            <div id="code-block">
+
+            </div>
+            <div id="module-info-wrapper">
+                <label for="module-name">Module</label>
+                <select id="module-name">
+                    <option value="0">Select a module</option>
+                </select>
+                <div id="module-info">
+                    Module info
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/data/module_deps.js"></script>
+    <script type="text/javascript">
+        function $id(id) {
+            return document.getElementById(id);
+        }
+        
+        // fill the select box with the module names
+        var moduleDropdown = $id('module-name');
+        for (let module_id of Object.keys(module_deps_data)) {
+            var option = document.createElement('option');
+            option.value = module_id;
+            // right now modules are not named
+            option.text = module_id + "(" + module_deps_data[module_id].lines + " LOC)";
+            moduleDropdown.appendChild(option);
+        }
+    </script>
+    <script type="text/javascript">
+        /* Graph data */
+        var raw_nodes = Object.entries(module_deps_data).map(
+            ([key, value]) => ({
+                id: parseInt(key),
+                label: key,
+                color: value.exports.length == 0 ? 'red' : 'green',
+            })
+        );
+
+        var nodes = new vis.DataSet(raw_nodes);
+
+        var edges = [];
+        for (const [key, value] of Object.entries(module_deps_data)) {
+            for (const dep of value.deps) {
+                edges.push({
+                    from: parseInt(key),
+                    to: dep,
+                    arrows: 'to'
+                });
+            }
+        }
+
+        // create a network
+        var container = document.getElementById("mynetwork");
+        var data = {
+            nodes: nodes,
+            edges: edges,
+        };
+        var options = {
+            layout: {
+                // improvedLayout: false,
+                // hierarchical: {
+                //   direction: "UD",
+                // },
+            },
+            physics: {
+                adaptiveTimestep: true,
+                barnesHut: {
+                    gravitationalConstant: -8000,
+                    springConstant: 0.04,
+                    springLength: 95
+                },
+                stabilization: {
+                    iterations: 10,
+                },
+                // enabled: false,
+            }
+        };
+        var network = new vis.Network(container, data, options);
+
+        network.on("click", function (params) {
+            params.event = "[original event]";
+            let selectedNode = network.getNodeAt(params.pointer.DOM);
+            if (selectedNode === undefined) {
+                return;
+            }
+
+            displayModule(selectedNode + "", true);
+        });
+
+        function displayModule(moduleId, viaClick = false) {
+            if (viaClick) {
+                // update url
+                window.history.pushState({}, '', `#m${moduleId}`);
+            }
+            else {
+                network.selectNodes([parseInt(moduleId)]);
+            }
+            $id("module-name").value = moduleId;
+
+            fetch(`/data/module_code/${moduleId}`)
+                .then(response => response.text())
+                .then(text => {
+                    editor.setValue(text);
+                });
+            
+            // update module info using module_deps_data
+            // show module's exports, imports and modules that import this module
+            let moduleInfo = module_deps_data[moduleId];
+            let exports = moduleInfo.exports;
+            let imports = moduleInfo.deps;
+            let importedBy = moduleInfo.importedBy;
+
+            let moduleInfoHtml = `
+                <div>
+                    <h3>Exports</h3>
+                    <ul>
+                        ${exports.map(e => `<li>${e}</li>`).join("")}
+                    </ul>
+                </div>
+                <div>
+                    <h3>Imports</h3>
+                    <ul>
+                        ${imports.map(e =>
+                            `<li><a href='#m${e}' onclick='displayModule("${e}")'>${e}</a></li>`
+                        ).join("")}
+                    </ul>
+                </div>
+                <div>
+                    <h3>Imported by</h3>
+                    <ul>
+                        ${importedBy.map(e =>
+                            `<li><a href='#m${e}' onclick='displayModule("${e}")'>${e}</a></li>`
+                        ).join("")}
+                    </ul>
+                </div>
+            `;
+
+            $id("module-info").innerHTML = moduleInfoHtml;
+        };
+
+        moduleDropdown.addEventListener('change', function () {
+            displayModule(this.value);
+        });
+
+        
+        /********** Code Viewer **********/
+        let editor = monaco.editor.create($id('code-block'), {
+            value: "function hello() {\n\talert('Hello world!');\n}",
+            language: 'javascript',
+            theme: 'vs-dark',
+            readOnly: false,
+            automaticLayout: true,
+            minimap: {
+                enabled: false
+            },
+            wordWrap: 'on',
+        });
+    </script>
+</body>
+
+</html>
