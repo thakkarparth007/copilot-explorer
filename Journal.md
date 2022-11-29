@@ -48,6 +48,8 @@
      - 9496 (`vscode` - things that import it are likely important)
      - 3197 (no module imports this. seems to be the main module)
      - 1862 (VSCodeCopilotTokenManager!)
+     - 2533 (`parsesWithoutError`, `getPrompt`, `getNodeStart`, ... all useful stuff)
+       - 3055 (imported by 2533 and packs a ton of stuff)
 
    - Color coded:
      - Red nodes: modules that aren't imported by anyone. These are likely top level modules.
