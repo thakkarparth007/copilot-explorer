@@ -24,25 +24,10 @@ o(require(9940), exports);
 o(require(1747), exports);
 o(require(9852), exports);
 var a = require(1788);
-Object.defineProperty(exports, "languageCommentMarkers", {
-  enumerable: !0,
-  get: function () {
-    return a.languageCommentMarkers;
-  }
-});
-Object.defineProperty(exports, "comment", {
-  enumerable: !0,
-  get: function () {
-    return a.comment;
-  }
-});
+exports.languageCommentMarkers = a.languageCommentMarkers;
+exports.comment = a.comment;
 var c = require(5012);
-Object.defineProperty(exports, "FileSystem", {
-  enumerable: !0,
-  get: function () {
-    return c.FileSystem;
-  }
-});
+exports.FileSystem = c.FileSystem;
 exports.createWorker = function () {
   return new s.Worker(i.resolve(__dirname, "..", "dist", "worker.js"));
 };

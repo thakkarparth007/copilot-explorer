@@ -1,5 +1,10 @@
 var r, o, i, s, a, c, l, u;
-module.exports = (o = (r = u = require(8249)).lib, i = o.WordArray, s = o.Hasher, a = r.algo, c = [], l = a.SHA1 = s.extend({
+o = (r = u = require(8249)).lib;
+i = o.WordArray;
+s = o.Hasher;
+a = r.algo;
+c = [];
+l = a.SHA1 = s.extend({
   _doReset: function () {
     this._hash = new i.init([1732584193, 4023233417, 2562383102, 271733878, 3285377520]);
   },
@@ -40,4 +45,7 @@ module.exports = (o = (r = u = require(8249)).lib, i = o.WordArray, s = o.Hasher
     e._hash = this._hash.clone();
     return e;
   }
-}), r.SHA1 = s._createHelper(l), r.HmacSHA1 = s._createHmacHelper(l), u.SHA1);
+});
+r.SHA1 = s._createHelper(l);
+r.HmacSHA1 = s._createHmacHelper(l);
+module.exports = u.SHA1;

@@ -25,7 +25,7 @@ i.SuffixStartMode = "copilotsuffixstartmode";
 i.SuffixMatchThreshold = "copilotsuffixmatchthreshold";
 i.FimSuffixLengthThreshold = "copilotfimsuffixlenthreshold";
 i.MultiLogitBias = "copilotlbeot";
-class s {
+class ExpConfig {
   constructor(e, t, n) {
     this.variables = e;
     this.assignmentContext = t;
@@ -38,11 +38,11 @@ class s {
     return this.createEmptyConfig();
   }
   static createEmptyConfig() {
-    return new s({}, "", "");
+    return new ExpConfig({}, "", "");
   }
   addToTelemetry(e) {
     e.properties[o.ExpServiceTelemetryNames.featuresTelemetryPropertyName] = this.features;
     e.properties[o.ExpServiceTelemetryNames.assignmentContextTelemetryPropertyName] = this.assignmentContext;
   }
 }
-exports.ExpConfig = s;
+exports.ExpConfig = ExpConfig;

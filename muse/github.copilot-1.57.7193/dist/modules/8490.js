@@ -19,7 +19,7 @@ exports.varKinds = {
   let: new r.Name("let"),
   var: new r.Name("var")
 };
-class s {
+class Scope {
   constructor({
     prefixes: e,
     parent: t
@@ -46,8 +46,8 @@ class s {
     };
   }
 }
-exports.Scope = s;
-class a extends r.Name {
+exports.Scope = Scope;
+class ValueScopeName extends r.Name {
   constructor(e, t) {
     super(t);
     this.prefix = e;
@@ -60,9 +60,9 @@ class a extends r.Name {
     this.scopePath = r._`.${new r.Name(t)}[${n}]`;
   }
 }
-exports.ValueScopeName = a;
+exports.ValueScopeName = ValueScopeName;
 const c = r._`\n`;
-exports.ValueScope = class extends s {
+exports.ValueScope = class extends Scope {
   constructor(e) {
     super(e);
     this._values = {};
@@ -76,7 +76,7 @@ exports.ValueScope = class extends s {
     return this._scope;
   }
   name(e) {
-    return new a(e, this._newName(e));
+    return new ValueScopeName(e, this._newName(e));
   }
   value(e, t) {
     var n;

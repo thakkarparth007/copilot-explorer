@@ -203,7 +203,7 @@ exports.validateFunctionCode = function (e) {
     });
   }(e) : m(e, () => r.topBoolOrEmptySchema(e));
 };
-class T {
+class KeywordCxt {
   constructor(e, t, n) {
     c.validateKeywordUsage(e, t, n);
     this.gen = e.gen;
@@ -218,7 +218,7 @@ class T {
     this.params = {};
     this.it = e;
     this.def = t;
-    if (this.$data) this.schemaCode = e.gen.const("vSchema", A(this.$data, e));else if (this.schemaCode = this.schemaValue, !(0, c.validSchemaType)(this.schema, t.schemaType, t.allowUndefined)) throw new Error(`${n} value must be ${JSON.stringify(t.schemaType)}`);
+    if (this.$data) this.schemaCode = e.gen.const("vSchema", getData(this.$data, e));else if (this.schemaCode = this.schemaValue, !(0, c.validSchemaType)(this.schema, t.schemaType, t.allowUndefined)) throw new Error(`${n} value must be ${JSON.stringify(t.schemaType)}`);
     ("code" in t ? t.trackErrors : !1 !== t.errors) && (this.errsCount = e.gen.const("_errs", d.default.errors));
   }
   result(e, t, n) {
@@ -367,13 +367,13 @@ class T {
   }
 }
 function k(e, t, n, r) {
-  const o = new T(e, n, t);
+  const o = new KeywordCxt(e, n, t);
   "code" in n ? n.code(o, r) : o.$data && n.validate ? c.funcKeywordCode(o, n) : "macro" in n ? c.macroKeywordCode(o, n) : (n.compile || n.validate) && c.funcKeywordCode(o, n);
 }
-exports.KeywordCxt = T;
+exports.KeywordCxt = KeywordCxt;
 const I = /^\/(?:[^~]|~0|~1)*$/,
   P = /^([0-9]+)(#|\/(?:[^~]|~0|~1)*)?$/;
-function A(e, {
+function getData(e, {
   dataLevel: t,
   dataNames: n,
   dataPathArr: r
@@ -405,4 +405,4 @@ function A(e, {
     return `Cannot access ${e} ${n} levels up, current level is ${t}`;
   }
 }
-exports.getData = A;
+exports.getData = getData;

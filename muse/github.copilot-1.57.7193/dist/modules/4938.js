@@ -1,10 +1,15 @@
 var r, o, i, s, a, c;
-module.exports = (r = require(8249), i = (o = r).lib, s = i.Base, a = i.WordArray, (c = o.x64 = {}).Word = s.extend({
+r = require(8249);
+i = (o = r).lib;
+s = i.Base;
+a = i.WordArray;
+(c = o.x64 = {}).Word = s.extend({
   init: function (e, t) {
     this.high = e;
     this.low = t;
   }
-}), c.WordArray = s.extend({
+});
+c.WordArray = s.extend({
   init: function (e, t) {
     e = this.words = e || [];
     this.sigBytes = null != t ? t : 8 * e.length;
@@ -21,4 +26,5 @@ module.exports = (r = require(8249), i = (o = r).lib, s = i.Base, a = i.WordArra
     for (var e = s.clone.call(this), t = e.words = this.words.slice(0), n = t.length, r = 0; r < n; r++) t[r] = t[r].clone();
     return e;
   }
-}), r);
+});
+module.exports = r;

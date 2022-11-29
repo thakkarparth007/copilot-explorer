@@ -5,7 +5,7 @@ exports.getArg = function (e, t, n) {
 };
 var n = /^(?:([\w+\-.]+):)?\/\/(?:(\w+:\w+)@)?([\w.-]*)(?::(\d+))?(.*)$/,
   r = /^data:.+\,.+$/;
-function o(e) {
+function urlParse(e) {
   var t = e.match(n);
   return t ? {
     scheme: t[1],
@@ -15,7 +15,7 @@ function o(e) {
     path: t[5]
   } : null;
 }
-function i(e) {
+function urlGenerate(e) {
   var t = "";
   e.scheme && (t += e.scheme + ":");
   t += "//";
@@ -25,36 +25,36 @@ function i(e) {
   e.path && (t += e.path);
   return t;
 }
-function s(e) {
+function normalize(e) {
   var n = e,
-    r = o(e);
+    r = urlParse(e);
   if (r) {
     if (!r.path) return e;
     n = r.path;
   }
   for (var s, a = exports.isAbsolute(n), c = n.split(/\/+/), l = 0, u = c.length - 1; u >= 0; u--) "." === (s = c[u]) ? c.splice(u, 1) : ".." === s ? l++ : l > 0 && ("" === s ? (c.splice(u + 1, l), l = 0) : (c.splice(u, 2), l--));
   "" === (n = c.join("/")) && (n = a ? "/" : ".");
-  return r ? (r.path = n, i(r)) : n;
+  return r ? (r.path = n, urlGenerate(r)) : n;
 }
-function a(e, t) {
+function join(e, t) {
   "" === e && (e = ".");
   "" === t && (t = ".");
-  var n = o(t),
-    a = o(e);
+  var n = urlParse(t),
+    a = urlParse(e);
   a && (e = a.path || "/");
-  if (n && !n.scheme) return a && (n.scheme = a.scheme), i(n);
+  if (n && !n.scheme) return a && (n.scheme = a.scheme), urlGenerate(n);
   if (n || t.match(r)) return t;
   if (a && !a.host && !a.path) {
     a.host = t;
-    return i(a);
+    return urlGenerate(a);
   }
-  var c = "/" === t.charAt(0) ? t : s(e.replace(/\/+$/, "") + "/" + t);
-  return a ? (a.path = c, i(a)) : c;
+  var c = "/" === t.charAt(0) ? t : normalize(e.replace(/\/+$/, "") + "/" + t);
+  return a ? (a.path = c, urlGenerate(a)) : c;
 }
-exports.urlParse = o;
-exports.urlGenerate = i;
-exports.normalize = s;
-exports.join = a;
+exports.urlParse = urlParse;
+exports.urlGenerate = urlGenerate;
+exports.normalize = normalize;
+exports.join = join;
 exports.isAbsolute = function (e) {
   return "/" === e.charAt(0) || n.test(e);
 };
@@ -109,13 +109,13 @@ exports.computeSourceURL = function (e, t, n) {
   t = t || "";
   e && ("/" !== e[e.length - 1] && "/" !== t[0] && (e += "/"), t = e + t);
   if (n) {
-    var r = o(n);
+    var r = urlParse(n);
     if (!r) throw new Error("sourceMapURL could not be parsed");
     if (r.path) {
       var c = r.path.lastIndexOf("/");
       c >= 0 && (r.path = r.path.substring(0, c + 1));
     }
-    t = a(i(r), t);
+    t = join(urlGenerate(r), t);
   }
-  return s(t);
+  return normalize(t);
 };

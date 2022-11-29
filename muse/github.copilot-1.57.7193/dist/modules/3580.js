@@ -24,7 +24,16 @@ exports.DEFAULT_LIVEMETRICS_HOST = "rt.services.visualstudio.com";
   e.REQUEST_RATE = "\\ASP.NET Applications(??APP_W3SVC_PROC??)\\Requests/Sec";
   e.REQUEST_DURATION = "\\ASP.NET Applications(??APP_W3SVC_PROC??)\\Request Execution Time";
 })(r = exports.PerformanceCounter || (exports.PerformanceCounter = {}));
-exports.PerformanceToQuickPulseCounter = ((o = {})[r.PROCESSOR_TIME] = n.PROCESSOR_TIME, o[r.REQUEST_RATE] = n.REQUEST_RATE, o[r.REQUEST_DURATION] = n.REQUEST_DURATION, o[n.COMMITTED_BYTES] = n.COMMITTED_BYTES, o[n.REQUEST_FAILURE_RATE] = n.REQUEST_FAILURE_RATE, o[n.DEPENDENCY_RATE] = n.DEPENDENCY_RATE, o[n.DEPENDENCY_FAILURE_RATE] = n.DEPENDENCY_FAILURE_RATE, o[n.DEPENDENCY_DURATION] = n.DEPENDENCY_DURATION, o[n.EXCEPTION_RATE] = n.EXCEPTION_RATE, o);
+(o = {})[r.PROCESSOR_TIME] = n.PROCESSOR_TIME;
+o[r.REQUEST_RATE] = n.REQUEST_RATE;
+o[r.REQUEST_DURATION] = n.REQUEST_DURATION;
+o[n.COMMITTED_BYTES] = n.COMMITTED_BYTES;
+o[n.REQUEST_FAILURE_RATE] = n.REQUEST_FAILURE_RATE;
+o[n.DEPENDENCY_RATE] = n.DEPENDENCY_RATE;
+o[n.DEPENDENCY_FAILURE_RATE] = n.DEPENDENCY_FAILURE_RATE;
+o[n.DEPENDENCY_DURATION] = n.DEPENDENCY_DURATION;
+o[n.EXCEPTION_RATE] = n.EXCEPTION_RATE;
+exports.PerformanceToQuickPulseCounter = o;
 exports.QuickPulseDocumentType = {
   Event: "Event",
   Exception: "Exception",

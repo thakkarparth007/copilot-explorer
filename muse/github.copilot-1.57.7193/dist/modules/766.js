@@ -8,7 +8,7 @@ const r = require(3055),
   s = require(362),
   a = require(3076);
 var c;
-function l(e) {
+function tryGetGitHubNWO(e) {
   if (undefined !== e && e !== f.PENDING) return "github.com" === e.hostname ? e.owner + "/" + e.repo : undefined;
 }
 exports.isRepoInfo = function (e) {
@@ -28,9 +28,9 @@ exports.getUserKind = async function (e) {
   e.UNKNOWN = "";
 })(c = exports.Dogfood || (exports.Dogfood = {}));
 exports.getDogFood = function (e) {
-  return undefined === e || e === f.PENDING ? c.UNKNOWN : "github/github" === l(e) ? c.GITHUB : "ssh.dev.azure.com" === e.hostname || "vs-ssh.visualstudio.com" === e.hostname || "dev.azure.com" === e.hostname || "domoreexp.visualstudio.com" === e.hostname || "office.visualstudio.com" === e.hostname ? c.MICROSOFT : c.UNKNOWN;
+  return undefined === e || e === f.PENDING ? c.UNKNOWN : "github/github" === tryGetGitHubNWO(e) ? c.GITHUB : "ssh.dev.azure.com" === e.hostname || "vs-ssh.visualstudio.com" === e.hostname || "dev.azure.com" === e.hostname || "domoreexp.visualstudio.com" === e.hostname || "office.visualstudio.com" === e.hostname ? c.MICROSOFT : c.UNKNOWN;
 };
-exports.tryGetGitHubNWO = l;
+exports.tryGetGitHubNWO = tryGetGitHubNWO;
 exports.extractRepoInfoInBackground = function (e, t) {
   if (!t) return;
   const n = i.dirname(t);
@@ -75,8 +75,8 @@ async function d(e, t) {
   if (!o) return;
   const s = e.get(r.FileSystem),
     a = i.join(o, ".git", "config"),
-    c = null !== (n = h((await s.readFile(a)).toString())) && undefined !== n ? n : "",
-    l = p(c);
+    c = null !== (n = getRepoUrlFromConfigText((await s.readFile(a)).toString())) && undefined !== n ? n : "",
+    l = parseRepoUrl(c);
   return undefined === l ? {
     baseFolder: o,
     url: c,
@@ -90,7 +90,7 @@ async function d(e, t) {
     ...l
   };
 }
-function p(e) {
+function parseRepoUrl(e) {
   let t = {};
   try {
     t = o(e);
@@ -105,7 +105,7 @@ function p(e) {
     pathname: t.pathname
   };
 }
-function h(e) {
+function getRepoUrlFromConfigText(e) {
   var t;
   const n = /^\s*\[\s*remote\s+"((\\\\|\\"|[^\\"])+)"/,
     r = /^\s*\[remote.([^"\s]+)/,
@@ -139,8 +139,8 @@ var f;
 exports.extractRepoInfoForTesting = async function (e, t) {
   return d(e, t);
 };
-exports.parseRepoUrl = p;
-exports.getRepoUrlFromConfigText = h;
+exports.parseRepoUrl = parseRepoUrl;
+exports.getRepoUrlFromConfigText = getRepoUrlFromConfigText;
 (function (e) {
   e[e.PENDING = 0] = "PENDING";
 })(f = exports.ComputationStatus || (exports.ComputationStatus = {}));

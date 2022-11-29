@@ -1,5 +1,5 @@
 require(1808);
-var r,
+var debug,
   o = require(4404),
   i = require(3685),
   s = require(5687),
@@ -114,13 +114,13 @@ l.prototype.createSocket = function (e, t) {
   });
   e.localAddress && (i.localAddress = e.localAddress);
   i.proxyAuth && (i.headers = i.headers || {}, i.headers["Proxy-Authorization"] = "Basic " + new Buffer(i.proxyAuth).toString("base64"));
-  r("making CONNECT request");
+  debug("making CONNECT request");
   var s = n.request(i);
   function a(i, a, c) {
     var l;
     s.removeAllListeners();
     a.removeAllListeners();
-    return 200 !== i.statusCode ? (r("tunneling socket could not be established, statusCode=%d", i.statusCode), a.destroy(), (l = new Error("tunneling socket could not be established, statusCode=" + i.statusCode)).code = "ECONNRESET", e.request.emit("error", l), void n.removeSocket(o)) : c.length > 0 ? (r("got illegal response body from proxy"), a.destroy(), (l = new Error("got illegal response body from proxy")).code = "ECONNRESET", e.request.emit("error", l), void n.removeSocket(o)) : (r("tunneling connection has established"), n.sockets[n.sockets.indexOf(o)] = a, t(a));
+    return 200 !== i.statusCode ? (debug("tunneling socket could not be established, statusCode=%d", i.statusCode), a.destroy(), (l = new Error("tunneling socket could not be established, statusCode=" + i.statusCode)).code = "ECONNRESET", e.request.emit("error", l), void n.removeSocket(o)) : c.length > 0 ? (debug("got illegal response body from proxy"), a.destroy(), (l = new Error("got illegal response body from proxy")).code = "ECONNRESET", e.request.emit("error", l), void n.removeSocket(o)) : (debug("tunneling connection has established"), n.sockets[n.sockets.indexOf(o)] = a, t(a));
   }
   s.useChunkedEncodingByDefault = !1;
   s.once("response", function (e) {
@@ -134,7 +134,7 @@ l.prototype.createSocket = function (e, t) {
   s.once("connect", a);
   s.once("error", function (t) {
     s.removeAllListeners();
-    r("tunneling socket could not be established, cause=%s\n", t.message, t.stack);
+    debug("tunneling socket could not be established, cause=%s\n", t.message, t.stack);
     var i = new Error("tunneling socket could not be established, cause=" + t.message);
     i.code = "ECONNRESET";
     e.request.emit("error", i);
@@ -152,9 +152,9 @@ l.prototype.removeSocket = function (e) {
     });
   }
 };
-r = process.env.NODE_DEBUG && /\btunnel\b/.test(process.env.NODE_DEBUG) ? function () {
+debug = process.env.NODE_DEBUG && /\btunnel\b/.test(process.env.NODE_DEBUG) ? function () {
   var e = Array.prototype.slice.call(arguments);
   "string" == typeof e[0] ? e[0] = "TUNNEL: " + e[0] : e.unshift("TUNNEL:");
   console.error.apply(console, e);
 } : function () {};
-exports.debug = r;
+exports.debug = debug;

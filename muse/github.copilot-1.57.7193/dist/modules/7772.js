@@ -42,11 +42,11 @@ const s = {
       for (const r in e) "__proto__" !== r && ((Array.isArray(e[r]) ? t : n)[r] = e[r]);
       return [t, n];
     }(e);
-    a(e, t);
-    c(e, n);
+    validatePropertyDeps(e, t);
+    validateSchemaDeps(e, n);
   }
 };
-function a(e, t = e.schema) {
+function validatePropertyDeps(e, t = e.schema) {
   const {
     gen: n,
     data: o,
@@ -68,7 +68,7 @@ function a(e, t = e.schema) {
     }) : (n.if(r._`${u} && (${i.checkMissingProp(e, l, a)})`), i.reportMissingProp(e, a), n.else());
   }
 }
-function c(e, t = e.schema) {
+function validateSchemaDeps(e, t = e.schema) {
   const {
       gen: n,
       data: r,
@@ -84,6 +84,6 @@ function c(e, t = e.schema) {
     e.mergeValidEvaluated(t, c);
   }, () => n.var(c, !0)), e.ok(c));
 }
-exports.validatePropertyDeps = a;
-exports.validateSchemaDeps = c;
+exports.validatePropertyDeps = validatePropertyDeps;
+exports.validateSchemaDeps = validateSchemaDeps;
 exports.default = s;

@@ -29,22 +29,22 @@ function u(e) {
   }
   return t;
 }
-function d(e = "", t) {
-  !1 !== t && (e = f(e));
-  return p(s.parse(e));
+function getFullPath(e = "", t) {
+  !1 !== t && (e = normalizeId(e));
+  return _getFullPath(s.parse(e));
 }
-function p(e) {
+function _getFullPath(e) {
   return s.serialize(e).split("#")[0] + "#";
 }
-exports.getFullPath = d;
-exports._getFullPath = p;
+exports.getFullPath = getFullPath;
+exports._getFullPath = _getFullPath;
 const h = /#\/?$/;
-function f(e) {
+function normalizeId(e) {
   return e ? e.replace(h, "") : "";
 }
-exports.normalizeId = f;
+exports.normalizeId = normalizeId;
 exports.resolveUrl = function (e, t) {
-  t = f(t);
+  t = normalizeId(t);
   return s.resolve(e, t);
 };
 const m = /^[a-z_][-a-z0-9._]*$/i;
@@ -53,11 +53,11 @@ exports.getSchemaRefs = function (e, t) {
   const {
       schemaId: n
     } = this.opts,
-    r = f(e[n] || t),
+    r = normalizeId(e[n] || t),
     a = {
       "": r
     },
-    c = d(r, !1),
+    c = getFullPath(r, !1),
     l = {},
     u = new Set();
   i(e, {
@@ -67,12 +67,12 @@ exports.getSchemaRefs = function (e, t) {
     const i = c + t;
     let d = a[o];
     function g(t) {
-      t = f(d ? s.resolve(d, t) : t);
+      t = normalizeId(d ? s.resolve(d, t) : t);
       if (u.has(t)) throw h(t);
       u.add(t);
       let n = this.refs[t];
       "string" == typeof n && (n = this.refs[n]);
-      "object" == typeof n ? p(e, n.schema, t) : t !== f(i) && ("#" === t[0] ? (p(e, l[t], t), l[t] = e) : this.refs[t] = i);
+      "object" == typeof n ? p(e, n.schema, t) : t !== normalizeId(i) && ("#" === t[0] ? (p(e, l[t], t), l[t] = e) : this.refs[t] = i);
       return t;
     }
     function _(e) {

@@ -5,20 +5,20 @@ exports.validateUnion = exports.validateArray = exports.usePattern = exports.cal
 const r = require(3487),
   o = require(6776),
   i = require(2141);
-function s(e) {
+function hasPropFunc(e) {
   return e.scopeValue("func", {
     ref: Object.prototype.hasOwnProperty,
     code: r._`Object.prototype.hasOwnProperty`
   });
 }
-function a(e, t, n) {
-  return r._`${s(e)}.call(${t}, ${n})`;
+function isOwnProperty(e, t, n) {
+  return r._`${hasPropFunc(e)}.call(${t}, ${n})`;
 }
-function c(e, t, n, o) {
+function noPropertyInData(e, t, n, o) {
   const i = r._`${t}${r.getProperty(n)} === undefined`;
-  return o ? r.or(i, r.not(a(e, t, n))) : i;
+  return o ? r.or(i, r.not(isOwnProperty(e, t, n))) : i;
 }
-function l(e) {
+function allSchemaProperties(e) {
   return e ? Object.keys(e).filter(e => "__proto__" !== e) : [];
 }
 exports.checkReportMissingProp = function (e, t) {
@@ -27,7 +27,7 @@ exports.checkReportMissingProp = function (e, t) {
     data: o,
     it: i
   } = e;
-  n.if(c(n, o, t, i.opts.ownProperties), () => {
+  n.if(noPropertyInData(n, o, t, i.opts.ownProperties), () => {
     e.setParams({
       missingProperty: r._`${t}`
     }, !0);
@@ -41,7 +41,7 @@ exports.checkMissingProp = function ({
     opts: n
   }
 }, o, i) {
-  return r.or(...o.map(o => r.and(c(e, t, o, n.ownProperties), r._`${i} = ${o}`)));
+  return r.or(...o.map(o => r.and(noPropertyInData(e, t, o, n.ownProperties), r._`${i} = ${o}`)));
 };
 exports.reportMissingProp = function (e, t) {
   e.setParams({
@@ -49,16 +49,16 @@ exports.reportMissingProp = function (e, t) {
   }, !0);
   e.error();
 };
-exports.hasPropFunc = s;
-exports.isOwnProperty = a;
+exports.hasPropFunc = hasPropFunc;
+exports.isOwnProperty = isOwnProperty;
 exports.propertyInData = function (e, t, n, o) {
   const i = r._`${t}${r.getProperty(n)} !== undefined`;
-  return o ? r._`${i} && ${a(e, t, n)}` : i;
+  return o ? r._`${i} && ${isOwnProperty(e, t, n)}` : i;
 };
-exports.noPropertyInData = c;
-exports.allSchemaProperties = l;
+exports.noPropertyInData = noPropertyInData;
+exports.allSchemaProperties = allSchemaProperties;
 exports.schemaProperties = function (e, t) {
-  return l(t).filter(n => !o.alwaysValidSchema(e, t[n]));
+  return allSchemaProperties(t).filter(n => !o.alwaysValidSchema(e, t[n]));
 };
 exports.callValidateCode = function ({
   schemaCode: e,

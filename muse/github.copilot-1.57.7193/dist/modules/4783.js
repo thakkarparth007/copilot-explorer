@@ -29,10 +29,10 @@ const r = require(3487),
         {
           items: r
         } = t;
-      Array.isArray(r) ? s(e, r) : o.checkStrictMode(n, '"additionalItems" is ignored when "items" is not an array of schemas');
+      Array.isArray(r) ? validateAdditionalItems(e, r) : o.checkStrictMode(n, '"additionalItems" is ignored when "items" is not an array of schemas');
     }
   };
-function s(e, t) {
+function validateAdditionalItems(e, t) {
   const {
     gen: n,
     schema: i,
@@ -62,5 +62,5 @@ function s(e, t) {
     e.ok(i);
   }
 }
-exports.validateAdditionalItems = s;
+exports.validateAdditionalItems = validateAdditionalItems;
 exports.default = i;

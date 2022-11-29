@@ -1,5 +1,11 @@
 var r, o, i, s, a, c, l, u;
-module.exports = (u = require(8249), require(2783), require(9824), i = (o = (r = u).lib).Base, s = o.WordArray, c = (a = r.algo).MD5, l = a.EvpKDF = i.extend({
+u = require(8249);
+require(2783);
+require(9824);
+i = (o = (r = u).lib).Base;
+s = o.WordArray;
+c = (a = r.algo).MD5;
+l = a.EvpKDF = i.extend({
   cfg: i.extend({
     keySize: 4,
     hasher: c,
@@ -22,6 +28,8 @@ module.exports = (u = require(8249), require(2783), require(9824), i = (o = (r =
     i.sigBytes = 4 * c;
     return i;
   }
-}), r.EvpKDF = function (e, t, n) {
+});
+r.EvpKDF = function (e, t, n) {
   return l.create(n).compute(e, t);
-}, u.EvpKDF);
+};
+module.exports = u.EvpKDF;

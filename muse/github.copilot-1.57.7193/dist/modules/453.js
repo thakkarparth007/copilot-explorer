@@ -8,7 +8,7 @@ const r = require(3141),
   s = require(3487),
   a = require(6776);
 var c;
-function l(e) {
+function getJSONTypes(e) {
   const t = Array.isArray(e) ? e : e ? [e] : [];
   if (t.every(r.isJSONType)) return t;
   throw new Error("type must be JSONType or JSONType[]: " + t.join(","));
@@ -18,7 +18,7 @@ function l(e) {
   e[e.Wrong = 1] = "Wrong";
 }(c = exports.DataType || (exports.DataType = {}));
 exports.getSchemaTypes = function (e) {
-  const t = l(e.type);
+  const t = getJSONTypes(e.type);
   if (t.includes("null")) {
     if (!1 === e.nullable) throw new Error("type: null contradicts nullable: false");
   } else {
@@ -27,7 +27,7 @@ exports.getSchemaTypes = function (e) {
   }
   return t;
 };
-exports.getJSONTypes = l;
+exports.getJSONTypes = getJSONTypes;
 exports.coerceAndCheckDataType = function (e, t) {
   const {
       gen: n,
@@ -39,7 +39,7 @@ exports.coerceAndCheckDataType = function (e, t) {
     }(t, i.coerceTypes),
     l = t.length > 0 && !(0 === a.length && 1 === t.length && o.schemaHasRulesForType(e, t[0]));
   if (l) {
-    const o = p(t, r, i.strictNumbers, c.Wrong);
+    const o = checkDataTypes(t, r, i.strictNumbers, c.Wrong);
     n.if(o, () => {
       a.length ? function (e, t, n) {
         const {
@@ -49,7 +49,7 @@ exports.coerceAndCheckDataType = function (e, t) {
           } = e,
           a = r.let("dataType", s._`typeof ${o}`),
           c = r.let("coerced", s._`undefined`);
-        "array" === i.coerceTypes && r.if(s._`${a} == 'object' && Array.isArray(${o}) && ${o}.length == 1`, () => r.assign(o, s._`${o}[0]`).assign(a, s._`typeof ${o}`).if(p(t, o, i.strictNumbers), () => r.assign(c, o)));
+        "array" === i.coerceTypes && r.if(s._`${a} == 'object' && Array.isArray(${o}) && ${o}.length == 1`, () => r.assign(o, s._`${o}[0]`).assign(a, s._`typeof ${o}`).if(checkDataTypes(t, o, i.strictNumbers), () => r.assign(c, o)));
         r.if(s._`${c} !== undefined`);
         for (const e of n) (u.has(e) || "array" === e && "array" === i.coerceTypes) && l(e);
         function l(e) {
@@ -73,7 +73,7 @@ exports.coerceAndCheckDataType = function (e, t) {
           }
         }
         r.else();
-        f(e);
+        reportTypeError(e);
         r.endIf();
         r.if(s._`${c} !== undefined`, () => {
           r.assign(o, c);
@@ -85,13 +85,13 @@ exports.coerceAndCheckDataType = function (e, t) {
             e.if(s._`${t} !== undefined`, () => e.assign(s._`${t}[${n}]`, r));
           })(e, c);
         });
-      }(e, t, a) : f(e);
+      }(e, t, a) : reportTypeError(e);
     });
   }
   return l;
 };
 const u = new Set(["string", "number", "integer", "boolean", "null"]);
-function d(e, t, n, r = c.Correct) {
+function checkDataType(e, t, n, r = c.Correct) {
   const o = r === c.Correct ? s.operators.EQ : s.operators.NEQ;
   let i;
   switch (e) {
@@ -117,8 +117,8 @@ function d(e, t, n, r = c.Correct) {
     return s.and(s._`typeof ${t} == "number"`, e, n ? s._`isFinite(${t})` : s.nil);
   }
 }
-function p(e, t, n, r) {
-  if (1 === e.length) return d(e[0], t, n, r);
+function checkDataTypes(e, t, n, r) {
+  if (1 === e.length) return checkDataType(e[0], t, n, r);
   let o;
   const i = a.toHash(e);
   if (i.array && i.object) {
@@ -129,11 +129,11 @@ function p(e, t, n, r) {
     delete i.object;
   } else o = s.nil;
   i.number && delete i.integer;
-  for (const e in i) o = s.and(o, d(e, t, n, r));
+  for (const e in i) o = s.and(o, checkDataType(e, t, n, r));
   return o;
 }
-exports.checkDataType = d;
-exports.checkDataTypes = p;
+exports.checkDataType = checkDataType;
+exports.checkDataTypes = checkDataTypes;
 const h = {
   message: ({
     schema: e
@@ -143,7 +143,7 @@ const h = {
     schemaValue: t
   }) => "string" == typeof e ? s._`{type: ${e}}` : s._`{type: ${t}}`
 };
-function f(e) {
+function reportTypeError(e) {
   const t = function (e) {
     const {
         gen: t,
@@ -165,4 +165,4 @@ function f(e) {
   }(e);
   i.reportError(t, h);
 }
-exports.reportTypeError = f;
+exports.reportTypeError = reportTypeError;

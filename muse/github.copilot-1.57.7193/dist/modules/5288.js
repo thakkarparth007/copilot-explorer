@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.parseTree = exports.registerLanguageSpecificParser = exports.flattenVirtual = exports.groupBlocks = exports.combineClosersAndOpeners = exports.buildLabelRules = exports.labelVirtualInherited = exports.labelLines = exports.parseRaw = undefined;
 const r = require(9608),
   o = require(9829);
-function i(e) {
+function parseRaw(e) {
   const t = e.split("\n"),
     n = t.map(e => e.match(/^\s*/)[0].length),
     o = t.map(e => e.trimLeft());
@@ -40,7 +40,7 @@ function i(e) {
   if (l < o.length) throw new Error(`Parsing did not go to end of file. Ended at ${l} out of ${o.length}`);
   return r.topNode(a);
 }
-function s(e, t) {
+function labelLines(e, t) {
   o.visitTree(e, function (e) {
     if (r.isLine(e)) {
       const n = t.find(t => t.matches(e.sourceLine));
@@ -48,7 +48,7 @@ function s(e, t) {
     }
   }, "bottomUp");
 }
-function a(e) {
+function buildLabelRules(e) {
   return Object.keys(e).map(t => {
     let n;
     n = e[t].test ? n => e[t].test(n) : e[t];
@@ -58,7 +58,7 @@ function a(e) {
     };
   });
 }
-function c(e) {
+function combineClosersAndOpeners(e) {
   const t = o.rebuildTree(e, function (e) {
     if (0 === e.subs.length || -1 === e.subs.findIndex(e => "closer" === e.label || "opener" === e.label)) return e;
     const t = [];
@@ -92,8 +92,8 @@ function c(e) {
   o.clearLabelsIf(e, e => "newVirtual" === e);
   return t;
 }
-exports.parseRaw = i;
-exports.labelLines = s;
+exports.parseRaw = parseRaw;
+exports.labelLines = labelLines;
 exports.labelVirtualInherited = function (e) {
   o.visitTree(e, function (e) {
     if (r.isVirtual(e) && undefined === e.label) {
@@ -102,8 +102,8 @@ exports.labelVirtualInherited = function (e) {
     }
   }, "bottomUp");
 };
-exports.buildLabelRules = a;
-exports.combineClosersAndOpeners = c;
+exports.buildLabelRules = buildLabelRules;
+exports.combineClosersAndOpeners = combineClosersAndOpeners;
 exports.groupBlocks = function (e, t = r.isBlank, n) {
   return o.rebuildTree(e, function (e) {
     if (e.subs.length <= 1) return e;
@@ -135,7 +135,7 @@ exports.flattenVirtual = function (e) {
     return r.isVirtual(e) && undefined === e.label && e.subs.length <= 1 ? 0 === e.subs.length ? undefined : e.subs[0] : (1 === e.subs.length && r.isVirtual(e.subs[0]) && undefined === e.subs[0].label && (e.subs = e.subs[0].subs), e);
   });
 };
-const l = a({
+const l = buildLabelRules({
     opener: /^[\[({]/,
     closer: /^[\])}]/
   }),
@@ -144,7 +144,7 @@ exports.registerLanguageSpecificParser = function (e, t) {
   u[e] = t;
 };
 exports.parseTree = function (e, t) {
-  const n = i(e),
+  const n = parseRaw(e),
     r = u[null != t ? t : ""];
-  return r ? r(n) : (s(n, l), c(n));
+  return r ? r(n) : (labelLines(n, l), combineClosersAndOpeners(n));
 };

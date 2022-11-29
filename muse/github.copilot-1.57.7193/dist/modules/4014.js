@@ -1,5 +1,5 @@
 var n;
-exports = module.exports = V;
+exports = module.exports = SemVer;
 n = "object" == typeof process && process.env && process.env.NODE_DEBUG && /\bsemver\b/i.test(process.env.NODE_DEBUG) ? function () {
   var e = Array.prototype.slice.call(arguments, 0);
   e.unshift("SEMVER");
@@ -89,32 +89,32 @@ for (var z = 0; z < 35; z++) {
   n(z, i[z]);
   o[z] || (o[z] = new RegExp(i[z]));
 }
-function G(e, t) {
+function parse(e, t) {
   t && "object" == typeof t || (t = {
     loose: !!t,
     includePrerelease: !1
   });
-  if (e instanceof V) return e;
+  if (e instanceof SemVer) return e;
   if ("string" != typeof e) return null;
   if (e.length > 256) return null;
   if (!(t.loose ? o[w] : o[y]).test(e)) return null;
   try {
-    return new V(e, t);
+    return new SemVer(e, t);
   } catch (e) {
     return null;
   }
 }
-function V(e, t) {
+function SemVer(e, t) {
   t && "object" == typeof t || (t = {
     loose: !!t,
     includePrerelease: !1
   });
-  if (e instanceof V) {
+  if (e instanceof SemVer) {
     if (e.loose === t.loose) return e;
     e = e.version;
   } else if ("string" != typeof e) throw new TypeError("Invalid Version: " + e);
   if (e.length > 256) throw new TypeError("version is longer than 256 characters");
-  if (!(this instanceof V)) return new V(e, t);
+  if (!(this instanceof SemVer)) return new SemVer(e, t);
   n("SemVer", e, t);
   this.options = t;
   this.loose = !!t.loose;
@@ -137,35 +137,35 @@ function V(e, t) {
   this.build = i[5] ? i[5].split(".") : [];
   this.format();
 }
-exports.parse = G;
+exports.parse = parse;
 exports.valid = function (e, t) {
-  var n = G(e, t);
+  var n = parse(e, t);
   return n ? n.version : null;
 };
 exports.clean = function (e, t) {
-  var n = G(e.trim().replace(/^[=v]+/, ""), t);
+  var n = parse(e.trim().replace(/^[=v]+/, ""), t);
   return n ? n.version : null;
 };
-exports.SemVer = V;
-V.prototype.format = function () {
+exports.SemVer = SemVer;
+SemVer.prototype.format = function () {
   this.version = this.major + "." + this.minor + "." + this.patch;
   this.prerelease.length && (this.version += "-" + this.prerelease.join("."));
   return this.version;
 };
-V.prototype.toString = function () {
+SemVer.prototype.toString = function () {
   return this.version;
 };
-V.prototype.compare = function (e) {
+SemVer.prototype.compare = function (e) {
   n("SemVer.compare", this.version, this.options, e);
-  e instanceof V || (e = new V(e, this.options));
+  e instanceof SemVer || (e = new SemVer(e, this.options));
   return this.compareMain(e) || this.comparePre(e);
 };
-V.prototype.compareMain = function (e) {
-  e instanceof V || (e = new V(e, this.options));
-  return K(this.major, e.major) || K(this.minor, e.minor) || K(this.patch, e.patch);
+SemVer.prototype.compareMain = function (e) {
+  e instanceof SemVer || (e = new SemVer(e, this.options));
+  return compareIdentifiers(this.major, e.major) || compareIdentifiers(this.minor, e.minor) || compareIdentifiers(this.patch, e.patch);
 };
-V.prototype.comparePre = function (e) {
-  e instanceof V || (e = new V(e, this.options));
+SemVer.prototype.comparePre = function (e) {
+  e instanceof SemVer || (e = new SemVer(e, this.options));
   if (this.prerelease.length && !e.prerelease.length) return -1;
   if (!this.prerelease.length && e.prerelease.length) return 1;
   if (!this.prerelease.length && !e.prerelease.length) return 0;
@@ -177,10 +177,10 @@ V.prototype.comparePre = function (e) {
     if (void 0 === r && void 0 === o) return 0;
     if (undefined === o) return 1;
     if (undefined === r) return -1;
-    if (r !== o) return K(r, o);
+    if (r !== o) return compareIdentifiers(r, o);
   } while (++t);
 };
-V.prototype.inc = function (e, t) {
+SemVer.prototype.inc = function (e, t) {
   switch (e) {
     case "premajor":
       this.prerelease.length = 0;
@@ -236,15 +236,15 @@ V.prototype.inc = function (e, t) {
 exports.inc = function (e, t, n, r) {
   "string" == typeof n && (r = n, n = undefined);
   try {
-    return new V(e, n).inc(t, r).version;
+    return new SemVer(e, n).inc(t, r).version;
   } catch (e) {
     return null;
   }
 };
 exports.diff = function (e, t) {
-  if (Y(e, t)) return null;
-  var n = G(e),
-    r = G(t),
+  if (eq(e, t)) return null;
+  var n = parse(e),
+    r = parse(t),
     o = "";
   if (n.prerelease.length || r.prerelease.length) {
     o = "pre";
@@ -253,34 +253,34 @@ exports.diff = function (e, t) {
   for (var s in n) if (("major" === s || "minor" === s || "patch" === s) && n[s] !== r[s]) return o + s;
   return i;
 };
-exports.compareIdentifiers = K;
+exports.compareIdentifiers = compareIdentifiers;
 var W = /^[0-9]+$/;
-function K(e, t) {
+function compareIdentifiers(e, t) {
   var n = W.test(e),
     r = W.test(t);
   n && r && (e = +e, t = +t);
   return e === t ? 0 : n && !r ? -1 : r && !n ? 1 : e < t ? -1 : 1;
 }
-function J(e, t, n) {
-  return new V(e, n).compare(new V(t, n));
+function compare(e, t, n) {
+  return new SemVer(e, n).compare(new SemVer(t, n));
 }
-function X(e, t, n) {
-  return J(e, t, n) > 0;
+function gt(e, t, n) {
+  return compare(e, t, n) > 0;
 }
-function Q(e, t, n) {
-  return J(e, t, n) < 0;
+function lt(e, t, n) {
+  return compare(e, t, n) < 0;
 }
-function Y(e, t, n) {
-  return 0 === J(e, t, n);
+function eq(e, t, n) {
+  return 0 === compare(e, t, n);
 }
-function Z(e, t, n) {
-  return 0 !== J(e, t, n);
+function neq(e, t, n) {
+  return 0 !== compare(e, t, n);
 }
 function ee(e, t, n) {
-  return J(e, t, n) >= 0;
+  return compare(e, t, n) >= 0;
 }
 function te(e, t, n) {
-  return J(e, t, n) <= 0;
+  return compare(e, t, n) <= 0;
 }
 function ne(e, t, n, r) {
   switch (t) {
@@ -295,15 +295,15 @@ function ne(e, t, n, r) {
     case "":
     case "=":
     case "==":
-      return Y(e, n, r);
+      return eq(e, n, r);
     case "!=":
-      return Z(e, n, r);
+      return neq(e, n, r);
     case ">":
-      return X(e, n, r);
+      return gt(e, n, r);
     case ">=":
       return ee(e, n, r);
     case "<":
-      return Q(e, n, r);
+      return lt(e, n, r);
     case "<=":
       return te(e, n, r);
     default:
@@ -328,23 +328,23 @@ function re(e, t) {
   n("comp", this);
 }
 exports.rcompareIdentifiers = function (e, t) {
-  return K(t, e);
+  return compareIdentifiers(t, e);
 };
 exports.major = function (e, t) {
-  return new V(e, t).major;
+  return new SemVer(e, t).major;
 };
 exports.minor = function (e, t) {
-  return new V(e, t).minor;
+  return new SemVer(e, t).minor;
 };
 exports.patch = function (e, t) {
-  return new V(e, t).patch;
+  return new SemVer(e, t).patch;
 };
-exports.compare = J;
+exports.compare = compare;
 exports.compareLoose = function (e, t) {
-  return J(e, t, !0);
+  return compare(e, t, !0);
 };
 exports.rcompare = function (e, t, n) {
-  return J(t, e, n);
+  return compare(t, e, n);
 };
 exports.sort = function (e, n) {
   return e.sort(function (e, r) {
@@ -356,10 +356,10 @@ exports.rsort = function (e, n) {
     return exports.rcompare(e, r, n);
   });
 };
-exports.gt = X;
-exports.lt = Q;
-exports.eq = Y;
-exports.neq = Z;
+exports.gt = gt;
+exports.lt = lt;
+exports.eq = eq;
+exports.neq = neq;
 exports.gte = ee;
 exports.lte = te;
 exports.cmp = ne;
@@ -415,18 +415,18 @@ function le(e, t, n) {
 }
 function ue(e, t, n, r) {
   var o, i, s, a, c;
-  switch (e = new V(e, r), t = new ie(t, r), n) {
+  switch (e = new SemVer(e, r), t = new ie(t, r), n) {
     case ">":
-      o = X;
+      o = gt;
       i = te;
-      s = Q;
+      s = lt;
       a = ">";
       c = ">=";
       break;
     case "<":
-      o = Q;
+      o = lt;
       i = ee;
-      s = X;
+      s = gt;
       a = "<";
       c = "<=";
       break;
@@ -456,14 +456,14 @@ re.prototype.parse = function (e) {
   if (!n) throw new TypeError("Invalid comparator: " + e);
   this.operator = n[1];
   "=" === this.operator && (this.operator = "");
-  n[2] ? this.semver = new V(n[2], this.options.loose) : this.semver = oe;
+  n[2] ? this.semver = new SemVer(n[2], this.options.loose) : this.semver = oe;
 };
 re.prototype.toString = function () {
   return this.value;
 };
 re.prototype.test = function (e) {
   n("Comparator.test", e, this.options.loose);
-  return this.semver === oe || ("string" == typeof e && (e = new V(e, this.options)), ne(e, this.operator, this.semver, this.options));
+  return this.semver === oe || ("string" == typeof e && (e = new SemVer(e, this.options)), ne(e, this.operator, this.semver, this.options));
 };
 re.prototype.intersects = function (e, t) {
   if (!(e instanceof re)) throw new TypeError("a Comparator is required");
@@ -595,7 +595,7 @@ exports.toComparators = function (e, t) {
 };
 ie.prototype.test = function (e) {
   if (!e) return !1;
-  "string" == typeof e && (e = new V(e, this.options));
+  "string" == typeof e && (e = new SemVer(e, this.options));
   for (var t = 0; t < this.set.length; t++) if (ce(this.set[t], e, this.options)) return !0;
   return !1;
 };
@@ -609,7 +609,7 @@ exports.maxSatisfying = function (e, t, n) {
     return null;
   }
   e.forEach(function (e) {
-    i.test(e) && (r && -1 !== o.compare(e) || (o = new V(r = e, n)));
+    i.test(e) && (r && -1 !== o.compare(e) || (o = new SemVer(r = e, n)));
   });
   return r;
 };
@@ -622,26 +622,26 @@ exports.minSatisfying = function (e, t, n) {
     return null;
   }
   e.forEach(function (e) {
-    i.test(e) && (r && 1 !== o.compare(e) || (o = new V(r = e, n)));
+    i.test(e) && (r && 1 !== o.compare(e) || (o = new SemVer(r = e, n)));
   });
   return r;
 };
 exports.minVersion = function (e, t) {
   e = new ie(e, t);
-  var n = new V("0.0.0");
+  var n = new SemVer("0.0.0");
   if (e.test(n)) return n;
-  n = new V("0.0.0-0");
+  n = new SemVer("0.0.0-0");
   if (e.test(n)) return n;
   n = null;
   for (var r = 0; r < e.set.length; ++r) e.set[r].forEach(function (e) {
-    var t = new V(e.semver.version);
+    var t = new SemVer(e.semver.version);
     switch (e.operator) {
       case ">":
         0 === t.prerelease.length ? t.patch++ : t.prerelease.push(0);
         t.raw = t.format();
       case "":
       case ">=":
-        n && !X(n, t) || (n = t);
+        n && !gt(n, t) || (n = t);
         break;
       case "<":
       case "<=":
@@ -667,7 +667,7 @@ exports.gtr = function (e, t, n) {
 };
 exports.outside = ue;
 exports.prerelease = function (e, t) {
-  var n = G(e, t);
+  var n = parse(e, t);
   return n && n.prerelease.length ? n.prerelease : null;
 };
 exports.intersects = function (e, t, n) {
@@ -676,8 +676,8 @@ exports.intersects = function (e, t, n) {
   return e.intersects(t);
 };
 exports.coerce = function (e) {
-  if (e instanceof V) return e;
+  if (e instanceof SemVer) return e;
   if ("string" != typeof e) return null;
   var t = e.match(o[P]);
-  return null == t ? null : G(t[1] + "." + (t[2] || "0") + "." + (t[3] || "0"));
+  return null == t ? null : parse(t[1] + "." + (t[2] || "0") + "." + (t[3] || "0"));
 };

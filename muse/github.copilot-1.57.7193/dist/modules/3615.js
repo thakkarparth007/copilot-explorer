@@ -1,5 +1,7 @@
 var r;
-module.exports = (r = require(8249), require(5109), r.pad.AnsiX923 = {
+r = require(8249);
+require(5109);
+r.pad.AnsiX923 = {
   pad: function (e, t) {
     var n = e.sigBytes,
       r = 4 * t,
@@ -13,4 +15,5 @@ module.exports = (r = require(8249), require(5109), r.pad.AnsiX923 = {
     var t = 255 & e.words[e.sigBytes - 1 >>> 2];
     e.sigBytes -= t;
   }
-}, r.pad.Ansix923);
+};
+module.exports = r.pad.Ansix923;

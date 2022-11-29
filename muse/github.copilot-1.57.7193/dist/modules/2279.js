@@ -18,12 +18,12 @@ exports.init = function (e) {
     u = !0;
   }
 };
-class d {}
-exports.Fetcher = d;
+class Fetcher {}
+exports.Fetcher = Fetcher;
 exports.isAbortError = function (e) {
   return e instanceof r.AbortError;
 };
-exports.HelixFetcher = class extends d {
+exports.HelixFetcher = class extends Fetcher {
   constructor(e) {
     super();
     this.ctx = e;
@@ -62,7 +62,7 @@ exports.HelixFetcher = class extends d {
         signal: t.signal
       },
       r = await this.fetchApi.fetch(e, n);
-    return new p(r.status, r.statusText, r.headers, () => r.text(), () => r.json(), async () => r.body);
+    return new Response(r.status, r.statusText, r.headers, () => r.text(), () => r.json(), async () => r.body);
   }
   disconnectAll() {
     return this.fetchApi.reset();
@@ -71,7 +71,7 @@ exports.HelixFetcher = class extends d {
     return new r.AbortController();
   }
 };
-class p {
+class Response {
   constructor(e, t, n, r, o, i) {
     this.status = e;
     this.statusText = t;
@@ -91,7 +91,7 @@ class p {
     return this.getBody();
   }
 }
-exports.Response = p;
+exports.Response = Response;
 exports.postRequest = function (e, t, n, r, o, l, p) {
   if (!u) throw new Error("Networking must be initialized before being used");
   const h = {
@@ -111,7 +111,7 @@ exports.postRequest = function (e, t, n, r, o, l, p) {
       json: l,
       timeout: 3e4
     },
-    g = e.get(d);
+    g = e.get(Fetcher);
   if (p) {
     const t = g.makeAbortController();
     p.onCancellationRequested(() => {

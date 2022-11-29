@@ -1,5 +1,9 @@
 var r, o, i, s;
-module.exports = (s = require(8249), require(5109), o = (r = s).lib.CipherParams, i = r.enc.Hex, r.format.Hex = {
+s = require(8249);
+require(5109);
+o = (r = s).lib.CipherParams;
+i = r.enc.Hex;
+r.format.Hex = {
   stringify: function (e) {
     return e.ciphertext.toString(i);
   },
@@ -9,4 +13,5 @@ module.exports = (s = require(8249), require(5109), o = (r = s).lib.CipherParams
       ciphertext: t
     });
   }
-}, s.format.Hex);
+};
+module.exports = s.format.Hex;

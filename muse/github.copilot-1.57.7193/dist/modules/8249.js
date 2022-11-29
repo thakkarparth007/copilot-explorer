@@ -1,5 +1,5 @@
 var r;
-module.exports = (r = r || function (e, t) {
+r = r || function (e, t) {
   var r;
   "undefined" != typeof window && window.crypto && (r = window.crypto);
   !r && "undefined" != typeof window && window.msCrypto && (r = window.msCrypto);
@@ -197,4 +197,5 @@ module.exports = (r = r || function (e, t) {
       }
     }), s.algo = {});
   return s;
-}(Math), r);
+}(Math);
+module.exports = r;

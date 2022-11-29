@@ -313,16 +313,16 @@ const u = {
     do_block: "end"
   }, new Map())
 };
-function d(e) {
+function getBlockParser(e) {
   return u[r.languageIdToWasmLanguage(e)];
 }
-exports.getBlockParser = d;
+exports.getBlockParser = getBlockParser;
 exports.isEmptyBlockStart = async function (e, t, n) {
-  return !!r.isSupportedLanguageId(e) && d(e).isEmptyBlockStart(t, n);
+  return !!r.isSupportedLanguageId(e) && getBlockParser(e).isEmptyBlockStart(t, n);
 };
 exports.isBlockBodyFinished = async function (e, t, n, o) {
-  if (r.isSupportedLanguageId(e)) return d(e).isBlockBodyFinished(t, n, o);
+  if (r.isSupportedLanguageId(e)) return getBlockParser(e).isBlockBodyFinished(t, n, o);
 };
 exports.getNodeStart = async function (e, t, n) {
-  if (r.isSupportedLanguageId(e)) return d(e).getNodeStart(t, n);
+  if (r.isSupportedLanguageId(e)) return getBlockParser(e).getNodeStart(t, n);
 };

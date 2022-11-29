@@ -31,46 +31,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = l;
 var u = require(4815);
-Object.defineProperty(exports, "KeywordCxt", {
-  enumerable: !0,
-  get: function () {
-    return u.KeywordCxt;
-  }
-});
+exports.KeywordCxt = u.KeywordCxt;
 var d = require(3487);
-Object.defineProperty(exports, "_", {
-  enumerable: !0,
-  get: function () {
-    return d._;
-  }
-});
-Object.defineProperty(exports, "str", {
-  enumerable: !0,
-  get: function () {
-    return d.str;
-  }
-});
-Object.defineProperty(exports, "stringify", {
-  enumerable: !0,
-  get: function () {
-    return d.stringify;
-  }
-});
-Object.defineProperty(exports, "nil", {
-  enumerable: !0,
-  get: function () {
-    return d.nil;
-  }
-});
-Object.defineProperty(exports, "Name", {
-  enumerable: !0,
-  get: function () {
-    return d.Name;
-  }
-});
-Object.defineProperty(exports, "CodeGen", {
-  enumerable: !0,
-  get: function () {
-    return d.CodeGen;
-  }
-});
+exports._ = d._;
+exports.str = d.str;
+exports.stringify = d.stringify;
+exports.nil = d.nil;
+exports.Name = d.Name;
+exports.CodeGen = d.CodeGen;

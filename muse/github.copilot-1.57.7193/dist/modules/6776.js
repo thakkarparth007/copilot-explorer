@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.checkStrictMode = exports.getErrorPath = exports.Type = exports.useFunc = exports.setEvaluated = exports.evaluatedPropsToName = exports.mergeEvaluated = exports.eachItem = exports.unescapeJsonPointer = exports.escapeJsonPointer = exports.escapeFragment = exports.unescapeFragment = exports.schemaRefOrVal = exports.schemaHasRulesButRef = exports.schemaHasRules = exports.checkUnknownRules = exports.alwaysValidSchema = exports.toHash = undefined;
 const r = require(3487),
   o = require(7023);
-function i(e, t = e.schema) {
+function checkUnknownRules(e, t = e.schema) {
   const {
     opts: n,
     self: r
@@ -12,17 +12,17 @@ function i(e, t = e.schema) {
   if (!n.strictSchema) return;
   if ("boolean" == typeof t) return;
   const o = r.RULES.keywords;
-  for (const n in t) o[n] || f(e, `unknown keyword: "${n}"`);
+  for (const n in t) o[n] || checkStrictMode(e, `unknown keyword: "${n}"`);
 }
-function s(e, t) {
+function schemaHasRules(e, t) {
   if ("boolean" == typeof e) return !e;
   for (const n in e) if (t[n]) return !0;
   return !1;
 }
-function a(e) {
+function escapeJsonPointer(e) {
   return "number" == typeof e ? `${e}` : e.replace(/~/g, "~0").replace(/\//g, "~1");
 }
-function c(e) {
+function unescapeJsonPointer(e) {
   return e.replace(/~1/g, "/").replace(/~0/g, "~");
 }
 function l({
@@ -36,13 +36,13 @@ function l({
     return c !== r.Name || l instanceof r.Name ? l : o(i, l);
   };
 }
-function u(e, t) {
+function evaluatedPropsToName(e, t) {
   if (!0 === t) return e.var("props", !0);
   const n = e.var("props", r._`{}`);
-  undefined !== t && d(e, n, t);
+  undefined !== t && setEvaluated(e, n, t);
   return n;
 }
-function d(e, t, n) {
+function setEvaluated(e, t, n) {
   Object.keys(n).forEach(n => e.assign(r._`${t}${r.getProperty(n)}`, !0));
 }
 exports.toHash = function (e) {
@@ -51,10 +51,10 @@ exports.toHash = function (e) {
   return t;
 };
 exports.alwaysValidSchema = function (e, t) {
-  return "boolean" == typeof t ? t : 0 === Object.keys(t).length || (i(e, t), !s(t, e.self.RULES.all));
+  return "boolean" == typeof t ? t : 0 === Object.keys(t).length || (checkUnknownRules(e, t), !schemaHasRules(t, e.self.RULES.all));
 };
-exports.checkUnknownRules = i;
-exports.schemaHasRules = s;
+exports.checkUnknownRules = checkUnknownRules;
+exports.schemaHasRules = schemaHasRules;
 exports.schemaHasRulesButRef = function (e, t) {
   if ("boolean" == typeof e) return !e;
   for (const n in e) if ("$ref" !== n && t.all[n]) return !0;
@@ -71,13 +71,13 @@ exports.schemaRefOrVal = function ({
   return r._`${e}${t}${r.getProperty(o)}`;
 };
 exports.unescapeFragment = function (e) {
-  return c(decodeURIComponent(e));
+  return unescapeJsonPointer(decodeURIComponent(e));
 };
 exports.escapeFragment = function (e) {
-  return encodeURIComponent(a(e));
+  return encodeURIComponent(escapeJsonPointer(e));
 };
-exports.escapeJsonPointer = a;
-exports.unescapeJsonPointer = c;
+exports.escapeJsonPointer = escapeJsonPointer;
+exports.unescapeJsonPointer = unescapeJsonPointer;
 exports.eachItem = function (e, t) {
   if (Array.isArray(e)) for (const n of e) t(n);else t(e);
 };
@@ -87,13 +87,13 @@ exports.mergeEvaluated = {
       e.if(r._`${t} === true`, () => e.assign(n, !0), () => e.assign(n, r._`${n} || {}`).code(r._`Object.assign(${n}, ${t})`));
     }),
     mergeToName: (e, t, n) => e.if(r._`${n} !== true`, () => {
-      !0 === t ? e.assign(n, !0) : (e.assign(n, r._`${n} || {}`), d(e, n, t));
+      !0 === t ? e.assign(n, !0) : (e.assign(n, r._`${n} || {}`), setEvaluated(e, n, t));
     }),
     mergeValues: (e, t) => !0 === e || {
       ...e,
       ...t
     },
-    resultToName: u
+    resultToName: evaluatedPropsToName
   }),
   items: l({
     mergeNames: (e, t, n) => e.if(r._`${n} !== true && ${t} !== undefined`, () => e.assign(n, r._`${t} === true ? true : ${n} > ${t} ? ${n} : ${t}`)),
@@ -102,11 +102,11 @@ exports.mergeEvaluated = {
     resultToName: (e, t) => e.var("items", t)
   })
 };
-exports.evaluatedPropsToName = u;
-exports.setEvaluated = d;
+exports.evaluatedPropsToName = evaluatedPropsToName;
+exports.setEvaluated = setEvaluated;
 const p = {};
 var h;
-function f(e, t, n = e.opts.strictSchema) {
+function checkStrictMode(e, t, n = e.opts.strictSchema) {
   if (n) {
     t = `strict mode: ${t}`;
     if (!0 === n) throw new Error(t);
@@ -128,6 +128,6 @@ exports.getErrorPath = function (e, t, n) {
     const o = t === h.Num;
     return n ? o ? r._`"[" + ${e} + "]"` : r._`"['" + ${e} + "']"` : o ? r._`"/" + ${e}` : r._`"/" + ${e}.replace(/~/g, "~0").replace(/\\//g, "~1")`;
   }
-  return n ? r.getProperty(e).toString() : "/" + a(e);
+  return n ? r.getProperty(e).toString() : "/" + escapeJsonPointer(e);
 };
-exports.checkStrictMode = f;
+exports.checkStrictMode = checkStrictMode;

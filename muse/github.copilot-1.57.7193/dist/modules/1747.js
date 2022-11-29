@@ -68,7 +68,7 @@ w.FifteenPercent = "fifteenPercent";
   e.SiblingBlock = "siblingblock";
   e.SiblingBlockTrimStart = "siblingblocktrimstart";
 })(b = exports.SuffixStartMode || (exports.SuffixStartMode = {}));
-class x {
+class PromptOptions {
   constructor(e, n) {
     this.fs = e;
     this.maxPromptLength = exports.MAX_PROMPT_LENGTH;
@@ -94,7 +94,7 @@ class x {
     if (this.snippetSelection === g.TopK && this.snippetSelectionK && this.snippetSelectionK <= 0) throw new Error(`snippetSelectionK must be greater than 0, but was ${this.snippetSelectionK}`);
   }
 }
-exports.PromptOptions = x;
+exports.PromptOptions = PromptOptions;
 const E = {
   javascriptreact: "javascript",
   jsx: "javascript",
@@ -102,26 +102,26 @@ const E = {
   jade: "pug",
   cshtml: "razor"
 };
-function C(e) {
+function normalizeLanguageId(e) {
   var t;
   e = e.toLowerCase();
   return null !== (t = E[e]) && undefined !== t ? t : e;
 }
-function S(e) {
+function newLineEnded(e) {
   return "" == e || e.endsWith("\n") ? e : e + "\n";
 }
-exports.normalizeLanguageId = C;
-exports.newLineEnded = S;
+exports.normalizeLanguageId = normalizeLanguageId;
+exports.newLineEnded = newLineEnded;
 exports.getPrompt = async function (e, n, g = {}, y = []) {
   var w;
-  const E = new x(e, g);
+  const E = new PromptOptions(e, g);
   let T = !1;
   const {
     source: k,
     offset: I
   } = n;
   if (I < 0 || I > k.length) throw new Error(`Offset ${I} is out of range.`);
-  n.languageId = C(n.languageId);
+  n.languageId = normalizeLanguageId(n.languageId);
   const P = new c.Priorities(),
     A = P.justBelow(c.Priorities.TOP),
     O = E.languageMarker == d.Always ? P.justBelow(c.Priorities.TOP) : P.justBelow(A),
@@ -132,14 +132,14 @@ exports.getPrompt = async function (e, n, g = {}, y = []) {
     $ = new c.PromptWishlist(E.lineEnding);
   let D, F;
   if (E.languageMarker != d.NoMarker) {
-    const e = S(r.getLanguageMarker(n));
+    const e = newLineEnded(r.getLanguageMarker(n));
     D = $.append(e, c.PromptElementKind.LanguageMarker, O);
   }
   if (E.pathMarker != p.NoMarker) {
-    const e = S(r.getPathMarker(n));
+    const e = newLineEnded(r.getPathMarker(n));
     e.length > 0 && (F = $.append(e, c.PromptElementKind.PathMarker, N));
   }
-  if (E.localImportContext != _.NoContext) for (const e of await o.extractLocalImportContext(n, E.fs)) $.append(S(e), c.PromptElementKind.ImportedFile, M);
+  if (E.localImportContext != _.NoContext) for (const e of await o.extractLocalImportContext(n, E.fs)) $.append(newLineEnded(e), c.PromptElementKind.ImportedFile, M);
   const j = E.neighboringTabs == f.None || 0 == y.length ? [] : await i.getNeighborSnippets(n, y, E.neighboringTabs, E.indentationMinLength, E.indentationMaxLength, E.snippetSelectionOption, E.snippetSelectionK);
   function q() {
     j.forEach(e => $.append(e.snippet, c.PromptElementKind.SimilarFile, L, a.tokenLength(e.snippet), e.score));

@@ -12,39 +12,39 @@ var s;
   e[e.WARN = 2] = "WARN";
   e[e.ERROR = 3] = "ERROR";
 }(s = exports.LogLevel || (exports.LogLevel = {}));
-class a {
+class LogVerbose {
   constructor(e) {
     this.logVerbose = e;
   }
 }
-function c(e) {
-  return e.get(a).logVerbose;
+function verboseLogging(e) {
+  return e.get(LogVerbose).logVerbose;
 }
-exports.LogVerbose = a;
-exports.verboseLogging = c;
-class l {
+exports.LogVerbose = LogVerbose;
+exports.verboseLogging = verboseLogging;
+class LogTarget {
   shouldLog(e, t) {}
 }
-exports.LogTarget = l;
-exports.ConsoleLog = class extends l {
+exports.LogTarget = LogTarget;
+exports.ConsoleLog = class extends LogTarget {
   constructor(e) {
     super();
     this.console = e;
   }
   logIt(e, t, n, ...r) {
-    c(e) || t == s.ERROR ? this.console.error(n, ...r) : t == s.WARN && this.console.warn(n, ...r);
+    verboseLogging(e) || t == s.ERROR ? this.console.error(n, ...r) : t == s.WARN && this.console.warn(n, ...r);
   }
 };
-exports.OutputChannelLog = class extends l {
+exports.OutputChannelLog = class extends LogTarget {
   constructor(e) {
     super();
     this.output = e;
   }
   logIt(e, t, n, ...r) {
-    this.output.appendLine(`${n} ${r.map(d)}`);
+    this.output.appendLine(`${n} ${r.map(toPlainText)}`);
   }
 };
-exports.MultiLog = class extends l {
+exports.MultiLog = class extends LogTarget {
   constructor(e) {
     super();
     this.targets = e;
@@ -53,7 +53,7 @@ exports.MultiLog = class extends l {
     this.targets.forEach(o => o.logIt(e, t, n, ...r));
   }
 };
-class u {
+class Logger {
   constructor(e, t) {
     this.minLoggedLevel = e;
     this.context = t;
@@ -71,7 +71,7 @@ class u {
       level: a,
       message: o.length > 0 ? JSON.stringify(o) : "no msg"
     }), n);
-    const c = e.get(l),
+    const c = e.get(LogTarget),
       u = c.shouldLog(e, t);
     if (!1 === u) return;
     if (undefined === u && !this.shouldLog(e, t, this.context)) return;
@@ -81,7 +81,7 @@ class u {
   }
   shouldLog(e, t, n) {
     var r, i;
-    if (c(e)) return !0;
+    if (verboseLogging(e)) return !0;
     const s = o.getConfig(e, o.ConfigKey.DebugFilterLogCategories);
     if (s.length > 0 && !s.includes(n)) return !1;
     if (o.isProduction(e)) return t >= this.minLoggedLevel;
@@ -105,9 +105,9 @@ class u {
     this.log(e, s.ERROR, !0, t, ...n);
   }
 }
-function d(e) {
+function toPlainText(e) {
   return "object" == typeof e ? JSON.stringify(e) : String(e);
 }
-exports.Logger = u;
-exports.toPlainText = d;
-exports.logger = new u(s.INFO, "default");
+exports.Logger = Logger;
+exports.toPlainText = toPlainText;
+exports.logger = new Logger(s.INFO, "default");

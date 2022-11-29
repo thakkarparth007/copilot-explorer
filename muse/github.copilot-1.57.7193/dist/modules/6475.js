@@ -1,5 +1,7 @@
 var r;
-module.exports = (r = require(8249), require(5109), r.pad.ZeroPadding = {
+r = require(8249);
+require(5109);
+r.pad.ZeroPadding = {
   pad: function (e, t) {
     var n = 4 * t;
     e.clamp();
@@ -13,4 +15,5 @@ module.exports = (r = require(8249), require(5109), r.pad.ZeroPadding = {
       break;
     }
   }
-}, r.pad.ZeroPadding);
+};
+module.exports = r.pad.ZeroPadding;

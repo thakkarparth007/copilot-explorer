@@ -13,7 +13,7 @@ var i;
   e.LanguageMarker = "LanguageMarker";
   e.PathMarker = "PathMarker";
 }(i = exports.PromptElementKind || (exports.PromptElementKind = {}));
-class s {
+class PromptBackground {
   constructor() {
     this.used = new Map();
     this.unused = new Map();
@@ -37,8 +37,8 @@ class s {
     return e.kind == i.SimilarFile;
   }
 }
-exports.PromptBackground = s;
-class a {
+exports.PromptBackground = PromptBackground;
+class PromptChoices {
   constructor() {
     this.used = new Map();
     this.unused = new Map();
@@ -53,8 +53,8 @@ class a {
     this.unused.set(e.kind, (this.used.get(e.kind) || 0) + e.tokens);
   }
 }
-exports.PromptChoices = a;
-class c {
+exports.PromptChoices = PromptChoices;
+class PromptElementRanges {
   constructor(e) {
     this.ranges = new Array();
     let t,
@@ -68,7 +68,7 @@ class c {
     }), t = r.kind, n += r.text.length);
   }
 }
-exports.PromptElementRanges = c;
+exports.PromptElementRanges = PromptElementRanges;
 exports.PromptWishlist = class {
   constructor(e) {
     this.content = [];
@@ -120,8 +120,8 @@ exports.PromptWishlist = class {
     n && r && n.excludes.push(r);
   }
   fulfill(e) {
-    const t = new a(),
-      n = new s(),
+    const t = new PromptChoices(),
+      n = new PromptBackground(),
       r = this.content.map((e, t) => ({
         element: e,
         index: t
@@ -171,7 +171,7 @@ exports.PromptWishlist = class {
       if (i <= e) {
         t.markUsed(u.element);
         n.markUsed(u.element);
-        const e = new c(m);
+        const e = new PromptElementRanges(m);
         return {
           prefix: r,
           suffix: "",
@@ -185,7 +185,7 @@ exports.PromptWishlist = class {
       t.markUnused(u.element);
       n.markUnused(u.element);
     }
-    const g = new c(d);
+    const g = new PromptElementRanges(d);
     return {
       prefix: h,
       suffix: "",
@@ -197,12 +197,12 @@ exports.PromptWishlist = class {
     };
   }
 };
-class l {
+class Priorities {
   constructor() {
     this.registeredPriorities = [0, 1];
   }
   register(e) {
-    if (e > l.TOP || e < l.BOTTOM) throw new Error("Priority must be between 0 and 1");
+    if (e > Priorities.TOP || e < Priorities.BOTTOM) throw new Error("Priority must be between 0 and 1");
     this.registeredPriorities.push(e);
     return e;
   }
@@ -221,6 +221,6 @@ class l {
     return this.register((e + t) / 2);
   }
 }
-exports.Priorities = l;
-l.TOP = 1;
-l.BOTTOM = 0;
+exports.Priorities = Priorities;
+Priorities.TOP = 1;
+Priorities.BOTTOM = 0;

@@ -284,12 +284,12 @@ const n = ["php", "plaintext"],
     shellscript: "#!/bin/sh",
     yaml: "# YAML data"
   };
-function o({
+function hasLanguageMarker({
   source: e
 }) {
   return e.startsWith("#!") || e.startsWith("<!DOCTYPE");
 }
-function i(e, n) {
+function comment(e, n) {
   const r = exports.languageCommentMarkers[n];
   if (r) {
     const t = "" == r.end ? "" : " " + r.end;
@@ -297,14 +297,14 @@ function i(e, n) {
   }
   return "";
 }
-exports.hasLanguageMarker = o;
-exports.comment = i;
+exports.hasLanguageMarker = hasLanguageMarker;
+exports.comment = comment;
 exports.getLanguageMarker = function (e) {
   const {
     languageId: t
   } = e;
-  return -1 !== n.indexOf(t) || o(e) ? "" : t in r ? r[t] : i(`Language: ${t}`, t);
+  return -1 !== n.indexOf(t) || hasLanguageMarker(e) ? "" : t in r ? r[t] : comment(`Language: ${t}`, t);
 };
 exports.getPathMarker = function (e) {
-  return e.relativePath ? i(`Path: ${e.relativePath}`, e.languageId) : "";
+  return e.relativePath ? comment(`Path: ${e.relativePath}`, e.languageId) : "";
 };

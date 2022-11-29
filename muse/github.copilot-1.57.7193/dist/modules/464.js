@@ -23,14 +23,14 @@ const a = {
   go: s.Go,
   ruby: s.Ruby
 };
-function c(e) {
+function languageIdToWasmLanguage(e) {
   if (!(e in a)) throw new Error(`Unrecognized language: ${e}`);
   return a[e];
 }
 exports.isSupportedLanguageId = function (e) {
   return e in a;
 };
-exports.languageIdToWasmLanguage = c;
+exports.languageIdToWasmLanguage = languageIdToWasmLanguage;
 const l = {
     python: [["(function_definition body: (block\n             (expression_statement (string))? @docstring) @body) @function"], ['(ERROR ("def" (identifier) (parameters))) @function']],
     javascript: [["[\n            (function body: (statement_block) @body)\n            (function_declaration body: (statement_block) @body)\n            (generator_function body: (statement_block) @body)\n            (generator_function_declaration body: (statement_block) @body)\n            (method_definition body: (statement_block) @body)\n          ] @function"]],
@@ -79,8 +79,8 @@ const l = {
     ruby: e => "program" === e.type || "class" === e.type
   },
   _ = new Map();
-async function y(e) {
-  const t = c(e);
+async function getLanguage(e) {
+  const t = languageIdToWasmLanguage(e);
   if (!_.has(t)) {
     const e = await async function (e) {
       await o.init();
@@ -91,8 +91,8 @@ async function y(e) {
   }
   return _.get(t);
 }
-async function v(e, t) {
-  let n = await y(e);
+async function parseTree(e, t) {
+  let n = await getLanguage(e);
   const r = new o();
   r.setLanguage(n);
   const i = r.parse(t);
@@ -110,19 +110,19 @@ function b(e, t) {
   }
   return n;
 }
-function w(e, t) {
-  return b(l[c(e)], t);
+function queryFunctions(e, t) {
+  return b(l[languageIdToWasmLanguage(e)], t);
 }
-exports.getLanguage = y;
-exports.parseTree = v;
+exports.getLanguage = getLanguage;
+exports.parseTree = parseTree;
 exports.parsesWithoutError = async function (e, t) {
-  const n = await v(e, t),
+  const n = await parseTree(e, t),
     r = !n.rootNode.hasError();
   n.delete();
   return r;
 };
 exports.getBlockCloseToken = function (e) {
-  switch (c(e)) {
+  switch (languageIdToWasmLanguage(e)) {
     case s.Python:
       return null;
     case s.JavaScript:
@@ -133,38 +133,38 @@ exports.getBlockCloseToken = function (e) {
       return "end";
   }
 };
-exports.queryFunctions = w;
+exports.queryFunctions = queryFunctions;
 exports.queryImports = function (e, t) {
-  return b(p[c(e)], t);
+  return b(p[languageIdToWasmLanguage(e)], t);
 };
 exports.queryExports = function (e, t) {
-  return b(h[c(e)], t);
+  return b(h[languageIdToWasmLanguage(e)], t);
 };
 exports.queryGlobalVars = function (e, t) {
-  return b(f[c(e)], t);
+  return b(f[languageIdToWasmLanguage(e)], t);
 };
 const x = ["[\n    (class_definition (block (expression_statement (string))))\n    (function_definition (block (expression_statement (string))))\n]"];
-function E(e, t) {
-  return m[c(e)].has(t.type);
+function isFunction(e, t) {
+  return m[languageIdToWasmLanguage(e)].has(t.type);
 }
 exports.queryPythonIsDocstring = function (e) {
   return 1 == b([x], e).length;
 };
 exports.getAncestorWithSiblingFunctions = function (e, t) {
-  const n = g[c(e)];
+  const n = g[languageIdToWasmLanguage(e)];
   for (; t.parent;) {
     if (n(t.parent)) return t;
     t = t.parent;
   }
   return t.parent ? t : null;
 };
-exports.isFunction = E;
+exports.isFunction = isFunction;
 exports.isFunctionDefinition = function (e, t) {
-  switch (c(e)) {
+  switch (languageIdToWasmLanguage(e)) {
     case s.Python:
     case s.Go:
     case s.Ruby:
-      return E(e, t);
+      return isFunction(e, t);
     case s.JavaScript:
     case s.TypeScript:
       if ("function_declaration" === t.type || "generator_function_declaration" === t.type || "method_definition" === t.type) return !0;
@@ -173,13 +173,13 @@ exports.isFunctionDefinition = function (e, t) {
         let n = t.namedChild(0);
         if (null == n) return !1;
         let r = n.namedChild(1);
-        return null !== r && E(e, r);
+        return null !== r && isFunction(e, r);
       }
       if ("expression_statement" === t.type) {
         let n = t.namedChild(0);
         if ("assignment_expression" === (null == n ? undefined : n.type)) {
           let t = n.namedChild(1);
-          return null !== t && E(e, t);
+          return null !== t && isFunction(e, t);
         }
       }
       return !1;
@@ -196,7 +196,7 @@ exports.getFirstPrecedingComment = function (e) {
   return "comment" === (null == n ? undefined : n.type) ? n : null;
 };
 exports.getFunctionPositions = async function (e, t) {
-  return w(e, (await v(e, t)).rootNode).map(e => {
+  return queryFunctions(e, (await parseTree(e, t)).rootNode).map(e => {
     const t = e.captures.find(e => "function" === e.name).node;
     return {
       startIndex: t.startIndex,

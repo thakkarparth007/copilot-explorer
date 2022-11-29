@@ -56,11 +56,11 @@ m.push(function (e) {
   } catch (e) {}
   return p[e] = t;
 });
-var w = y(g);
-function x(e) {
+var retrieveSourceMap = y(g);
+function mapSourcePosition(e) {
   var t = h[e.source];
   if (!t) {
-    var n = w(e.source);
+    var n = retrieveSourceMap(e.source);
     n ? (t = h[e.source] = {
       url: n.url,
       map: new o(n.map)
@@ -87,7 +87,7 @@ function x(e) {
 function E(e) {
   var t = /^eval at ([^(]+) \((.+):(\d+):(\d+)\)$/.exec(e);
   if (t) {
-    var n = x({
+    var n = mapSourcePosition({
       source: t[2],
       line: +t[3],
       column: t[4] - 1
@@ -132,7 +132,7 @@ function S(e) {
   t.toString = C;
   return t;
 }
-function T(e, t) {
+function wrapCallSite(e, t) {
   undefined === t && (t = {
     nextPosition: null,
     curPosition: null
@@ -144,7 +144,7 @@ function T(e, t) {
       o = e.getColumnNumber() - 1,
       i = /^v(10\.1[6-9]|10\.[2-9][0-9]|10\.[0-9]{3,}|1[2-9]\d*|[2-9]\d|\d{3,}|11\.11)/.test("object" == typeof process && null !== process ? process.version : "") ? 0 : 62;
     1 === r && o > i && !_() && !e.isEval() && (o -= i);
-    var s = x({
+    var s = mapSourcePosition({
       source: n,
       line: r,
       column: o
@@ -179,13 +179,13 @@ function k(e, t) {
       nextPosition: null,
       curPosition: null
     }, o = [], i = t.length - 1; i >= 0; i--) {
-    o.push("\n    at " + T(t[i], r));
+    o.push("\n    at " + wrapCallSite(t[i], r));
     r.nextPosition = r.curPosition;
   }
   r.curPosition = r.nextPosition = null;
   return n + o.reverse().join("");
 }
-function I(e) {
+function getErrorSource(e) {
   var t = /\n    at [^(]+ \((.*):(\d+):(\d+)\)/.exec(e.stack);
   if (t) {
     var n = t[1],
@@ -205,7 +205,7 @@ function I(e) {
   return null;
 }
 function P(e) {
-  var t = I(e),
+  var t = getErrorSource(e),
     n = function () {
       if ("object" == typeof process && null !== process) return process.stderr;
     }();
@@ -246,10 +246,10 @@ g.push(function (e) {
 });
 var A = m.slice(0),
   O = g.slice(0);
-exports.wrapCallSite = T;
-exports.getErrorSource = I;
-exports.mapSourcePosition = x;
-exports.retrieveSourceMap = w;
+exports.wrapCallSite = wrapCallSite;
+exports.getErrorSource = getErrorSource;
+exports.mapSourcePosition = mapSourcePosition;
+exports.retrieveSourceMap = retrieveSourceMap;
 exports.install = function (t) {
   if ((t = t || {}).environment && (d = t.environment, -1 === ["node", "browser", "auto"].indexOf(d))) throw new Error("environment " + d + " was unknown. Available options are {auto, browser, node}");
   t.retrieveFile && (t.overrideRetrieveFile && (m.length = 0), m.unshift(t.retrieveFile));
@@ -284,6 +284,6 @@ exports.resetRetrieveHandlers = function () {
   g.length = 0;
   m = A.slice(0);
   g = O.slice(0);
-  w = y(g);
+  retrieveSourceMap = y(g);
   v = y(m);
 };

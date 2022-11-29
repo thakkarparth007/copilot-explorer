@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
 exports.ExpConfigNone = exports.ExpConfigFromTAS = exports.ExpConfigMaker = undefined;
 const r = require(2279),
   o = require(219);
-class i {}
-exports.ExpConfigMaker = i;
-exports.ExpConfigFromTAS = class extends i {
+class ExpConfigMaker {}
+exports.ExpConfigMaker = ExpConfigMaker;
+exports.ExpConfigFromTAS = class extends ExpConfigMaker {
   async fetchExperiments(e, t) {
     var n;
     const i = e.get(r.Fetcher);
@@ -29,7 +29,7 @@ exports.ExpConfigFromTAS = class extends i {
     return new o.ExpConfig(c.Parameters, a.AssignmentContext, l.join(";"));
   }
 };
-exports.ExpConfigNone = class extends i {
+exports.ExpConfigNone = class extends ExpConfigMaker {
   async fetchExperiments(e, t) {
     return o.ExpConfig.createEmptyConfig();
   }

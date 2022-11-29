@@ -40,23 +40,23 @@ var f,
   R = undefined,
   M = undefined,
   L = !1;
-function $() {
+function start() {
   exports.defaultClient ? (L = !0, g.enable(E, C), _.enable(S), y.enable(T), v.enable(N, m), b.useAutoCorrelation(A, f), b.enable(k), w.enable(I), exports.liveMetricsClient && O && exports.liveMetricsClient.enable(O)) : d.warn("Start cannot be called before setup");
-  return D;
+  return Configuration;
 }
 exports.setup = function (e) {
   exports.defaultClient ? d.info("The default client is already setup") : (exports.defaultClient = new exports.TelemetryClient(e), g = new i(exports.defaultClient), _ = new s(exports.defaultClient), y = new a(exports.defaultClient), b = new l(exports.defaultClient), w = new c(exports.defaultClient), v || (v = new h.AutoCollectNativePerformance(exports.defaultClient)));
   exports.defaultClient && exports.defaultClient.channel && exports.defaultClient.channel.setUseDiskRetryCaching(P, R, M);
-  return D;
+  return Configuration;
 };
-exports.start = $;
+exports.start = start;
 exports.getCorrelationContext = function () {
   return A ? o.CorrelationContextManager.getCurrentContext() : null;
 };
 exports.wrapWithCorrelationContext = function (e) {
   return o.CorrelationContextManager.wrapCallback(e);
 };
-var D = function () {
+var Configuration = function () {
   function e() {}
   e.setDistributedTracingMode = function (t) {
     u.w3cEnabled = t === r.AI_AND_W3C;
@@ -117,10 +117,10 @@ var D = function () {
     undefined === n && (n = !1);
     return exports.defaultClient ? (!exports.liveMetricsClient && n ? (exports.liveMetricsClient = new p(exports.defaultClient.config.instrumentationKey), x = new a(exports.liveMetricsClient, 1e3, !0), exports.liveMetricsClient.addCollector(x), exports.defaultClient.quickPulseClient = exports.liveMetricsClient) : exports.liveMetricsClient && exports.liveMetricsClient.enable(n), O = n, e) : (d.warn("Live metrics client cannot be setup without the default client"), e);
   };
-  e.start = $;
+  e.start = start;
   return e;
 }();
-exports.Configuration = D;
+exports.Configuration = Configuration;
 exports.dispose = function () {
   exports.defaultClient = null;
   L = !1;

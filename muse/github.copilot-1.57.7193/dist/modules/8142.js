@@ -31,7 +31,7 @@ exports.telmetryNames = {
   [n.CopilotFileType]: "fileType",
   [n.CopilotUserKind]: "userKind"
 };
-class o {
+class FilterSettings {
   constructor(e) {
     this.filters = e;
     for (const [e, t] of Object.entries(this.filters)) "" === t && delete this.filters[e];
@@ -57,10 +57,10 @@ class o {
     };
   }
   withChange(e, t) {
-    return new o({
+    return new FilterSettings({
       ...this.filters,
       [e]: t
     });
   }
 }
-exports.FilterSettings = o;
+exports.FilterSettings = FilterSettings;

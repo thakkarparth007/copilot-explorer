@@ -1,5 +1,10 @@
 var r;
-module.exports = (r = require(8249), require(8269), require(8214), require(888), require(5109), function () {
+r = require(8249);
+require(8269);
+require(8214);
+require(888);
+require(5109);
+(function () {
   var e = r,
     t = e.lib.StreamCipher,
     n = e.algo,
@@ -59,4 +64,5 @@ module.exports = (r = require(8249), require(8269), require(8214), require(888),
     e[7] = s[7] + (s[6] << 8 | s[6] >>> 24) + s[5] | 0;
   }
   e.Rabbit = t._createHelper(a);
-}(), r.Rabbit);
+})();
+module.exports = r.Rabbit;

@@ -5,7 +5,7 @@ exports.ExtensionTextDocumentManager = undefined;
 const r = require(1017),
   o = require(9496),
   i = require(3136);
-class s extends i.TextDocumentManager {
+class ExtensionTextDocumentManager extends i.TextDocumentManager {
   constructor() {
     super(...arguments);
     this.onDidFocusTextDocument = o.window.onDidChangeActiveTextEditor;
@@ -30,4 +30,4 @@ class s extends i.TextDocumentManager {
     return o.workspace.notebookDocuments.find(e => e.getCells().some(e => e.document === t));
   }
 }
-exports.ExtensionTextDocumentManager = s;
+exports.ExtensionTextDocumentManager = ExtensionTextDocumentManager;

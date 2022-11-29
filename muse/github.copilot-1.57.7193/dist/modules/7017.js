@@ -32,7 +32,7 @@ const r = require(6881),
     captureCode: !1,
     captureRejection: !1
   }];
-async function h(e, t, n) {
+async function captureCode(e, t, n) {
   const r = await e.get(u.TextDocumentManager).getTextDocument(t);
   if (!r) {
     d.info(e, `Could not get document for ${t.fsPath}. Maybe it was closed by the editor.`);
@@ -84,7 +84,7 @@ function f(e, t, n, r) {
     stillInCodeHeuristic: s <= .5 ? 1 : 0
   };
 }
-exports.captureCode = h;
+exports.captureCode = captureCode;
 exports.postRejectionTasks = function (e, t, n, i, s) {
   s.forEach(({
     completionText: n,
@@ -104,7 +104,7 @@ exports.postRejectionTasks = function (e, t, n, i, s) {
           prompt: c,
           capturedCode: u,
           terminationOffset: p
-        } = await h(e, i, a.offset);
+        } = await captureCode(e, i, a.offset);
       let f;
       f = c.isFimEnabled ? {
         hypotheticalPromptPrefixJson: JSON.stringify(c.prefix),
@@ -149,7 +149,7 @@ exports.postInsertionTasks = async function (e, t, n, i, s, a) {
           prompt: n,
           capturedCode: c,
           terminationOffset: u
-        } = await h(e, o, a.offset);
+        } = await captureCode(e, o, a.offset);
         let p;
         p = n.isFimEnabled ? {
           hypotheticalPromptPrefixJson: JSON.stringify(n.prefix),

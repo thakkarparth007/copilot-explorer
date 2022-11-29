@@ -1,5 +1,6 @@
 var r;
-module.exports = (r = require(8249), function (e) {
+r = require(8249);
+(function (e) {
   var t = r,
     n = t.lib,
     o = n.WordArray,
@@ -148,4 +149,5 @@ module.exports = (r = require(8249), function (e) {
   }
   t.MD5 = i._createHelper(c);
   t.HmacMD5 = i._createHmacHelper(c);
-}(Math), r.MD5);
+})(Math);
+module.exports = r.MD5;

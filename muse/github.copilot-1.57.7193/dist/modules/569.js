@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.computeScore = exports.IndentationBasedJaccardMatcher = exports.FixedWindowSizeJaccardMatcher = undefined;
 const r = require(4855),
   o = require(1016);
-class i extends o.WindowedMatcher {
+class FixedWindowSizeJaccardMatcher extends o.WindowedMatcher {
   constructor(e, t) {
     super(e);
     this.windowLength = t;
@@ -25,14 +25,14 @@ class i extends o.WindowedMatcher {
     return e.source.slice(0, e.offset).split("\n").slice(-this.windowLength).join("\n");
   }
   similarityScore(e, t) {
-    return a(e, t);
+    return computeScore(e, t);
   }
 }
-exports.FixedWindowSizeJaccardMatcher = i;
-i.FACTORY = e => ({
-  to: t => new i(t, e)
+exports.FixedWindowSizeJaccardMatcher = FixedWindowSizeJaccardMatcher;
+FixedWindowSizeJaccardMatcher.FACTORY = e => ({
+  to: t => new FixedWindowSizeJaccardMatcher(t, e)
 });
-class s extends o.WindowedMatcher {
+class IndentationBasedJaccardMatcher extends o.WindowedMatcher {
   constructor(e, t, n) {
     super(e);
     this.indentationMinLength = t;
@@ -49,18 +49,18 @@ class s extends o.WindowedMatcher {
     return e.source.slice(0, e.offset).split("\n").slice(-this.indentationMaxLength).join("\n");
   }
   similarityScore(e, t) {
-    return a(e, t);
+    return computeScore(e, t);
   }
 }
-function a(e, t) {
+function computeScore(e, t) {
   const n = new Set();
   e.forEach(e => {
     t.has(e) && n.add(e);
   });
   return n.size / (e.size + t.size - n.size);
 }
-exports.IndentationBasedJaccardMatcher = s;
-s.FACTORY = (e, t) => ({
-  to: n => new s(n, e, t)
+exports.IndentationBasedJaccardMatcher = IndentationBasedJaccardMatcher;
+IndentationBasedJaccardMatcher.FACTORY = (e, t) => ({
+  to: n => new IndentationBasedJaccardMatcher(n, e, t)
 });
-exports.computeScore = a;
+exports.computeScore = computeScore;

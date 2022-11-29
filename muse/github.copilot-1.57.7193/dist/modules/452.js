@@ -1,5 +1,10 @@
 var r;
-module.exports = (r = require(8249), require(8269), require(8214), require(888), require(5109), function () {
+r = require(8249);
+require(8269);
+require(8214);
+require(888);
+require(5109);
+(function () {
   var e = r,
     t = e.lib.BlockCipher,
     n = e.algo,
@@ -85,4 +90,5 @@ module.exports = (r = require(8249), require(8269), require(8214), require(888),
       keySize: 8
     });
   e.AES = t._createHelper(m);
-}(), r.AES);
+})();
+module.exports = r.AES;

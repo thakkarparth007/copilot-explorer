@@ -1,5 +1,6 @@
 var r;
-module.exports = (r = require(8249), function () {
+r = require(8249);
+(function () {
   var e = r,
     t = e.lib.WordArray,
     n = e.enc;
@@ -32,4 +33,5 @@ module.exports = (r = require(8249), function () {
       return t.create(r, 2 * n);
     }
   };
-}(), r.enc.Utf16);
+})();
+module.exports = r.enc.Utf16;

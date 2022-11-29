@@ -1,5 +1,6 @@
 var r;
-module.exports = (r = require(8249), function () {
+r = require(8249);
+(function () {
   if ("function" == typeof ArrayBuffer) {
     var e = r.lib.WordArray,
       t = e.init,
@@ -13,4 +14,5 @@ module.exports = (r = require(8249), function () {
       };
     n.prototype = e;
   }
-}(), r.lib.WordArray);
+})();
+module.exports = r.lib.WordArray;

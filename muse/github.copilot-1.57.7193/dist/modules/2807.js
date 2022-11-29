@@ -1,5 +1,7 @@
 var r;
-module.exports = (r = require(8249), require(5109), r.pad.Iso10126 = {
+r = require(8249);
+require(5109);
+r.pad.Iso10126 = {
   pad: function (e, t) {
     var n = 4 * t,
       o = n - e.sigBytes % n;
@@ -9,4 +11,5 @@ module.exports = (r = require(8249), require(5109), r.pad.Iso10126 = {
     var t = 255 & e.words[e.sigBytes - 1 >>> 2];
     e.sigBytes -= t;
   }
-}, r.pad.Iso10126);
+};
+module.exports = r.pad.Iso10126;

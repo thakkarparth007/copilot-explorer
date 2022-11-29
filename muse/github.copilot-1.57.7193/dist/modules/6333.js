@@ -11,7 +11,7 @@ const r = require(1581),
   l = require(2499);
 exports.APP_INSIGHTS_KEY = "7d7048df-6dd0-4048-bb23-b716c1461f8f";
 exports.APP_INSIGHTS_KEY_SECURE = "3fdd7f28-937a-48c8-9a21-ba337db23bd1";
-class u {
+class TelemetryReporters {
   constructor(e, t) {
     this.reporter = e;
     this.reporterSecure = t;
@@ -56,30 +56,30 @@ class u {
 let d;
 function p(e, t, n, r) {
   const i = new o.default(t, n, r);
-  _(e, i);
+  configureReporter(e, i);
   return i;
 }
-exports.TelemetryReporters = u;
+exports.TelemetryReporters = TelemetryReporters;
 exports.setupStandardReporters = function (e, n) {
   const r = i.getVersion(e),
     o = p(e, n, r, exports.APP_INSIGHTS_KEY),
     s = p(e, n, r, exports.APP_INSIGHTS_KEY_SECURE),
-    a = e.get(u);
+    a = e.get(TelemetryReporters);
   a.setReporter(o);
   a.setSecureReporter(s);
   return a;
 };
 exports.setupEmptyReporters = function () {
-  return new u();
+  return new TelemetryReporters();
 };
-class h {
+class TelemetryData {
   constructor(e, t, n) {
     this.properties = e;
     this.measurements = t;
     this.issuedTime = n;
   }
   static createAndMarkAsIssued(e, t) {
-    return new h(e || {}, t || {}, m());
+    return new TelemetryData(e || {}, t || {}, now());
   }
   extendedBy(e, t) {
     const n = {
@@ -90,13 +90,13 @@ class h {
         ...this.measurements,
         ...t
       },
-      o = new h(n, r, this.issuedTime);
+      o = new TelemetryData(n, r, this.issuedTime);
     o.displayedTime = this.displayedTime;
     o.filtersAndExp = this.filtersAndExp;
     return o;
   }
   markAsDisplayed() {
-    undefined === this.displayedTime && (this.displayedTime = m());
+    undefined === this.displayedTime && (this.displayedTime = now());
   }
   async extendWithExpTelemetry(e) {
     this.filtersAndExp || (await e.get(s.Features).addExpAndFilterToTelemetry(this));
@@ -141,36 +141,36 @@ class h {
   static maybeRemoveRepoInfoFromPropertiesHack(e, t) {
     if (e) return t;
     const n = {};
-    for (const e in t) h.keysToRemoveFromStandardTelemetryHack.includes(e) || (n[e] = t[e]);
+    for (const e in t) TelemetryData.keysToRemoveFromStandardTelemetryHack.includes(e) || (n[e] = t[e]);
     return n;
   }
   sanitizeKeys() {
-    this.properties = h.sanitizeKeys(this.properties);
-    this.measurements = h.sanitizeKeys(this.measurements);
+    this.properties = TelemetryData.sanitizeKeys(this.properties);
+    this.measurements = TelemetryData.sanitizeKeys(this.measurements);
   }
   static sanitizeKeys(e) {
     e = e || {};
     const t = {};
-    for (const n in e) t[h.keysExemptedFromSanitization.includes(n) ? n : n.replace(/\./g, "_")] = e[n];
+    for (const n in e) t[TelemetryData.keysExemptedFromSanitization.includes(n) ? n : n.replace(/\./g, "_")] = e[n];
     return t;
   }
   updateTimeSinceIssuedAndDisplayed() {
-    const e = m() - this.issuedTime;
+    const e = now() - this.issuedTime;
     this.measurements.timeSinceIssuedMs = e;
     if (void 0 !== this.displayedTime) {
-      const e = m() - this.displayedTime;
+      const e = now() - this.displayedTime;
       this.measurements.timeSinceDisplayedMs = e;
     }
   }
   validateData(e, t) {
     var n;
     let r;
-    h.validateTelemetryProperties(this.properties) || (r = {
+    TelemetryData.validateTelemetryProperties(this.properties) || (r = {
       problem: "properties",
-      error: JSON.stringify(h.validateTelemetryProperties.errors)
+      error: JSON.stringify(TelemetryData.validateTelemetryProperties.errors)
     });
-    if (!h.validateTelemetryMeasurements(this.measurements)) {
-      const e = JSON.stringify(h.validateTelemetryMeasurements.errors);
+    if (!TelemetryData.validateTelemetryMeasurements(this.measurements)) {
+      const e = JSON.stringify(TelemetryData.validateTelemetryMeasurements.errors);
       void 0 === r ? r = {
         problem: "measurements",
         error: e
@@ -178,13 +178,13 @@ class h {
     }
     if (undefined === r) return !0;
     if (c.shouldFailForDebugPurposes(e)) throw new Error(`Invalid telemetry data: ${r.problem} ${r.error} properties=${JSON.stringify(this.properties)} measurements=${JSON.stringify(this.measurements)}`);
-    b(e, "invalidTelemetryData", h.createAndMarkAsIssued({
+    telemetryError(e, "invalidTelemetryData", TelemetryData.createAndMarkAsIssued({
       properties: JSON.stringify(this.properties),
       measurements: JSON.stringify(this.measurements),
       problem: r.problem,
       validationError: r.error
     }), t);
-    t && b(e, "invalidTelemetryData_in_secure", h.createAndMarkAsIssued({
+    t && telemetryError(e, "invalidTelemetryData_in_secure", TelemetryData.createAndMarkAsIssued({
       problem: r.problem,
       requestId: null !== (n = this.properties.requestId) && undefined !== n ? n : "unknown"
     }), !1);
@@ -200,24 +200,24 @@ class h {
   }
 }
 function f(e, t, n, r) {
-  const o = t ? e.get(u).getSecureReporter(e) : e.get(u).getReporter(e);
-  o && o.sendTelemetryEvent(n, h.maybeRemoveRepoInfoFromPropertiesHack(t, r.properties), r.measurements);
+  const o = t ? e.get(TelemetryReporters).getSecureReporter(e) : e.get(TelemetryReporters).getReporter(e);
+  o && o.sendTelemetryEvent(n, TelemetryData.maybeRemoveRepoInfoFromPropertiesHack(t, r.properties), r.measurements);
 }
-function m() {
+function now() {
   return new Date().getTime();
 }
-exports.TelemetryData = h;
-h.ajv = new r.default({
+exports.TelemetryData = TelemetryData;
+TelemetryData.ajv = new r.default({
   strictNumbers: !1
 });
-h.validateTelemetryProperties = h.ajv.compile({
+TelemetryData.validateTelemetryProperties = TelemetryData.ajv.compile({
   type: "object",
   additionalProperties: {
     type: "string"
   },
   required: []
 });
-h.validateTelemetryMeasurements = h.ajv.compile({
+TelemetryData.validateTelemetryMeasurements = TelemetryData.ajv.compile({
   type: "object",
   properties: {
     meanLogProb: {
@@ -234,8 +234,8 @@ h.validateTelemetryMeasurements = h.ajv.compile({
   },
   required: []
 });
-h.keysExemptedFromSanitization = [a.ExpServiceTelemetryNames.assignmentContextTelemetryPropertyName, a.ExpServiceTelemetryNames.featuresTelemetryPropertyName];
-h.keysToRemoveFromStandardTelemetryHack = ["gitRepoHost", "gitRepoName", "gitRepoOwner", "gitRepoUrl", "gitRepoPath", "repo", "request_option_nwo"];
+TelemetryData.keysExemptedFromSanitization = [a.ExpServiceTelemetryNames.assignmentContextTelemetryPropertyName, a.ExpServiceTelemetryNames.featuresTelemetryPropertyName];
+TelemetryData.keysToRemoveFromStandardTelemetryHack = ["gitRepoHost", "gitRepoName", "gitRepoOwner", "gitRepoUrl", "gitRepoPath", "repo", "request_option_nwo"];
 exports.telemetrizePromptLength = function (e) {
   return e.isFimEnabled ? {
     promptPrefixCharLen: e.prefix.length,
@@ -244,8 +244,8 @@ exports.telemetrizePromptLength = function (e) {
     promptCharLen: e.prefix.length
   };
 };
-exports.now = m;
-class g {
+exports.now = now;
+class TelemetryEndpointUrl {
   constructor(e = "https://copilot-telemetry.githubusercontent.com/telemetry") {
     this.url = e;
   }
@@ -256,14 +256,14 @@ class g {
     this.url = e;
   }
 }
-function _(e, t) {
+function configureReporter(e, t) {
   const n = t;
   if (n.appInsightsClient) {
     const t = n.appInsightsClient.commonProperties,
-      r = h.sanitizeKeys(t);
+      r = TelemetryData.sanitizeKeys(t);
     n.appInsightsClient.commonProperties = r;
     n.appInsightsClient.context.tags[n.appInsightsClient.context.keys.cloudRoleInstance] = "REDACTED";
-    const o = e.get(g).getUrl();
+    const o = e.get(TelemetryEndpointUrl).getUrl();
     n.appInsightsClient.config.endpointUrl = o;
   }
 }
@@ -271,26 +271,26 @@ function y() {
   var e;
   return null !== (e = null == d ? undefined : d.optedIn) && undefined !== e && e;
 }
-async function v(e, t, n, r) {
+async function telemetry(e, t, n, r) {
   if (r && !y()) return;
-  const o = n || h.createAndMarkAsIssued({}, {});
+  const o = n || TelemetryData.createAndMarkAsIssued({}, {});
   await o.makeReadyForSending(e, null != r && r, "IncludeExp");
   f(e, null != r && r, t, o);
 }
-async function b(e, t, n, r) {
+async function telemetryError(e, t, n, r) {
   if (r && !y()) return;
-  const o = n || h.createAndMarkAsIssued({}, {});
+  const o = n || TelemetryData.createAndMarkAsIssued({}, {});
   await o.makeReadyForSending(e, null != r && r, "IncludeExp");
   (function (e, t, n, r) {
-    const o = t ? e.get(u).getSecureReporter(e) : e.get(u).getReporter(e);
-    o && o.sendTelemetryErrorEvent(n, h.maybeRemoveRepoInfoFromPropertiesHack(t, r.properties), r.measurements);
+    const o = t ? e.get(TelemetryReporters).getSecureReporter(e) : e.get(TelemetryReporters).getReporter(e);
+    o && o.sendTelemetryErrorEvent(n, TelemetryData.maybeRemoveRepoInfoFromPropertiesHack(t, r.properties), r.measurements);
   })(e, null != r && r, t, o);
 }
-exports.TelemetryEndpointUrl = g;
-exports.configureReporter = _;
-exports.telemetry = v;
+exports.TelemetryEndpointUrl = TelemetryEndpointUrl;
+exports.configureReporter = configureReporter;
+exports.telemetry = telemetry;
 exports.telemetryExpProblem = async function (e, t) {
-  const n = h.createAndMarkAsIssued(t, {});
+  const n = TelemetryData.createAndMarkAsIssued(t, {});
   await n.makeReadyForSending(e, !1, "SkipExp");
   f(e, !1, "expProblem", n);
 };
@@ -303,7 +303,7 @@ exports.telemetryRaw = async function (e, t, n, r) {
 exports.telemetryException = async function (e, t, n, r) {
   const o = t instanceof Error ? t : new Error("Non-error thrown: " + t),
     i = y(),
-    s = h.createAndMarkAsIssued({
+    s = TelemetryData.createAndMarkAsIssued({
       origin: l.redactPaths(n),
       reason: i ? "Exception logged to restricted telemetry" : "Exception, not logged due to opt-out",
       ...r
@@ -311,26 +311,26 @@ exports.telemetryException = async function (e, t, n, r) {
   await s.makeReadyForSending(e, !1, "IncludeExp");
   f(e, !1, "exception", s);
   if (!i) return;
-  const a = h.createAndMarkAsIssued({
+  const a = TelemetryData.createAndMarkAsIssued({
     origin: n,
     ...r
   });
   await a.makeReadyForSending(e, !0, "IncludeExp");
   (function (e, t, n, r) {
-    const o = e.get(u).getSecureReporter(e);
-    o && o.sendTelemetryException(n, h.maybeRemoveRepoInfoFromPropertiesHack(true, r.properties), r.measurements);
+    const o = e.get(TelemetryReporters).getSecureReporter(e);
+    o && o.sendTelemetryException(n, TelemetryData.maybeRemoveRepoInfoFromPropertiesHack(true, r.properties), r.measurements);
   })(e, 0, o, a);
 };
-exports.telemetryError = b;
+exports.telemetryError = telemetryError;
 exports.logEngineCompletion = async function (e, t, n, r, o) {
   var i;
-  const s = h.createAndMarkAsIssued({
+  const s = TelemetryData.createAndMarkAsIssued({
     completionTextJson: JSON.stringify(t),
     choiceIndex: o.toString()
   });
   if (n.logprobs) for (const [e, t] of Object.entries(n.logprobs)) s.properties["logprobs_" + e] = null !== (i = JSON.stringify(t)) && undefined !== i ? i : "unset";
   s.extendWithRequestId(r);
-  await v(e, "engine.completion", s, !0);
+  await telemetry(e, "engine.completion", s, !0);
 };
 exports.logEnginePrompt = async function (e, t, n) {
   let r;
@@ -343,7 +343,7 @@ exports.logEnginePrompt = async function (e, t, n) {
     promptElementRanges: JSON.stringify(t.promptElementRanges)
   };
   const o = n.extendedBy(r);
-  await v(e, "engine.prompt", o, !0);
+  await telemetry(e, "engine.prompt", o, !0);
 };
 exports.setTelemetryConfig = function (e) {
   d = e;
@@ -357,7 +357,7 @@ exports.forceSendingTelemetry = function (e, n) {
     const n = r;
     n.userOptIn = !0;
     n.createAppInsightsClient(exports.APP_INSIGHTS_KEY);
-    _(e, r);
+    configureReporter(e, r);
   }
   try {
     const r = n.getSecureReporter(e);
@@ -365,7 +365,7 @@ exports.forceSendingTelemetry = function (e, n) {
       const n = r;
       n.userOptIn = !0;
       n.createAppInsightsClient(exports.APP_INSIGHTS_KEY_SECURE);
-      _(e, r);
+      configureReporter(e, r);
     }
   } catch (e) {}
 };

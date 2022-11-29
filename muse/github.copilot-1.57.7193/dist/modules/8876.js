@@ -1,7 +1,7 @@
-function n(e, t) {
-  return t.rules.some(t => r(e, t));
+function shouldUseGroup(e, t) {
+  return t.rules.some(t => shouldUseRule(e, t));
 }
-function r(e, t) {
+function shouldUseRule(e, t) {
   var n;
   return undefined !== e[t.keyword] || (null === (n = t.definition.implements) || undefined === n ? undefined : n.some(t => undefined !== e[t]));
 }
@@ -14,7 +14,7 @@ exports.schemaHasRulesForType = function ({
   self: t
 }, r) {
   const o = t.RULES.types[r];
-  return o && !0 !== o && n(e, o);
+  return o && !0 !== o && shouldUseGroup(e, o);
 };
-exports.shouldUseGroup = n;
-exports.shouldUseRule = r;
+exports.shouldUseGroup = shouldUseGroup;
+exports.shouldUseRule = shouldUseRule;

@@ -9,7 +9,7 @@ const r = require(3487),
   a = require(6776),
   c = require(4815),
   l = require(540);
-class u {
+class SchemaEnv {
   constructor(e) {
     var t;
     let n;
@@ -27,8 +27,8 @@ class u {
     this.refs = {};
   }
 }
-function d(e) {
-  const t = h.call(this, e);
+function compileSchema(e) {
+  const t = getCompilingSchema.call(this, e);
   if (t) return t;
   const n = s.getFullPath(e.root.baseId),
     {
@@ -121,9 +121,9 @@ function d(e) {
   }
 }
 function p(e) {
-  return s.inlineRef(e.schema, this.opts.inlineRefs) ? e.schema : e.validate ? e : d.call(this, e);
+  return s.inlineRef(e.schema, this.opts.inlineRefs) ? e.schema : e.validate ? e : compileSchema.call(this, e);
 }
-function h(e) {
+function getCompilingSchema(e) {
   for (const r of this._compilations) {
     n = e;
     if ((t = r).schema === n.schema && t.root === n.root && t.baseId === n.baseId) return r;
@@ -133,9 +133,9 @@ function h(e) {
 function f(e, t) {
   let n;
   for (; "string" == typeof (n = this.refs[t]);) t = n;
-  return n || this.schemas[t] || m.call(this, e, t);
+  return n || this.schemas[t] || resolveSchema.call(this, e, t);
 }
-function m(e, t) {
+function resolveSchema(e, t) {
   const n = l.parse(t),
     r = s._getFullPath(n);
   let o = s.getFullPath(e.baseId);
@@ -143,12 +143,12 @@ function m(e, t) {
   const i = s.normalizeId(r),
     a = this.refs[i] || this.schemas[i];
   if ("string" == typeof a) {
-    const t = m.call(this, e, a);
+    const t = resolveSchema.call(this, e, a);
     if ("object" != typeof (null == t ? undefined : t.schema)) return;
     return _.call(this, n, t);
   }
   if ("object" == typeof (null == a ? undefined : a.schema)) {
-    a.validate || d.call(this, a);
+    a.validate || compileSchema.call(this, a);
     if (i === (0, s.normalizeId)(t)) {
       const {
           schema: t
@@ -157,7 +157,7 @@ function m(e, t) {
           schemaId: n
         } = this.opts,
         r = t[n];
-      return r && (o = (0, s.resolveUrl)(o, r)), new u({
+      return r && (o = (0, s.resolveUrl)(o, r)), new SchemaEnv({
         schema: t,
         schemaId: n,
         root: e,
@@ -167,8 +167,8 @@ function m(e, t) {
     return _.call(this, n, a);
   }
 }
-exports.SchemaEnv = u;
-exports.compileSchema = d;
+exports.SchemaEnv = SchemaEnv;
+exports.compileSchema = compileSchema;
 exports.resolveRef = function (e, t, n) {
   var r;
   n = s.resolveUrl(t, n);
@@ -180,7 +180,7 @@ exports.resolveRef = function (e, t, n) {
       {
         schemaId: s
       } = this.opts;
-    o && (i = new u({
+    o && (i = new SchemaEnv({
       schema: o,
       schemaId: s,
       root: e,
@@ -189,8 +189,8 @@ exports.resolveRef = function (e, t, n) {
   }
   return undefined !== i ? e.refs[n] = p.call(this, i) : undefined;
 };
-exports.getCompilingSchema = h;
-exports.resolveSchema = m;
+exports.getCompilingSchema = getCompilingSchema;
+exports.resolveSchema = resolveSchema;
 const g = new Set(["properties", "patternProperties", "enum", "dependencies", "definitions"]);
 function _(e, {
   baseId: t,
@@ -209,12 +209,12 @@ function _(e, {
   let i;
   if ("boolean" != typeof n && n.$ref && !a.schemaHasRulesButRef(n, this.RULES)) {
     const e = s.resolveUrl(t, n.$ref);
-    i = m.call(this, r, e);
+    i = resolveSchema.call(this, r, e);
   }
   const {
     schemaId: c
   } = this.opts;
-  i = i || new u({
+  i = i || new SchemaEnv({
     schema: n,
     schemaId: c,
     root: r,

@@ -1,4 +1,4 @@
-function n(e, t, n = (e, t) => e === t ? 0 : 1) {
+function editDistance(e, t, n = (e, t) => e === t ? 0 : 1) {
   if (0 === t.length || 0 === e.length) return {
     distance: t.length,
     startOffset: 0,
@@ -38,15 +38,15 @@ function n(e, t, n = (e, t) => e === t ? 0 : 1) {
     endOffset: c
   };
 }
-function r() {
+function emptyLexDictionary() {
   return new Map();
 }
-function o(e) {
+function reverseLexDictionary(e) {
   const t = new Array(e.size);
   for (const [n, r] of e) t[r] = n;
   return t;
 }
-function* i(e) {
+function* lexGeneratorWords(e) {
   let t,
     n = "";
   !function (e) {
@@ -62,7 +62,7 @@ function* i(e) {
   }
   n.length > 0 && (yield n);
 }
-function s(e, t, n, r) {
+function lexicalAnalyzer(e, t, n, r) {
   const o = [];
   let i = 0;
   for (const s of n(e)) {
@@ -78,14 +78,14 @@ Object.defineProperty(exports, "__esModule", {
   value: !0
 });
 exports.lexEditDistance = exports.lexicalAnalyzer = exports.lexGeneratorWords = exports.reverseLexDictionary = exports.emptyLexDictionary = exports.editDistance = undefined;
-exports.editDistance = n;
-exports.emptyLexDictionary = r;
-exports.reverseLexDictionary = o;
-exports.lexGeneratorWords = i;
-exports.lexicalAnalyzer = s;
-exports.lexEditDistance = function (e, t, c = i) {
-  const [l, u] = s(e, r(), c, a),
-    [d, p] = s(t, u, c, a);
+exports.editDistance = editDistance;
+exports.emptyLexDictionary = emptyLexDictionary;
+exports.reverseLexDictionary = reverseLexDictionary;
+exports.lexGeneratorWords = lexGeneratorWords;
+exports.lexicalAnalyzer = lexicalAnalyzer;
+exports.lexEditDistance = function (e, t, c = lexGeneratorWords) {
+  const [l, u] = lexicalAnalyzer(e, emptyLexDictionary(), c, a),
+    [d, p] = lexicalAnalyzer(t, u, c, a);
   if (0 === d.length || 0 === l.length) return {
     lexDistance: d.length,
     startOffset: 0,
@@ -93,11 +93,11 @@ exports.lexEditDistance = function (e, t, c = i) {
     haystackLexLength: l.length,
     needleLexLength: d.length
   };
-  const h = o(p),
+  const h = reverseLexDictionary(p),
     f = d.length,
     m = h[d[0][0]],
     g = h[d[f - 1][0]],
-    _ = n(l.map(e => e[0]), d.map(e => e[0]), function (e, t, n, r) {
+    _ = editDistance(l.map(e => e[0]), d.map(e => e[0]), function (e, t, n, r) {
       if (0 === r || r === f - 1) {
         const e = h[l[n][0]];
         return 0 == r && e.endsWith(m) || r == f - 1 && e.startsWith(g) ? 0 : 1;

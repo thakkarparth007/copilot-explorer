@@ -1,7 +1,7 @@
-function n(e) {
+function isVirtual(e) {
   return "virtual" === e.type;
 }
-function r(e) {
+function isTop(e) {
   return "top" === e.type;
 }
 Object.defineProperty(exports, "__esModule", {
@@ -47,11 +47,11 @@ exports.isBlank = function (e) {
 exports.isLine = function (e) {
   return "line" === e.type;
 };
-exports.isVirtual = n;
-exports.isTop = r;
+exports.isVirtual = isVirtual;
+exports.isTop = isTop;
 exports.cutTreeAfterLine = function (e, t) {
   !function e(o) {
-    if (!n(o) && !r(o) && o.lineNumber === t) {
+    if (!isVirtual(o) && !isTop(o) && o.lineNumber === t) {
       o.subs = [];
       return !0;
     }

@@ -7,7 +7,7 @@ const r = require(1133),
   i = require(6333),
   s = require(70);
 var a = require(4419);
-function c(e, t) {
+function calculateMeanLogProb(e, t) {
   var n;
   if (null === (n = null == t ? undefined : t.logprobs) || undefined === n ? undefined : n.token_logprobs) try {
     let e = 0,
@@ -22,7 +22,7 @@ function c(e, t) {
     o.logger.error(e, `Error calculating mean prob: ${t}`);
   }
 }
-function l(e, t) {
+function calculateMeanAlternativeLogProb(e, t) {
   var n;
   if (null === (n = null == t ? undefined : t.logprobs) || undefined === n ? undefined : n.top_logprobs) try {
     let e = 0,
@@ -41,38 +41,18 @@ function l(e, t) {
     o.logger.error(e, `Error calculating mean prob: ${t}`);
   }
 }
-Object.defineProperty(exports, "CopilotUiKind", {
-  enumerable: !0,
-  get: function () {
-    return a.CopilotUiKind;
-  }
-});
-Object.defineProperty(exports, "getRequestId", {
-  enumerable: !0,
-  get: function () {
-    return a.getRequestId;
-  }
-});
-Object.defineProperty(exports, "LiveOpenAIFetcher", {
-  enumerable: !0,
-  get: function () {
-    return a.LiveOpenAIFetcher;
-  }
-});
-Object.defineProperty(exports, "OpenAIFetcher", {
-  enumerable: !0,
-  get: function () {
-    return a.OpenAIFetcher;
-  }
-});
+exports.CopilotUiKind = a.CopilotUiKind;
+exports.getRequestId = a.getRequestId;
+exports.LiveOpenAIFetcher = a.LiveOpenAIFetcher;
+exports.OpenAIFetcher = a.OpenAIFetcher;
 exports.MAX_PROMPT_LENGTH = 1500;
 exports.DEFAULT_CHARACTER_MULTIPLIER = 3;
 exports.convertToAPIChoice = function (e, t, n, r, o, s, a, u) {
   i.logEngineCompletion(e, t, n, o, r);
   return {
     completionText: t,
-    meanLogProb: c(e, n),
-    meanAlternativeLogProb: l(e, n),
+    meanLogProb: calculateMeanLogProb(e, n),
+    meanAlternativeLogProb: calculateMeanAlternativeLogProb(e, n),
     choiceIndex: r,
     requestId: o,
     modelInfo: u,
@@ -96,8 +76,8 @@ exports.cleanupIndentChoices = async function* (e, t) {
     yield e;
   }
 };
-exports.calculateMeanLogProb = c;
-exports.calculateMeanAlternativeLogProb = l;
+exports.calculateMeanLogProb = calculateMeanLogProb;
+exports.calculateMeanAlternativeLogProb = calculateMeanAlternativeLogProb;
 exports.getTemperatureForSamples = function (e, t) {
   if (s.isRunningInTest(e)) return 0;
   const n = parseFloat(r.getConfig(e, r.ConfigKey.Temperature));

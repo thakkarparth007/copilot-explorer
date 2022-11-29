@@ -1,5 +1,7 @@
 var r, o, i;
-module.exports = (i = require(8249), require(5109), i.mode.CTR = (o = (r = i.lib.BlockCipherMode.extend()).Encryptor = r.extend({
+i = require(8249);
+require(5109);
+o = (r = i.lib.BlockCipherMode.extend()).Encryptor = r.extend({
   processBlock: function (e, t) {
     var n = this._cipher,
       r = n.blockSize,
@@ -11,4 +13,7 @@ module.exports = (i = require(8249), require(5109), i.mode.CTR = (o = (r = i.lib
     i[r - 1] = i[r - 1] + 1 | 0;
     for (var a = 0; a < r; a++) e[t + a] ^= s[a];
   }
-}), r.Decryptor = o, r), i.mode.CTR);
+});
+r.Decryptor = o;
+i.mode.CTR = r;
+module.exports = i.mode.CTR;

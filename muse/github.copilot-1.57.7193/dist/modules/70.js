@@ -2,12 +2,12 @@ Object.defineProperty(exports, "__esModule", {
   value: !0
 });
 exports.isVerboseLoggingEnabled = exports.isDebugEnabled = exports.shouldFailForDebugPurposes = exports.isRunningInTest = exports.RuntimeMode = undefined;
-class n {
+class RuntimeMode {
   constructor(e) {
     this.flags = e;
   }
   static fromEnvironment(e) {
-    return new n({
+    return new RuntimeMode({
       debug: (t = process.argv, r = process.env, t.includes("--debug") || "true" === (null === (s = r.GITHUB_COPILOT_DEBUG) || undefined === s ? undefined : s.toLowerCase())),
       verboseLogging: o(process.env),
       testMode: e,
@@ -16,8 +16,8 @@ class n {
     var t, r, s;
   }
 }
-function r(e) {
-  return e.get(n).flags.testMode;
+function isRunningInTest(e) {
+  return e.get(RuntimeMode).flags.testMode;
 }
 function o(e) {
   if ("COPILOT_AGENT_VERBOSE" in e) {
@@ -30,14 +30,14 @@ function i(e, t) {
   var n;
   return e.includes("--record") || "true" === (null === (n = t.GITHUB_COPILOT_RECORD) || undefined === n ? undefined : n.toLowerCase());
 }
-exports.RuntimeMode = n;
-exports.isRunningInTest = r;
+exports.RuntimeMode = RuntimeMode;
+exports.isRunningInTest = isRunningInTest;
 exports.shouldFailForDebugPurposes = function (e) {
-  return r(e);
+  return isRunningInTest(e);
 };
 exports.isDebugEnabled = function (e) {
-  return e.get(n).flags.debug;
+  return e.get(RuntimeMode).flags.debug;
 };
 exports.isVerboseLoggingEnabled = function (e) {
-  return e.get(n).flags.verboseLogging;
+  return e.get(RuntimeMode).flags.verboseLogging;
 };

@@ -18,7 +18,7 @@ const r = require(3837),
   g = require(2901),
   _ = new l.Logger(l.LogLevel.INFO, "fetch");
 var y;
-function v(e, t) {
+function getRequestId(e, t) {
   return {
     headerRequestId: e.headers.get("x-request-id") || "",
     completionId: t && t.id ? t.id : "",
@@ -27,27 +27,27 @@ function v(e, t) {
     deploymentId: e.headers.get("azureml-model-deployment") || ""
   };
 }
-function b(e) {
+function getProcessingTime(e) {
   const t = e.headers.get("openai-processing-ms");
   return t ? parseInt(t, 10) : 0;
 }
-function w(e, t) {
+function extractEngineName(e, t) {
   return t.split("/").pop() || (_.error(e, "Malformed engine URL: " + t), t);
 }
 !function (e) {
   e.GhostText = "ghostText";
   e.Panel = "synthesize";
 }(y = exports.CopilotUiKind || (exports.CopilotUiKind = {}));
-exports.getRequestId = v;
-exports.getProcessingTime = b;
-exports.extractEngineName = w;
-class x {}
-function E(e, t) {
+exports.getRequestId = getRequestId;
+exports.getProcessingTime = getProcessingTime;
+exports.extractEngineName = extractEngineName;
+class OpenAIFetcher {}
+function postProcessChoices(e, t) {
   return null != t && t ? e : i.asyncIterableFilter(e, async e => e.completionText.trim().length > 0);
 }
-exports.OpenAIFetcher = x;
-exports.postProcessChoices = E;
-exports.LiveOpenAIFetcher = class extends x {
+exports.OpenAIFetcher = OpenAIFetcher;
+exports.postProcessChoices = postProcessChoices;
+exports.LiveOpenAIFetcher = class extends OpenAIFetcher {
   async fetchAndStreamCompletions(e, t, n, r, o) {
     const s = e.get(d.StatusReporter),
       a = "completions",
@@ -84,14 +84,14 @@ exports.LiveOpenAIFetcher = class extends x {
     }
     return {
       type: "success",
-      choices: E(i.asyncIterableMap(g.processSSE(e, c, r, n, o), async t => g.prepareSolutionForReturn(e, t, n)), t.allowEmptyChoices),
-      getProcessingTime: () => b(c)
+      choices: postProcessChoices(i.asyncIterableMap(g.processSSE(e, c, r, n, o), async t => g.prepareSolutionForReturn(e, t, n)), t.allowEmptyChoices),
+      getProcessingTime: () => getProcessingTime(c)
     };
   }
   createTelemetryData(e, t, n) {
     return f.TelemetryData.createAndMarkAsIssued({
       endpoint: e,
-      engineName: w(t, n.engineUrl),
+      engineName: extractEngineName(t, n.engineUrl),
       uiKind: n.uiKind,
       headerRequestId: n.ourRequestId
     });
@@ -121,7 +121,7 @@ exports.LiveOpenAIFetcher = class extends x {
       if (!a) return void l.logger.error(e, `Failed to send request to ${_} due to missing key`);
       const b = f.TelemetryData.createAndMarkAsIssued({
         endpoint: o,
-        engineName: w(e, n),
+        engineName: extractEngineName(e, n),
         uiKind: p
       }, f.telemetrizePromptLength(t));
       for (const [e, t] of Object.entries(s)) "prompt" != e && "suffix" != e && (b.properties[`request.option.${e}`] = null !== (m = JSON.stringify(t)) && undefined !== m ? m : "undefined");
@@ -137,7 +137,7 @@ exports.LiveOpenAIFetcher = class extends x {
           }
         }(p);
       return u.postRequest(e, _, a, E, i, s, h).then(n => {
-        const r = v(n, undefined);
+        const r = getRequestId(n, undefined);
         b.extendWithRequestId(r);
         const o = f.now() - x;
         b.measurements.totalTimeMs = o;

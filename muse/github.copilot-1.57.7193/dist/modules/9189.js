@@ -19,7 +19,7 @@ class h {
   }
   async fetchExpConfig(e) {
     let t = this.cache.get(e.stringify());
-    t || (t = new f(() => this.ctx.get(u.ExpConfigMaker).fetchExperiments(this.ctx, e.toHeaders()), 36e5), this.cache.put(e.stringify(), t));
+    t || (t = new Task(() => this.ctx.get(u.ExpConfigMaker).fetchExperiments(this.ctx, e.toHeaders()), 36e5), this.cache.put(e.stringify(), t));
     return t.run();
   }
   getCachedExpConfig(e) {
@@ -27,7 +27,7 @@ class h {
     return null == t ? undefined : t.value();
   }
 }
-class f {
+class Task {
   constructor(e, t = 1 / 0) {
     this.producer = e;
     this.expirationMs = t;
@@ -49,8 +49,8 @@ class f {
     return this.result;
   }
 }
-exports.Task = f;
-class m {
+exports.Task = Task;
+class Features {
   constructor(e) {
     this.ctx = e;
     this.staticFilters = {};
@@ -85,9 +85,9 @@ class m {
     const c = this.granularityDirectory.extendFilters(i),
       u = c.newFilterSettings,
       d = await this.getExpConfig(u);
-    let p = new Promise(e => setTimeout(e, m.upcomingDynamicFilterCheckDelayMs));
+    let p = new Promise(e => setTimeout(e, Features.upcomingDynamicFilterCheckDelayMs));
     for (const e of c.otherFilterSettingsToPrefetch) p = p.then(async () => {
-      await new Promise(e => setTimeout(e, m.upcomingDynamicFilterCheckDelayMs));
+      await new Promise(e => setTimeout(e, Features.upcomingDynamicFilterCheckDelayMs));
       this.getExpConfig(e);
     });
     this.prepareForUpcomingFilters(u);
@@ -112,8 +112,8 @@ class m {
     }
   }
   async prepareForUpcomingFilters(e) {
-    if (!(new Date().getMinutes() < 60 - m.upcomingTimeBucketMinutes)) for (const [t, n] of Object.entries(this.upcomingDynamicFilters)) {
-      await new Promise(e => setTimeout(e, m.upcomingDynamicFilterCheckDelayMs));
+    if (!(new Date().getMinutes() < 60 - Features.upcomingTimeBucketMinutes)) for (const [t, n] of Object.entries(this.upcomingDynamicFilters)) {
+      await new Promise(e => setTimeout(e, Features.upcomingDynamicFilterCheckDelayMs));
       this.getExpConfig(e.withChange(t, n()));
     }
   }
@@ -250,6 +250,6 @@ class m {
     };
   }
 }
-exports.Features = m;
-m.upcomingDynamicFilterCheckDelayMs = 20;
-m.upcomingTimeBucketMinutes = 5 + Math.floor(11 * Math.random());
+exports.Features = Features;
+Features.upcomingDynamicFilterCheckDelayMs = 20;
+Features.upcomingTimeBucketMinutes = 5 + Math.floor(11 * Math.random());

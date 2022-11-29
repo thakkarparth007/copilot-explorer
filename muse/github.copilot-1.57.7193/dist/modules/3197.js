@@ -12,15 +12,15 @@ const r = require(9496),
   u = require(6333),
   d = require(4540),
   p = "_ghostTextPostInsert";
-function h(e) {
+function getInsertionTextFromCompletion(e) {
   return e.insertText;
 }
 let f, m;
-exports.getInsertionTextFromCompletion = h;
+exports.getInsertionTextFromCompletion = getInsertionTextFromCompletion;
 exports.ghostTextLogger = new c.Logger(c.LogLevel.INFO, "ghostText");
 let g,
   _ = [];
-async function y(e, n, c, h, y) {
+async function provideInlineCompletions(e, n, c, h, y) {
   const v = await async function (e, n, a, c, h) {
     const y = u.TelemetryData.createAndMarkAsIssued();
     if (!function (e) {
@@ -104,37 +104,37 @@ async function y(e, n, c, h, y) {
   }(e, n, c, h, y);
   return await a.handleGhostTextResultTelemetry(e, v);
 }
-exports.provideInlineCompletions = y;
+exports.provideInlineCompletions = provideInlineCompletions;
 class v {
   constructor(e) {
     this.ctx = e;
   }
   async provideInlineCompletionItems(e, t, n, r) {
-    return y(this.ctx, e, t, n, r);
+    return provideInlineCompletions(this.ctx, e, t, n, r);
   }
   handleDidShowCompletionItem(e) {
-    b(this.ctx, e);
+    handleGhostTextShown(this.ctx, e);
   }
 }
-function b(e, n) {
+function handleGhostTextShown(e, n) {
   g = n.index;
   if (!_.find(e => e.index === n.index) && (_.push(n), n.telemetry)) {
     const r = !(n.resultType === s.ResultType.Network);
     exports.ghostTextLogger.debug(e, `[${n.telemetry.properties.headerRequestId}] shown choiceIndex: ${n.telemetry.properties.choiceIndex}, fromCache ${r}`), (0, a.telemetryShown)(e, "ghostText", n.telemetry, r);
   }
 }
-async function w(e, n) {
+async function handleGhostTextPostInsert(e, n) {
   _ = [];
   m = undefined;
   f = undefined;
   exports.ghostTextLogger.debug(e, "Ghost text post insert");
-  n.telemetry && n.uri && n.displayText && undefined !== n.insertOffset && n.range && (n.telemetry.measurements.compCharLen = h(n).length, await l.postInsertionTasks(e, "ghostText", n.displayText, n.insertOffset, n.uri, n.telemetry));
+  n.telemetry && n.uri && n.displayText && undefined !== n.insertOffset && n.range && (n.telemetry.measurements.compCharLen = getInsertionTextFromCompletion(n).length, await l.postInsertionTasks(e, "ghostText", n.displayText, n.insertOffset, n.uri, n.telemetry));
 }
-exports.handleGhostTextShown = b;
-exports.handleGhostTextPostInsert = w;
+exports.handleGhostTextShown = handleGhostTextShown;
+exports.handleGhostTextPostInsert = handleGhostTextPostInsert;
 exports.registerGhostText = function (e) {
   const t = new v(e);
   return [r.languages.registerInlineCompletionItemProvider({
     pattern: "**"
-  }, t), r.commands.registerCommand(p, async t => w(e, t))];
+  }, t), r.commands.registerCommand(p, async t => handleGhostTextPostInsert(e, t))];
 };

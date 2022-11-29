@@ -3,21 +3,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.contextualFilterScore = exports.getLastLineLength = exports.ContextualFilterManager = undefined;
 const r = require(7744);
-class o {
+class ContextualFilterManager {
   constructor() {
     this.previousLabel = 0;
     this.previousLabelTimestamp = Date.now() - 3600;
     this.probabilityAccept = 0;
   }
 }
-function i(e) {
+function getLastLineLength(e) {
   const t = e.split("\n");
   return t[t.length - 1].length;
 }
-exports.ContextualFilterManager = o;
-exports.getLastLineLength = i;
+exports.ContextualFilterManager = ContextualFilterManager;
+exports.getLastLineLength = getLastLineLength;
 exports.contextualFilterScore = function (e, t, n) {
-  const s = e.get(o),
+  const s = e.get(ContextualFilterManager),
     a = s.previousLabel;
   let c = 0;
   "afterCursorWhitespace" in t.properties && "true" === t.properties.afterCursorWhitespace && (c = 1);
@@ -27,7 +27,7 @@ exports.contextualFilterScore = function (e, t, n) {
     p = 0;
   const h = n.prefix;
   if (h) {
-    d = Math.log(1 + i(h));
+    d = Math.log(1 + getLastLineLength(h));
     const e = h.slice(-1);
     undefined !== r.contextualFilterCharacterMap[e] && (p = r.contextualFilterCharacterMap[e]);
   }
@@ -35,7 +35,7 @@ exports.contextualFilterScore = function (e, t, n) {
     m = 0;
   const g = h.trimEnd();
   if (g) {
-    f = Math.log(1 + i(g));
+    f = Math.log(1 + getLastLineLength(g));
     const e = g.slice(-1);
     undefined !== r.contextualFilterCharacterMap[e] && (m = r.contextualFilterCharacterMap[e]);
   }
@@ -69,6 +69,6 @@ exports.contextualFilterScore = function (e, t, n) {
   w += r.contextualFilterWeights[29 + p];
   w += r.contextualFilterWeights[125 + m];
   const x = 1 / (1 + Math.exp(-w));
-  e.get(o).probabilityAccept = x;
+  e.get(ContextualFilterManager).probabilityAccept = x;
   return x;
 };

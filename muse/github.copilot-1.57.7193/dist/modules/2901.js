@@ -6,12 +6,12 @@ const r = require(9899),
   o = require(6333),
   i = require(937),
   s = new r.Logger(r.LogLevel.INFO, "streamChoices");
-function a(e) {
+function splitChunk(e) {
   const t = e.split("\n"),
     n = t.pop();
   return [t.filter(e => "" != e), n];
 }
-exports.splitChunk = a;
+exports.splitChunk = splitChunk;
 exports.processSSE = async function* (e, t, n, r, c) {
   var l, u, d, p, h, f, m, g, _;
   const y = await t.body();
@@ -26,7 +26,7 @@ exports.processSSE = async function* (e, t, n, r, c) {
       return void y.destroy();
     }
     s.debug(e, "chunk", x.toString());
-    const [E, C] = a(w + x.toString());
+    const [E, C] = splitChunk(w + x.toString());
     w = C;
     for (const a of E) {
       const w = a.slice("data:".length).trim();

@@ -45,14 +45,14 @@ exports.shouldDoServerTrimming = function (e) {
 (c = exports.BuildType || (exports.BuildType = {})).DEV = "dev";
 c.PROD = "prod";
 c.NIGHTLY = "nightly";
-class l {}
+class BlockModeConfig {}
 function u(e, t) {
   return e !== a.ParsingAndServer || r.isSupportedLanguageId(t) ? e : a.Server;
 }
-exports.BlockModeConfig = l;
-exports.ConfigBlockModeConfig = class extends l {
+exports.BlockModeConfig = BlockModeConfig;
+exports.ConfigBlockModeConfig = class extends BlockModeConfig {
   async forLanguage(e, n) {
-    if (e.get(d).isDefaultSettingOverwritten(exports.ConfigKey.IndentationMode)) switch (e.get(d).getLanguageConfig(exports.ConfigKey.IndentationMode, n)) {
+    if (e.get(ConfigProvider).isDefaultSettingOverwritten(exports.ConfigKey.IndentationMode)) switch (e.get(ConfigProvider).getLanguageConfig(exports.ConfigKey.IndentationMode, n)) {
       case "client":
       case !0:
       case "server":
@@ -66,8 +66,8 @@ exports.ConfigBlockModeConfig = class extends l {
     return o ? u(o, n) : r.isSupportedLanguageId(n) ? a.Parsing : a.Server;
   }
 };
-class d {}
-function p(e) {
+class ConfigProvider {}
+function getConfigDefaultForKey(e) {
   try {
     const t = s.contributes.configuration[0].properties[`${o.CopilotConfigPrefix}.${e}`].default;
     if (undefined === t) throw new Error(`Missing config default value: ${o.CopilotConfigPrefix}.${e}`);
@@ -76,7 +76,7 @@ function p(e) {
     throw new Error(`Error inspecting config default value ${o.CopilotConfigPrefix}.${e}: ${t}`);
   }
 }
-function h(e, t) {
+function getConfigDefaultForObjectKey(e, t) {
   try {
     const n = s.contributes.configuration[0].properties[`${o.CopilotConfigPrefix}.${e}`].properties[t].default;
     if (undefined === n) throw new Error(`Missing config default value: ${o.CopilotConfigPrefix}.${e}`);
@@ -85,22 +85,22 @@ function h(e, t) {
     throw new Error(`Error inspecting config default value ${o.CopilotConfigPrefix}.${e}.${t}: ${n}`);
   }
 }
-function f(e, t) {
-  return e.get(d).getConfig(t);
+function getConfig(e, t) {
+  return e.get(ConfigProvider).getConfig(t);
 }
-function m(e, t) {
-  return e.get(d).isDefaultSettingOverwritten(t);
+function isDefaultSettingOverwritten(e, t) {
+  return e.get(ConfigProvider).isDefaultSettingOverwritten(t);
 }
-function g(e, t, n) {
-  return m(e, t) ? f(e, t) : n.default;
+function getHiddenConfig(e, t, n) {
+  return isDefaultSettingOverwritten(e, t) ? getConfig(e, t) : n.default;
 }
-function _(e, t, n) {
-  return e.get(d).getLanguageConfig(t, n);
+function getLanguageConfig(e, t, n) {
+  return e.get(ConfigProvider).getLanguageConfig(t, n);
 }
-exports.ConfigProvider = d;
-exports.DefaultsOnlyConfigProvider = class extends d {
+exports.ConfigProvider = ConfigProvider;
+exports.DefaultsOnlyConfigProvider = class extends ConfigProvider {
   getConfig(e) {
-    return Array.isArray(e) ? h(e[0], e[1]) : p(e);
+    return Array.isArray(e) ? getConfigDefaultForObjectKey(e[0], e[1]) : getConfigDefaultForKey(e);
   }
   isDefaultSettingOverwritten(e) {
     return !1;
@@ -148,34 +148,34 @@ exports.InMemoryConfigProvider = class {
     return undefined !== n ? undefined !== t ? n[t] : n["*"] : this.baseConfigProvider.getLanguageConfig(e, t);
   }
 };
-exports.getConfigDefaultForKey = p;
-exports.getConfigDefaultForObjectKey = h;
-exports.getConfig = f;
-exports.isDefaultSettingOverwritten = m;
-exports.getHiddenConfig = g;
+exports.getConfigDefaultForKey = getConfigDefaultForKey;
+exports.getConfigDefaultForObjectKey = getConfigDefaultForObjectKey;
+exports.getConfig = getConfig;
+exports.isDefaultSettingOverwritten = isDefaultSettingOverwritten;
+exports.getHiddenConfig = getHiddenConfig;
 exports.dumpConfig = function (e) {
-  return e.get(d).dumpConfig();
+  return e.get(ConfigProvider).dumpConfig();
 };
-exports.getLanguageConfig = _;
+exports.getLanguageConfig = getLanguageConfig;
 exports.getEnabledConfig = function (e, n) {
-  return _(e, exports.ConfigKey.Enable, n);
+  return getLanguageConfig(e, exports.ConfigKey.Enable, n);
 };
 exports.suffixPercent = async function (e, n, r) {
-  return g(e, exports.ConfigKey.DebugUseSuffix, {
+  return getHiddenConfig(e, exports.ConfigKey.DebugUseSuffix, {
     default: !1
   }) ? 15 : e.get(i.Features).suffixPercent(n, r);
 };
 exports.suffixMatchThreshold = async function (e, n, r) {
-  return g(e, exports.ConfigKey.DebugUseSuffix, {
+  return getHiddenConfig(e, exports.ConfigKey.DebugUseSuffix, {
     default: !1
   }) ? 0 : e.get(i.Features).suffixMatchThreshold(n, r);
 };
 exports.fimSuffixLengthThreshold = async function (e, n, r) {
-  return g(e, exports.ConfigKey.DebugUseSuffix, {
+  return getHiddenConfig(e, exports.ConfigKey.DebugUseSuffix, {
     default: !1
   }) ? -1 : e.get(i.Features).fimSuffixLengthThreshold(n, r);
 };
-class y {
+class BuildInfo {
   constructor() {
     this.packageJson = s;
   }
@@ -195,43 +195,43 @@ class y {
     return this.packageJson.name;
   }
 }
-exports.BuildInfo = y;
+exports.BuildInfo = BuildInfo;
 exports.isProduction = function (e) {
-  return e.get(y).isProduction();
+  return e.get(BuildInfo).isProduction();
 };
 exports.getBuildType = function (e) {
-  return e.get(y).getBuildType();
+  return e.get(BuildInfo).getBuildType();
 };
 exports.getBuild = function (e) {
-  return e.get(y).getBuild();
+  return e.get(BuildInfo).getBuild();
 };
 exports.getVersion = function (e) {
-  return e.get(y).getVersion();
+  return e.get(BuildInfo).getVersion();
 };
-class v {
+class VscInfo {
   constructor(e, t, n) {
     this.sessionId = e;
     this.machineId = t;
     this.vsCodeVersion = n;
   }
 }
-function b({
+function formatNameAndVersion({
   name: e,
   version: t
 }) {
   return `${e}/${t}`;
 }
-exports.VscInfo = v;
+exports.VscInfo = VscInfo;
 exports.getTestVscInfo = function () {
-  return new v("test-session-id", "test-machine-id", "test-vscode-version");
+  return new VscInfo("test-session-id", "test-machine-id", "test-vscode-version");
 };
-exports.formatNameAndVersion = b;
-class w {}
-exports.EditorAndPluginInfo = w;
+exports.formatNameAndVersion = formatNameAndVersion;
+class EditorAndPluginInfo {}
+exports.EditorAndPluginInfo = EditorAndPluginInfo;
 exports.editorVersionHeaders = function (e) {
-  const t = e.get(w);
+  const t = e.get(EditorAndPluginInfo);
   return {
-    "Editor-Version": b(t.getEditorInfo(e)),
-    "Editor-Plugin-Version": b(t.getEditorPluginInfo(e))
+    "Editor-Version": formatNameAndVersion(t.getEditorInfo(e)),
+    "Editor-Plugin-Version": formatNameAndVersion(t.getEditorPluginInfo(e))
   };
 };

@@ -2,7 +2,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0
 });
 exports.TimeBucketGranularity = exports.DEFAULT_GRANULARITY = exports.GranularityImplementation = undefined;
-class n {
+class GranularityImplementation {
   constructor(e) {
     this.prefix = e;
   }
@@ -10,8 +10,8 @@ class n {
     return [this.getValue(e), this.getUpcomingValues(e)];
   }
 }
-exports.GranularityImplementation = n;
-class r extends n {
+exports.GranularityImplementation = GranularityImplementation;
+class r extends GranularityImplementation {
   getValue(e) {
     return this.prefix;
   }
@@ -20,7 +20,7 @@ class r extends n {
   }
 }
 exports.DEFAULT_GRANULARITY = e => new r(e);
-exports.TimeBucketGranularity = class extends n {
+exports.TimeBucketGranularity = class extends GranularityImplementation {
   constructor(e, t = .5, n = new Date().setUTCHours(0, 0, 0, 0)) {
     super(e);
     this.prefix = e;

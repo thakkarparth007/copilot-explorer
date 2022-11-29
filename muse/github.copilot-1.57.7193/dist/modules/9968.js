@@ -1,5 +1,7 @@
 var r;
-module.exports = (r = require(8249), require(5109), r.mode.CTRGladman = function () {
+r = require(8249);
+require(5109);
+r.mode.CTRGladman = function () {
   var e = r.lib.BlockCipherMode.extend();
   function t(e) {
     if (255 == (e >> 24 & 255)) {
@@ -31,4 +33,5 @@ module.exports = (r = require(8249), require(5109), r.mode.CTRGladman = function
   });
   e.Decryptor = n;
   return e;
-}(), r.mode.CTRGladman);
+}();
+module.exports = r.mode.CTRGladman;

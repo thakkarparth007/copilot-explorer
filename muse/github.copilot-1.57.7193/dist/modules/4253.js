@@ -1,5 +1,10 @@
 var r;
-module.exports = (r = require(8249), require(8269), require(8214), require(888), require(5109), function () {
+r = require(8249);
+require(8269);
+require(8214);
+require(888);
+require(5109);
+(function () {
   var e = r,
     t = e.lib,
     n = t.WordArray,
@@ -620,4 +625,5 @@ module.exports = (r = require(8249), require(8269), require(8214), require(888),
     blockSize: 2
   });
   e.TripleDES = o._createHelper(f);
-}(), r.TripleDES);
+})();
+module.exports = r.TripleDES;

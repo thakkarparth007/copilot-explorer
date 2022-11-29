@@ -1,5 +1,6 @@
 var r;
-module.exports = (r = require(8249), function (e) {
+r = require(8249);
+(function (e) {
   var t = r,
     n = t.lib,
     o = n.WordArray,
@@ -75,4 +76,5 @@ module.exports = (r = require(8249), function (e) {
     });
   t.SHA256 = i._createHelper(u);
   t.HmacSHA256 = i._createHmacHelper(u);
-}(Math), r.SHA256);
+})(Math);
+module.exports = r.SHA256;

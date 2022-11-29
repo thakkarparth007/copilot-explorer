@@ -1,5 +1,12 @@
 var r, o, i, s, a, c, l, u, d;
-module.exports = (d = require(8249), require(2783), require(9824), i = (o = (r = d).lib).Base, s = o.WordArray, c = (a = r.algo).SHA1, l = a.HMAC, u = a.PBKDF2 = i.extend({
+d = require(8249);
+require(2783);
+require(9824);
+i = (o = (r = d).lib).Base;
+s = o.WordArray;
+c = (a = r.algo).SHA1;
+l = a.HMAC;
+u = a.PBKDF2 = i.extend({
   cfg: i.extend({
     keySize: 4,
     hasher: c,
@@ -23,6 +30,8 @@ module.exports = (d = require(8249), require(2783), require(9824), i = (o = (r =
     o.sigBytes = 4 * u;
     return o;
   }
-}), r.PBKDF2 = function (e, t, n) {
+});
+r.PBKDF2 = function (e, t, n) {
   return u.create(n).compute(e, t);
-}, d.PBKDF2);
+};
+module.exports = d.PBKDF2;

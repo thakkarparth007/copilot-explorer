@@ -5,79 +5,19 @@ exports.or = exports.and = exports.not = exports.CodeGen = exports.operators = e
 const r = require(7023),
   o = require(8490);
 var i = require(7023);
-Object.defineProperty(exports, "_", {
-  enumerable: !0,
-  get: function () {
-    return i._;
-  }
-});
-Object.defineProperty(exports, "str", {
-  enumerable: !0,
-  get: function () {
-    return i.str;
-  }
-});
-Object.defineProperty(exports, "strConcat", {
-  enumerable: !0,
-  get: function () {
-    return i.strConcat;
-  }
-});
-Object.defineProperty(exports, "nil", {
-  enumerable: !0,
-  get: function () {
-    return i.nil;
-  }
-});
-Object.defineProperty(exports, "getProperty", {
-  enumerable: !0,
-  get: function () {
-    return i.getProperty;
-  }
-});
-Object.defineProperty(exports, "stringify", {
-  enumerable: !0,
-  get: function () {
-    return i.stringify;
-  }
-});
-Object.defineProperty(exports, "regexpCode", {
-  enumerable: !0,
-  get: function () {
-    return i.regexpCode;
-  }
-});
-Object.defineProperty(exports, "Name", {
-  enumerable: !0,
-  get: function () {
-    return i.Name;
-  }
-});
+exports._ = i._;
+exports.str = i.str;
+exports.strConcat = i.strConcat;
+exports.nil = i.nil;
+exports.getProperty = i.getProperty;
+exports.stringify = i.stringify;
+exports.regexpCode = i.regexpCode;
+exports.Name = i.Name;
 var s = require(8490);
-Object.defineProperty(exports, "Scope", {
-  enumerable: !0,
-  get: function () {
-    return s.Scope;
-  }
-});
-Object.defineProperty(exports, "ValueScope", {
-  enumerable: !0,
-  get: function () {
-    return s.ValueScope;
-  }
-});
-Object.defineProperty(exports, "ValueScopeName", {
-  enumerable: !0,
-  get: function () {
-    return s.ValueScopeName;
-  }
-});
-Object.defineProperty(exports, "varKinds", {
-  enumerable: !0,
-  get: function () {
-    return s.varKinds;
-  }
-});
+exports.Scope = s.Scope;
+exports.ValueScope = s.ValueScope;
+exports.ValueScopeName = s.ValueScopeName;
+exports.varKinds = s.varKinds;
 exports.operators = {
   GT: new r._Code(">"),
   GTE: new r._Code(">="),
@@ -278,7 +218,7 @@ class v extends g {
       const e = t.optimizeNodes();
       t = this.else = Array.isArray(e) ? new y(e) : e;
     }
-    return t ? !1 === e ? t instanceof v ? t : t.nodes : this.nodes.length ? this : new v(R(e), t instanceof v ? [t] : t.nodes) : !1 !== e && this.nodes.length ? this : undefined;
+    return t ? !1 === e ? t instanceof v ? t : t.nodes : this.nodes.length ? this : new v(not(e), t instanceof v ? [t] : t.nodes) : !1 !== e && this.nodes.length ? this : undefined;
   }
   optimizeNames(e, t) {
     var n;
@@ -435,7 +375,7 @@ function O(e, t, n) {
 function N(e, t) {
   for (const n in t) e[n] = (e[n] || 0) - (t[n] || 0);
 }
-function R(e) {
+function not(e) {
   return "boolean" == typeof e || "number" == typeof e || null === e ? !e : r._`!${D(e)}`;
 }
 I.kind = "finally";
@@ -646,7 +586,7 @@ exports.CodeGen = class {
     t[t.length - 1] = e;
   }
 };
-exports.not = R;
+exports.not = not;
 const M = $(exports.operators.AND);
 exports.and = function (...e) {
   return e.reduce(M);

@@ -85,7 +85,7 @@ function l(e, t) {
   }
   return "";
 }
-function u(e, t) {
+function getDocComment(e, t) {
   const n = o.getFirstPrecedingComment(t);
   return n ? e.substring(n.startIndex, t.startIndex) : "";
 }
@@ -98,7 +98,7 @@ function d(e, t) {
       for (; n >= 0 && (" " === e[n] || "\t" === e[n]);) n--;
       if (n < 0 || "\n" === e[n]) return e.substring(n + 1, t.startIndex);
     }(e, null != c ? c : t)) && undefined !== r ? r : "  ",
-    h = u(e, t);
+    h = getDocComment(e, t);
   switch (t.type) {
     case "ambient_declaration":
       const n = t.namedChild(0);
@@ -139,7 +139,7 @@ async function p(e, t, n) {
             decl: o
           } = c(s, t);
           if (n) {
-            o = u(s, e) + o;
+            o = getDocComment(s, e) + o;
             let t = r.get(n);
             t || (t = [], r.set(n, t));
             t.push(o);
@@ -160,7 +160,7 @@ async function p(e, t, n) {
   });
   return r;
 }
-exports.getDocComment = u;
+exports.getDocComment = getDocComment;
 const h = /^\s*import\s*(type|)\s*\{[^}]*\}\s*from\s*['"]\./gm;
 exports.extractLocalImportContext = async function (e, t) {
   let {

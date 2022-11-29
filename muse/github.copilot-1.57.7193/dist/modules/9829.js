@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.rebuildTree = exports.foldTree = exports.visitTreeConditionally = exports.visitTree = exports.resetLineNumbers = exports.mapLabels = exports.clearLabelsIf = exports.clearLabels = undefined;
 const r = require(9608);
-function o(e, t, n) {
+function visitTree(e, t, n) {
   !function e(r) {
     "topDown" === n && t(r);
     r.subs.forEach(t => {
@@ -13,13 +13,13 @@ function o(e, t, n) {
   }(e);
 }
 exports.clearLabels = function (e) {
-  o(e, e => {
+  visitTree(e, e => {
     e.label = undefined;
   }, "bottomUp");
   return e;
 };
 exports.clearLabelsIf = function (e, t) {
-  o(e, e => {
+  visitTree(e, e => {
     e.label = e.label ? t(e.label) ? undefined : e.label : undefined;
   }, "bottomUp");
   return e;
@@ -49,11 +49,11 @@ exports.mapLabels = function e(t, n) {
 };
 exports.resetLineNumbers = function (e) {
   let t = 0;
-  o(e, function (e) {
+  visitTree(e, function (e) {
     r.isVirtual(e) || r.isTop(e) || (e.lineNumber = t, t++);
   }, "topDown");
 };
-exports.visitTree = o;
+exports.visitTree = visitTree;
 exports.visitTreeConditionally = function (e, t, n) {
   !function e(r) {
     if ("topDown" === n && !t(r)) return !1;
@@ -67,7 +67,7 @@ exports.visitTreeConditionally = function (e, t, n) {
 };
 exports.foldTree = function (e, t, n, r) {
   let i = t;
-  o(e, function (e) {
+  visitTree(e, function (e) {
     i = n(e, i);
   }, r);
   return i;

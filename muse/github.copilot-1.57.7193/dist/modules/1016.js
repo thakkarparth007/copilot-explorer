@@ -15,7 +15,7 @@ class i {
     this.stopsForLanguage = null !== (t = u.get(e.languageId)) && undefined !== t ? t : l;
   }
   tokenize(e) {
-    return new Set(a(e).filter(e => !this.stopsForLanguage.has(e)));
+    return new Set(splitIntoWords(e).filter(e => !this.stopsForLanguage.has(e)));
   }
 }
 const s = new class {
@@ -37,7 +37,7 @@ const s = new class {
     return this.cache[e];
   }
 }(20);
-function a(e) {
+function splitIntoWords(e) {
   return e.split(/[^a-zA-Z0-9]/).filter(e => e.length > 0);
 }
 exports.WindowedMatcher = class {
@@ -103,7 +103,7 @@ exports.WindowedMatcher = class {
     }));
   }
 };
-exports.splitIntoWords = a;
+exports.splitIntoWords = splitIntoWords;
 const c = new Set(["we", "our", "you", "it", "its", "they", "them", "their", "this", "that", "these", "those", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "can", "don", "t", "s", "will", "would", "should", "what", "which", "who", "when", "where", "why", "how", "a", "an", "the", "and", "or", "not", "no", "but", "because", "as", "until", "again", "further", "then", "once", "here", "there", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "above", "below", "to", "during", "before", "after", "of", "at", "by", "about", "between", "into", "through", "from", "up", "down", "in", "out", "on", "off", "over", "under", "only", "own", "same", "so", "than", "too", "very", "just", "now"]),
   l = new Set(["if", "then", "else", "for", "while", "with", "def", "function", "return", "TODO", "import", "try", "catch", "raise", "finally", "repeat", "switch", "case", "match", "assert", "continue", "break", "const", "class", "enum", "struct", "static", "new", "super", "this", "var", ...c]),
   u = new Map([]);

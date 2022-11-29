@@ -2,10 +2,10 @@ Object.defineProperty(exports, "__esModule", {
   value: !0
 });
 exports.regexpCode = exports.getProperty = exports.safeStringify = exports.stringify = exports.strConcat = exports.addCodeArg = exports.str = exports._ = exports.nil = exports._Code = exports.Name = exports.IDENTIFIER = exports._CodeOrName = undefined;
-class n {}
-exports._CodeOrName = n;
+class _CodeOrName {}
+exports._CodeOrName = _CodeOrName;
 exports.IDENTIFIER = /^[a-z$_][a-z$_0-9]*$/i;
-class r extends n {
+class Name extends _CodeOrName {
   constructor(e) {
     super();
     if (!exports.IDENTIFIER.test(e)) throw new Error("CodeGen: name must be a valid identifier");
@@ -23,8 +23,8 @@ class r extends n {
     };
   }
 }
-exports.Name = r;
-class o extends n {
+exports.Name = Name;
+class _Code extends _CodeOrName {
   constructor(e) {
     super();
     this._items = "string" == typeof e ? [e] : e;
@@ -43,29 +43,29 @@ class o extends n {
   }
   get names() {
     var e;
-    return null !== (e = this._names) && undefined !== e ? e : this._names = this._items.reduce((e, t) => (t instanceof r && (e[t.str] = (e[t.str] || 0) + 1), e), {});
+    return null !== (e = this._names) && undefined !== e ? e : this._names = this._items.reduce((e, t) => (t instanceof Name && (e[t.str] = (e[t.str] || 0) + 1), e), {});
   }
 }
-function i(e, ...t) {
+function _(e, ...t) {
   const n = [e[0]];
   let r = 0;
   for (; r < t.length;) {
-    c(n, t[r]);
+    addCodeArg(n, t[r]);
     n.push(e[++r]);
   }
-  return new o(n);
+  return new _Code(n);
 }
-exports._Code = o;
-exports.nil = new o("");
-exports._ = i;
-const s = new o("+");
-function a(e, ...t) {
-  const n = [u(e[0])];
+exports._Code = _Code;
+exports.nil = new _Code("");
+exports._ = _;
+const s = new _Code("+");
+function str(e, ...t) {
+  const n = [safeStringify(e[0])];
   let r = 0;
   for (; r < t.length;) {
     n.push(s);
-    c(n, t[r]);
-    n.push(s, u(e[++r]));
+    addCodeArg(n, t[r]);
+    n.push(s, safeStringify(e[++r]));
   }
   (function (e) {
     let t = 1;
@@ -81,36 +81,36 @@ function a(e, ...t) {
       t++;
     }
   })(n);
-  return new o(n);
+  return new _Code(n);
 }
-function c(e, t) {
+function addCodeArg(e, t) {
   var n;
-  t instanceof o ? e.push(...t._items) : t instanceof r ? e.push(t) : e.push("number" == typeof (n = t) || "boolean" == typeof n || null === n ? n : u(Array.isArray(n) ? n.join(",") : n));
+  t instanceof _Code ? e.push(...t._items) : t instanceof Name ? e.push(t) : e.push("number" == typeof (n = t) || "boolean" == typeof n || null === n ? n : safeStringify(Array.isArray(n) ? n.join(",") : n));
 }
 function l(e, t) {
   if ('""' === t) return e;
   if ('""' === e) return t;
   if ("string" == typeof e) {
-    if (t instanceof r || '"' !== e[e.length - 1]) return;
+    if (t instanceof Name || '"' !== e[e.length - 1]) return;
     return "string" != typeof t ? `${e.slice(0, -1)}${t}"` : '"' === t[0] ? e.slice(0, -1) + t.slice(1) : undefined;
   }
-  return "string" != typeof t || '"' !== t[0] || e instanceof r ? undefined : `"${e}${t.slice(1)}`;
+  return "string" != typeof t || '"' !== t[0] || e instanceof Name ? undefined : `"${e}${t.slice(1)}`;
 }
-function u(e) {
+function safeStringify(e) {
   return JSON.stringify(e).replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029");
 }
-exports.str = a;
-exports.addCodeArg = c;
+exports.str = str;
+exports.addCodeArg = addCodeArg;
 exports.strConcat = function (e, t) {
-  return t.emptyStr() ? e : e.emptyStr() ? t : a`${e}${t}`;
+  return t.emptyStr() ? e : e.emptyStr() ? t : str`${e}${t}`;
 };
 exports.stringify = function (e) {
-  return new o(u(e));
+  return new _Code(safeStringify(e));
 };
-exports.safeStringify = u;
+exports.safeStringify = safeStringify;
 exports.getProperty = function (e) {
-  return "string" == typeof e && exports.IDENTIFIER.test(e) ? new o(`.${e}`) : i`[${e}]`;
+  return "string" == typeof e && exports.IDENTIFIER.test(e) ? new _Code(`.${e}`) : _`[${e}]`;
 };
 exports.regexpCode = function (e) {
-  return new o(e.toString());
+  return new _Code(e.toString());
 };

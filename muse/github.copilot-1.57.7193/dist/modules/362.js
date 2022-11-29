@@ -11,10 +11,10 @@ const r = require(2361),
   l = require(7057),
   u = new i.Logger(i.LogLevel.INFO, "auth");
 let d = 0;
-function p() {
+function nowSeconds() {
   return Math.floor(Date.now() / 1e3);
 }
-async function h(e, t) {
+async function authFromGitHubToken(e, t) {
   var n, r;
   c.telemetry(e, "auth.new_login");
   const i = null !== (r = null === (n = t.devOverride) || undefined === n ? undefined : n.copilotTokenUrl) && undefined !== r ? r : "https://api.github.com/copilot_internal/v2/token",
@@ -61,13 +61,13 @@ async function h(e, t) {
     };
   }
   const d = l.expires_at;
-  l.expires_at = p() + l.refresh_in + 60;
+  l.expires_at = nowSeconds() + l.refresh_in + 60;
   e.get(c.TelemetryReporters).setToken(l);
-  _(l);
+  setTelemetryConfigFromTokenInfo(l);
   c.telemetry(e, "auth.new_token", c.TelemetryData.createAndMarkAsIssued({}, {
     adjusted_expires_at: l.expires_at,
     expires_at: d,
-    current_time: p()
+    current_time: nowSeconds()
   }));
   return {
     kind: "success",
@@ -75,12 +75,12 @@ async function h(e, t) {
   };
 }
 exports.TOKEN_REFRESHED_EVENT = "token_refreshed";
-exports.nowSeconds = p;
-exports.authFromGitHubToken = h;
+exports.nowSeconds = nowSeconds;
+exports.authFromGitHubToken = authFromGitHubToken;
 const f = new Map();
 function m(e, t, n) {
   if (!t) return;
-  const r = p();
+  const r = nowSeconds();
   f.get(t.message) || (f.set(t.message, r), e.get(a.NotificationSender).showWarningMessage(t.message, {
     title: t.title
   }, {
@@ -113,7 +113,7 @@ function m(e, t, n) {
     }(e, t.notification_id, n));
   }));
 }
-function g(e) {
+function extractTrackingIdFromToken(e) {
   const t = null == e ? undefined : e.split(":")[0],
     n = null == t ? undefined : t.split(";");
   for (const e of n) {
@@ -121,22 +121,22 @@ function g(e) {
     if ("tid" === t) return n;
   }
 }
-function _(e) {
-  const t = g(e.token);
+function setTelemetryConfigFromTokenInfo(e) {
+  const t = extractTrackingIdFromToken(e.token);
   undefined !== t && c.setTelemetryConfig({
     trackingId: t,
     optedIn: "enabled" === e.telemetry || "unconfigured" === e.telemetry
   });
 }
-exports.extractTrackingIdFromToken = g;
-exports.setTelemetryConfigFromTokenInfo = _;
-class y {
+exports.extractTrackingIdFromToken = extractTrackingIdFromToken;
+exports.setTelemetryConfigFromTokenInfo = setTelemetryConfigFromTokenInfo;
+class CopilotTokenManager {
   constructor() {
     this.tokenRefreshEventEmitter = new r.EventEmitter();
   }
 }
-function v(e, n, r) {
-  const o = p();
+function refreshToken(e, n, r) {
+  const o = nowSeconds();
   d > 0 || (d++, setTimeout(async () => {
     let r,
       i = "";
@@ -152,20 +152,20 @@ function v(e, n, r) {
     const s = c.TelemetryData.createAndMarkAsIssued({
       result: r
     }, {
-      time_taken: p() - o,
+      time_taken: nowSeconds() - o,
       refresh_count: d
     });
     i && (s.properties.reason = i);
     c.telemetry(e, "auth.token_refresh", s);
   }, 1e3 * r));
 }
-exports.CopilotTokenManager = y;
-exports.FixedCopilotTokenManager = class extends y {
+exports.CopilotTokenManager = CopilotTokenManager;
+exports.FixedCopilotTokenManager = class extends CopilotTokenManager {
   constructor(e) {
     super();
     this.tokenInfo = e;
     this.wasReset = !1;
-    _(e);
+    setTelemetryConfigFromTokenInfo(e);
   }
   async getGitHubToken() {
     return Promise.resolve("token");
@@ -183,7 +183,7 @@ exports.FixedCopilotTokenManager = class extends y {
     };
   }
 };
-exports.CopilotTokenManagerFromGitHubToken = class extends y {
+exports.CopilotTokenManagerFromGitHubToken = class extends CopilotTokenManager {
   constructor(e) {
     super();
     this.githubToken = e;
@@ -194,24 +194,24 @@ exports.CopilotTokenManagerFromGitHubToken = class extends y {
   }
   async getCopilotToken(e, t) {
     var n;
-    if (!this.copilotToken || this.copilotToken.expires_at < p() || t) {
-      const t = await h(e, this.githubToken);
+    if (!this.copilotToken || this.copilotToken.expires_at < nowSeconds() || t) {
+      const t = await authFromGitHubToken(e, this.githubToken);
       if ("failure" === t.kind) throw Error(`Failed to get copilot token: ${t.reason.toString()} ${null !== (n = t.message) && undefined !== n ? n : ""}`);
       this.copilotToken = {
         ...t
       };
-      v(e, this, t.refresh_in);
+      refreshToken(e, this, t.refresh_in);
     }
     return this.copilotToken;
   }
   async checkCopilotToken(e) {
-    if (!this.copilotToken || this.copilotToken.expires_at < p()) {
-      const t = await h(e, this.githubToken);
+    if (!this.copilotToken || this.copilotToken.expires_at < nowSeconds()) {
+      const t = await authFromGitHubToken(e, this.githubToken);
       if ("failure" === t.kind) return t;
       this.copilotToken = {
         ...t
       };
-      v(e, this, t.refresh_in);
+      refreshToken(e, this, t.refresh_in);
     }
     return {
       status: "OK",
@@ -224,4 +224,4 @@ exports.CopilotTokenManagerFromGitHubToken = class extends y {
     this.copilotToken = undefined;
   }
 };
-exports.refreshToken = v;
+exports.refreshToken = refreshToken;

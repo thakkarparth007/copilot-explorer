@@ -1,5 +1,10 @@
 var r;
-module.exports = (r = require(8249), require(8269), require(8214), require(888), require(5109), function () {
+r = require(8249);
+require(8269);
+require(8214);
+require(888);
+require(5109);
+(function () {
   var e = r,
     t = e.lib.StreamCipher,
     n = e.algo,
@@ -46,4 +51,5 @@ module.exports = (r = require(8249), require(8269), require(8214), require(888),
     }
   });
   e.RC4Drop = t._createHelper(s);
-}(), r.RC4);
+})();
+module.exports = r.RC4;

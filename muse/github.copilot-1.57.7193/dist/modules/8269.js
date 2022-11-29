@@ -1,5 +1,7 @@
 var r, o, i;
-module.exports = (r = require(8249), i = (o = r).lib.WordArray, o.enc.Base64 = {
+r = require(8249);
+i = (o = r).lib.WordArray;
+o.enc.Base64 = {
   stringify: function (e) {
     var t = e.words,
       n = e.sigBytes,
@@ -33,4 +35,5 @@ module.exports = (r = require(8249), i = (o = r).lib.WordArray, o.enc.Base64 = {
     }(e, t, r);
   },
   _map: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
-}, r.enc.Base64);
+};
+module.exports = r.enc.Base64;

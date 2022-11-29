@@ -9,7 +9,7 @@ const r = require(3055),
   a = require(3136),
   c = require(2533),
   l = require(766);
-function u(e) {
+function trimLastLine(e) {
   const t = e.split("\n"),
     n = t[t.length - 1],
     r = n.length - n.trimRight().length,
@@ -74,7 +74,7 @@ async function d(e, n, d, p, h, f) {
       const w = e.get(r.FileSystem);
       return await c.getPrompt(w, m, _, f);
     }(e, n, d, p, h, f),
-    [S, T] = u(b),
+    [S, T] = trimLastLine(b),
     k = Date.now();
   return {
     type: "prompt",
@@ -98,7 +98,7 @@ exports.MIN_PROMPT_CHARS = 10;
 exports._contextTooShort = {
   type: "contextTooShort"
 };
-exports.trimLastLine = u;
+exports.trimLastLine = trimLastLine;
 exports.extractPrompt = function (e, t, n) {
   const r = e.get(a.TextDocumentManager).findNotebook(t);
   return undefined === r ? p(e, t, n) : async function (e, t, n, r) {

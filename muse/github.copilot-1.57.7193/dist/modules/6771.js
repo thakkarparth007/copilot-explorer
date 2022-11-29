@@ -3,7 +3,7 @@ var r = require(2728),
   i = require(8213).I,
   s = require(6400),
   a = require(2826).U;
-function c(e, t) {
+function SourceMapConsumer(e, t) {
   var n = e;
   "string" == typeof e && (n = r.parseSourceMapInput(e));
   return null != n.sections ? new d(n, t) : new l(n, t);
@@ -66,16 +66,16 @@ function d(e, t) {
         generatedLine: o + 1,
         generatedColumn: i + 1
       },
-      consumer: new c(r.getArg(e, "map"), t)
+      consumer: new SourceMapConsumer(r.getArg(e, "map"), t)
     };
   });
 }
-c.fromSourceMap = function (e, t) {
+SourceMapConsumer.fromSourceMap = function (e, t) {
   return l.fromSourceMap(e, t);
 };
-c.prototype._version = 3;
-c.prototype.__generatedMappings = null;
-Object.defineProperty(c.prototype, "_generatedMappings", {
+SourceMapConsumer.prototype._version = 3;
+SourceMapConsumer.prototype.__generatedMappings = null;
+Object.defineProperty(SourceMapConsumer.prototype, "_generatedMappings", {
   configurable: !0,
   enumerable: !0,
   get: function () {
@@ -83,8 +83,8 @@ Object.defineProperty(c.prototype, "_generatedMappings", {
     return this.__generatedMappings;
   }
 });
-c.prototype.__originalMappings = null;
-Object.defineProperty(c.prototype, "_originalMappings", {
+SourceMapConsumer.prototype.__originalMappings = null;
+Object.defineProperty(SourceMapConsumer.prototype, "_originalMappings", {
   configurable: !0,
   enumerable: !0,
   get: function () {
@@ -92,25 +92,25 @@ Object.defineProperty(c.prototype, "_originalMappings", {
     return this.__originalMappings;
   }
 });
-c.prototype._charIsMappingSeparator = function (e, t) {
+SourceMapConsumer.prototype._charIsMappingSeparator = function (e, t) {
   var n = e.charAt(t);
   return ";" === n || "," === n;
 };
-c.prototype._parseMappings = function (e, t) {
+SourceMapConsumer.prototype._parseMappings = function (e, t) {
   throw new Error("Subclasses must implement _parseMappings");
 };
-c.GENERATED_ORDER = 1;
-c.ORIGINAL_ORDER = 2;
-c.GREATEST_LOWER_BOUND = 1;
-c.LEAST_UPPER_BOUND = 2;
-c.prototype.eachMapping = function (e, t, n) {
+SourceMapConsumer.GENERATED_ORDER = 1;
+SourceMapConsumer.ORIGINAL_ORDER = 2;
+SourceMapConsumer.GREATEST_LOWER_BOUND = 1;
+SourceMapConsumer.LEAST_UPPER_BOUND = 2;
+SourceMapConsumer.prototype.eachMapping = function (e, t, n) {
   var o,
     i = t || null;
-  switch (n || c.GENERATED_ORDER) {
-    case c.GENERATED_ORDER:
+  switch (n || SourceMapConsumer.GENERATED_ORDER) {
+    case SourceMapConsumer.GENERATED_ORDER:
       o = this._generatedMappings;
       break;
-    case c.ORIGINAL_ORDER:
+    case SourceMapConsumer.ORIGINAL_ORDER:
       o = this._originalMappings;
       break;
     default:
@@ -129,7 +129,7 @@ c.prototype.eachMapping = function (e, t, n) {
     };
   }, this).forEach(e, i);
 };
-c.prototype.allGeneratedPositionsFor = function (e) {
+SourceMapConsumer.prototype.allGeneratedPositionsFor = function (e) {
   var t = r.getArg(e, "line"),
     n = {
       source: r.getArg(e, "source"),
@@ -160,9 +160,9 @@ c.prototype.allGeneratedPositionsFor = function (e) {
   }
   return i;
 };
-exports.SourceMapConsumer = c;
-l.prototype = Object.create(c.prototype);
-l.prototype.consumer = c;
+exports.SourceMapConsumer = SourceMapConsumer;
+l.prototype = Object.create(SourceMapConsumer.prototype);
+l.prototype.consumer = SourceMapConsumer;
 l.prototype._findSourceIndex = function (e) {
   var t,
     n = e;
@@ -251,7 +251,7 @@ l.prototype.originalPositionFor = function (e) {
       generatedLine: r.getArg(e, "line"),
       generatedColumn: r.getArg(e, "column")
     },
-    n = this._findMapping(t, this._generatedMappings, "generatedLine", "generatedColumn", r.compareByGeneratedPositionsDeflated, r.getArg(e, "bias", c.GREATEST_LOWER_BOUND));
+    n = this._findMapping(t, this._generatedMappings, "generatedLine", "generatedColumn", r.compareByGeneratedPositionsDeflated, r.getArg(e, "bias", SourceMapConsumer.GREATEST_LOWER_BOUND));
   if (n >= 0) {
     var o = this._generatedMappings[n];
     if (o.generatedLine === t.generatedLine) {
@@ -306,7 +306,7 @@ l.prototype.generatedPositionFor = function (e) {
       originalLine: r.getArg(e, "line"),
       originalColumn: r.getArg(e, "column")
     },
-    o = this._findMapping(n, this._originalMappings, "originalLine", "originalColumn", r.compareByOriginalPositions, r.getArg(e, "bias", c.GREATEST_LOWER_BOUND));
+    o = this._findMapping(n, this._originalMappings, "originalLine", "originalColumn", r.compareByOriginalPositions, r.getArg(e, "bias", SourceMapConsumer.GREATEST_LOWER_BOUND));
   if (o >= 0) {
     var i = this._originalMappings[o];
     if (i.source === n.source) return {
@@ -321,8 +321,8 @@ l.prototype.generatedPositionFor = function (e) {
     lastColumn: null
   };
 };
-d.prototype = Object.create(c.prototype);
-d.prototype.constructor = c;
+d.prototype = Object.create(SourceMapConsumer.prototype);
+d.prototype.constructor = SourceMapConsumer;
 d.prototype._version = 3;
 Object.defineProperty(d.prototype, "sources", {
   get: function () {

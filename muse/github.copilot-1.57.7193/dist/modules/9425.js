@@ -10,7 +10,7 @@ const r = require(9496),
 function c(e) {
   return "string" == typeof e ? e : JSON.stringify(e);
 }
-class l extends o.ConfigProvider {
+class VSCodeConfigProvider extends o.ConfigProvider {
   constructor() {
     super();
     this.config = r.workspace.getConfiguration(i.CopilotConfigPrefix);
@@ -61,7 +61,7 @@ class l extends o.ConfigProvider {
   }
 }
 let u;
-exports.VSCodeConfigProvider = l;
+exports.VSCodeConfigProvider = VSCodeConfigProvider;
 exports.setExtension = function (e) {
   u = e;
 };
@@ -73,7 +73,7 @@ exports.getExtension = function (e) {
 exports.makeVscInfo = function () {
   return new o.VscInfo(r.env.sessionId, r.env.machineId, r.version);
 };
-class d extends o.EditorAndPluginInfo {
+class VSCodeEditorInfo extends o.EditorAndPluginInfo {
   getEditorInfo(e) {
     return {
       name: "vscode",
@@ -87,4 +87,4 @@ class d extends o.EditorAndPluginInfo {
     };
   }
 }
-exports.VSCodeEditorInfo = d;
+exports.VSCodeEditorInfo = VSCodeEditorInfo;

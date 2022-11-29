@@ -23,7 +23,7 @@ exports.completionTypeToString = function (e) {
       return "unknown";
   }
 };
-class a {
+class CompletionContext {
   constructor(e, t, n) {
     this.prependToCompletion = "";
     this.appendToCompletion = "";
@@ -34,19 +34,19 @@ class a {
   }
   static fromJSONParse(e, t) {
     const n = e.get(o.LocationFactory).position(t.insertPosition.line, t.insertPosition.character),
-      r = new a(e, n, t.completionType);
+      r = new CompletionContext(e, n, t.completionType);
     r.prependToCompletion = t.prependToCompletion;
     r.appendToCompletion = t.appendToCompletion;
     r.indentation = t.indentation;
     return r;
   }
 }
-exports.CompletionContext = a;
+exports.CompletionContext = CompletionContext;
 exports.completionContextForDocument = function (e, t, n) {
   let r = n;
   const o = t.lineAt(n.line);
   o.isEmptyOrWhitespace || (r = o.range.end);
-  return new a(e, r, s.OPEN_COPILOT);
+  return new CompletionContext(e, r, s.OPEN_COPILOT);
 };
 let c = 0;
 exports.encodeLocation = function (e, t) {
@@ -57,5 +57,5 @@ exports.encodeLocation = function (e, t) {
 };
 exports.decodeLocation = function (e, t) {
   const [n, o, i] = JSON.parse(t.query);
-  return [r.URI.parse(i.length > 0 ? n + "#" + i : n), a.fromJSONParse(e, o)];
+  return [r.URI.parse(i.length > 0 ? n + "#" + i : n), CompletionContext.fromJSONParse(e, o)];
 };

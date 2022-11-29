@@ -2,7 +2,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0
 });
 var r = require(5290);
-function o(e) {
+function getSamplingHashCode(e) {
   var t = 2147483647,
     n = 5381;
   if (!e) return 0;
@@ -12,6 +12,6 @@ function o(e) {
 }
 exports.samplingTelemetryProcessor = function (e, t) {
   var n = e.sampleRate;
-  return null == n || n >= 100 || !(!e.data || r.TelemetryType.Metric !== r.baseTypeToTelemetryType(e.data.baseType)) || (t.correlationContext && t.correlationContext.operation ? o(t.correlationContext.operation.id) < n : 100 * Math.random() < n);
+  return null == n || n >= 100 || !(!e.data || r.TelemetryType.Metric !== r.baseTypeToTelemetryType(e.data.baseType)) || (t.correlationContext && t.correlationContext.operation ? getSamplingHashCode(t.correlationContext.operation.id) < n : 100 * Math.random() < n);
 };
-exports.getSamplingHashCode = o;
+exports.getSamplingHashCode = getSamplingHashCode;

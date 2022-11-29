@@ -1,5 +1,7 @@
 var r;
-module.exports = (r = require(8249), require(5109), r.mode.CFB = function () {
+r = require(8249);
+require(5109);
+r.mode.CFB = function () {
   var e = r.lib.BlockCipherMode.extend();
   function t(e, t, n, r) {
     var o,
@@ -26,4 +28,5 @@ module.exports = (r = require(8249), require(5109), r.mode.CFB = function () {
     }
   });
   return e;
-}(), r.mode.CFB);
+}();
+module.exports = r.mode.CFB;

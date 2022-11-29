@@ -15,12 +15,12 @@ const r = require(3487),
         schema: t,
         it: n
       } = e;
-      if (Array.isArray(t)) return a(e, "additionalItems", t);
+      if (Array.isArray(t)) return validateTuple(e, "additionalItems", t);
       n.items = !0;
       o.alwaysValidSchema(n, t) || e.ok(i.validateArray(e));
     }
   };
-function a(e, t, n = e.schema) {
+function validateTuple(e, t, n = e.schema) {
   const {
     gen: i,
     parentSchema: s,
@@ -51,5 +51,5 @@ function a(e, t, n = e.schema) {
     }, u)), e.ok(u));
   });
 }
-exports.validateTuple = a;
+exports.validateTuple = validateTuple;
 exports.default = s;

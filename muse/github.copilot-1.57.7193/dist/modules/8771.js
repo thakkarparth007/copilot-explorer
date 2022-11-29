@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.TestNotificationSender = exports.TestUrlOpener = exports.rangeToString = exports.positionToString = undefined;
 const r = require(1547);
-function o(e) {
+function positionToString(e) {
   return `${e.line}:${e.character}`;
 }
-exports.positionToString = o;
+exports.positionToString = positionToString;
 exports.rangeToString = function (e) {
-  return `[${o(e.start)}--${o(e.end)}]`;
+  return `[${positionToString(e.start)}--${positionToString(e.end)}]`;
 };
 exports.TestUrlOpener = class {
   constructor() {
@@ -18,7 +18,7 @@ exports.TestUrlOpener = class {
     this.openedUrls.push(e);
   }
 };
-class i extends r.NotificationSender {
+class TestNotificationSender extends r.NotificationSender {
   constructor() {
     super();
     this.sentMessages = [];
@@ -28,4 +28,4 @@ class i extends r.NotificationSender {
     return t ? Promise.resolve(t[0]) : Promise.resolve(undefined);
   }
 }
-exports.TestNotificationSender = i;
+exports.TestNotificationSender = TestNotificationSender;

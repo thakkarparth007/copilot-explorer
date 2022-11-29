@@ -34,7 +34,7 @@ function c(e) {
   const t = /^(\s*)([^]*)$/.exec(e);
   return t && t[2] && t[2].length > 0 ? t[1].length : undefined;
 }
-function l(e, t, n) {
+function contextIndentationFromText(e, t, n) {
   const r = e.slice(0, t).split("\n"),
     o = e.slice(t).split("\n");
   function i(e, t, r) {
@@ -74,7 +74,7 @@ function l(e, t, n) {
     next: u
   };
 }
-function u(e, t, n) {
+function completionCutOrContinue(e, t, n) {
   var r;
   const o = e.split("\n"),
     i = undefined !== n,
@@ -93,13 +93,13 @@ function u(e, t, n) {
   return "continue";
 }
 exports.contextIndentation = function (e, t) {
-  return l(e.getText(), e.offsetAt(t), e.languageId);
+  return contextIndentationFromText(e.getText(), e.offsetAt(t), e.languageId);
 };
-exports.contextIndentationFromText = l;
-exports.completionCutOrContinue = u;
+exports.contextIndentationFromText = contextIndentationFromText;
+exports.completionCutOrContinue = completionCutOrContinue;
 exports.indentationBlockFinished = function (e, t) {
   return async n => {
-    const r = u(n, e, t);
+    const r = completionCutOrContinue(n, e, t);
     return "continue" === r ? undefined : r;
   };
 };

@@ -28,17 +28,17 @@ const r = require(6646),
           root: f
         } = c;
       if (("#" === n || "#/" === n) && s === f.baseId) return function () {
-        if (c === f) return d(e, l, c, c.$async);
+        if (c === f) return callRef(e, l, c, c.$async);
         const n = t.scopeValue("root", {
           ref: f
         });
-        return d(e, i._`${n}.validate`, f, f.$async);
+        return callRef(e, i._`${n}.validate`, f, f.$async);
       }();
       const m = a.resolveRef.call(h, f, s, n);
       if (undefined === m) throw new r.default(s, n);
       return m instanceof a.SchemaEnv ? function (t) {
-        const n = u(e, t);
-        d(e, n, t, t.$async);
+        const n = getValidate(e, t);
+        callRef(e, n, t, t.$async);
       }(m) : function (r) {
         const o = t.scopeValue("schema", !0 === p.code.source ? {
             ref: r,
@@ -59,7 +59,7 @@ const r = require(6646),
       }(m);
     }
   };
-function u(e, t) {
+function getValidate(e, t) {
   const {
     gen: n
   } = e;
@@ -69,7 +69,7 @@ function u(e, t) {
     ref: t
   })}.validate`;
 }
-function d(e, t, n, r) {
+function callRef(e, t, n, r) {
   const {
       gen: a,
       it: l
@@ -113,6 +113,6 @@ function d(e, t, n, r) {
     e.ok(n);
   }() : e.result(o.callValidateCode(e, t, h), () => m(t), () => f(t));
 }
-exports.getValidate = u;
-exports.callRef = d;
+exports.getValidate = getValidate;
+exports.callRef = callRef;
 exports.default = l;

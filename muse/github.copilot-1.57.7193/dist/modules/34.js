@@ -1,5 +1,7 @@
 var r;
-module.exports = (r = require(8249), require(4938), function () {
+r = require(8249);
+require(4938);
+(function () {
   var e = r,
     t = e.lib.Hasher,
     n = e.x64,
@@ -114,4 +116,5 @@ module.exports = (r = require(8249), require(4938), function () {
   });
   e.SHA512 = t._createHelper(u);
   e.HmacSHA512 = t._createHmacHelper(u);
-}(), r.SHA512);
+})();
+module.exports = r.SHA512;

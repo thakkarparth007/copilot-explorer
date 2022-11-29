@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", {
 var o = require(9253),
   i = require(4470),
   s = require(5282),
-  a = function () {
+  AutoCollectNativePerformance = function () {
     function e(t) {
       this._disabledMetrics = {};
       e.INSTANCE && e.INSTANCE.dispose();
@@ -139,4 +139,4 @@ var o = require(9253),
     };
     return e;
   }();
-exports.AutoCollectNativePerformance = a;
+exports.AutoCollectNativePerformance = AutoCollectNativePerformance;

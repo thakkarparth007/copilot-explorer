@@ -6,7 +6,7 @@ const r = require(106),
   o = require(1133),
   i = require(6333),
   s = require(2388);
-class a {
+class CopilotListDocument {
   constructor(e, t, n, s, a, c) {
     this.targetDocument = n;
     this.completionContext = s;
@@ -86,7 +86,7 @@ class a {
   formatDisplayLines(e, t, n) {
     let r = "";
     this._showLogprobs && (n = n || 0, r += `\n\t# mean prob: ${t}`);
-    return `${a.separator}${r}\n\n${e}`.split("\n");
+    return `${CopilotListDocument.separator}${r}\n\n${e}`.split("\n");
   }
   async runQuery() {
     const e = await s.launchSolutions(this._ctx, this);
@@ -112,5 +112,5 @@ class a {
     return [this.header()].concat(this._solutions.flatMap(e => e.displayLines)).concat("").join("\n");
   }
 }
-exports.CopilotListDocument = a;
-a.separator = "\n=======";
+exports.CopilotListDocument = CopilotListDocument;
+CopilotListDocument.separator = "\n=======";

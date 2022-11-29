@@ -22,7 +22,7 @@ exports.ExtensionNotificationSender = class {
     };
   }
 };
-class p extends o.CopilotTokenManager {
+class VSCodeCopilotTokenManager extends o.CopilotTokenManager {
   constructor() {
     super();
     this.copilotToken = undefined;
@@ -94,4 +94,4 @@ class p extends o.CopilotTokenManager {
     this.copilotToken = undefined;
   }
 }
-exports.VSCodeCopilotTokenManager = p;
+exports.VSCodeCopilotTokenManager = VSCodeCopilotTokenManager;

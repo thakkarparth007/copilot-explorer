@@ -27,6 +27,7 @@ exports.decode = function (e, t, n) {
     l += (i &= 31) << u;
     u += 5;
   } while (o);
-  n.value = (a = (s = l) >> 1, 1 == (1 & s) ? -a : a);
+  a = (s = l) >> 1;
+  n.value = 1 == (1 & s) ? -a : a;
   n.rest = t;
 };

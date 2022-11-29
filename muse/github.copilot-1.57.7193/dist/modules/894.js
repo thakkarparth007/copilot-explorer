@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var r = require(5282),
   o = require(7396),
-  i = function () {
+  CorrelationContextManager = function () {
     function e() {}
     e.getCurrentContext = function () {
       if (!e.enabled) return null;
@@ -65,7 +65,7 @@ var r = require(5282),
     e.CONTEXT_NAME = "ApplicationInsights-Context";
     return e;
   }();
-exports.CorrelationContextManager = i;
+exports.CorrelationContextManager = CorrelationContextManager;
 var s = function () {
   function e(e) {
     this.props = [];

@@ -2,7 +2,7 @@ var r = require(6400),
   o = require(2728),
   i = require(8213).I,
   s = require(1188).H;
-function a(e) {
+function h(e) {
   e || (e = {});
   this._file = o.getArg(e, "file", null);
   this._sourceRoot = o.getArg(e, "sourceRoot", null);
@@ -12,10 +12,10 @@ function a(e) {
   this._mappings = new s();
   this._sourcesContents = null;
 }
-a.prototype._version = 3;
-a.fromSourceMap = function (e) {
+h.prototype._version = 3;
+h.fromSourceMap = function (e) {
   var t = e.sourceRoot,
-    n = new a({
+    n = new h({
       file: e.file,
       sourceRoot: t
     });
@@ -41,7 +41,7 @@ a.fromSourceMap = function (e) {
   });
   return n;
 };
-a.prototype.addMapping = function (e) {
+h.prototype.addMapping = function (e) {
   var t = o.getArg(e, "generated"),
     n = o.getArg(e, "original", null),
     r = o.getArg(e, "source", null),
@@ -58,12 +58,12 @@ a.prototype.addMapping = function (e) {
     name: i
   });
 };
-a.prototype.setSourceContent = function (e, t) {
+h.prototype.setSourceContent = function (e, t) {
   var n = e;
   null != this._sourceRoot && (n = o.relative(this._sourceRoot, n));
   null != t ? (this._sourcesContents || (this._sourcesContents = Object.create(null)), this._sourcesContents[o.toSetString(n)] = t) : this._sourcesContents && (delete this._sourcesContents[o.toSetString(n)], 0 === Object.keys(this._sourcesContents).length && (this._sourcesContents = null));
 };
-a.prototype.applySourceMap = function (e, t, n) {
+h.prototype.applySourceMap = function (e, t, n) {
   var r = t;
   if (null == t) {
     if (null == e.file) throw new Error('SourceMapGenerator.prototype.applySourceMap requires either an explicit source file, or the source map\'s "file" property. Both were omitted.');
@@ -93,7 +93,7 @@ a.prototype.applySourceMap = function (e, t, n) {
     null != r && (null != n && (t = o.join(n, t)), null != s && (t = o.relative(s, t)), this.setSourceContent(t, r));
   }, this);
 };
-a.prototype._validateMapping = function (e, t, n, r) {
+h.prototype._validateMapping = function (e, t, n, r) {
   if (t && "number" != typeof t.line && "number" != typeof t.column) throw new Error("original.line and original.column are not numbers -- you probably meant to omit the original mapping entirely and only map the generated position. If so, pass null for the original mapping instead of an object with empty or null values.");
   if ((!(e && "line" in e && "column" in e && e.line > 0 && e.column >= 0) || t || n || r) && !(e && "line" in e && "column" in e && t && "line" in t && "column" in t && e.line > 0 && e.column >= 0 && t.line > 0 && t.column >= 0 && n)) throw new Error("Invalid mapping: " + JSON.stringify({
     generated: e,
@@ -102,7 +102,7 @@ a.prototype._validateMapping = function (e, t, n, r) {
     name: r
   }));
 };
-a.prototype._serializeMappings = function () {
+h.prototype._serializeMappings = function () {
   for (var e, t, n, i, s = 0, a = 1, c = 0, l = 0, u = 0, d = 0, p = "", h = this._mappings.toArray(), f = 0, m = h.length; f < m; f++) {
     e = "";
     if ((t = h[f]).generatedLine !== a) for (s = 0; t.generatedLine !== a;) e += ";", a++;else if (f > 0) {
@@ -116,7 +116,7 @@ a.prototype._serializeMappings = function () {
   }
   return p;
 };
-a.prototype._generateSourcesContent = function (e, t) {
+h.prototype._generateSourcesContent = function (e, t) {
   return e.map(function (e) {
     if (!this._sourcesContents) return null;
     null != t && (e = o.relative(t, e));
@@ -124,7 +124,7 @@ a.prototype._generateSourcesContent = function (e, t) {
     return Object.prototype.hasOwnProperty.call(this._sourcesContents, n) ? this._sourcesContents[n] : null;
   }, this);
 };
-a.prototype.toJSON = function () {
+h.prototype.toJSON = function () {
   var e = {
     version: this._version,
     sources: this._sources.toArray(),
@@ -136,7 +136,7 @@ a.prototype.toJSON = function () {
   this._sourcesContents && (e.sourcesContent = this._generateSourcesContent(e.sources, e.sourceRoot));
   return e;
 };
-a.prototype.toString = function () {
+h.prototype.toString = function () {
   return JSON.stringify(this.toJSON());
 };
-exports.h = a;
+exports.h = h;

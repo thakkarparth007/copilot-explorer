@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.ExtensionLocationFactory = undefined;
 const r = require(9496),
   o = require(6403);
-class i extends o.LocationFactory {
+class ExtensionLocationFactory extends o.LocationFactory {
   range(e, t, n, o) {
     return undefined !== n && undefined !== o ? new r.Range(e, t, n, o) : new r.Range(e, t);
   }
@@ -12,4 +12,4 @@ class i extends o.LocationFactory {
     return new r.Position(e, t);
   }
 }
-exports.ExtensionLocationFactory = i;
+exports.ExtensionLocationFactory = ExtensionLocationFactory;
