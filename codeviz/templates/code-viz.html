@@ -161,7 +161,7 @@
                 return;
             }
 
-            displayModule(selectedNode + "", true);
+            displayModule(selectedNode + "", false);
         });
 
         function highlightSelectedModule(module_id, old_module_id) {
@@ -190,21 +190,28 @@
             });
         }
 
-        let curSelectedModule = "main";
-        function displayModule(moduleId, viaClick = false) {
-            if (viaClick) {
+        window.onpopstate = function (event) {
+            if (event.state !== null) {
+                displayModule(event.state.module_id, true);
+            }
+        };
+
+        let curSelectedModule = undefined;
+        function displayModule(moduleId, dontUpdateHistory) {
+            if (moduleId === curSelectedModule) {
+                return;
+            }
+            if (!dontUpdateHistory) {
                 // update url
-                window.history.pushState({}, '', `#m${moduleId}`);
+                window.history.pushState({ module_id: moduleId }, '', `#m${moduleId}`);
             }
-            else {
-                network.selectNodes([moduleId]);
-            }
+            network.selectNodes([moduleId]);
+            highlightSelectedModule(moduleId, curSelectedModule);
+            curSelectedModule = moduleId;
+
             if ($("#module-name").val() != moduleId) {
                 $("#module-name").val(moduleId).trigger('change');
             }
-
-            highlightSelectedModule(moduleId, curSelectedModule);
-            curSelectedModule = moduleId;
 
             // fetch(`/data/module_code/${moduleId}`)
             //     .then(response => response.text())
@@ -265,6 +272,13 @@
             },
             wordWrap: 'on',
         });
+
+        /****** Load initial module ******/
+        let initialModule = window.location.hash.substring(2);
+        if (initialModule === "") {
+            initialModule = "main";
+        }
+        displayModule(initialModule, false);
     </script>
 </body>
 
