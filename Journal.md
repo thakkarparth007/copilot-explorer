@@ -50,6 +50,7 @@
      - 1862 (VSCodeCopilotTokenManager!)
      - 2533 (`parsesWithoutError`, `getPrompt`, `getNodeStart`, ... all useful stuff)
        - 3055 (imported by 2533 and packs a ton of stuff)
+      (See README.md for higher signal modules)
 
    - Color coded:
      - Red nodes: modules that aren't imported by anyone. These are likely top level modules.

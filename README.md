@@ -24,23 +24,30 @@ The modules don't have names because these have been extracted by a bit of deobf
 ### Interesting modules
 
 Some interesting modules I've found so far (most interesting at the **bottom**):
-- [3458 (has references to github/visualstudio/cloudforge)](codeviz/templates/code-viz.html#m3458)
-- [2279 (HelixFetcher. Seems to be an important library component mostly relevant to network)](codeviz/templates/code-viz.html#m2279)
-  - [5413 (seems to control debouncing)](codeviz/templates/code-viz.html#m5413)
-- [4419 (OpenAIFetcher)](codeviz/templates/code-viz.html#m4419)
-- [9189 (does something with neighbouring tabs)](codeviz/templates/code-viz.html#m9189)
-- [6333 (deals with telemetry)](codeviz/templates/code-viz.html#m6333)
-- [2901 (does some sort of filtering/processing of model output)](codeviz/templates/code-viz.html#m2901)
-- [9334 (FAT STUFF. depends on lots of other copilot modules. seems to be the main module or close to it)](codeviz/templates/code-viz.html#m9334)
-- [3197 depends on 9334](codeviz/templates/code-viz.html#m3197)
-- [6267 (says copilot requires codelens - check who imports this to see what parts of codelens are used)](codeviz/templates/code-viz.html#m6267)
-- [9496 (`vscode` - things that import it are likely important)](codeviz/templates/code-viz.html#m9496)
-- [3197 (no module imports this. seems to be the main module)](codeviz/templates/code-viz.html#m3197)
-- [1862 (VSCodeCopilotTokenManager!)](codeviz/templates/code-viz.html#m1862)
-- [2533 (`parsesWithoutError`, `getPrompt`, `getNodeStart`, ... all useful stuff)](codeviz/templates/code-viz.html#m2533)
- - [3055 (imported by 2533 and packs a ton of stuff)](codeviz/templates/code-viz.html#m3055)
-   - 3055 was actually a jumbo module that had multiple nested modules in it. I extracted them as top level modules. Each of those modules begins with 3055\<something\>.
-   - e.g., **the actual definition of `getPrompt` is in [3055312](codeviz/templates/code-viz.html#m3055312)**
+- **Prompting**:
+  - [3055 (imported by 2533 and packs a ton of stuff)](codeviz/templates/code-viz.html#m3055)
+    - 3055 was actually a jumbo module that had multiple nested modules in it. I extracted them as top level modules. Each of those modules begins with 3055\<something\>.
+    - e.g., **the actual definition of `getPrompt` is in [3055312](codeviz/templates/code-viz.html#m3055312)**
+  - [2388 seems to identify the repo to which the code belongs, and also suggests Copilot has different modes of completion: "OPEN_COPILOT", "TODO_QUICK_FIX", "UNKNOWN_FUNCTION_QUICK_FIX"](codeviz/templates/code-viz.html#m2388)
+  - [9189 (does something with neighbouring tabs)](codeviz/templates/code-viz.html#m9189)  
+  - [2533 (`parsesWithoutError`, `getPrompt`, `getNodeStart`, ... all useful stuff)](codeviz/templates/code-viz.html#m2533)
+
+- **Completion**:
+  - [9334 appears to handle stuff after prompt collection. It defines `getGhostText`.](codeviz/templates/code-viz.html#m9334). Depends on lots of other copilot modules. Only two hops away from the main module.
+    - [3197 seems like a wrapper over 9334](codeviz/templates/code-viz.html#m3197). One hop from main.
+
+- **Telemetry**:
+  - [7017 seems to track changes after accept/reject of suggestions](codeviz/templates/code-viz.html#m7017).
+  - [6333 appears to be the main Telemetry code](codeviz/templates/code-viz.html#m6333)
+
+- **Network**:
+  - [4419 (OpenAIFetcher) - this seems to be where the network communication takes place](codeviz/templates/code-viz.html#m4419)
+      - [2279 (HelixFetcher. Seems to be an important library component mostly relevant to network)](codeviz/templates/code-viz.html#m2279)
+      - [5413 (seems to control debouncing)](codeviz/templates/code-viz.html#m5413)
+
+- **Misc**:
+  - [9496 (`vscode` - things that import it are likely important)](codeviz/templates/code-viz.html#m9496)
+  - [1862 (VSCodeCopilotTokenManager! - auth stuff)](codeviz/templates/code-viz.html#m1862)
 
 ## How to run locally
 
