@@ -1,4 +1,4 @@
-let module_deps_info = {
+let module_deps_data = {
   "3": {
     "deps": [
       1133,
