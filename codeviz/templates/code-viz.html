@@ -69,6 +69,7 @@
     </div>
     <script type="text/javascript" src="../data/module_deps.js"></script>
     <script type="text/javascript" src="../data/module_codes.js"></script>
+    <script type="text/javascript" src="../data/parths_annotations.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Select2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
@@ -76,6 +77,24 @@
         // function $(i#d) {
         //     return document.getElementById(id);
         // }
+
+        try {
+            // merge entries from parths annotations into localstorage if not already there
+            let changes = false;
+            for (var key in parths_annotations) {
+                if (localStorage.getItem(key) === null) {
+                    localStorage.setItem(key, parths_annotations[key]);
+                    changes = true;
+                }
+            }
+            if (changes) {
+                console.log("Merged parths annotations into localstorage");
+            } else {
+                console.log("No changes to annotations in localstorage");
+            }
+        } catch (e) {
+            // do nothing
+        }
         
         // fill the select box with the module names
         var moduleDropdown = $('#module-dropdown');
