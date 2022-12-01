@@ -899,7 +899,7 @@
 				"use strict";
 				const {
 					Readable: r
-				} = n(2781), o = n(3055404), {
+				} = n(2781), o = n(4404), {
 					types: {
 						isAnyArrayBuffer: i
 					}

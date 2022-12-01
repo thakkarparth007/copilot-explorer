@@ -5305,7 +5305,7 @@ let module_deps_data = {
   "9575": {
     "deps": [
       "\"stream\"",
-      "3055404",
+      "\"tls\"",
       "\"util\"",
       "8348",
       "8104",
@@ -5882,7 +5882,6 @@ let module_deps_data = {
     ],
     "importedBy": [
       "5468",
-      "9575",
       "3055125"
     ],
     "lines": 84

@@ -1,5 +1,5 @@
 const { Readable: r } = require("stream"),
-  o = require(3055404),
+  o = require("tls"),
   {
     types: { isAnyArrayBuffer: i },
   } = require("util"),
