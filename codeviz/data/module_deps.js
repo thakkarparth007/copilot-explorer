@@ -3247,7 +3247,7 @@ let module_deps_data = {
   "5468": {
     "deps": [
       "\"net\"",
-      "3055404",
+      "\"tls\"",
       "\"http\"",
       "\"https\"",
       "\"events\"",
@@ -5881,7 +5881,6 @@ let module_deps_data = {
       "FixedWindowSizeJaccardMatcher"
     ],
     "importedBy": [
-      "5468",
       "3055125"
     ],
     "lines": 84
