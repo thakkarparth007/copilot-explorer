@@ -19,7 +19,7 @@ The webpage shows 3 panels:
 - Middle panel shows the prettified code of the selected module. By default the main module is selected.
 - Right panel shows some information about the model (specifically, the module id, exports, imports and modules that import this module).
 
-The modules don't have names because these have been extracted by a bit of deobfuscation, and the original obfuscated code didn't have names. I'm working on a way to provide reasonable names to the modules.
+The modules don't have names because these have been extracted by a bit of deobfuscation, and the original obfuscated code didn't have names. I'm working on a way to provide reasonable names to the modules. Currently I have a hacky system that allows manual renaming of modules, but it's not synced. Your edits do stay on local storage though.
 
 ### Interesting modules
 
