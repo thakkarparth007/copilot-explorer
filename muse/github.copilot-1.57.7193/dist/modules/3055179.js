@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.extractLocalImportContext = exports.getDocComment = undefined;
-const r = require(3055_622),
-  o = require(3055_306);
+const r = require("path"),
+  o = require(3055306);
 function i(e, t) {
   var n;
   let o =

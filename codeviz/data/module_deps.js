@@ -529,7 +529,7 @@ let module_deps_data = {
   },
   "766": {
     "deps": [
-      3055563,
+      "3055563",
       "3458",
       "\"path\"",
       "362",
@@ -802,7 +802,7 @@ let module_deps_data = {
   },
   "1133": {
     "deps": [
-      3055563,
+      "3055563",
       "4197",
       "9189",
       "4147"
@@ -1383,8 +1383,8 @@ let module_deps_data = {
   },
   "2279": {
     "deps": [
-      6143,
-      5468,
+      "6143",
+      "5468",
       "\"util\"",
       "1133",
       "5413",
@@ -1572,7 +1572,7 @@ let module_deps_data = {
   },
   "2533": {
     "deps": [
-      3055563,
+      "3055563",
       "4723"
     ],
     "exports": [
@@ -2998,7 +2998,7 @@ let module_deps_data = {
   },
   "4969": {
     "deps": [
-      3055563,
+      "3055563",
       "1133",
       "1839",
       "9189",
@@ -3262,7 +3262,6 @@ let module_deps_data = {
       "debug"
     ],
     "importedBy": [
-      "6149",
       "2279"
     ],
     "lines": 215
@@ -3412,7 +3411,6 @@ let module_deps_data = {
       "$complex-export$ new P().api() $complex-export$"
     ],
     "importedBy": [
-      "9825",
       "2279"
     ],
     "lines": 367
@@ -4971,7 +4969,7 @@ let module_deps_data = {
   },
   "9189": {
     "deps": [
-      3055563,
+      "3055563",
       "299",
       "3076",
       "1133",
@@ -5054,7 +5052,7 @@ let module_deps_data = {
   },
   "9334": {
     "deps": [
-      3055563,
+      "3055563",
       "2277",
       "3076",
       "106",
@@ -5976,7 +5974,6 @@ let module_deps_data = {
       "languageCommentMarkers"
     ],
     "importedBy": [
-      "3055",
       "766",
       "1133",
       "2533",
@@ -6058,7 +6055,7 @@ let module_deps_data = {
   },
   "main": {
     "deps": [
-      3055563,
+      "3055563",
       "406",
       "\"vscode\"",
       "362",

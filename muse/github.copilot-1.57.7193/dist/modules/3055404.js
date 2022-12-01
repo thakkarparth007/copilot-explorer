@@ -5,8 +5,8 @@ exports.computeScore =
   exports.IndentationBasedJaccardMatcher =
   exports.FixedWindowSizeJaccardMatcher =
     undefined;
-const r = require(3055_250),
-  o = require(3055_467);
+const r = require(3055250),
+  o = require(3055467);
 class FixedWindowSizeJaccardMatcher extends o.WindowedMatcher {
   constructor(e, t) {
     super(e);

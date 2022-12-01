@@ -6,7 +6,7 @@ exports.getNodeStart =
   exports.isEmptyBlockStart =
   exports.getBlockParser =
     undefined;
-const r = require(3055_306);
+const r = require(3055306);
 class o {
   constructor(e, t, n) {
     this.languageId = e;

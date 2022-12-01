@@ -10,7 +10,7 @@ exports.rebuildTree =
   exports.clearLabelsIf =
   exports.clearLabels =
     undefined;
-const r = require(3055_876);
+const r = require(3055876);
 function visitTree(e, t, n) {
   !(function e(r) {
     if ("topDown" === n) {

@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.getSiblingFunctionStart = exports.getSiblingFunctions = undefined;
-const r = require(3055_312),
-  o = require(3055_306);
+const r = require(3055312),
+  o = require(3055306);
 exports.getSiblingFunctions = async function ({
   source: e,
   offset: t,

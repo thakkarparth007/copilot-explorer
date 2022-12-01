@@ -518,16 +518,16 @@ for (const moduleId in moduleDeps) {
             // make modules that import it import the original module.
             // we're not doing this recursively because it's not needed for this project.
 
-            const originalModuleId = stdLibAliasMatch ? stdLibAliasMatch[1] : parseInt(internalAliasMatch[1].replace("_", ""));
+            const originalModuleId = stdLibAliasMatch ? stdLibAliasMatch[1] : (parseInt(internalAliasMatch[1].replace("_", "")) + "");
             const aliasingModule = moduleId;
-            const importers = moduleDeps[aliasingModule]["importedBy"];
+            const importers = removeDups(moduleDeps[aliasingModule]["importedBy"]);
 
             // step 0: update originalModule's importedBy for internal modules
             if (internalAliasMatch) {
                 moduleDeps[originalModuleId]["importedBy"] = removeDups(
                     moduleDeps[originalModuleId]["importedBy"].concat(
                         moduleDeps[aliasingModule]["importedBy"]
-                    )
+                    ).filter(x => x != aliasingModule)
                 );
             }
 
@@ -543,14 +543,18 @@ for (const moduleId in moduleDeps) {
                     metadata["deps"].map(x => x == aliasingModule ? originalModuleId : x)
                 );
 
+                console.log("Renaming " + aliasingModule + " to " + originalModuleId + " in " + importer);
                 // step 2: update the code
-                const moduleCode = fs.readFileSync(getModulePath(importer), "utf8").trim();
+                const moduleCode = moduleCodes[importer] || fs.readFileSync(getModulePath(importer), "utf8").trim();
                 // replace all occurences of `require(aliasingModule)` with `require(originalModule)`
+                const pattern = new RegExp(`require\\(${aliasingModule}\\)`, "g");
+                assert (moduleCode.match(pattern), "Module " + importer + " imports " + aliasingModule + " but it's not in the code");
                 const newModuleCode = moduleCode.replace(
-                    new RegExp(`require\\(${aliasingModule}\\)`, "g"),
+                    pattern,
                     `require(${originalModuleId})`
                 );
                 fs.writeFileSync(getModulePath(importer), newModuleCode);
+                moduleCodes[importer] = newModuleCode;
             }
 
             // finally remove the aliasing module

@@ -1,6 +1,6 @@
 require("net");
 var debug,
-  o = require(3055_404),
+  o = require(3055404),
   i = require("http"),
   s = require("https"),
   a = require("events"),

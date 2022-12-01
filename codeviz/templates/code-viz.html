@@ -58,6 +58,8 @@
                 <select id="module-dropdown">
                     <option value="0">Select a module</option>
                 </select>
+                <br>
+                <label for="module-label">Module Name:</label>
                 <input id="module-label" type="text" placeholder="Module label" />
                 <div id="module-info">
                     Module info
@@ -83,9 +85,14 @@
             // // right now modules are not named
             // option.text = module_id + "(" + module_deps_data[module_id].lines + " LOC)";
             // moduleDropdown.appendChild(option);
-
+            
+            let module_name = localStorage.getItem("module-label-" + module_id) || module_id;
+            let module_display_name = module_name + "(" + module_id + ")";
+            if (module_name == module_id) {
+                module_display_name = module_id + "(" + module_deps_data[module_id].lines + " LOC)";
+            }
             var newOption = new Option(
-                module_id + "(" + module_deps_data[module_id].lines + " LOC)", module_id, false, false
+                module_display_name, module_id, false, false
             );
             newOption.id = "module-option-" + module_id;
             moduleDropdown.append(newOption)
@@ -298,7 +305,7 @@
             let imports = moduleInfo.deps;
             let importedBy = moduleInfo.importedBy;
 
-            console.log(imports);
+            console.log(moduleId, "imports", imports);
             let moduleInfoHtml = `
                 <div>
                     <h3>Exports</h3>
@@ -310,7 +317,7 @@
                     <h3>Imports</h3>
                     <ul>
                         ${imports.map(e =>
-                            `<li><a href='#m${e}' onclick='displayModule("${e}")'>${nodes.get(e).label}</a></li>`
+                            `<li><a href='#m${e}' onclick='displayModule("${e}")'>${nodes.get(e) ? nodes.get(e).label : e}</a></li>`
                         ).join("")}
                     </ul>
                 </div>
@@ -318,7 +325,7 @@
                     <h3>Imported by</h3>
                     <ul>
                         ${importedBy.map(e =>
-                            `<li><a href='#m${e}' onclick='displayModule("${e}")'>${nodes.get(e).label}</a></li>`
+                            `<li><a href='#m${e}' onclick='displayModule("${e}")'>${nodes.get(e) ? nodes.get(e).label : e}</a></li>`
                         ).join("")}
                     </ul>
                 </div>
@@ -342,6 +349,10 @@
             localStorage.setItem("module-label-" + moduleId, this.value);
             // update all code that does require("module")
             for (const importerId of node.importedBy) {
+                if (!nodes.get(importerId)) {
+                    // library dependency
+                    continue;
+                }
                 let oldCode = module_codes_data[importerId];
                 let newCode = oldCode.replace(
                     new RegExp(`require\\((["']?${oldLabel}["']?|${moduleId})\\)`, 'g'),

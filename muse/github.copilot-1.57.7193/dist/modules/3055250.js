@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.getWindowsDelineations = undefined;
-const r = require(3055_469),
-  o = require(3055_617);
+const r = require(3055469),
+  o = require(3055617);
 exports.getWindowsDelineations = function (e, t, n, i) {
   if (e.length < n || 0 == i) return [];
   const s = [],

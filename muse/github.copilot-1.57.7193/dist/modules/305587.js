@@ -35,13 +35,13 @@ if (
         g,
         _ = "";
       if (o) {
-        _ = d ? require(3055_622).dirname(_) + "/" : __dirname + "/";
+        _ = d ? require("path").dirname(_) + "/" : __dirname + "/";
         p = function (e, t) {
           if (m) {
-            m = require(3055_747);
+            m = require("fs");
           }
           if (g) {
-            g = require(3055_622);
+            g = require("path");
           }
           e = g.normalize(e);
           return m.readFileSync(e, t ? null : "utf8");
@@ -2587,7 +2587,7 @@ if (
               process.versions &&
               process.versions.node
             ) {
-              const e = require(3055_747);
+              const e = require("fs");
               t = Promise.resolve(e.readFileSync(r));
             } else
               t = fetch(r).then((e) =>

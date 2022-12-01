@@ -34,16 +34,16 @@ exports.createWorker =
   exports.comment =
   exports.languageCommentMarkers =
     undefined;
-const i = require(3055_622),
-  s = require(3055_13);
-o(require(3055_306), exports);
-o(require(3055_610), exports);
-o(require(3055_312), exports);
-o(require(3055_94), exports);
-var a = require(3055_417);
+const i = require("path"),
+  s = require("worker_threads");
+o(require(3055306), exports);
+o(require(3055610), exports);
+o(require(3055312), exports);
+o(require(305594), exports);
+var a = require(3055417);
 exports.languageCommentMarkers = a.languageCommentMarkers;
 exports.comment = a.comment;
-var c = require(3055_271);
+var c = require(3055271);
 exports.FileSystem = c.FileSystem;
 exports.createWorker = function () {
   return new s.Worker(i.resolve(__dirname, "..", "dist", "worker.js"));

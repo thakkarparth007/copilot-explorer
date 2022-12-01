@@ -899,7 +899,7 @@
 				"use strict";
 				const {
 					Readable: r
-				} = n(2781), o = n(3055_404), {
+				} = n(2781), o = n(3055404), {
 					types: {
 						isAnyArrayBuffer: i
 					}
@@ -24455,7 +24455,7 @@
 			5468: (e, t, n) => {
 				"use strict";
 				n(1808);
-				var r, o = n(3055_404),
+				var r, o = n(3055404),
 					i = n(3685),
 					s = n(5687),
 					a = n(2361),
@@ -27556,14 +27556,14 @@
 				}.apply(t, [])) || (e.exports = r)
 			},
             3055: (e, t, n) => {
-                e.exports = n(3055_563)
+                e.exports = n(3055563)
             },
-            3055_271: (e, t, n) => {
+            3055271: (e, t, n) => {
                 "use strict";
                 Object.defineProperty(t, "__esModule", {
                     value: !0
                 }), t.defaultFileSystem = t.FileSystem = void 0;
-                const r = n(3055_747);
+                const r = n(3055747);
                 t.FileSystem = class {}, t.defaultFileSystem = {
                     readFile: e => r.promises.readFile(e),
                     mtime: async e => (await r.promises.stat(e)).mtimeMs,
@@ -27577,7 +27577,7 @@
                     }
                 }
             },
-            3055_876: (e, t) => {
+            3055876: (e, t) => {
                 "use strict";
             
                 function n(e) {
@@ -27633,12 +27633,12 @@
                     return JSON.parse(JSON.stringify(e))
                 }
             },
-            3055_617: (e, t, n) => {
+            3055617: (e, t, n) => {
                 "use strict";
                 Object.defineProperty(t, "__esModule", {
                     value: !0
                 }), t.rebuildTree = t.foldTree = t.visitTreeConditionally = t.visitTree = t.resetLineNumbers = t.mapLabels = t.clearLabelsIf = t.clearLabels = void 0;
-                const r = n(3055_876);
+                const r = n(3055876);
             
                 function o(e, t, n) {
                     ! function e(r) {
@@ -27701,13 +27701,13 @@
                     return void 0 !== i ? i : r.topNode()
                 }
             },
-            3055_469: (e, t, n) => {
+            3055469: (e, t, n) => {
                 "use strict";
                 Object.defineProperty(t, "__esModule", {
                     value: !0
                 }), t.parseTree = t.registerLanguageSpecificParser = t.flattenVirtual = t.groupBlocks = t.combineClosersAndOpeners = t.buildLabelRules = t.labelVirtualInherited = t.labelLines = t.parseRaw = void 0;
-                const r = n(3055_876),
-                    o = n(3055_617);
+                const r = n(3055876),
+                    o = n(3055617);
             
                 function i(e) {
                     const t = e.split("\n"),
@@ -27828,13 +27828,13 @@
                     return r ? r(n) : (s(n, l), c(n))
                 }
             },
-            3055_250: (e, t, n) => {
+            3055250: (e, t, n) => {
                 "use strict";
                 Object.defineProperty(t, "__esModule", {
                     value: !0
                 }), t.getWindowsDelineations = void 0;
-                const r = n(3055_469),
-                    o = n(3055_617);
+                const r = n(3055469),
+                    o = n(3055617);
                 t.getWindowsDelineations = function(e, t, n, i) {
                     if (e.length < n || 0 == i) return [];
                     const s = [],
@@ -27879,7 +27879,7 @@
                     }), "bottomUp"), s.sort(((e, t) => e[0] - t[0] || e[1] - t[1])).filter(((e, t, n) => 0 == t || e[0] != n[t - 1][0] || e[1] != n[t - 1][1]))
                 }
             },
-            3055_417: (e, t) => {
+            3055417: (e, t) => {
                 "use strict";
                 Object.defineProperty(t, "__esModule", {
                     value: !0
@@ -28189,7 +28189,7 @@
                     return e.relativePath ? i(`Path: ${e.relativePath}`, e.languageId) : ""
                 }
             },
-            3055_563: (e, t, n) => {
+            3055563: (e, t, n) => {
                 "use strict";
                 var r = this && this.__createBinding || (Object.create ? function(e, t, n, r) {
                         void 0 === r && (r = n), Object.defineProperty(e, r, {
@@ -28207,10 +28207,10 @@
                 Object.defineProperty(t, "__esModule", {
                     value: !0
                 }), t.createWorker = t.FileSystem = t.comment = t.languageCommentMarkers = void 0;
-                const i = n(3055_622),
-                    s = n(3055_13);
-                o(n(3055_306), t), o(n(3055_610), t), o(n(3055_312), t), o(n(3055_94), t);
-                var a = n(3055_417);
+                const i = n(3055622),
+                    s = n(305513);
+                o(n(3055306), t), o(n(3055610), t), o(n(3055312), t), o(n(305594), t);
+                var a = n(3055417);
                 Object.defineProperty(t, "languageCommentMarkers", {
                     enumerable: !0,
                     get: function() {
@@ -28222,7 +28222,7 @@
                         return a.comment
                     }
                 });
-                var c = n(3055_271);
+                var c = n(3055271);
                 Object.defineProperty(t, "FileSystem", {
                     enumerable: !0,
                     get: function() {
@@ -28232,13 +28232,13 @@
                     return new s.Worker(i.resolve(__dirname, "..", "dist", "worker.js"))
                 }
             },
-            3055_179: (e, t, n) => {
+            3055179: (e, t, n) => {
                 "use strict";
                 Object.defineProperty(t, "__esModule", {
                     value: !0
                 }), t.extractLocalImportContext = t.getDocComment = void 0;
-                const r = n(3055_622),
-                    o = n(3055_306);
+                const r = n(3055622),
+                    o = n(3055306);
             
                 function i(e, t) {
                     var n;
@@ -28439,14 +28439,14 @@
                     }(n, r, t): []
                 }
             },
-            3055_306: (e, t, n) => {
+            3055306: (e, t, n) => {
                 "use strict";
                 Object.defineProperty(t, "__esModule", {
                     value: !0
                 }), t.getFunctionPositions = t.getFirstPrecedingComment = t.isFunctionDefinition = t.isFunction = t.getAncestorWithSiblingFunctions = t.queryPythonIsDocstring = t.queryGlobalVars = t.queryExports = t.queryImports = t.queryFunctions = t.getBlockCloseToken = t.parsesWithoutError = t.parseTree = t.getLanguage = t.languageIdToWasmLanguage = t.isSupportedLanguageId = t.WASMLanguage = void 0;
-                const r = n(3055_622),
-                    o = n(3055_87),
-                    i = n(3055_87);
+                const r = n(3055622),
+                    o = n(305587),
+                    i = n(305587);
                 var s;
                 ! function(e) {
                     e.Python = "python", e.JavaScript = "javascript", e.TypeScript = "typescript", e.Go = "go", e.Ruby = "ruby"
@@ -28661,12 +28661,12 @@
                     }))
                 }
             },
-            3055_610: (e, t, n) => {
+            3055610: (e, t, n) => {
                 "use strict";
                 Object.defineProperty(t, "__esModule", {
                     value: !0
                 }), t.getNodeStart = t.isBlockBodyFinished = t.isEmptyBlockStart = t.getBlockParser = void 0;
-                const r = n(3055_306);
+                const r = n(3055306);
                 class o {
                     constructor(e, t, n) {
                         this.languageId = e, this.nodeMatch = t, this.nodeTypesWithBlockOrStmtChild = n
@@ -28996,18 +28996,18 @@
                     if (r.isSupportedLanguageId(e)) return d(e).getNodeStart(t, n)
                 }
             },
-            3055_312: (e, t, n) => {
+            3055312: (e, t, n) => {
                 "use strict";
                 Object.defineProperty(t, "__esModule", {
                     value: !0
                 }), t.getPrompt = t.newLineEnded = t.normalizeLanguageId = t.PromptOptions = t.SuffixStartMode = t.SuffixMatchOption = t.SuffixOption = t.LineEndingOptions = t.LocalImportContextOption = t.SnippetSelectionOption = t.NeighboringTabsPositionOption = t.NeighboringTabsOption = t.SiblingOption = t.PathMarkerOption = t.LanguageMarkerOption = t.TOKENS_RESERVED_FOR_SUFFIX_ENCODING = t.MAX_EDIT_DISTANCE_LENGTH = t.MAX_PROMPT_LENGTH = void 0;
-                const r = n(3055_417),
-                    o = n(3055_179),
-                    i = n(3055_125),
-                    s = n(3055_670),
-                    a = n(3055_94),
-                    c = n(3055_456),
-                    l = n(3055_395);
+                const r = n(3055417),
+                    o = n(3055179),
+                    i = n(3055125),
+                    s = n(3055670),
+                    a = n(305594),
+                    c = n(3055456),
+                    l = n(3055395);
                 let u = {
                     text: "",
                     tokens: []
@@ -29146,13 +29146,13 @@
                     }
                 }
             },
-            3055_670: (e, t, n) => {
+            3055670: (e, t, n) => {
                 "use strict";
                 Object.defineProperty(t, "__esModule", {
                     value: !0
                 }), t.getSiblingFunctionStart = t.getSiblingFunctions = void 0;
-                const r = n(3055_312),
-                    o = n(3055_306);
+                const r = n(3055312),
+                    o = n(3055306);
                 t.getSiblingFunctions = async function({
                     source: e,
                     offset: t,
@@ -29224,13 +29224,13 @@
                     return t
                 }
             },
-            3055_404: (e, t, n) => {
+            3055404: (e, t, n) => {
                 "use strict";
                 Object.defineProperty(t, "__esModule", {
                     value: !0
                 }), t.computeScore = t.IndentationBasedJaccardMatcher = t.FixedWindowSizeJaccardMatcher = void 0;
-                const r = n(3055_250),
-                    o = n(3055_467);
+                const r = n(3055250),
+                    o = n(3055467);
                 class i extends o.WindowedMatcher {
                     constructor(e, t) {
                         super(e), this.windowLength = t
@@ -29285,13 +29285,13 @@
                     to: n => new s(n, e, t)
                 }), t.computeScore = a
             },
-            3055_125: (e, t, n) => {
+            3055125: (e, t, n) => {
                 "use strict";
                 Object.defineProperty(t, "__esModule", {
                     value: !0
                 }), t.getNeighborSnippets = t.neighborOptionToSelection = void 0;
-                const r = n(3055_417),
-                    o = n(3055_404);
+                const r = n(3055417),
+                    o = n(3055404);
             
                 function i(e) {
                     return [e.relativePath ? "Compare this snippet from " + e.relativePath + ":" : "Compare this snippet:"].concat(e.snippet.split("\n"))
@@ -29341,12 +29341,12 @@
                     })))
                 }
             },
-            3055_467: (e, t, n) => {
+            3055467: (e, t, n) => {
                 "use strict";
                 Object.defineProperty(t, "__esModule", {
                     value: !0
                 }), t.splitIntoWords = t.WindowedMatcher = t.SortOptions = void 0;
-                const r = n(3055_312);
+                const r = n(3055312);
                 var o;
                 ! function(e) {
                     e.Ascending = "ascending", e.Descending = "descending", e.None = "none"
@@ -29444,12 +29444,12 @@
                     l = new Set(["if", "then", "else", "for", "while", "with", "def", "function", "return", "TODO", "import", "try", "catch", "raise", "finally", "repeat", "switch", "case", "match", "assert", "continue", "break", "const", "class", "enum", "struct", "static", "new", "super", "this", "var", ...c]),
                     u = new Map([])
             },
-            3055_395: (e, t, n) => {
+            3055395: (e, t, n) => {
                 "use strict";
                 Object.defineProperty(t, "__esModule", {
                     value: !0
                 }), t.findEditDistanceScore = void 0;
-                const r = n(3055_94);
+                const r = n(305594);
                 t.findEditDistanceScore = function(e, t) {
                     if ("string" == typeof e && (e = r.tokenize(e)), "string" == typeof t && (t = r.tokenize(t)), 0 === e.length || 0 === t.length) return {
                         score: e.length + t.length
@@ -29468,13 +29468,13 @@
                     }
                 }
             },
-            3055_456: (e, t, n) => {
+            3055456: (e, t, n) => {
                 "use strict";
                 Object.defineProperty(t, "__esModule", {
                     value: !0
                 }), t.Priorities = t.PromptWishlist = t.PromptElementRanges = t.PromptChoices = t.PromptBackground = t.PromptElementKind = void 0;
-                const r = n(3055_312),
-                    o = n(3055_94);
+                const r = n(3055312),
+                    o = n(305594);
                 var i;
                 ! function(e) {
                     e.BeforeCursor = "BeforeCursor", e.AfterCursor = "AfterCursor", e.SimilarFile = "SimilarFile", e.ImportedFile = "ImportedFile", e.LanguageMarker = "LanguageMarker", e.PathMarker = "PathMarker"
@@ -29668,7 +29668,7 @@
                 }
                 t.Priorities = l, l.TOP = 1, l.BOTTOM = 0
             },
-            3055_87: (e, t, n) => {
+            305587: (e, t, n) => {
                 var r, o, i = void 0 !== i ? i : {};
                 void 0 === (o = "function" == typeof(r = function() {
                     var t, r = {};
@@ -29682,8 +29682,8 @@
                         d = !1;
                     u = "object" == typeof window, d = "function" == typeof importScripts, o = "object" == typeof process && "object" == typeof process.versions && "string" == typeof process.versions.node, s = !u && !o && !d;
                     var p, h, f, m, g, _ = "";
-                    o ? (_ = d ? n(3055_622).dirname(_) + "/" : __dirname + "/", p = function(e, t) {
-                        return m || (m = n(3055_747)), g || (g = n(3055_622)), e = g.normalize(e), m.readFileSync(e, t ? null : "utf8")
+                    o ? (_ = d ? n(3055622).dirname(_) + "/" : __dirname + "/", p = function(e, t) {
+                        return m || (m = n(3055747)), g || (g = n(3055622)), e = g.normalize(e), m.readFileSync(e, t ? null : "utf8")
                     }, f = function(e) {
                         var t = p(e, !0);
                         return t.buffer || (t = new Uint8Array(t)), O(t.buffer), t
@@ -31181,7 +31181,7 @@
                             else {
                                 const r = e;
                                 if ("undefined" != typeof process && process.versions && process.versions.node) {
-                                    const e = n(3055_747);
+                                    const e = n(3055747);
                                     t = Promise.resolve(e.readFileSync(r))
                                 } else t = fetch(r).then((e => e.arrayBuffer().then((t => {
                                     if (e.ok) return new Uint8Array(t); {
@@ -31351,9 +31351,9 @@
                     return gt.Language = bt, gt.Parser = gt, gt
                 }) ? r.apply(t, []) : r) || (e.exports = o)
             },
-            3055_94: (e, t, n) => {
-                const r = n(3055_747),
-                    o = n(3055_622),
+            305594: (e, t, n) => {
+                const r = n(3055747),
+                    o = n(3055622),
                     i = (e, t) => Array.from(Array(t).keys()).slice(e),
                     s = e => e.charCodeAt(0),
                     a = new TextDecoder("utf-8"),
@@ -31497,15 +31497,15 @@
                     detokenize: E
                 }
             },
-            3055_747: (e, t, n) => {
+            3055747: (e, t, n) => {
                 "use strict";
                 e.exports = n(7147)
             },
-            3055_622: (e, t, n) => {
+            3055622: (e, t, n) => {
                 "use strict";
                 e.exports = n(1017)
             },
-            3055_13: (e, t, n) => {
+            305513: (e, t, n) => {
                 "use strict";
                 e.exports = n(1267)
             },

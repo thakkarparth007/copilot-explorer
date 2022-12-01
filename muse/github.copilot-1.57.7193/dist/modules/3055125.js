@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.getNeighborSnippets = exports.neighborOptionToSelection = undefined;
-const r = require(3055_417),
-  o = require(3055_404);
+const r = require(3055417),
+  o = require(3055404);
 function i(e) {
   return [
     e.relativePath

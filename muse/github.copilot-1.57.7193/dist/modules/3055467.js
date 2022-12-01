@@ -5,7 +5,7 @@ exports.splitIntoWords =
   exports.WindowedMatcher =
   exports.SortOptions =
     undefined;
-const r = require(3055_312);
+const r = require(3055312);
 var o;
 !(function (e) {
   e.Ascending = "ascending";

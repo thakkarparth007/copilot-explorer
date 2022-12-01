@@ -19,9 +19,9 @@ exports.getFunctionPositions =
   exports.isSupportedLanguageId =
   exports.WASMLanguage =
     undefined;
-const r = require(3055_622),
-  o = require(3055_87),
-  i = require(3055_87);
+const r = require("path"),
+  o = require(305587),
+  i = require(305587);
 var s;
 !(function (e) {
   e.Python = "python";

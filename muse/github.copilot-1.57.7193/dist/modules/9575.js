@@ -1,5 +1,5 @@
 const { Readable: r } = require("stream"),
-  o = require(3055_404),
+  o = require(3055404),
   {
     types: { isAnyArrayBuffer: i },
   } = require("util"),

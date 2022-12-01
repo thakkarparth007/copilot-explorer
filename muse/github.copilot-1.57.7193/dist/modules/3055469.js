@@ -11,8 +11,8 @@ exports.parseTree =
   exports.labelLines =
   exports.parseRaw =
     undefined;
-const r = require(3055_876),
-  o = require(3055_617);
+const r = require(3055876),
+  o = require(3055617);
 function parseRaw(e) {
   const t = e.split("\n"),
     n = t.map((e) => e.match(/^\s*/)[0].length),

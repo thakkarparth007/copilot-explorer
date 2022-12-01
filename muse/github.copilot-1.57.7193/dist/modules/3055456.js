@@ -8,8 +8,8 @@ exports.Priorities =
   exports.PromptBackground =
   exports.PromptElementKind =
     undefined;
-const r = require(3055_312),
-  o = require(3055_94);
+const r = require(3055312),
+  o = require(305594);
 var i;
 !(function (e) {
   e.BeforeCursor = "BeforeCursor";
