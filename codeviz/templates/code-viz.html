@@ -17,12 +17,12 @@
             width: 100vw;
         }
         #mynetwork {
-            width: 50%;
+            width: 35%;
             height: 100vh;
             border-right: 1px solid darkgray;
         }
         #info-panel {
-            width: 50%;
+            width: 65%;
             height: 100vh;
             display: flex;
         }
@@ -109,21 +109,27 @@
                 color: value.importedBy.length == 0 ? "red"
                         : value.deps.length == 0 ? 'orange'
                         : 'green',
+                importedBy: value.importedBy,
+                exports: value.exports,
+                lines: value.lines,
+                deps: []
             })
         );
-
         var nodes = new vis.DataSet(raw_nodes);
 
-        var edges = [];
+        var raw_edges = [];
         for (const [key, value] of Object.entries(module_deps_data)) {
+            nodes.get(key).deps = value.deps;
             for (const dep of value.deps) {
-                edges.push({
+                raw_edges.push({
                     from: key,
                     to: dep,
                     arrows: 'to'
                 });
             }
         }
+
+        var edges = new vis.DataSet(raw_edges);
 
         // create a network
         var container = document.getElementById("mynetwork");
@@ -156,13 +162,71 @@
 
         network.on("click", function (params) {
             params.event = "[original event]";
-            let selectedNode = network.getNodeAt(params.pointer.DOM);
+            let selectedNode = params.nodes[0];
             if (selectedNode === undefined) {
                 return;
             }
 
-            displayModule(selectedNode + "", false);
+            displayModule(selectedNode, false);
         });
+
+        // function collapseNode(node) {
+        //     if (node.collapsed) {
+        //         return;
+        //     }
+        //     node.collapsed = true;
+        //     node._orig_color = node.color;
+        //     node.color = 'grey';
+        //     nodes.update(node);
+        //     try {
+        //         for (const dep of node.deps) {
+        //             if (!nodes.get(dep)) {
+        //                 // library dependency
+        //                 continue;
+        //             }
+        //             nodes.update({id: dep, hidden: true});
+        //             collapseNode(nodes.get(dep));
+        //         }
+        //     } catch (e) {
+        //         console.log(e, node);
+        //         throw e;
+        //     }
+        // }
+
+        // function expandNode(node) {
+        //     node.collapsed = false;
+        //     node.color = node._orig_color;
+        //     nodes.update(node);
+        //     for (const dep of node.deps) {
+        //         if (!nodes.get(dep)) {
+        //             // library dependency
+        //             continue;
+        //         }
+        //         nodes.update({id: dep, hidden: false});
+        //         // expandNode(nodes.get(dep));
+        //     }
+        // }
+
+        // network.on("doubleClick", function (params) {
+        //     console.log("Double click");
+        //     params.event = "[original event]";
+        //     let selectedNode = params.nodes[0];
+        //     if (selectedNode === undefined) {
+        //         return;
+        //     }
+
+        //     // on right click, we collapse/expand the node
+        //     // while collapsing, we hide all the dependencies and edges,
+        //     // and mark the node as collapsed
+        //     // while expanding we undo the above
+
+        //     let node = nodes.get(selectedNode);
+        //     if (node.collapsed) {
+        //         expandNode(node);
+        //     } else {
+        //         collapseNode(node);
+        //     }
+        // });
 
         function highlightSelectedModule(module_id, old_module_id) {
             if (old_module_id !== undefined) {
@@ -183,7 +247,7 @@
                     // background: 'yellow',
                     border: 'black',
                     highlight: {
-                        background: 'yellow',
+                        background: 'cyan',
                         border: 'black'
                     }
                 }
