@@ -54,10 +54,11 @@
 
             </div>
             <div id="module-info-wrapper">
-                <label for="module-name">Module</label>
-                <select id="module-name">
+                <label for="module-dropdown">Module</label>
+                <select id="module-dropdown">
                     <option value="0">Select a module</option>
                 </select>
+                <input id="module-label" type="text" placeholder="Module label" />
                 <div id="module-info">
                     Module info
                 </div>
@@ -75,7 +76,7 @@
         // }
         
         // fill the select box with the module names
-        var moduleDropdown = $('#module-name');
+        var moduleDropdown = $('#module-dropdown');
         for (let module_id of Object.keys(module_deps_data)) {
             // var option = document.createElement('option');
             // option.value = module_id;
@@ -86,6 +87,7 @@
             var newOption = new Option(
                 module_id + "(" + module_deps_data[module_id].lines + " LOC)", module_id, false, false
             );
+            newOption.id = "module-option-" + module_id;
             moduleDropdown.append(newOption)
         }
 
@@ -105,7 +107,7 @@
         var raw_nodes = Object.entries(module_deps_data).map(
             ([key, value]) => ({
                 id: key,
-                label: key,
+                label: localStorage.getItem("module-label-" + key) || key,
                 color: value.importedBy.length == 0 ? "red"
                         : value.deps.length == 0 ? 'orange'
                         : 'green',
@@ -115,6 +117,10 @@
                 deps: []
             })
         );
+        // update code from local storage
+        for (let node of raw_nodes) {
+            module_codes_data[node.id] = localStorage.getItem("module-code-" + node.id) || module_codes_data[node.id];
+        }
         var nodes = new vis.DataSet(raw_nodes);
 
         var raw_edges = [];
@@ -273,9 +279,10 @@
             highlightSelectedModule(moduleId, curSelectedModule);
             curSelectedModule = moduleId;
 
-            if ($("#module-name").val() != moduleId) {
-                $("#module-name").val(moduleId).trigger('change');
+            if ($("#module-dropdown").val() != moduleId) {
+                $("#module-dropdown").val(moduleId).trigger('change');
             }
+            $("#module-label").val(nodes.get(moduleId).label);
 
             // fetch(`/data/module_code/${moduleId}`)
             //     .then(response => response.text())
@@ -291,6 +298,7 @@
             let imports = moduleInfo.deps;
             let importedBy = moduleInfo.importedBy;
 
+            console.log(imports);
             let moduleInfoHtml = `
                 <div>
                     <h3>Exports</h3>
@@ -302,7 +310,7 @@
                     <h3>Imports</h3>
                     <ul>
                         ${imports.map(e =>
-                            `<li><a href='#m${e}' onclick='displayModule("${e}")'>${e}</a></li>`
+                            `<li><a href='#m${e}' onclick='displayModule("${e}")'>${nodes.get(e).label}</a></li>`
                         ).join("")}
                     </ul>
                 </div>
@@ -310,7 +318,7 @@
                     <h3>Imported by</h3>
                     <ul>
                         ${importedBy.map(e =>
-                            `<li><a href='#m${e}' onclick='displayModule("${e}")'>${e}</a></li>`
+                            `<li><a href='#m${e}' onclick='displayModule("${e}")'>${nodes.get(e).label}</a></li>`
                         ).join("")}
                     </ul>
                 </div>
@@ -321,6 +329,27 @@
 
         moduleDropdown.on('change', function () {
             displayModule(this.value);
+        });
+
+        $("#module-label").change(function () {
+            let moduleId = moduleDropdown.val();
+            let node = nodes.get(moduleId);
+            let oldLabel = node.label;
+            node.label = this.value;
+            nodes.update(node);
+            $("#module-option-" + moduleId).text(this.value + " (" + moduleId + ")");
+            $("#module-dropdown").select2(); // refresh select2
+            localStorage.setItem("module-label-" + moduleId, this.value);
+            // update all code that does require("module")
+            for (const importerId of node.importedBy) {
+                let oldCode = module_codes_data[importerId];
+                let newCode = oldCode.replace(
+                    new RegExp(`require\\((["']?${oldLabel}["']?|${moduleId})\\)`, 'g'),
+                    `require("${this.value}")`
+                );
+                module_codes_data[importerId] = newCode;
+                localStorage.setItem("module-code-" + importerId, newCode);
+            }
         });
 
         
