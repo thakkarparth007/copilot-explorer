@@ -1,4 +1,4 @@
-const r = require(2037),
+const r = require("os"),
   o = require(6560),
   i = process.env;
 let s;

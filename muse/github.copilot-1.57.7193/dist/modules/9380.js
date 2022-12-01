@@ -2,7 +2,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.setupExperimentationService = exports.logger = undefined;
-const r = require(9496),
+const r = require("vscode"),
   o = require(1133),
   i = require(9189),
   s = require(8142),

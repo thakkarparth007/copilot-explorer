@@ -1,7 +1,7 @@
-const { PassThrough: r, Readable: o } = require(2781),
+const { PassThrough: r, Readable: o } = require("stream"),
   {
     types: { isAnyArrayBuffer: i },
-  } = require(3837),
+  } = require("util"),
   { FetchError: s, FetchBaseError: a } = require(3683),
   { streamToBuffer: c } = require(4544),
   l = Buffer.alloc(0),

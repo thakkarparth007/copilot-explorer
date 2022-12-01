@@ -10,7 +10,7 @@ require.d(exports, {
   validate: () => l,
   version: () => E,
 });
-var r = require(6113),
+var r = require("crypto"),
   o = require.n(r);
 const i = new Uint8Array(256);
 let s = i.length;

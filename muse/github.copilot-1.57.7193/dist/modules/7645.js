@@ -5,12 +5,12 @@ var r = require(6372),
   i = r.wrap,
   s = r.massWrap,
   a = require(9090),
-  c = require(3837),
+  c = require("util"),
   l = o.gte(process.version, "6.0.0"),
   u = o.gte(process.version, "7.0.0"),
   d = o.gte(process.version, "8.0.0"),
   p = o.gte(process.version, "11.0.0"),
-  h = require(1808);
+  h = require("net");
 function f(e) {
   return function () {
     this.on("connection", function (e) {
@@ -111,7 +111,7 @@ i(h.Socket.prototype, "connect", function (e) {
     return n;
   };
 });
-var g = require(3685);
+var g = require("http");
 i(g.Agent.prototype, "addRequest", function (e) {
   return function (t) {
     var n = t.onSocket;
@@ -122,7 +122,7 @@ i(g.Agent.prototype, "addRequest", function (e) {
     return e.apply(this, arguments);
   };
 });
-var _ = require(2081);
+var _ = require("child_process");
 function y(e) {
   if (Array.isArray(e.stdio)) {
     e.stdio.forEach(function (e) {
@@ -169,13 +169,13 @@ var b = ["setTimeout", "setInterval"];
 if (global.setImmediate) {
   b.push("setImmediate");
 }
-var w = require(9512),
+var w = require("timers"),
   x = global.setTimeout === w.setTimeout;
 s(w, b, N);
 if (x) {
   s(global, b, N);
 }
-var E = require(9523);
+var E = require("dns");
 s(
   E,
   [
@@ -197,7 +197,7 @@ if (E.resolveNaptr) {
 }
 var C,
   S,
-  T = require(7147);
+  T = require("fs");
 s(
   T,
   [
@@ -245,7 +245,7 @@ if (T.ftruncate) {
   i(T, "ftruncate", O);
 }
 try {
-  C = require(9796);
+  C = require("zlib");
 } catch (e) {}
 if (C && C.Deflate && C.Deflate.prototype) {
   var k = Object.getPrototypeOf(C.Deflate.prototype);
@@ -258,7 +258,7 @@ if (C && C.Deflate && C.Deflate.prototype) {
   }
 }
 try {
-  S = require(6113);
+  S = require("crypto");
 } catch (e) {}
 if (S) {
   var I = ["pbkdf2", "randomBytes"];

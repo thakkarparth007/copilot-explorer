@@ -2,9 +2,9 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.initProxyEnvironment = undefined;
-const r = require(1808),
-  o = require(7310),
-  i = require(9496);
+const r = require("net"),
+  o = require("url"),
+  i = require("vscode");
 exports.initProxyEnvironment = function (e, t) {
   let n =
     i.workspace.getConfiguration("http").get("proxy") ||

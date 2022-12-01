@@ -23,7 +23,7 @@ var r,
       e.prototype =
         null === t ? Object.create(t) : ((n.prototype = t.prototype), new n());
     }),
-  i = require(7310),
+  i = require("url"),
   s = require(5290),
   a = require(5740),
   c = require(9036),

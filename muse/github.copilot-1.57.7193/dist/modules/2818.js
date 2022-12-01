@@ -1,5 +1,5 @@
-const r = require(2037),
-  o = require(7147),
+const r = require("os"),
+  o = require("fs"),
   i = require(1595),
   s = () => {
     if ("linux" !== process.platform) return !1;

@@ -1,4 +1,4 @@
-var r = require(7310),
+var r = require("url"),
   o = require(9253),
   i = require(4470),
   s = require(5290),

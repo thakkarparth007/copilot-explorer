@@ -9,7 +9,7 @@ exports.LiveOpenAIFetcher =
   exports.getRequestId =
   exports.CopilotUiKind =
     undefined;
-const r = require(3837),
+const r = require("util"),
   o = require(362),
   i = require(6932),
   s = require(1133),

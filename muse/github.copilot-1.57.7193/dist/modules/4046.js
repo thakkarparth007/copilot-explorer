@@ -1,5 +1,5 @@
-const r = require(3837),
-  o = require(9491),
+const r = require("util"),
+  o = require("assert"),
   i = require(9867),
   s = require(3223),
   a = "error@context",

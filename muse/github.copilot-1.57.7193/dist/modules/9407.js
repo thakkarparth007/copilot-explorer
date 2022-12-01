@@ -1,5 +1,5 @@
-const { randomBytes: r } = require(6113),
-  { Readable: o } = require(2781),
+const { randomBytes: r } = require("crypto"),
+  { Readable: o } = require("stream"),
   i = (e) =>
     "object" == typeof e &&
     0 ===

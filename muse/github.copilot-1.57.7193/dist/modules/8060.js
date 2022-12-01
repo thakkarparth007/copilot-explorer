@@ -2,7 +2,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 var r = require(4953),
-  o = require(2361);
+  o = require("events");
 exports.postgres6 = {
   versionSpecifier: "6.*",
   patch: function (e, t) {

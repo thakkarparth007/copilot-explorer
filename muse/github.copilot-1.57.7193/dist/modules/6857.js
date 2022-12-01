@@ -2,7 +2,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.extensionFileSystem = undefined;
-const r = require(9496);
+const r = require("vscode");
 exports.extensionFileSystem = {
   readFile: async function (e) {
     return await r.workspace.fs.readFile(r.Uri.file(e));

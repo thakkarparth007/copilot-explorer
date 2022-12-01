@@ -1,4 +1,4 @@
-const r = require(7147);
+const r = require("fs");
 let o;
 module.exports = () => (
   undefined === o &&

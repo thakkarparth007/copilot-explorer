@@ -1,4 +1,4 @@
-const { EventEmitter: r } = require(2361),
+const { EventEmitter: r } = require("events"),
   o = Symbol("AbortSignal internals");
 class i {
   constructor() {

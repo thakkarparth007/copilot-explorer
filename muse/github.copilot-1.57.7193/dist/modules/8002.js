@@ -2,7 +2,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 var r = require(4953),
-  o = require(1017);
+  o = require("path");
 exports.mysql = {
   versionSpecifier: ">= 2.0.0 < 3.0.0",
   patch: function (e, t) {

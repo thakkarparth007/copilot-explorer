@@ -1,9 +1,9 @@
 let module_deps_data = {
   "3": {
     "deps": [
-      1133,
-      9189,
-      70
+      "1133",
+      "9189",
+      "70"
     ],
     "exports": [
       "getEngineURL",
@@ -14,11 +14,11 @@ let module_deps_data = {
       "2388",
       "9334"
     ],
-    "lines": 35
+    "lines": 34
   },
   "19": {
     "deps": [
-      412
+      "412"
     ],
     "exports": [
       "default"
@@ -26,12 +26,12 @@ let module_deps_data = {
     "importedBy": [
       "8200"
     ],
-    "lines": 14
+    "lines": 13
   },
   "34": {
     "deps": [
-      8249,
-      4938
+      "8249",
+      "4938"
     ],
     "exports": [
       "$complex-export$ r.SHA512 $complex-export$"
@@ -40,14 +40,14 @@ let module_deps_data = {
       "1354",
       "7460"
     ],
-    "lines": 297
+    "lines": 296
   },
   "39": {
     "deps": [
-      6224,
-      3837,
-      2130,
-      2447
+      "\"tty\"",
+      "\"util\"",
+      "2130",
+      "2447"
     ],
     "exports": [
       "init",
@@ -65,11 +65,11 @@ let module_deps_data = {
     "importedBy": [
       "8104"
     ],
-    "lines": 86
+    "lines": 85
   },
   "47": {
     "deps": [
-      9496
+      "\"vscode\""
     ],
     "exports": [
       "getGithubAccount",
@@ -78,7 +78,7 @@ let module_deps_data = {
     "importedBy": [
       "1862"
     ],
-    "lines": 46
+    "lines": 45
   },
   "70": {
     "deps": [],
@@ -98,7 +98,7 @@ let module_deps_data = {
       "9425",
       "main"
     ],
-    "lines": 62
+    "lines": 61
   },
   "98": {
     "deps": [],
@@ -106,7 +106,7 @@ let module_deps_data = {
     "importedBy": [
       "1581"
     ],
-    "lines": 4
+    "lines": 3
   },
   "106": {
     "deps": [],
@@ -119,7 +119,7 @@ let module_deps_data = {
       "7254",
       "9334"
     ],
-    "lines": 32
+    "lines": 31
   },
   "130": {
     "deps": [],
@@ -127,12 +127,12 @@ let module_deps_data = {
     "importedBy": [
       "4953"
     ],
-    "lines": 4
+    "lines": 3
   },
   "219": {
     "deps": [
-      6333,
-      6500
+      "6333",
+      "6500"
     ],
     "exports": [
       "ExpConfig",
@@ -142,13 +142,13 @@ let module_deps_data = {
       "9189",
       "9748"
     ],
-    "lines": 53
+    "lines": 52
   },
   "256": {
     "deps": [
-      7373,
-      6403,
-      4197
+      "7373",
+      "6403",
+      "4197"
     ],
     "exports": [
       "decodeLocation",
@@ -164,11 +164,11 @@ let module_deps_data = {
       "2990",
       "6267"
     ],
-    "lines": 77
+    "lines": 76
   },
   "298": {
     "deps": [
-      8249
+      "8249"
     ],
     "exports": [
       "$complex-export$ r.enc.Utf16 $complex-export$"
@@ -176,7 +176,7 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 40
+    "lines": 39
   },
   "299": {
     "deps": [],
@@ -188,12 +188,12 @@ let module_deps_data = {
       "9899",
       "main"
     ],
-    "lines": 10
+    "lines": 9
   },
   "313": {
     "deps": [
-      3487,
-      6776
+      "3487",
+      "6776"
     ],
     "exports": [
       "assignDefaults"
@@ -201,29 +201,27 @@ let module_deps_data = {
     "importedBy": [
       "4815"
     ],
-    "lines": 25
+    "lines": 24
   },
   "320": {
-    "deps": [
-      4101
-    ],
+    "deps": [],
     "exports": [
       "$maybe-default$ i $maybe-default$"
     ],
     "importedBy": [
       "9958"
     ],
-    "lines": 34
+    "lines": 33
   },
   "362": {
     "deps": [
-      2361,
-      1133,
-      9899,
-      2279,
-      1547,
-      6333,
-      7057
+      "\"events\"",
+      "1133",
+      "9899",
+      "2279",
+      "1547",
+      "6333",
+      "7057"
     ],
     "exports": [
       "refreshToken",
@@ -243,13 +241,13 @@ let module_deps_data = {
       "4419",
       "main"
     ],
-    "lines": 313
+    "lines": 312
   },
   "385": {
     "deps": [
-      1017,
-      9496,
-      3136
+      "\"path\"",
+      "\"vscode\"",
+      "3136"
     ],
     "exports": [
       "ExtensionTextDocumentManager"
@@ -257,23 +255,23 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 48
+    "lines": 47
   },
   "406": {
     "deps": [
-      6252
+      "6252"
     ],
     "exports": [],
     "importedBy": [
       "main"
     ],
-    "lines": 2
+    "lines": 1
   },
   "412": {
     "deps": [
-      3487,
-      6776,
-      2141
+      "3487",
+      "6776",
+      "2141"
     ],
     "exports": [
       "validateUnion",
@@ -303,7 +301,7 @@ let module_deps_data = {
       "8280",
       "9351"
     ],
-    "lines": 166
+    "lines": 165
   },
   "420": {
     "deps": [],
@@ -311,11 +309,11 @@ let module_deps_data = {
     "importedBy": [
       "8002"
     ],
-    "lines": 9
+    "lines": 8
   },
   "430": {
     "deps": [
-      3487
+      "3487"
     ],
     "exports": [
       "default"
@@ -323,15 +321,15 @@ let module_deps_data = {
     "importedBy": [
       "2649"
     ],
-    "lines": 25
+    "lines": 24
   },
   "452": {
     "deps": [
-      8249,
-      8269,
-      8214,
-      888,
-      5109
+      "8249",
+      "8269",
+      "8214",
+      "888",
+      "5109"
     ],
     "exports": [
       "$complex-export$ r.AES $complex-export$"
@@ -339,15 +337,15 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 189
+    "lines": 188
   },
   "453": {
     "deps": [
-      3141,
-      8876,
-      4181,
-      3487,
-      6776
+      "3141",
+      "8876",
+      "4181",
+      "3487",
+      "6776"
     ],
     "exports": [
       "reportTypeError",
@@ -364,12 +362,12 @@ let module_deps_data = {
       "4815",
       "7159"
     ],
-    "lines": 206
+    "lines": 205
   },
   "454": {
     "deps": [
-      5290,
-      4953
+      "5290",
+      "4953"
     ],
     "exports": [
       "wp"
@@ -377,13 +375,12 @@ let module_deps_data = {
     "importedBy": [
       "6281"
     ],
-    "lines": 68
+    "lines": 67
   },
   "464": {
     "deps": [
-      1017,
-      4087,
-      4087
+      "\"path\"",
+      "4087"
     ],
     "exports": [
       "getFunctionPositions",
@@ -410,7 +407,7 @@ let module_deps_data = {
       "4723",
       "9940"
     ],
-    "lines": 293
+    "lines": 292
   },
   "465": {
     "deps": [],
@@ -418,7 +415,7 @@ let module_deps_data = {
     "importedBy": [
       "7898"
     ],
-    "lines": 32
+    "lines": 31
   },
   "495": {
     "deps": [],
@@ -427,11 +424,11 @@ let module_deps_data = {
       "8602",
       "9958"
     ],
-    "lines": 7
+    "lines": 6
   },
   "498": {
     "deps": [
-      3487
+      "3487"
     ],
     "exports": [
       "default"
@@ -439,7 +436,7 @@ let module_deps_data = {
     "importedBy": [
       "2649"
     ],
-    "lines": 24
+    "lines": 23
   },
   "540": {
     "deps": [],
@@ -448,12 +445,12 @@ let module_deps_data = {
       "2531",
       "5173"
     ],
-    "lines": 1204
+    "lines": 1203
   },
   "569": {
     "deps": [
-      4855,
-      1016
+      "4855",
+      "1016"
     ],
     "exports": [
       "computeScore",
@@ -463,11 +460,11 @@ let module_deps_data = {
     "importedBy": [
       "9931"
     ],
-    "lines": 85
+    "lines": 84
   },
   "608": {
     "deps": [
-      5290
+      "5290"
     ],
     "exports": [
       "samplingTelemetryProcessor",
@@ -476,11 +473,11 @@ let module_deps_data = {
     "importedBy": [
       "9428"
     ],
-    "lines": 29
+    "lines": 28
   },
   "706": {
     "deps": [
-      8249
+      "8249"
     ],
     "exports": [
       "$complex-export$ r.RIPEMD160 $complex-export$"
@@ -488,18 +485,18 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 166
+    "lines": 165
   },
   "731": {
     "deps": [
-      3685,
-      5687,
-      5282,
-      5740,
-      9036,
-      6694,
-      894,
-      4350
+      "\"http\"",
+      "\"https\"",
+      "5282",
+      "5740",
+      "9036",
+      "6694",
+      "894",
+      "4350"
     ],
     "exports": [
       "$maybe-default$ d $maybe-default$"
@@ -508,12 +505,12 @@ let module_deps_data = {
       "1259",
       "9574"
     ],
-    "lines": 213
+    "lines": 212
   },
   "750": {
     "deps": [
-      6333,
-      8965
+      "6333",
+      "8965"
     ],
     "exports": [
       "handleGhostTextResultTelemetry",
@@ -528,15 +525,15 @@ let module_deps_data = {
       "7017",
       "9334"
     ],
-    "lines": 74
+    "lines": 73
   },
   "766": {
     "deps": [
-      3055,
-      3458,
-      1017,
-      362,
-      3076
+      3055563,
+      "3458",
+      "\"path\"",
+      "362",
+      "3076"
     ],
     "exports": [
       "ComputationStatus",
@@ -558,12 +555,12 @@ let module_deps_data = {
       "9334",
       "main"
     ],
-    "lines": 197
+    "lines": 196
   },
   "820": {
     "deps": [
-      1747,
-      464
+      "1747",
+      "464"
     ],
     "exports": [
       "getSiblingFunctionStart",
@@ -572,15 +569,7 @@ let module_deps_data = {
     "importedBy": [
       "1747"
     ],
-    "lines": 93
-  },
-  "852": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "3964"
-    ],
-    "lines": 2
+    "lines": 92
   },
   "862": {
     "deps": [],
@@ -592,13 +581,13 @@ let module_deps_data = {
     "importedBy": [
       "9030"
     ],
-    "lines": 99
+    "lines": 98
   },
   "888": {
     "deps": [
-      8249,
-      2783,
-      9824
+      "8249",
+      "2783",
+      "9824"
     ],
     "exports": [
       "$complex-export$ u.EvpKDF $complex-export$"
@@ -612,14 +601,14 @@ let module_deps_data = {
       "4454",
       "5109"
     ],
-    "lines": 48
+    "lines": 47
   },
   "893": {
     "deps": [
-      106,
-      1133,
-      6333,
-      2388
+      "106",
+      "1133",
+      "6333",
+      "2388"
     ],
     "exports": [
       "CopilotListDocument"
@@ -627,14 +616,14 @@ let module_deps_data = {
     "importedBy": [
       "2990"
     ],
-    "lines": 142
+    "lines": 141
   },
   "894": {
     "deps": [
-      5282,
-      7396,
-      9562,
-      3057
+      "5282",
+      "7396",
+      "9562",
+      "3057"
     ],
     "exports": [
       "CorrelationContextManager"
@@ -646,39 +635,35 @@ let module_deps_data = {
       "9574",
       "9813"
     ],
-    "lines": 152
+    "lines": 151
   },
   "901": {
-    "deps": [
-      8934
-    ],
+    "deps": [],
     "exports": [
       "$maybe-default$ i $maybe-default$"
     ],
     "importedBy": [
       "9958"
     ],
-    "lines": 37
+    "lines": 36
   },
   "935": {
-    "deps": [
-      8934
-    ],
+    "deps": [],
     "exports": [
       "$maybe-default$ i $maybe-default$"
     ],
     "importedBy": [
       "9958"
     ],
-    "lines": 39
+    "lines": 38
   },
   "937": {
     "deps": [
-      1133,
-      9899,
-      6333,
-      70,
-      4419
+      "1133",
+      "9899",
+      "6333",
+      "70",
+      "4419"
     ],
     "exports": [
       "getTemperatureForSamples",
@@ -699,12 +684,12 @@ let module_deps_data = {
       "4419",
       "9334"
     ],
-    "lines": 115
+    "lines": 114
   },
   "956": {
     "deps": [
-      7147,
-      362
+      "\"fs\"",
+      "362"
     ],
     "exports": [
       "readTestingGitHubToken",
@@ -713,13 +698,13 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 32
+    "lines": 31
   },
   "966": {
     "deps": [
-      3487,
-      6776,
-      3510
+      "3487",
+      "6776",
+      "3510"
     ],
     "exports": [
       "default"
@@ -727,12 +712,12 @@ let module_deps_data = {
     "importedBy": [
       "2649"
     ],
-    "lines": 48
+    "lines": 47
   },
   "1006": {
     "deps": [
-      9899,
-      7481
+      "9899",
+      "7481"
     ],
     "exports": [
       "ghostTextScoreQuantile",
@@ -741,11 +726,11 @@ let module_deps_data = {
     "importedBy": [
       "9334"
     ],
-    "lines": 87
+    "lines": 86
   },
   "1016": {
     "deps": [
-      1747
+      "1747"
     ],
     "exports": [
       "splitIntoWords",
@@ -755,35 +740,12 @@ let module_deps_data = {
     "importedBy": [
       "569"
     ],
-    "lines": 268
-  },
-  "1017": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "385",
-      "464",
-      "766",
-      "2588",
-      "3136",
-      "3507",
-      "4087",
-      "4087",
-      "4398",
-      "4470",
-      "4723",
-      "6252",
-      "7424",
-      "8002",
-      "8318",
-      "9852"
-    ],
-    "lines": 2
+    "lines": 267
   },
   "1077": {
     "deps": [
-      8249,
-      5109
+      "8249",
+      "5109"
     ],
     "exports": [
       "$complex-export$ r.pad.Iso97971 $complex-export$"
@@ -791,14 +753,14 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 15
+    "lines": 14
   },
   "1119": {
     "deps": [
-      3487,
-      6776,
-      412,
-      4783
+      "3487",
+      "6776",
+      "412",
+      "4783"
     ],
     "exports": [
       "default"
@@ -806,15 +768,15 @@ let module_deps_data = {
     "importedBy": [
       "8200"
     ],
-    "lines": 32
+    "lines": 31
   },
   "1124": {
     "deps": [
-      9189,
-      2533,
-      6333,
-      70,
-      9657
+      "9189",
+      "2533",
+      "6333",
+      "70",
+      "9657"
     ],
     "exports": [
       "checkSuffix",
@@ -824,11 +786,11 @@ let module_deps_data = {
       "2388",
       "9334"
     ],
-    "lines": 105
+    "lines": 104
   },
   "1125": {
     "deps": [
-      6776
+      "6776"
     ],
     "exports": [
       "default"
@@ -836,14 +798,14 @@ let module_deps_data = {
     "importedBy": [
       "8200"
     ],
-    "lines": 27
+    "lines": 26
   },
   "1133": {
     "deps": [
-      3055,
-      4197,
-      9189,
-      4147
+      3055563,
+      "4197",
+      "9189",
+      "4147"
     ],
     "exports": [
       "editorVersionHeaders",
@@ -900,12 +862,12 @@ let module_deps_data = {
       "9899",
       "main"
     ],
-    "lines": 312
+    "lines": 311
   },
   "1148": {
     "deps": [
-      8249,
-      5109
+      "8249",
+      "5109"
     ],
     "exports": [
       "$complex-export$ o.mode.ECB $complex-export$"
@@ -913,11 +875,11 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 16
+    "lines": 15
   },
   "1188": {
     "deps": [
-      2728
+      "2728"
     ],
     "exports": [
       "H"
@@ -925,11 +887,11 @@ let module_deps_data = {
     "importedBy": [
       "4433"
     ],
-    "lines": 40
+    "lines": 39
   },
   "1227": {
     "deps": [
-      4953
+      "4953"
     ],
     "exports": [
       "qP",
@@ -938,12 +900,12 @@ let module_deps_data = {
     "importedBy": [
       "8723"
     ],
-    "lines": 41
+    "lines": 40
   },
   "1240": {
     "deps": [
-      3487,
-      9306
+      "3487",
+      "9306"
     ],
     "exports": [
       "default"
@@ -951,14 +913,14 @@ let module_deps_data = {
     "importedBy": [
       "1581"
     ],
-    "lines": 111
+    "lines": 110
   },
   "1259": {
     "deps": [
-      7625,
-      731,
-      8723,
-      5282
+      "7625",
+      "731",
+      "8723",
+      "5282"
     ],
     "exports": [
       "$maybe-default$ l $maybe-default$"
@@ -966,51 +928,43 @@ let module_deps_data = {
     "importedBy": [
       "9574"
     ],
-    "lines": 70
-  },
-  "1267": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "4723"
-    ],
-    "lines": 2
+    "lines": 69
   },
   "1354": {
     "deps": [
-      8249,
-      4938,
-      2422,
-      298,
-      8269,
-      8214,
-      2783,
-      2153,
-      7792,
-      34,
-      7460,
-      3327,
-      706,
-      9824,
-      2112,
-      888,
-      5109,
-      8568,
-      4242,
-      9968,
-      7660,
-      1148,
-      3615,
-      2807,
-      1077,
-      6475,
-      6991,
-      2209,
-      452,
-      4253,
-      1857,
-      4454,
-      3974
+      "8249",
+      "4938",
+      "2422",
+      "298",
+      "8269",
+      "8214",
+      "2783",
+      "2153",
+      "7792",
+      "34",
+      "7460",
+      "3327",
+      "706",
+      "9824",
+      "2112",
+      "888",
+      "5109",
+      "8568",
+      "4242",
+      "9968",
+      "7660",
+      "1148",
+      "3615",
+      "2807",
+      "1077",
+      "6475",
+      "6991",
+      "2209",
+      "452",
+      "4253",
+      "1857",
+      "4454",
+      "3974"
     ],
     "exports": [
       "$maybe-default$ r $maybe-default$"
@@ -1018,7 +972,7 @@ let module_deps_data = {
     "importedBy": [
       "3076"
     ],
-    "lines": 36
+    "lines": 35
   },
   "1547": {
     "deps": [],
@@ -1030,16 +984,16 @@ let module_deps_data = {
       "8771",
       "main"
     ],
-    "lines": 6
+    "lines": 5
   },
   "1581": {
     "deps": [
-      7159,
-      3924,
-      1240,
-      98,
-      4815,
-      3487
+      "7159",
+      "3924",
+      "1240",
+      "98",
+      "4815",
+      "3487"
     ],
     "exports": [
       "CodeGen",
@@ -1055,11 +1009,11 @@ let module_deps_data = {
     "importedBy": [
       "6333"
     ],
-    "lines": 52
+    "lines": 51
   },
   "1595": {
     "deps": [
-      7147
+      "\"fs\""
     ],
     "exports": [
       "$complex-export$ () =&gt; (undefined === o && (o = function () {\n  try {\n    r.statSync(\"/.dockerenv\");\n    return !0;\n  } catch (e) {\n    return !1;\n  }\n}() || function () {\n  try {\n    return r.readFileSync(\"/proc/self/cgroup\", \"utf8\").includes(\"docker\");\n  } catch (e) {\n    return !1;\n  }\n}()), o) $complex-export$"
@@ -1068,14 +1022,14 @@ let module_deps_data = {
       "2818",
       "8318"
     ],
-    "lines": 23
+    "lines": 22
   },
   "1629": {
     "deps": [
-      9253,
-      4470,
-      5282,
-      9166
+      "9253",
+      "4470",
+      "5282",
+      "\"applicationinsights-native-metrics\""
     ],
     "exports": [
       "AutoCollectNativePerformance"
@@ -1083,11 +1037,11 @@ let module_deps_data = {
     "importedBy": [
       "9574"
     ],
-    "lines": 207
+    "lines": 206
   },
   "1687": {
     "deps": [
-      3487
+      "3487"
     ],
     "exports": [
       "default"
@@ -1095,17 +1049,17 @@ let module_deps_data = {
     "importedBy": [
       "2649"
     ],
-    "lines": 24
+    "lines": 23
   },
   "1747": {
     "deps": [
-      1788,
-      3507,
-      9931,
-      820,
-      9852,
-      7408,
-      4431
+      "1788",
+      "3507",
+      "9931",
+      "820",
+      "9852",
+      "7408",
+      "4431"
     ],
     "exports": [
       "getPrompt",
@@ -1133,11 +1087,11 @@ let module_deps_data = {
       "4723",
       "7408"
     ],
-    "lines": 355
+    "lines": 354
   },
   "1758": {
     "deps": [
-      2447
+      "2447"
     ],
     "exports": [
       "formatArgs",
@@ -1154,7 +1108,7 @@ let module_deps_data = {
     "importedBy": [
       "8104"
     ],
-    "lines": 175
+    "lines": 174
   },
   "1787": {
     "deps": [],
@@ -1164,7 +1118,7 @@ let module_deps_data = {
       "9575",
       "9803"
     ],
-    "lines": 12
+    "lines": 11
   },
   "1788": {
     "deps": [],
@@ -1180,21 +1134,11 @@ let module_deps_data = {
       "4723",
       "9931"
     ],
-    "lines": 316
-  },
-  "1808": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "5468",
-      "7645",
-      "9477"
-    ],
-    "lines": 2
+    "lines": 315
   },
   "1839": {
     "deps": [
-      3136
+      "3136"
     ],
     "exports": [
       "registerDocumentTracker",
@@ -1204,15 +1148,15 @@ let module_deps_data = {
       "4969",
       "main"
     ],
-    "lines": 22
+    "lines": 21
   },
   "1857": {
     "deps": [
-      8249,
-      8269,
-      8214,
-      888,
-      5109
+      "8249",
+      "8269",
+      "8214",
+      "888",
+      "5109"
     ],
     "exports": [
       "$complex-export$ r.RC4 $complex-export$"
@@ -1220,16 +1164,16 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 65
+    "lines": 64
   },
   "1862": {
     "deps": [
-      9496,
-      362,
-      6794,
-      9899,
-      6333,
-      47
+      "\"vscode\"",
+      "362",
+      "6794",
+      "9899",
+      "6333",
+      "47"
     ],
     "exports": [
       "VSCodeCopilotTokenManager",
@@ -1240,7 +1184,7 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 131
+    "lines": 130
   },
   "1906": {
     "deps": [],
@@ -1248,15 +1192,15 @@ let module_deps_data = {
     "importedBy": [
       "8318"
     ],
-    "lines": 22
+    "lines": 21
   },
   "1929": {
     "deps": [
-      9496,
-      256,
-      6333,
-      3060,
-      4540
+      "\"vscode\"",
+      "256",
+      "6333",
+      "3060",
+      "4540"
     ],
     "exports": [
       "OpenCopilotActionProvider"
@@ -1264,7 +1208,7 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 118
+    "lines": 117
   },
   "1974": {
     "deps": [],
@@ -1272,19 +1216,11 @@ let module_deps_data = {
     "importedBy": [
       "6694"
     ],
-    "lines": 45
-  },
-  "1995": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "7262"
-    ],
-    "lines": 2
+    "lines": 44
   },
   "2028": {
     "deps": [
-      4953
+      "4953"
     ],
     "exports": [
       "mongoCore",
@@ -1293,45 +1229,13 @@ let module_deps_data = {
     "importedBy": [
       "4106"
     ],
-    "lines": 34
-  },
-  "2037": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "2130",
-      "2588",
-      "2818",
-      "4350",
-      "4398",
-      "4470",
-      "7148"
-    ],
-    "lines": 2
-  },
-  "2057": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "5740"
-    ],
-    "lines": 2
-  },
-  "2081": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "2588",
-      "7645",
-      "8318"
-    ],
-    "lines": 2
+    "lines": 33
   },
   "2112": {
     "deps": [
-      8249,
-      2783,
-      9824
+      "8249",
+      "2783",
+      "9824"
     ],
     "exports": [
       "$complex-export$ d.PBKDF2 $complex-export$"
@@ -1339,12 +1243,12 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 49
+    "lines": 48
   },
   "2130": {
     "deps": [
-      2037,
-      6560
+      "\"os\"",
+      "6560"
     ],
     "exports": [
       "supportsColor",
@@ -1354,11 +1258,11 @@ let module_deps_data = {
     "importedBy": [
       "39"
     ],
-    "lines": 74
+    "lines": 73
   },
   "2141": {
     "deps": [
-      3487
+      "3487"
     ],
     "exports": [
       "default"
@@ -1373,11 +1277,11 @@ let module_deps_data = {
       "8280",
       "9351"
     ],
-    "lines": 24
+    "lines": 23
   },
   "2153": {
     "deps": [
-      8249
+      "8249"
     ],
     "exports": [
       "$complex-export$ r.SHA256 $complex-export$"
@@ -1386,12 +1290,12 @@ let module_deps_data = {
       "1354",
       "7792"
     ],
-    "lines": 115
+    "lines": 114
   },
   "2209": {
     "deps": [
-      8249,
-      5109
+      "8249",
+      "5109"
     ],
     "exports": [
       "$complex-export$ s.format.Hex $complex-export$"
@@ -1399,14 +1303,14 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 18
+    "lines": 17
   },
   "2218": {
     "deps": [
-      2277,
-      6403,
-      9334,
-      3286
+      "2277",
+      "6403",
+      "9334",
+      "3286"
     ],
     "exports": [
       "completionsFromGhostTextResults"
@@ -1414,7 +1318,7 @@ let module_deps_data = {
     "importedBy": [
       "3197"
     ],
-    "lines": 68
+    "lines": 67
   },
   "2249": {
     "deps": [],
@@ -1463,11 +1367,11 @@ let module_deps_data = {
     "importedBy": [
       "7645"
     ],
-    "lines": 1100
+    "lines": 1099
   },
   "2277": {
     "deps": [
-      6113
+      "\"crypto\""
     ],
     "exports": [],
     "importedBy": [
@@ -1475,16 +1379,16 @@ let module_deps_data = {
       "2388",
       "9334"
     ],
-    "lines": 200
+    "lines": 199
   },
   "2279": {
     "deps": [
-      9825,
-      6149,
-      3837,
-      1133,
-      5413,
-      6333
+      6143,
+      5468,
+      "\"util\"",
+      "1133",
+      "5413",
+      "6333"
     ],
     "exports": [
       "postRequest",
@@ -1502,14 +1406,14 @@ let module_deps_data = {
       "9748",
       "main"
     ],
-    "lines": 172
+    "lines": 171
   },
   "2296": {
     "deps": [
-      412,
-      3487,
-      6776,
-      6776
+      "412",
+      "3487",
+      "6776",
+      "6776"
     ],
     "exports": [
       "default"
@@ -1517,7 +1421,7 @@ let module_deps_data = {
     "importedBy": [
       "8200"
     ],
-    "lines": 79
+    "lines": 78
   },
   "2301": {
     "deps": [],
@@ -1526,7 +1430,7 @@ let module_deps_data = {
       "2512",
       "7898"
     ],
-    "lines": 4
+    "lines": 3
   },
   "2337": {
     "deps": [],
@@ -1535,38 +1439,25 @@ let module_deps_data = {
       "6008",
       "9073"
     ],
-    "lines": 16
-  },
-  "2361": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "362",
-      "3769",
-      "5468",
-      "6143",
-      "6829",
-      "8060"
-    ],
-    "lines": 2
+    "lines": 15
   },
   "2388": {
     "deps": [
-      2277,
-      6932,
-      1133,
-      256,
-      9899,
-      3,
-      937,
-      6722,
-      7727,
-      4969,
-      2533,
-      766,
-      1124,
-      6333,
-      6403
+      "2277",
+      "6932",
+      "1133",
+      "256",
+      "9899",
+      "3",
+      "937",
+      "6722",
+      "7727",
+      "4969",
+      "2533",
+      "766",
+      "1124",
+      "6333",
+      "6403"
     ],
     "exports": [
       "launchSolutions",
@@ -1575,11 +1466,11 @@ let module_deps_data = {
     "importedBy": [
       "893"
     ],
-    "lines": 245
+    "lines": 244
   },
   "2422": {
     "deps": [
-      8249
+      "8249"
     ],
     "exports": [
       "$complex-export$ r.lib.WordArray $complex-export$"
@@ -1587,11 +1478,11 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 34
+    "lines": 33
   },
   "2447": {
     "deps": [
-      7824
+      "7824"
     ],
     "exports": [
       "$maybe-default$ <anonymouse-function> $maybe-default$"
@@ -1600,13 +1491,13 @@ let module_deps_data = {
       "39",
       "1758"
     ],
-    "lines": 129
+    "lines": 128
   },
   "2495": {
     "deps": [
-      4953,
-      2781,
-      6206
+      "4953",
+      "\"stream\"",
+      "\"console\""
     ],
     "exports": [
       "console",
@@ -1615,7 +1506,7 @@ let module_deps_data = {
     "importedBy": [
       "4106"
     ],
-    "lines": 65
+    "lines": 64
   },
   "2499": {
     "deps": [],
@@ -1625,13 +1516,13 @@ let module_deps_data = {
     "importedBy": [
       "6333"
     ],
-    "lines": 14
+    "lines": 13
   },
   "2500": {
     "deps": [
-      2781,
-      9872,
-      2981
+      "\"stream\"",
+      "9872",
+      "2981"
     ],
     "exports": [
       "cacheableResponse"
@@ -1639,12 +1530,12 @@ let module_deps_data = {
     "importedBy": [
       "6143"
     ],
-    "lines": 90
+    "lines": 89
   },
   "2512": {
     "deps": [
-      2301,
-      7898
+      "2301",
+      "7898"
     ],
     "exports": [
       "$complex-export$ global._stackChain $complex-export$",
@@ -1654,14 +1545,14 @@ let module_deps_data = {
       "3223",
       "4046"
     ],
-    "lines": 6
+    "lines": 5
   },
   "2531": {
     "deps": [
-      6776,
-      4063,
-      9461,
-      540
+      "6776",
+      "4063",
+      "9461",
+      "540"
     ],
     "exports": [
       "getSchemaRefs",
@@ -1677,12 +1568,12 @@ let module_deps_data = {
       "6646",
       "7159"
     ],
-    "lines": 150
+    "lines": 149
   },
   "2533": {
     "deps": [
-      3055,
-      4723
+      3055563,
+      "4723"
     ],
     "exports": [
       "parsesWithoutError",
@@ -1704,18 +1595,18 @@ let module_deps_data = {
       "7727",
       "main"
     ],
-    "lines": 136
+    "lines": 135
   },
   "2588": {
     "deps": [
-      7147,
-      2037,
-      1017,
-      9796,
-      2081,
-      5282,
-      8723,
-      5740
+      "\"fs\"",
+      "\"os\"",
+      "\"path\"",
+      "\"zlib\"",
+      "\"child_process\"",
+      "5282",
+      "8723",
+      "5740"
     ],
     "exports": [
       "$maybe-default$ d $maybe-default$"
@@ -1723,11 +1614,11 @@ let module_deps_data = {
     "importedBy": [
       "7625"
     ],
-    "lines": 464
+    "lines": 463
   },
   "2626": {
     "deps": [
-      5481
+      "5481"
     ],
     "exports": [
       "hasOwnProperty",
@@ -1736,20 +1627,20 @@ let module_deps_data = {
     "importedBy": [
       "5290"
     ],
-    "lines": 10
+    "lines": 9
   },
   "2649": {
     "deps": [
-      3983,
-      430,
-      3229,
-      4336,
-      498,
-      3301,
-      1687,
-      2958,
-      4693,
-      966
+      "3983",
+      "430",
+      "3229",
+      "4336",
+      "498",
+      "3301",
+      "1687",
+      "2958",
+      "4693",
+      "966"
     ],
     "exports": [
       "default"
@@ -1757,7 +1648,7 @@ let module_deps_data = {
     "importedBy": [
       "3924"
     ],
-    "lines": 35
+    "lines": 34
   },
   "2728": {
     "deps": [],
@@ -1784,27 +1675,11 @@ let module_deps_data = {
       "7085",
       "8213"
     ],
-    "lines": 209
-  },
-  "2781": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "2495",
-      "2500",
-      "4544",
-      "5600",
-      "6143",
-      "7262",
-      "9407",
-      "9575",
-      "9803"
-    ],
-    "lines": 2
+    "lines": 208
   },
   "2783": {
     "deps": [
-      8249
+      "8249"
     ],
     "exports": [
       "$complex-export$ u.SHA1 $complex-export$"
@@ -1814,12 +1689,12 @@ let module_deps_data = {
       "1354",
       "2112"
     ],
-    "lines": 72
+    "lines": 71
   },
   "2807": {
     "deps": [
-      8249,
-      5109
+      "8249",
+      "5109"
     ],
     "exports": [
       "$complex-export$ r.pad.Iso10126 $complex-export$"
@@ -1827,13 +1702,13 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 18
+    "lines": 17
   },
   "2818": {
     "deps": [
-      2037,
-      7147,
-      1595
+      "\"os\"",
+      "\"fs\"",
+      "1595"
     ],
     "exports": [
       "$maybe-default$ s $maybe-default$",
@@ -1842,7 +1717,7 @@ let module_deps_data = {
     "importedBy": [
       "8318"
     ],
-    "lines": 23
+    "lines": 22
   },
   "2826": {
     "deps": [],
@@ -1852,13 +1727,13 @@ let module_deps_data = {
     "importedBy": [
       "6771"
     ],
-    "lines": 24
+    "lines": 23
   },
   "2901": {
     "deps": [
-      9899,
-      6333,
-      937
+      "9899",
+      "6333",
+      "937"
     ],
     "exports": [
       "prepareSolutionForReturn",
@@ -1868,11 +1743,11 @@ let module_deps_data = {
     "importedBy": [
       "4419"
     ],
-    "lines": 226
+    "lines": 225
   },
   "2924": {
     "deps": [
-      4665
+      "4665"
     ],
     "exports": [
       "default"
@@ -1880,14 +1755,14 @@ let module_deps_data = {
     "importedBy": [
       "8200"
     ],
-    "lines": 13
+    "lines": 12
   },
   "2958": {
     "deps": [
-      453,
-      3487,
-      6776,
-      3510
+      "453",
+      "3487",
+      "6776",
+      "3510"
     ],
     "exports": [
       "default"
@@ -1895,14 +1770,14 @@ let module_deps_data = {
     "importedBy": [
       "2649"
     ],
-    "lines": 82
+    "lines": 81
   },
   "2981": {
     "deps": [
-      5600,
-      9872,
-      4544,
-      9407
+      "5600",
+      "9872",
+      "4544",
+      "9407"
     ],
     "exports": [
       "Response"
@@ -1911,17 +1786,17 @@ let module_deps_data = {
       "2500",
       "6143"
     ],
-    "lines": 109
+    "lines": 108
   },
   "2990": {
     "deps": [
-      9496,
-      1133,
-      4197,
-      256,
-      893,
-      7017,
-      3060
+      "\"vscode\"",
+      "1133",
+      "4197",
+      "256",
+      "893",
+      "7017",
+      "3060"
     ],
     "exports": [
       "CopilotPanel"
@@ -1929,7 +1804,7 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 116
+    "lines": 115
   },
   "3054": {
     "deps": [],
@@ -1938,31 +1813,13 @@ let module_deps_data = {
       "6694",
       "8339"
     ],
-    "lines": 27
-  },
-  "3055": {
-    "deps": [
-      3055563
-    ],
-    "exports": [
-      "$complex-export$ require(3055_563) $complex-export$"
-    ],
-    "importedBy": [
-      "766",
-      "1133",
-      "2533",
-      "4969",
-      "9189",
-      "9334",
-      "main"
-    ],
-    "lines": 2
+    "lines": 26
   },
   "3057": {
     "deps": [
-      9491,
-      9867,
-      7645
+      "\"assert\"",
+      "9867",
+      "7645"
     ],
     "exports": [
       "getNamespace",
@@ -1973,7 +1830,7 @@ let module_deps_data = {
     "importedBy": [
       "894"
     ],
-    "lines": 163
+    "lines": 162
   },
   "3060": {
     "deps": [],
@@ -1992,11 +1849,11 @@ let module_deps_data = {
       "7254",
       "main"
     ],
-    "lines": 19
+    "lines": 18
   },
   "3076": {
     "deps": [
-      1354
+      "1354"
     ],
     "exports": [
       "LRUCache",
@@ -2007,24 +1864,22 @@ let module_deps_data = {
       "9189",
       "9334"
     ],
-    "lines": 56
+    "lines": 55
   },
   "3092": {
-    "deps": [
-      8934
-    ],
+    "deps": [],
     "exports": [
       "$maybe-default$ i $maybe-default$"
     ],
     "importedBy": [
       "9958"
     ],
-    "lines": 38
+    "lines": 37
   },
   "3099": {
     "deps": [
-      3487,
-      6776
+      "3487",
+      "6776"
     ],
     "exports": [
       "extendSubschemaMode",
@@ -2034,12 +1889,12 @@ let module_deps_data = {
     "importedBy": [
       "4815"
     ],
-    "lines": 108
+    "lines": 107
   },
   "3100": {
     "deps": [
-      8104,
-      9575
+      "8104",
+      "9575"
     ],
     "exports": [
       "$complex-export$ new p().api() $complex-export$"
@@ -2047,11 +1902,11 @@ let module_deps_data = {
     "importedBy": [
       "6143"
     ],
-    "lines": 40
+    "lines": 39
   },
   "3136": {
     "deps": [
-      1017
+      "\"path\""
     ],
     "exports": [
       "TextDocumentManager",
@@ -2065,7 +1920,7 @@ let module_deps_data = {
       "7017",
       "main"
     ],
-    "lines": 13
+    "lines": 12
   },
   "3141": {
     "deps": [],
@@ -2077,19 +1932,19 @@ let module_deps_data = {
       "453",
       "7159"
     ],
-    "lines": 59
+    "lines": 58
   },
   "3197": {
     "deps": [
-      9496,
-      1133,
-      2218,
-      9334,
-      750,
-      9899,
-      7017,
-      6333,
-      4540
+      "\"vscode\"",
+      "1133",
+      "2218",
+      "9334",
+      "750",
+      "9899",
+      "7017",
+      "6333",
+      "4540"
     ],
     "exports": [
       "registerGhostText",
@@ -2102,13 +1957,13 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 227
+    "lines": 226
   },
   "3223": {
     "deps": [
-      9822,
-      6157,
-      2512
+      "9822",
+      "6157",
+      "2512"
     ],
     "exports": [
       "$complex-export$ global._asyncHook $complex-export$",
@@ -2117,13 +1972,13 @@ let module_deps_data = {
     "importedBy": [
       "4046"
     ],
-    "lines": 15
+    "lines": 14
   },
   "3229": {
     "deps": [
-      3487,
-      6776,
-      4499
+      "3487",
+      "6776",
+      "4499"
     ],
     "exports": [
       "default"
@@ -2131,7 +1986,7 @@ let module_deps_data = {
     "importedBy": [
       "2649"
     ],
-    "lines": 30
+    "lines": 29
   },
   "3269": {
     "deps": [],
@@ -2139,7 +1994,7 @@ let module_deps_data = {
     "importedBy": [
       "9822"
     ],
-    "lines": 36
+    "lines": 35
   },
   "3286": {
     "deps": [],
@@ -2149,13 +2004,13 @@ let module_deps_data = {
     "importedBy": [
       "2218"
     ],
-    "lines": 44
+    "lines": 43
   },
   "3301": {
     "deps": [
-      412,
-      3487,
-      6776
+      "412",
+      "3487",
+      "6776"
     ],
     "exports": [
       "default"
@@ -2163,12 +2018,12 @@ let module_deps_data = {
     "importedBy": [
       "2649"
     ],
-    "lines": 82
+    "lines": 81
   },
   "3327": {
     "deps": [
-      8249,
-      4938
+      "8249",
+      "4938"
     ],
     "exports": [
       "$complex-export$ r.SHA3 $complex-export$"
@@ -2176,11 +2031,11 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 173
+    "lines": 172
   },
   "3458": {
     "deps": [
-      9266
+      "9266"
     ],
     "exports": [
       "$maybe-default$ o $maybe-default$"
@@ -2188,14 +2043,14 @@ let module_deps_data = {
     "importedBy": [
       "766"
     ],
-    "lines": 246
+    "lines": 245
   },
   "3487": {
     "deps": [
-      7023,
-      8490,
-      7023,
-      8490
+      "7023",
+      "8490",
+      "7023",
+      "8490"
     ],
     "exports": [
       "or",
@@ -2255,11 +2110,11 @@ let module_deps_data = {
       "9651",
       "9864"
     ],
-    "lines": 706
+    "lines": 705
   },
   "3504": {
     "deps": [
-      5282
+      "5282"
     ],
     "exports": [
       "$maybe-default$ o $maybe-default$"
@@ -2267,12 +2122,12 @@ let module_deps_data = {
     "importedBy": [
       "7625"
     ],
-    "lines": 65
+    "lines": 64
   },
   "3507": {
     "deps": [
-      1017,
-      464
+      "\"path\"",
+      "464"
     ],
     "exports": [
       "extractLocalImportContext",
@@ -2281,11 +2136,11 @@ let module_deps_data = {
     "importedBy": [
       "1747"
     ],
-    "lines": 278
+    "lines": 277
   },
   "3510": {
     "deps": [
-      4063
+      "4063"
     ],
     "exports": [
       "default"
@@ -2295,7 +2150,7 @@ let module_deps_data = {
       "2958",
       "4693"
     ],
-    "lines": 7
+    "lines": 6
   },
   "3580": {
     "deps": [],
@@ -2318,12 +2173,12 @@ let module_deps_data = {
       "7148",
       "9253"
     ],
-    "lines": 75
+    "lines": 74
   },
   "3615": {
     "deps": [
-      8249,
-      5109
+      "8249",
+      "5109"
     ],
     "exports": [
       "$complex-export$ r.pad.Ansix923 $complex-export$"
@@ -2331,16 +2186,16 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 20
+    "lines": 19
   },
   "3668": {
     "deps": [
-      5282,
-      9253,
-      7148,
-      9184,
-      3580,
-      4470
+      "5282",
+      "9253",
+      "7148",
+      "9184",
+      "3580",
+      "4470"
     ],
     "exports": [
       "$maybe-default$ l $maybe-default$"
@@ -2348,7 +2203,7 @@ let module_deps_data = {
     "importedBy": [
       "9574"
     ],
-    "lines": 140
+    "lines": 139
   },
   "3683": {
     "deps": [],
@@ -2357,26 +2212,12 @@ let module_deps_data = {
       "5600",
       "6143"
     ],
-    "lines": 30
-  },
-  "3685": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "731",
-      "5468",
-      "5740",
-      "7645",
-      "8723",
-      "9803",
-      "9872"
-    ],
-    "lines": 2
+    "lines": 29
   },
   "3708": {
     "deps": [
-      3487,
-      6776
+      "3487",
+      "6776"
     ],
     "exports": [
       "default"
@@ -2384,11 +2225,11 @@ let module_deps_data = {
     "importedBy": [
       "8200"
     ],
-    "lines": 43
+    "lines": 42
   },
   "3769": {
     "deps": [
-      2361
+      "\"events\""
     ],
     "exports": [
       "$complex-export$ () =&gt; {\n  const e = {},\n    t = new r();\n  t.setMaxListeners(0);\n  return {\n    acquire: n => new Promise(r => {\n      if (!e[n]) {\n        e[n] = !0;\n        return void r();\n      }\n      const o = i => {\n        if (e[n]) {\n          e[n] = !0;\n          t.removeListener(n, o);\n          r(i);\n        }\n      };\n      t.on(n, o);\n    }),\n    release: (n, r) => {\n      Reflect.deleteProperty(e, n);\n      setImmediate(() => t.emit(n, r));\n    }\n  };\n} $complex-export$"
@@ -2396,28 +2237,11 @@ let module_deps_data = {
     "importedBy": [
       "9575"
     ],
-    "lines": 28
-  },
-  "3837": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "39",
-      "2279",
-      "3964",
-      "4046",
-      "4419",
-      "4544",
-      "5468",
-      "5600",
-      "7645",
-      "9575"
-    ],
-    "lines": 2
+    "lines": 27
   },
   "3905": {
     "deps": [
-      6008
+      "6008"
     ],
     "exports": [
       "$maybe-default$ s $maybe-default$"
@@ -2425,15 +2249,15 @@ let module_deps_data = {
     "importedBy": [
       "9266"
     ],
-    "lines": 208
+    "lines": 207
   },
   "3924": {
     "deps": [
-      5684,
-      2649,
-      8200,
-      9502,
-      6167
+      "5684",
+      "2649",
+      "8200",
+      "9502",
+      "6167"
     ],
     "exports": [
       "default"
@@ -2441,14 +2265,14 @@ let module_deps_data = {
     "importedBy": [
       "1581"
     ],
-    "lines": 18
+    "lines": 17
   },
   "3964": {
     "deps": [
-      3837,
-      9491,
-      9867,
-      852
+      "\"util\"",
+      "\"assert\"",
+      "9867",
+      "\"async_hooks\""
     ],
     "exports": [
       "getNamespace",
@@ -2460,15 +2284,15 @@ let module_deps_data = {
     "importedBy": [
       "9562"
     ],
-    "lines": 522
+    "lines": 521
   },
   "3974": {
     "deps": [
-      8249,
-      8269,
-      8214,
-      888,
-      5109
+      "8249",
+      "8269",
+      "8214",
+      "888",
+      "5109"
     ],
     "exports": [
       "$complex-export$ r.RabbitLegacy $complex-export$"
@@ -2476,11 +2300,11 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 129
+    "lines": 128
   },
   "3983": {
     "deps": [
-      3487
+      "3487"
     ],
     "exports": [
       "default"
@@ -2488,7 +2312,7 @@ let module_deps_data = {
     "importedBy": [
       "2649"
     ],
-    "lines": 46
+    "lines": 45
   },
   "4014": {
     "deps": [],
@@ -2537,15 +2361,15 @@ let module_deps_data = {
     "importedBy": [
       "7424"
     ],
-    "lines": 1100
+    "lines": 1099
   },
   "4046": {
     "deps": [
-      3837,
-      9491,
-      9867,
-      3223,
-      2512
+      "\"util\"",
+      "\"assert\"",
+      "9867",
+      "3223",
+      "2512"
     ],
     "exports": [
       "getNamespace",
@@ -2557,7 +2381,7 @@ let module_deps_data = {
     "importedBy": [
       "9562"
     ],
-    "lines": 450
+    "lines": 449
   },
   "4063": {
     "deps": [],
@@ -2566,14 +2390,12 @@ let module_deps_data = {
       "2531",
       "3510"
     ],
-    "lines": 28
+    "lines": 27
   },
   "4087": {
     "deps": [
-      1017,
-      7147,
-      1017,
-      7147
+      "\"path\"",
+      "\"fs\""
     ],
     "exports": [
       "$maybe-default$ o $maybe-default$",
@@ -2583,30 +2405,21 @@ let module_deps_data = {
       "464",
       "464"
     ],
-    "lines": 2818
-  },
-  "4101": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "320",
-      "9958"
-    ],
-    "lines": 2
+    "lines": 2817
   },
   "4106": {
     "deps": [
-      8604,
-      8859,
-      2495,
-      2028,
-      8436,
-      8002,
-      9024,
-      8060,
-      4487,
-      6661,
-      4650
+      "8604",
+      "8859",
+      "2495",
+      "2028",
+      "8436",
+      "8002",
+      "9024",
+      "8060",
+      "4487",
+      "6661",
+      "4650"
     ],
     "exports": [
       "azuresdk",
@@ -2625,12 +2438,12 @@ let module_deps_data = {
     "importedBy": [
       "7396"
     ],
-    "lines": 39
+    "lines": 38
   },
   "4127": {
     "deps": [
-      4350,
-      5290
+      "4350",
+      "5290"
     ],
     "exports": [
       "performanceMetricsTelemetryProcessor"
@@ -2638,7 +2451,7 @@ let module_deps_data = {
     "importedBy": [
       "9428"
     ],
-    "lines": 21
+    "lines": 20
   },
   "4147": {
     "deps": [],
@@ -2647,13 +2460,13 @@ let module_deps_data = {
       "1133",
       "9425"
     ],
-    "lines": 4
+    "lines": 3
   },
   "4181": {
     "deps": [
-      3487,
-      6776,
-      2141
+      "3487",
+      "6776",
+      "2141"
     ],
     "exports": [
       "extendErrors",
@@ -2669,12 +2482,12 @@ let module_deps_data = {
       "5005",
       "5667"
     ],
-    "lines": 148
+    "lines": 147
   },
   "4193": {
     "deps": [
-      6214,
-      9872
+      "6214",
+      "9872"
     ],
     "exports": [
       "$complex-export$ class {\n  constructor(e, t, n) {\n    this.policy = new r(i(e), s(t), n);\n  }\n  storable() {\n    return this.policy.storable();\n  }\n  satisfiesWithoutRevalidation(e) {\n    return this.policy.satisfiesWithoutRevalidation(i(e));\n  }\n  responseHeaders(e) {\n    return new o(this.policy.responseHeaders(s(e)));\n  }\n  timeToLive() {\n    return this.policy.timeToLive();\n  }\n} $complex-export$"
@@ -2682,7 +2495,7 @@ let module_deps_data = {
     "importedBy": [
       "6143"
     ],
-    "lines": 29
+    "lines": 28
   },
   "4197": {
     "deps": [],
@@ -2698,12 +2511,12 @@ let module_deps_data = {
       "9425",
       "main"
     ],
-    "lines": 7
+    "lines": 6
   },
   "4200": {
     "deps": [
-      3487,
-      6776
+      "3487",
+      "6776"
     ],
     "exports": [
       "default"
@@ -2711,12 +2524,12 @@ let module_deps_data = {
     "importedBy": [
       "8200"
     ],
-    "lines": 63
+    "lines": 62
   },
   "4242": {
     "deps": [
-      8249,
-      5109
+      "8249",
+      "5109"
     ],
     "exports": [
       "$complex-export$ i.mode.CTR $complex-export$"
@@ -2724,15 +2537,15 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 23
+    "lines": 22
   },
   "4253": {
     "deps": [
-      8249,
-      8269,
-      8214,
-      888,
-      5109
+      "8249",
+      "8269",
+      "8214",
+      "888",
+      "5109"
     ],
     "exports": [
       "$complex-export$ r.TripleDES $complex-export$"
@@ -2740,20 +2553,12 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 659
-  },
-  "4300": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "4544"
-    ],
-    "lines": 2
+    "lines": 658
   },
   "4309": {
     "deps": [
-      5290,
-      4953
+      "5290",
+      "4953"
     ],
     "exports": [
       "wp"
@@ -2761,12 +2566,12 @@ let module_deps_data = {
     "importedBy": [
       "6281"
     ],
-    "lines": 41
+    "lines": 40
   },
   "4336": {
     "deps": [
-      412,
-      3487
+      "412",
+      "3487"
     ],
     "exports": [
       "default"
@@ -2774,12 +2579,12 @@ let module_deps_data = {
     "importedBy": [
       "2649"
     ],
-    "lines": 23
+    "lines": 22
   },
   "4350": {
     "deps": [
-      2037,
-      3580
+      "\"os\"",
+      "3580"
     ],
     "exports": [
       "$maybe-default$ i $maybe-default$"
@@ -2789,15 +2594,15 @@ let module_deps_data = {
       "4127",
       "9574"
     ],
-    "lines": 289
+    "lines": 288
   },
   "4398": {
     "deps": [
-      7147,
-      2037,
-      1017,
-      9496,
-      9574
+      "\"fs\"",
+      "\"os\"",
+      "\"path\"",
+      "\"vscode\"",
+      "9574"
     ],
     "exports": [
       "default"
@@ -2806,30 +2611,24 @@ let module_deps_data = {
       "4428",
       "6333"
     ],
-    "lines": 320
-  },
-  "4404": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [],
-    "lines": 2
+    "lines": 319
   },
   "4419": {
     "deps": [
-      3837,
-      362,
-      6932,
-      1133,
-      9189,
-      5413,
-      9899,
-      2279,
-      6722,
-      766,
-      9657,
-      6333,
-      937,
-      2901
+      "\"util\"",
+      "362",
+      "6932",
+      "1133",
+      "9189",
+      "5413",
+      "9899",
+      "2279",
+      "6722",
+      "766",
+      "9657",
+      "6333",
+      "937",
+      "2901"
     ],
     "exports": [
       "LiveOpenAIFetcher",
@@ -2845,14 +2644,14 @@ let module_deps_data = {
       "9334",
       "main"
     ],
-    "lines": 289
+    "lines": 288
   },
   "4428": {
     "deps": [
-      4398,
-      1133,
-      6333,
-      9380
+      "4398",
+      "1133",
+      "6333",
+      "9380"
     ],
     "exports": [
       "activate"
@@ -2860,11 +2659,11 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 24
+    "lines": 23
   },
   "4431": {
     "deps": [
-      9852
+      "9852"
     ],
     "exports": [
       "findEditDistanceScore"
@@ -2872,14 +2671,14 @@ let module_deps_data = {
     "importedBy": [
       "1747"
     ],
-    "lines": 38
+    "lines": 37
   },
   "4433": {
     "deps": [
-      6400,
-      2728,
-      8213,
-      1188
+      "6400",
+      "2728",
+      "8213",
+      "1188"
     ],
     "exports": [
       "h"
@@ -2888,15 +2687,15 @@ let module_deps_data = {
       "7085",
       "9125"
     ],
-    "lines": 283
+    "lines": 282
   },
   "4454": {
     "deps": [
-      8249,
-      8269,
-      8214,
-      888,
-      5109
+      "8249",
+      "8269",
+      "8214",
+      "888",
+      "5109"
     ],
     "exports": [
       "$complex-export$ r.Rabbit $complex-export$"
@@ -2904,15 +2703,15 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 130
+    "lines": 129
   },
   "4470": {
     "deps": [
-      2037,
-      7147,
-      1017,
-      5290,
-      5282
+      "\"os\"",
+      "\"fs\"",
+      "\"path\"",
+      "5290",
+      "5282"
     ],
     "exports": [
       "$maybe-default$ c $maybe-default$"
@@ -2922,11 +2721,11 @@ let module_deps_data = {
       "3668",
       "7625"
     ],
-    "lines": 56
+    "lines": 55
   },
   "4487": {
     "deps": [
-      4953
+      "4953"
     ],
     "exports": [
       "redis",
@@ -2935,7 +2734,7 @@ let module_deps_data = {
     "importedBy": [
       "4106"
     ],
-    "lines": 42
+    "lines": 41
   },
   "4499": {
     "deps": [],
@@ -2945,12 +2744,10 @@ let module_deps_data = {
     "importedBy": [
       "3229"
     ],
-    "lines": 23
+    "lines": 22
   },
   "4526": {
-    "deps": [
-      8934
-    ],
+    "deps": [],
     "exports": [
       "$maybe-default$ i $maybe-default$"
     ],
@@ -2958,12 +2755,12 @@ let module_deps_data = {
       "6279",
       "9958"
     ],
-    "lines": 38
+    "lines": 37
   },
   "4540": {
     "deps": [
-      1133,
-      4197
+      "1133",
+      "4197"
     ],
     "exports": [
       "ignoreDocument"
@@ -2972,15 +2769,15 @@ let module_deps_data = {
       "1929",
       "3197"
     ],
-    "lines": 14
+    "lines": 13
   },
   "4544": {
     "deps": [
-      4300,
-      2781,
-      3837,
-      9796,
-      8104
+      "\"buffer\"",
+      "\"stream\"",
+      "\"util\"",
+      "\"zlib\"",
+      "8104"
     ],
     "exports": [
       "decodeStream",
@@ -2998,11 +2795,11 @@ let module_deps_data = {
       "9803",
       "9872"
     ],
-    "lines": 115
+    "lines": 114
   },
   "4650": {
     "deps": [
-      4953
+      "4953"
     ],
     "exports": [
       "winston3",
@@ -3012,13 +2809,13 @@ let module_deps_data = {
     "importedBy": [
       "4106"
     ],
-    "lines": 170
+    "lines": 169
   },
   "4665": {
     "deps": [
-      3487,
-      6776,
-      412
+      "3487",
+      "6776",
+      "412"
     ],
     "exports": [
       "validateTuple",
@@ -3028,13 +2825,13 @@ let module_deps_data = {
       "2924",
       "8200"
     ],
-    "lines": 56
+    "lines": 55
   },
   "4693": {
     "deps": [
-      3487,
-      6776,
-      3510
+      "3487",
+      "6776",
+      "3510"
     ],
     "exports": [
       "default"
@@ -3042,7 +2839,7 @@ let module_deps_data = {
     "importedBy": [
       "2649"
     ],
-    "lines": 24
+    "lines": 23
   },
   "4694": {
     "deps": [],
@@ -3050,18 +2847,18 @@ let module_deps_data = {
     "importedBy": [
       "8002"
     ],
-    "lines": 9
+    "lines": 8
   },
   "4723": {
     "deps": [
-      1017,
-      1267,
-      464,
-      9940,
-      1747,
-      9852,
-      1788,
-      5012
+      "\"path\"",
+      "\"worker_threads\"",
+      "464",
+      "9940",
+      "1747",
+      "9852",
+      "1788",
+      "5012"
     ],
     "exports": [
       "createWorker",
@@ -3072,7 +2869,7 @@ let module_deps_data = {
     "importedBy": [
       "2533"
     ],
-    "lines": 51
+    "lines": 50
   },
   "4775": {
     "deps": [],
@@ -3080,11 +2877,11 @@ let module_deps_data = {
     "importedBy": [
       "7159"
     ],
-    "lines": 4
+    "lines": 3
   },
   "4777": {
     "deps": [
-      4953
+      "4953"
     ],
     "exports": [
       "qP",
@@ -3093,12 +2890,12 @@ let module_deps_data = {
     "importedBy": [
       "8723"
     ],
-    "lines": 38
+    "lines": 37
   },
   "4783": {
     "deps": [
-      3487,
-      6776
+      "3487",
+      "6776"
     ],
     "exports": [
       "validateAdditionalItems",
@@ -3108,22 +2905,22 @@ let module_deps_data = {
       "1119",
       "8200"
     ],
-    "lines": 63
+    "lines": 62
   },
   "4815": {
     "deps": [
-      5667,
-      453,
-      8876,
-      453,
-      313,
-      5005,
-      3099,
-      3487,
-      2141,
-      2531,
-      6776,
-      4181
+      "5667",
+      "453",
+      "8876",
+      "453",
+      "313",
+      "5005",
+      "3099",
+      "3487",
+      "2141",
+      "2531",
+      "6776",
+      "4181"
     ],
     "exports": [
       "getData",
@@ -3136,12 +2933,12 @@ let module_deps_data = {
       "6239",
       "7159"
     ],
-    "lines": 552
+    "lines": 551
   },
   "4855": {
     "deps": [
-      5288,
-      9829
+      "5288",
+      "9829"
     ],
     "exports": [
       "getWindowsDelineations"
@@ -3149,11 +2946,11 @@ let module_deps_data = {
     "importedBy": [
       "569"
     ],
-    "lines": 76
+    "lines": 75
   },
   "4938": {
     "deps": [
-      8249
+      "8249"
     ],
     "exports": [
       "$maybe-default$ r $maybe-default$"
@@ -3164,14 +2961,13 @@ let module_deps_data = {
       "3327",
       "7460"
     ],
-    "lines": 39
+    "lines": 38
   },
   "4953": {
     "deps": [
-      7424,
-      7424,
-      130,
-      8188
+      "7424",
+      "130",
+      "\"module\""
     ],
     "exports": [
       "makePatchingRequire",
@@ -3198,17 +2994,17 @@ let module_deps_data = {
       "8859",
       "9024"
     ],
-    "lines": 114
+    "lines": 113
   },
   "4969": {
     "deps": [
-      3055,
-      1133,
-      1839,
-      9189,
-      3136,
-      2533,
-      766
+      3055563,
+      "1133",
+      "1839",
+      "9189",
+      "3136",
+      "2533",
+      "766"
     ],
     "exports": [
       "extractPrompt",
@@ -3221,14 +3017,14 @@ let module_deps_data = {
       "7017",
       "9334"
     ],
-    "lines": 155
+    "lines": 154
   },
   "5005": {
     "deps": [
-      3487,
-      2141,
-      412,
-      4181
+      "3487",
+      "2141",
+      "412",
+      "4181"
     ],
     "exports": [
       "validateKeywordUsage",
@@ -3239,11 +3035,11 @@ let module_deps_data = {
     "importedBy": [
       "4815"
     ],
-    "lines": 158
+    "lines": 157
   },
   "5012": {
     "deps": [
-      7147
+      "\"fs\""
     ],
     "exports": [
       "defaultFileSystem",
@@ -3252,11 +3048,11 @@ let module_deps_data = {
     "importedBy": [
       "4723"
     ],
-    "lines": 19
+    "lines": 18
   },
   "5071": {
     "deps": [
-      4953
+      "4953"
     ],
     "exports": [
       "qP",
@@ -3265,12 +3061,12 @@ let module_deps_data = {
     "importedBy": [
       "8723"
     ],
-    "lines": 35
+    "lines": 34
   },
   "5109": {
     "deps": [
-      8249,
-      888
+      "8249",
+      "888"
     ],
     "exports": [
       "$complex-export$ void (r.lib.Cipher || (o = r, i = o.lib, s = i.Base, a = i.WordArray, c = i.BufferedBlockAlgorithm, l = o.enc, l.Utf8, u = l.Base64, d = o.algo.EvpKDF, p = i.Cipher = c.extend({\n  cfg: s.extend(),\n  createEncryptor: function (e, t) {\n    return this.create(this._ENC_XFORM_MODE, e, t);\n  },\n  createDecryptor: function (e, t) {\n    return this.create(this._DEC_XFORM_MODE, e, t);\n  },\n  init: function (e, t, n) {\n    this.cfg = this.cfg.extend(n), this._xformMode = e, this._key = t, this.reset();\n  },\n  reset: function () {\n    c.reset.call(this), this._doReset();\n  },\n  process: function (e) {\n    return this._append(e), this._process();\n  },\n  finalize: function (e) {\n    return e && this._append(e), this._doFinalize();\n  },\n  keySize: 4,\n  ivSize: 4,\n  _ENC_XFORM_MODE: 1,\n  _DEC_XFORM_MODE: 2,\n  _createHelper: function () {\n    function e(e) {\n      return \"string\" == typeof e ? w : v;\n    }\n    return function (t) {\n      return {\n        encrypt: function (n, r, o) {\n          return e(r).encrypt(t, n, r, o);\n        },\n        decrypt: function (n, r, o) {\n          return e(r).decrypt(t, n, r, o);\n        }\n      };\n    };\n  }()\n}), i.StreamCipher = p.extend({\n  _doFinalize: function () {\n    return this._process(!0);\n  },\n  blockSize: 1\n}), h = o.mode = {}, f = i.BlockCipherMode = s.extend({\n  createEncryptor: function (e, t) {\n    return this.Encryptor.create(e, t);\n  },\n  createDecryptor: function (e, t) {\n    return this.Decryptor.create(e, t);\n  },\n  init: function (e, t) {\n    this._cipher = e, this._iv = t;\n  }\n}), m = h.CBC = function () {\n  var e = f.extend();\n  function t(e, t, n) {\n    var r,\n      o = this._iv;\n    o ? (r = o, this._iv = void 0) : r = this._prevBlock;\n    for (var i = 0; i &lt; n; i++) e[t + i] ^= r[i];\n  }\n  return e.Encryptor = e.extend({\n    processBlock: function (e, n) {\n      var r = this._cipher,\n        o = r.blockSize;\n      t.call(this, e, n, o), r.encryptBlock(e, n), this._prevBlock = e.slice(n, n + o);\n    }\n  }), e.Decryptor = e.extend({\n    processBlock: function (e, n) {\n      var r = this._cipher,\n        o = r.blockSize,\n        i = e.slice(n, n + o);\n      r.decryptBlock(e, n), t.call(this, e, n, o), this._prevBlock = i;\n    }\n  }), e;\n}(), g = (o.pad = {}).Pkcs7 = {\n  pad: function (e, t) {\n    for (var n = 4 * t, r = n - e.sigBytes % n, o = r << 24 | r << 16 | r << 8 | r, i = [], s = 0; s < r; s += 4) i.push(o);\n    var c = a.create(i, r);\n    e.concat(c);\n  },\n  unpad: function (e) {\n    var t = 255 & e.words[e.sigBytes - 1 &gt;>> 2];\n    e.sigBytes -= t;\n  }\n}, i.BlockCipher = p.extend({\n  cfg: p.cfg.extend({\n    mode: m,\n    padding: g\n  }),\n  reset: function () {\n    var e;\n    p.reset.call(this);\n    var t = this.cfg,\n      n = t.iv,\n      r = t.mode;\n    this._xformMode == this._ENC_XFORM_MODE ? e = r.createEncryptor : (e = r.createDecryptor, this._minBufferSize = 1), this._mode && this._mode.__creator == e ? this._mode.init(this, n && n.words) : (this._mode = e.call(r, this, n && n.words), this._mode.__creator = e);\n  },\n  _doProcessBlock: function (e, t) {\n    this._mode.processBlock(e, t);\n  },\n  _doFinalize: function () {\n    var e,\n      t = this.cfg.padding;\n    return this._xformMode == this._ENC_XFORM_MODE ? (t.pad(this._data, this.blockSize), e = this._process(!0)) : (e = this._process(!0), t.unpad(e)), e;\n  },\n  blockSize: 4\n}), _ = i.CipherParams = s.extend({\n  init: function (e) {\n    this.mixIn(e);\n  },\n  toString: function (e) {\n    return (e || this.formatter).stringify(this);\n  }\n}), y = (o.format = {}).OpenSSL = {\n  stringify: function (e) {\n    var t = e.ciphertext,\n      n = e.salt;\n    return (n ? a.create([1398893684, 1701076831]).concat(n).concat(t) : t).toString(u);\n  },\n  parse: function (e) {\n    var t,\n      n = u.parse(e),\n      r = n.words;\n    return 1398893684 == r[0] && 1701076831 == r[1] && (t = a.create(r.slice(2, 4)), r.splice(0, 4), n.sigBytes -= 16), _.create({\n      ciphertext: n,\n      salt: t\n    });\n  }\n}, v = i.SerializableCipher = s.extend({\n  cfg: s.extend({\n    format: y\n  }),\n  encrypt: function (e, t, n, r) {\n    r = this.cfg.extend(r);\n    var o = e.createEncryptor(n, r),\n      i = o.finalize(t),\n      s = o.cfg;\n    return _.create({\n      ciphertext: i,\n      key: n,\n      iv: s.iv,\n      algorithm: e,\n      mode: s.mode,\n      padding: s.padding,\n      blockSize: e.blockSize,\n      formatter: r.format\n    });\n  },\n  decrypt: function (e, t, n, r) {\n    return r = this.cfg.extend(r), t = this._parse(t, r.format), e.createDecryptor(n, r).finalize(t.ciphertext);\n  },\n  _parse: function (e, t) {\n    return \"string\" == typeof e ? t.parse(e, this) : e;\n  }\n}), b = (o.kdf = {}).OpenSSL = {\n  execute: function (e, t, n, r) {\n    r || (r = a.random(8));\n    var o = d.create({\n        keySize: t + n\n      }).compute(e, r),\n      i = a.create(o.words.slice(t), 4 * n);\n    return o.sigBytes = 4 * t, _.create({\n      key: o,\n      iv: i,\n      salt: r\n    });\n  }\n}, w = i.PasswordBasedCipher = v.extend({\n  cfg: v.cfg.extend({\n    kdf: b\n  }),\n  encrypt: function (e, t, n, r) {\n    var o = (r = this.cfg.extend(r)).kdf.execute(n, e.keySize, e.ivSize);\n    r.iv = o.iv;\n    var i = v.encrypt.call(this, e, t, o.key, r);\n    return i.mixIn(o), i;\n  },\n  decrypt: function (e, t, n, r) {\n    r = this.cfg.extend(r), t = this._parse(t, r.format);\n    var o = r.kdf.execute(n, e.keySize, e.ivSize, t.salt);\n    return r.iv = o.iv, v.decrypt.call(this, e, t, o.key, r);\n  }\n}))) $complex-export$"
@@ -3294,7 +3090,7 @@ let module_deps_data = {
       "8568",
       "9968"
     ],
-    "lines": 266
+    "lines": 265
   },
   "5120": {
     "deps": [],
@@ -3309,11 +3105,11 @@ let module_deps_data = {
     "importedBy": [
       "7017"
     ],
-    "lines": 160
+    "lines": 159
   },
   "5158": {
     "deps": [
-      3580
+      "3580"
     ],
     "exports": [
       "$maybe-default$ o $maybe-default$"
@@ -3321,17 +3117,17 @@ let module_deps_data = {
     "importedBy": [
       "9253"
     ],
-    "lines": 33
+    "lines": 32
   },
   "5173": {
     "deps": [
-      3487,
-      7426,
-      2141,
-      2531,
-      6776,
-      4815,
-      540
+      "3487",
+      "7426",
+      "2141",
+      "2531",
+      "6776",
+      "4815",
+      "540"
     ],
     "exports": [
       "resolveSchema",
@@ -3344,7 +3140,7 @@ let module_deps_data = {
       "7159",
       "8280"
     ],
-    "lines": 268
+    "lines": 267
   },
   "5258": {
     "deps": [],
@@ -3352,7 +3148,7 @@ let module_deps_data = {
     "importedBy": [
       "9575"
     ],
-    "lines": 4
+    "lines": 3
   },
   "5282": {
     "deps": [],
@@ -3375,12 +3171,12 @@ let module_deps_data = {
       "9574",
       "9962"
     ],
-    "lines": 22
+    "lines": 21
   },
   "5288": {
     "deps": [
-      9608,
-      9829
+      "9608",
+      "9829"
     ],
     "exports": [
       "parseTree",
@@ -3396,13 +3192,13 @@ let module_deps_data = {
     "importedBy": [
       "4855"
     ],
-    "lines": 208
+    "lines": 207
   },
   "5290": {
     "deps": [
-      9382,
-      9958,
-      2626
+      "9382",
+      "9958",
+      "2626"
     ],
     "exports": [
       "hasOwnProperty",
@@ -3422,11 +3218,11 @@ let module_deps_data = {
       "9574",
       "9813"
     ],
-    "lines": 13
+    "lines": 12
   },
   "5413": {
     "deps": [
-      9189
+      "9189"
     ],
     "exports": [
       "getDebounceLimit",
@@ -3438,7 +3234,7 @@ let module_deps_data = {
       "9334",
       "main"
     ],
-    "lines": 26
+    "lines": 25
   },
   "5420": {
     "deps": [],
@@ -3446,17 +3242,17 @@ let module_deps_data = {
     "importedBy": [
       "6252"
     ],
-    "lines": 36
+    "lines": 35
   },
   "5468": {
     "deps": [
-      1808,
-      3055404,
-      3685,
-      5687,
-      2361,
-      9491,
-      3837
+      "\"net\"",
+      "3055404",
+      "\"http\"",
+      "\"https\"",
+      "\"events\"",
+      "\"assert\"",
+      "\"util\""
     ],
     "exports": [
       "httpOverHttp",
@@ -3466,9 +3262,10 @@ let module_deps_data = {
       "debug"
     ],
     "importedBy": [
-      "6149"
+      "6149",
+      "2279"
     ],
-    "lines": 216
+    "lines": 215
   },
   "5481": {
     "deps": [],
@@ -3481,14 +3278,14 @@ let module_deps_data = {
     "importedBy": [
       "2626"
     ],
-    "lines": 59
+    "lines": 58
   },
   "5600": {
     "deps": [
-      2781,
-      3837,
-      3683,
-      4544
+      "\"stream\"",
+      "\"util\"",
+      "3683",
+      "4544"
     ],
     "exports": [
       "Body",
@@ -3500,13 +3297,13 @@ let module_deps_data = {
       "6143",
       "8359"
     ],
-    "lines": 119
+    "lines": 118
   },
   "5667": {
     "deps": [
-      4181,
-      3487,
-      2141
+      "4181",
+      "3487",
+      "2141"
     ],
     "exports": [
       "boolOrEmptySchema",
@@ -3515,12 +3312,12 @@ let module_deps_data = {
     "importedBy": [
       "4815"
     ],
-    "lines": 47
+    "lines": 46
   },
   "5684": {
     "deps": [
-      8386,
-      8280
+      "8386",
+      "8280"
     ],
     "exports": [
       "default"
@@ -3528,24 +3325,11 @@ let module_deps_data = {
     "importedBy": [
       "3924"
     ],
-    "lines": 19
-  },
-  "5687": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "731",
-      "5468",
-      "5740",
-      "8723",
-      "9184",
-      "9803"
-    ],
-    "lines": 2
+    "lines": 18
   },
   "5697": {
     "deps": [
-      6776
+      "6776"
     ],
     "exports": [
       "default"
@@ -3553,16 +3337,16 @@ let module_deps_data = {
     "importedBy": [
       "8200"
     ],
-    "lines": 33
+    "lines": 32
   },
   "5740": {
     "deps": [
-      3685,
-      5687,
-      7310,
-      2057,
-      5282,
-      9036
+      "\"http\"",
+      "\"https\"",
+      "\"url\"",
+      "\"constants\"",
+      "5282",
+      "9036"
     ],
     "exports": [
       "$maybe-default$ u $maybe-default$"
@@ -3579,12 +3363,12 @@ let module_deps_data = {
       "9813",
       "9962"
     ],
-    "lines": 291
+    "lines": 290
   },
   "5823": {
     "deps": [
-      5290,
-      4953
+      "5290",
+      "4953"
     ],
     "exports": [
       "wp"
@@ -3592,11 +3376,11 @@ let module_deps_data = {
     "importedBy": [
       "6281"
     ],
-    "lines": 45
+    "lines": 44
   },
   "6008": {
     "deps": [
-      2337
+      "2337"
     ],
     "exports": [
       "$maybe-default$ <anonymouse-function> $maybe-default$"
@@ -3604,56 +3388,34 @@ let module_deps_data = {
     "importedBy": [
       "3905"
     ],
-    "lines": 47
-  },
-  "6113": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "2277",
-      "7645",
-      "8249",
-      "9407"
-    ],
-    "lines": 2
+    "lines": 46
   },
   "6143": {
     "deps": [
-      2361,
-      2781,
-      8104,
-      8348,
-      5600,
-      9872,
-      8359,
-      2981,
-      3683,
-      6829,
-      4193,
-      2500,
-      4544,
-      9407,
-      3100
+      "\"events\"",
+      "\"stream\"",
+      "8104",
+      "8348",
+      "5600",
+      "9872",
+      "8359",
+      "2981",
+      "3683",
+      "6829",
+      "4193",
+      "2500",
+      "4544",
+      "9407",
+      "3100"
     ],
     "exports": [
       "$complex-export$ new P().api() $complex-export$"
     ],
     "importedBy": [
-      "9825"
-    ],
-    "lines": 368
-  },
-  "6149": {
-    "deps": [
-      5468
-    ],
-    "exports": [
-      "$complex-export$ require(5468) $complex-export$"
-    ],
-    "importedBy": [
+      "9825",
       "2279"
     ],
-    "lines": 2
+    "lines": 367
   },
   "6157": {
     "deps": [],
@@ -3662,7 +3424,7 @@ let module_deps_data = {
       "3223",
       "9822"
     ],
-    "lines": 4
+    "lines": 3
   },
   "6167": {
     "deps": [],
@@ -3673,15 +3435,7 @@ let module_deps_data = {
     "importedBy": [
       "3924"
     ],
-    "lines": 19
-  },
-  "6206": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "2495"
-    ],
-    "lines": 2
+    "lines": 18
   },
   "6214": {
     "deps": [],
@@ -3689,22 +3443,14 @@ let module_deps_data = {
     "importedBy": [
       "4193"
     ],
-    "lines": 399
-  },
-  "6224": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "39"
-    ],
-    "lines": 2
+    "lines": 398
   },
   "6239": {
     "deps": [
-      4815,
-      412,
-      6776,
-      9351
+      "4815",
+      "412",
+      "6776",
+      "9351"
     ],
     "exports": [
       "default"
@@ -3712,14 +3458,14 @@ let module_deps_data = {
     "importedBy": [
       "8200"
     ],
-    "lines": 60
+    "lines": 59
   },
   "6252": {
     "deps": [
-      9125,
-      1017,
-      7147,
-      5420
+      "9125",
+      "\"path\"",
+      "\"fs\"",
+      "5420"
     ],
     "exports": [
       "wrapCallSite",
@@ -3732,12 +3478,12 @@ let module_deps_data = {
     "importedBy": [
       "406"
     ],
-    "lines": 447
+    "lines": 446
   },
   "6267": {
     "deps": [
-      9496,
-      256
+      "\"vscode\"",
+      "256"
     ],
     "exports": [
       "commandOpenPanel",
@@ -3746,12 +3492,37 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 36
+    "lines": 35
   },
   "6279": {
     "deps": [
-      4526
+      "4526"
     ],
+    "exports": [
+      "$maybe-default$ i $maybe-default$"
+    ],
+    "importedBy": [
+      "9958"
+    ],
+    "lines": 37
+  },
+  "6281": {
+    "deps": [
+      "7396",
+      "4309",
+      "5823",
+      "454"
+    ],
+    "exports": [
+      "$maybe-default$ o $maybe-default$"
+    ],
+    "importedBy": [
+      "9574"
+    ],
+    "lines": 28
+  },
+  "6290": {
+    "deps": [],
     "exports": [
       "$maybe-default$ i $maybe-default$"
     ],
@@ -3760,42 +3531,15 @@ let module_deps_data = {
     ],
     "lines": 38
   },
-  "6281": {
-    "deps": [
-      7396,
-      4309,
-      5823,
-      454
-    ],
-    "exports": [
-      "$maybe-default$ o $maybe-default$"
-    ],
-    "importedBy": [
-      "9574"
-    ],
-    "lines": 29
-  },
-  "6290": {
-    "deps": [
-      8934
-    ],
-    "exports": [
-      "$maybe-default$ i $maybe-default$"
-    ],
-    "importedBy": [
-      "9958"
-    ],
-    "lines": 39
-  },
   "6333": {
     "deps": [
-      1581,
-      4398,
-      1133,
-      9189,
-      6500,
-      70,
-      2499
+      "1581",
+      "4398",
+      "1133",
+      "9189",
+      "6500",
+      "70",
+      "2499"
     ],
     "exports": [
       "forceSendingTelemetry",
@@ -3841,7 +3585,7 @@ let module_deps_data = {
       "9899",
       "main"
     ],
-    "lines": 505
+    "lines": 504
   },
   "6372": {
     "deps": [],
@@ -3851,19 +3595,11 @@ let module_deps_data = {
       "9090",
       "9867"
     ],
-    "lines": 93
-  },
-  "6376": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "9958"
-    ],
-    "lines": 2
+    "lines": 92
   },
   "6400": {
     "deps": [
-      7923
+      "7923"
     ],
     "exports": [
       "encode",
@@ -3873,7 +3609,7 @@ let module_deps_data = {
       "4433",
       "6771"
     ],
-    "lines": 37
+    "lines": 36
   },
   "6403": {
     "deps": [],
@@ -3889,12 +3625,12 @@ let module_deps_data = {
       "9334",
       "main"
     ],
-    "lines": 6
+    "lines": 5
   },
   "6475": {
     "deps": [
-      8249,
-      5109
+      "8249",
+      "5109"
     ],
     "exports": [
       "$complex-export$ r.pad.ZeroPadding $complex-export$"
@@ -3902,7 +3638,7 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 21
+    "lines": 20
   },
   "6500": {
     "deps": [],
@@ -3913,11 +3649,11 @@ let module_deps_data = {
       "219",
       "6333"
     ],
-    "lines": 11
+    "lines": 10
   },
   "6552": {
     "deps": [
-      6776
+      "6776"
     ],
     "exports": [
       "default"
@@ -3925,7 +3661,7 @@ let module_deps_data = {
     "importedBy": [
       "8200"
     ],
-    "lines": 15
+    "lines": 14
   },
   "6560": {
     "deps": [],
@@ -3933,7 +3669,7 @@ let module_deps_data = {
     "importedBy": [
       "2130"
     ],
-    "lines": 8
+    "lines": 7
   },
   "6639": {
     "deps": [],
@@ -3941,11 +3677,11 @@ let module_deps_data = {
     "importedBy": [
       "9574"
     ],
-    "lines": 93
+    "lines": 92
   },
   "6646": {
     "deps": [
-      2531
+      "2531"
     ],
     "exports": [
       "default"
@@ -3954,11 +3690,11 @@ let module_deps_data = {
       "7159",
       "8280"
     ],
-    "lines": 13
+    "lines": 12
   },
   "6661": {
     "deps": [
-      4953
+      "4953"
     ],
     "exports": [
       "tedious",
@@ -3967,18 +3703,18 @@ let module_deps_data = {
     "importedBy": [
       "4106"
     ],
-    "lines": 64
+    "lines": 63
   },
   "6694": {
     "deps": [
-      7310,
-      5290,
-      5740,
-      9036,
-      3054,
-      9962,
-      1974,
-      8090
+      "\"url\"",
+      "5290",
+      "5740",
+      "9036",
+      "3054",
+      "9962",
+      "1974",
+      "8090"
     ],
     "exports": [
       "$maybe-default$ h $maybe-default$"
@@ -3986,7 +3722,7 @@ let module_deps_data = {
     "importedBy": [
       "731"
     ],
-    "lines": 228
+    "lines": 227
   },
   "6722": {
     "deps": [],
@@ -4000,15 +3736,15 @@ let module_deps_data = {
       "9334",
       "main"
     ],
-    "lines": 14
+    "lines": 13
   },
   "6771": {
     "deps": [
-      2728,
-      9216,
-      8213,
-      6400,
-      2826
+      "2728",
+      "9216",
+      "8213",
+      "6400",
+      "2826"
     ],
     "exports": [
       "SourceMapConsumer"
@@ -4016,12 +3752,12 @@ let module_deps_data = {
     "importedBy": [
       "9125"
     ],
-    "lines": 567
+    "lines": 566
   },
   "6776": {
     "deps": [
-      3487,
-      7023
+      "3487",
+      "7023"
     ],
     "exports": [
       "checkStrictMode",
@@ -4075,7 +3811,7 @@ let module_deps_data = {
       "9434",
       "9864"
     ],
-    "lines": 189
+    "lines": 188
   },
   "6794": {
     "deps": [],
@@ -4086,11 +3822,11 @@ let module_deps_data = {
     "importedBy": [
       "1862"
     ],
-    "lines": 7
+    "lines": 6
   },
   "6829": {
     "deps": [
-      2361
+      "\"events\""
     ],
     "exports": [
       "AbortController",
@@ -4101,11 +3837,11 @@ let module_deps_data = {
       "6143",
       "8359"
     ],
-    "lines": 112
+    "lines": 111
   },
   "6857": {
     "deps": [
-      9496
+      "\"vscode\""
     ],
     "exports": [
       "extensionFileSystem"
@@ -4113,11 +3849,11 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 17
+    "lines": 16
   },
   "6881": {
     "deps": [
-      3136
+      "3136"
     ],
     "exports": [
       "ChangeTracker"
@@ -4125,7 +3861,7 @@ let module_deps_data = {
     "importedBy": [
       "7017"
     ],
-    "lines": 38
+    "lines": 37
   },
   "6932": {
     "deps": [],
@@ -4140,12 +3876,12 @@ let module_deps_data = {
       "4419",
       "9334"
     ],
-    "lines": 29
+    "lines": 28
   },
   "6991": {
     "deps": [
-      8249,
-      5109
+      "8249",
+      "5109"
     ],
     "exports": [
       "$complex-export$ r.pad.NoPadding $complex-export$"
@@ -4153,18 +3889,18 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 9
+    "lines": 8
   },
   "7017": {
     "deps": [
-      6881,
-      750,
-      9899,
-      7727,
-      4969,
-      5120,
-      6333,
-      3136
+      "6881",
+      "750",
+      "9899",
+      "7727",
+      "4969",
+      "5120",
+      "6333",
+      "3136"
     ],
     "exports": [
       "postInsertionTasks",
@@ -4175,7 +3911,7 @@ let module_deps_data = {
       "2990",
       "3197"
     ],
-    "lines": 233
+    "lines": 232
   },
   "7023": {
     "deps": [],
@@ -4200,11 +3936,11 @@ let module_deps_data = {
       "6776",
       "8490"
     ],
-    "lines": 160
+    "lines": 159
   },
   "7057": {
     "deps": [
-      8318
+      "8318"
     ],
     "exports": [
       "RealUrlOpener",
@@ -4214,46 +3950,26 @@ let module_deps_data = {
       "362",
       "main"
     ],
-    "lines": 12
+    "lines": 11
   },
   "7085": {
     "deps": [
-      4433,
-      2728
+      "4433",
+      "2728"
     ],
     "exports": [],
     "importedBy": [
       "9125"
     ],
-    "lines": 251
-  },
-  "7147": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "956",
-      "1595",
-      "2588",
-      "2818",
-      "4087",
-      "4087",
-      "4398",
-      "4470",
-      "5012",
-      "6252",
-      "7645",
-      "8318",
-      "9852"
-    ],
-    "lines": 2
+    "lines": 250
   },
   "7148": {
     "deps": [
-      2037,
-      5290,
-      3580,
-      5740,
-      5282
+      "\"os\"",
+      "5290",
+      "3580",
+      "5740",
+      "5282"
     ],
     "exports": [
       "$maybe-default$ u $maybe-default$"
@@ -4261,21 +3977,21 @@ let module_deps_data = {
     "importedBy": [
       "3668"
     ],
-    "lines": 173
+    "lines": 172
   },
   "7159": {
     "deps": [
-      4815,
-      3487,
-      7426,
-      6646,
-      3141,
-      5173,
-      3487,
-      2531,
-      453,
-      6776,
-      4775
+      "4815",
+      "3487",
+      "7426",
+      "6646",
+      "3141",
+      "5173",
+      "3487",
+      "2531",
+      "453",
+      "6776",
+      "4775"
     ],
     "exports": [
       "CodeGen",
@@ -4290,11 +4006,11 @@ let module_deps_data = {
     "importedBy": [
       "1581"
     ],
-    "lines": 641
+    "lines": 640
   },
   "7190": {
     "deps": [
-      9512
+      "\"timers\""
     ],
     "exports": [
       "$maybe-default$ <anonymouse-function> $maybe-default$"
@@ -4302,27 +4018,25 @@ let module_deps_data = {
     "importedBy": [
       "9822"
     ],
-    "lines": 73
+    "lines": 72
   },
   "7220": {
-    "deps": [
-      8934
-    ],
+    "deps": [],
     "exports": [
       "$maybe-default$ i $maybe-default$"
     ],
     "importedBy": [
       "9958"
     ],
-    "lines": 38
+    "lines": 37
   },
   "7254": {
     "deps": [
-      9496,
-      106,
-      1133,
-      6333,
-      3060
+      "\"vscode\"",
+      "106",
+      "1133",
+      "6333",
+      "3060"
     ],
     "exports": [
       "CopilotStatusBar"
@@ -4330,15 +4044,15 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 176
+    "lines": 175
   },
   "7262": {
     "deps": [
-      1995,
-      2781,
-      8104,
-      1787,
-      4544
+      "\"http2\"",
+      "\"stream\"",
+      "8104",
+      "1787",
+      "4544"
     ],
     "exports": [
       "request",
@@ -4348,7 +4062,7 @@ let module_deps_data = {
     "importedBy": [
       "9575"
     ],
-    "lines": 249
+    "lines": 248
   },
   "7300": {
     "deps": [],
@@ -4356,32 +4070,17 @@ let module_deps_data = {
     "importedBy": [
       "9958"
     ],
-    "lines": 6
-  },
-  "7310": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "5740",
-      "6694",
-      "7625",
-      "8339",
-      "9253",
-      "9477"
-    ],
-    "lines": 2
+    "lines": 5
   },
   "7339": {
-    "deps": [
-      8934
-    ],
+    "deps": [],
     "exports": [
       "$maybe-default$ i $maybe-default$"
     ],
     "importedBy": [
       "9958"
     ],
-    "lines": 38
+    "lines": 37
   },
   "7373": {
     "deps": [],
@@ -4389,13 +4088,13 @@ let module_deps_data = {
     "importedBy": [
       "256"
     ],
-    "lines": 946
+    "lines": 945
   },
   "7396": {
     "deps": [
-      5282,
-      4106,
-      4953
+      "5282",
+      "4106",
+      "4953"
     ],
     "exports": [
       "IsInitialized",
@@ -4406,12 +4105,12 @@ let module_deps_data = {
       "6281",
       "8723"
     ],
-    "lines": 39
+    "lines": 38
   },
   "7408": {
     "deps": [
-      1747,
-      9852
+      "1747",
+      "9852"
     ],
     "exports": [
       "Priorities",
@@ -4424,13 +4123,13 @@ let module_deps_data = {
     "importedBy": [
       "1747"
     ],
-    "lines": 307
+    "lines": 306
   },
   "7424": {
     "deps": [
-      1017,
-      4014,
-      8188
+      "\"path\"",
+      "4014",
+      "\"module\""
     ],
     "exports": [
       "makePatchingRequire"
@@ -4439,7 +4138,7 @@ let module_deps_data = {
       "4953",
       "4953"
     ],
-    "lines": 39
+    "lines": 38
   },
   "7426": {
     "deps": [],
@@ -4450,13 +4149,13 @@ let module_deps_data = {
       "5173",
       "7159"
     ],
-    "lines": 12
+    "lines": 11
   },
   "7460": {
     "deps": [
-      8249,
-      4938,
-      34
+      "8249",
+      "4938",
+      "34"
     ],
     "exports": [
       "$complex-export$ u.SHA384 $complex-export$"
@@ -4464,7 +4163,7 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 32
+    "lines": 31
   },
   "7481": {
     "deps": [],
@@ -4479,21 +4178,21 @@ let module_deps_data = {
     "importedBy": [
       "1006"
     ],
-    "lines": 35
+    "lines": 34
   },
   "7625": {
     "deps": [
-      7310,
-      9253,
-      4470,
-      5290,
-      3504,
-      9428,
-      894,
-      2588,
-      5740,
-      5282,
-      9813
+      "\"url\"",
+      "9253",
+      "4470",
+      "5290",
+      "3504",
+      "9428",
+      "894",
+      "2588",
+      "5740",
+      "5282",
+      "9813"
     ],
     "exports": [
       "$maybe-default$ f $maybe-default$"
@@ -4501,34 +4200,34 @@ let module_deps_data = {
     "importedBy": [
       "1259"
     ],
-    "lines": 125
+    "lines": 124
   },
   "7645": {
     "deps": [
-      6372,
-      2249,
-      9090,
-      3837,
-      1808,
-      3685,
-      2081,
-      9512,
-      9523,
-      7147,
-      9796,
-      6113,
-      8286
+      "6372",
+      "2249",
+      "9090",
+      "\"util\"",
+      "\"net\"",
+      "\"http\"",
+      "\"child_process\"",
+      "\"timers\"",
+      "\"dns\"",
+      "\"fs\"",
+      "\"zlib\"",
+      "\"crypto\"",
+      "8286"
     ],
     "exports": [],
     "importedBy": [
       "3057"
     ],
-    "lines": 486
+    "lines": 485
   },
   "7660": {
     "deps": [
-      8249,
-      5109
+      "8249",
+      "5109"
     ],
     "exports": [
       "$complex-export$ i.mode.OFB $complex-export$"
@@ -4536,12 +4235,12 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 21
+    "lines": 20
   },
   "7727": {
     "deps": [
-      6403,
-      2533
+      "6403",
+      "2533"
     ],
     "exports": [
       "indentationBlockFinished",
@@ -4558,7 +4257,7 @@ let module_deps_data = {
       "7017",
       "9334"
     ],
-    "lines": 143
+    "lines": 142
   },
   "7744": {
     "deps": [],
@@ -4573,13 +4272,13 @@ let module_deps_data = {
       "8965",
       "9189"
     ],
-    "lines": 194
+    "lines": 193
   },
   "7772": {
     "deps": [
-      3487,
-      6776,
-      412
+      "3487",
+      "6776",
+      "412"
     ],
     "exports": [
       "validateSchemaDeps",
@@ -4590,12 +4289,12 @@ let module_deps_data = {
     "importedBy": [
       "8200"
     ],
-    "lines": 91
+    "lines": 90
   },
   "7792": {
     "deps": [
-      8249,
-      2153
+      "8249",
+      "2153"
     ],
     "exports": [
       "$complex-export$ c.SHA224 $complex-export$"
@@ -4603,7 +4302,7 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 23
+    "lines": 22
   },
   "7824": {
     "deps": [],
@@ -4611,7 +4310,7 @@ let module_deps_data = {
     "importedBy": [
       "2447"
     ],
-    "lines": 96
+    "lines": 95
   },
   "7870": {
     "deps": [],
@@ -4621,11 +4320,11 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 60
+    "lines": 59
   },
   "7886": {
     "deps": [
-      4953
+      "4953"
     ],
     "exports": [
       "qP",
@@ -4634,12 +4333,12 @@ let module_deps_data = {
     "importedBy": [
       "8723"
     ],
-    "lines": 37
+    "lines": 36
   },
   "7898": {
     "deps": [
-      465,
-      2301
+      "465",
+      "2301"
     ],
     "exports": [
       "$maybe-default$ s $maybe-default$"
@@ -4647,7 +4346,7 @@ let module_deps_data = {
     "importedBy": [
       "2512"
     ],
-    "lines": 121
+    "lines": 120
   },
   "7923": {
     "deps": [],
@@ -4658,14 +4357,14 @@ let module_deps_data = {
     "importedBy": [
       "6400"
     ],
-    "lines": 20
+    "lines": 19
   },
   "8002": {
     "deps": [
-      4953,
-      1017,
-      4694,
-      420
+      "4953",
+      "\"path\"",
+      "4694",
+      "420"
     ],
     "exports": [
       "mysql",
@@ -4674,20 +4373,12 @@ let module_deps_data = {
     "importedBy": [
       "4106"
     ],
-    "lines": 80
-  },
-  "8028": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "8604"
-    ],
-    "lines": 2
+    "lines": 79
   },
   "8060": {
     "deps": [
-      4953,
-      2361
+      "4953",
+      "\"events\""
     ],
     "exports": [
       "postgres6",
@@ -4697,7 +4388,7 @@ let module_deps_data = {
     "importedBy": [
       "4106"
     ],
-    "lines": 223
+    "lines": 222
   },
   "8082": {
     "deps": [],
@@ -4705,12 +4396,12 @@ let module_deps_data = {
     "importedBy": [
       "9958"
     ],
-    "lines": 5
+    "lines": 4
   },
   "8090": {
     "deps": [
-      5740,
-      9962
+      "5740",
+      "9962"
     ],
     "exports": [
       "$maybe-default$ i $maybe-default$"
@@ -4719,12 +4410,12 @@ let module_deps_data = {
       "6694",
       "8723"
     ],
-    "lines": 88
+    "lines": 87
   },
   "8104": {
     "deps": [
-      1758,
-      39
+      "1758",
+      "39"
     ],
     "exports": [
       "$complex-export$ require(1758) $complex-export$",
@@ -4738,12 +4429,12 @@ let module_deps_data = {
       "9575",
       "9803"
     ],
-    "lines": 11
+    "lines": 10
   },
   "8129": {
     "deps": [
-      9496,
-      6403
+      "\"vscode\"",
+      "6403"
     ],
     "exports": [
       "ExtensionLocationFactory"
@@ -4751,7 +4442,7 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 18
+    "lines": 17
   },
   "8142": {
     "deps": [],
@@ -4766,35 +4457,26 @@ let module_deps_data = {
       "9189",
       "9380"
     ],
-    "lines": 77
-  },
-  "8188": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "4953",
-      "7424"
-    ],
-    "lines": 2
+    "lines": 76
   },
   "8200": {
     "deps": [
-      4783,
-      2924,
-      4665,
-      1119,
-      9864,
-      7772,
-      3708,
-      9351,
-      6239,
-      2296,
-      5697,
-      19,
-      4200,
-      1125,
-      9434,
-      6552
+      "4783",
+      "2924",
+      "4665",
+      "1119",
+      "9864",
+      "7772",
+      "3708",
+      "9351",
+      "6239",
+      "2296",
+      "5697",
+      "19",
+      "4200",
+      "1125",
+      "9434",
+      "6552"
     ],
     "exports": [
       "default"
@@ -4802,11 +4484,11 @@ let module_deps_data = {
     "importedBy": [
       "3924"
     ],
-    "lines": 42
+    "lines": 41
   },
   "8213": {
     "deps": [
-      2728
+      "2728"
     ],
     "exports": [
       "I"
@@ -4815,11 +4497,11 @@ let module_deps_data = {
       "4433",
       "6771"
     ],
-    "lines": 53
+    "lines": 52
   },
   "8214": {
     "deps": [
-      8249
+      "8249"
     ],
     "exports": [
       "$complex-export$ r.MD5 $complex-export$"
@@ -4832,11 +4514,11 @@ let module_deps_data = {
       "4253",
       "4454"
     ],
-    "lines": 162
+    "lines": 161
   },
   "8249": {
     "deps": [
-      6113
+      "\"crypto\""
     ],
     "exports": [
       "$maybe-default$ r $maybe-default$"
@@ -4876,11 +4558,11 @@ let module_deps_data = {
       "9824",
       "9968"
     ],
-    "lines": 237
+    "lines": 236
   },
   "8269": {
     "deps": [
-      8249
+      "8249"
     ],
     "exports": [
       "$complex-export$ r.enc.Base64 $complex-export$"
@@ -4893,16 +4575,16 @@ let module_deps_data = {
       "4253",
       "4454"
     ],
-    "lines": 55
+    "lines": 54
   },
   "8280": {
     "deps": [
-      6646,
-      412,
-      3487,
-      2141,
-      5173,
-      6776
+      "6646",
+      "412",
+      "3487",
+      "2141",
+      "5173",
+      "6776"
     ],
     "exports": [
       "callRef",
@@ -4912,7 +4594,7 @@ let module_deps_data = {
     "importedBy": [
       "5684"
     ],
-    "lines": 142
+    "lines": 141
   },
   "8286": {
     "deps": [],
@@ -4920,16 +4602,16 @@ let module_deps_data = {
     "importedBy": [
       "7645"
     ],
-    "lines": 27
+    "lines": 26
   },
   "8318": {
     "deps": [
-      1017,
-      2081,
-      7147,
-      2818,
-      1595,
-      1906
+      "\"path\"",
+      "\"child_process\"",
+      "\"fs\"",
+      "2818",
+      "1595",
+      "1906"
     ],
     "exports": [
       "$maybe-default$ g $maybe-default$"
@@ -4937,16 +4619,16 @@ let module_deps_data = {
     "importedBy": [
       "7057"
     ],
-    "lines": 238
+    "lines": 237
   },
   "8339": {
     "deps": [
-      7310,
-      5290,
-      5740,
-      9036,
-      3054,
-      9962
+      "\"url\"",
+      "5290",
+      "5740",
+      "9036",
+      "3054",
+      "9962"
     ],
     "exports": [
       "$maybe-default$ d $maybe-default$"
@@ -4954,7 +4636,7 @@ let module_deps_data = {
     "importedBy": [
       "8723"
     ],
-    "lines": 119
+    "lines": 118
   },
   "8348": {
     "deps": [],
@@ -4963,15 +4645,15 @@ let module_deps_data = {
       "6143",
       "9575"
     ],
-    "lines": 774
+    "lines": 773
   },
   "8359": {
     "deps": [
-      6829,
-      5600,
-      9872,
-      4544,
-      9407
+      "6829",
+      "5600",
+      "9872",
+      "4544",
+      "9407"
     ],
     "exports": [
       "Request"
@@ -4979,7 +4661,7 @@ let module_deps_data = {
     "importedBy": [
       "6143"
     ],
-    "lines": 154
+    "lines": 153
   },
   "8386": {
     "deps": [],
@@ -4989,11 +4671,11 @@ let module_deps_data = {
     "importedBy": [
       "5684"
     ],
-    "lines": 11
+    "lines": 10
   },
   "8436": {
     "deps": [
-      4953
+      "4953"
     ],
     "exports": [
       "mongo2",
@@ -5004,11 +4686,11 @@ let module_deps_data = {
     "importedBy": [
       "4106"
     ],
-    "lines": 208
+    "lines": 207
   },
   "8490": {
     "deps": [
-      7023
+      "7023"
     ],
     "exports": [
       "ValueScope",
@@ -5021,12 +4703,12 @@ let module_deps_data = {
       "3487",
       "3487"
     ],
-    "lines": 160
+    "lines": 159
   },
   "8568": {
     "deps": [
-      8249,
-      5109
+      "8249",
+      "5109"
     ],
     "exports": [
       "$complex-export$ r.mode.CFB $complex-export$"
@@ -5034,11 +4716,11 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 38
+    "lines": 37
   },
   "8602": {
     "deps": [
-      495
+      "495"
     ],
     "exports": [
       "$maybe-default$ <anonymouse-function> $maybe-default$"
@@ -5046,12 +4728,12 @@ let module_deps_data = {
     "importedBy": [
       "9958"
     ],
-    "lines": 5
+    "lines": 4
   },
   "8604": {
     "deps": [
-      4953,
-      8028
+      "4953",
+      "\"@opentelemetry/tracing\""
     ],
     "exports": [
       "AzureMonitorSymbol",
@@ -5061,24 +4743,24 @@ let module_deps_data = {
     "importedBy": [
       "4106"
     ],
-    "lines": 67
+    "lines": 66
   },
   "8723": {
     "deps": [
-      3685,
-      5687,
-      5282,
-      5740,
-      9036,
-      8339,
-      894,
-      9962,
-      8090,
-      7396,
-      7886,
-      4777,
-      5071,
-      1227
+      "\"http\"",
+      "\"https\"",
+      "5282",
+      "5740",
+      "9036",
+      "8339",
+      "894",
+      "9962",
+      "8090",
+      "7396",
+      "7886",
+      "4777",
+      "5071",
+      "1227"
     ],
     "exports": [
       "$maybe-default$ h $maybe-default$"
@@ -5089,11 +4771,11 @@ let module_deps_data = {
       "9184",
       "9574"
     ],
-    "lines": 194
+    "lines": 193
   },
   "8771": {
     "deps": [
-      1547
+      "1547"
     ],
     "exports": [
       "TestNotificationSender",
@@ -5104,11 +4786,11 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 36
+    "lines": 35
   },
   "8859": {
     "deps": [
-      4953
+      "4953"
     ],
     "exports": [
       "bunyan",
@@ -5117,7 +4799,7 @@ let module_deps_data = {
     "importedBy": [
       "4106"
     ],
-    "lines": 29
+    "lines": 28
   },
   "8876": {
     "deps": [],
@@ -5130,26 +4812,11 @@ let module_deps_data = {
       "453",
       "4815"
     ],
-    "lines": 26
-  },
-  "8934": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "901",
-      "935",
-      "3092",
-      "4526",
-      "6290",
-      "7220",
-      "7339",
-      "9958"
-    ],
-    "lines": 2
+    "lines": 25
   },
   "8965": {
     "deps": [
-      7744
+      "7744"
     ],
     "exports": [
       "contextualFilterScore",
@@ -5161,7 +4828,7 @@ let module_deps_data = {
       "9334",
       "main"
     ],
-    "lines": 89
+    "lines": 88
   },
   "9012": {
     "deps": [],
@@ -5210,11 +4877,11 @@ let module_deps_data = {
     "importedBy": [
       "9562"
     ],
-    "lines": 1100
+    "lines": 1099
   },
   "9024": {
     "deps": [
-      4953
+      "4953"
     ],
     "exports": [
       "postgresPool1",
@@ -5223,12 +4890,12 @@ let module_deps_data = {
     "importedBy": [
       "4106"
     ],
-    "lines": 21
+    "lines": 20
   },
   "9030": {
     "deps": [
-      8142,
-      862
+      "8142",
+      "862"
     ],
     "exports": [
       "GranularityDirectory"
@@ -5236,7 +4903,7 @@ let module_deps_data = {
     "importedBy": [
       "9189"
     ],
-    "lines": 39
+    "lines": 38
   },
   "9036": {
     "deps": [],
@@ -5248,11 +4915,11 @@ let module_deps_data = {
       "8339",
       "8723"
     ],
-    "lines": 12
+    "lines": 11
   },
   "9073": {
     "deps": [
-      2337
+      "2337"
     ],
     "exports": [
       "$maybe-default$ e $maybe-default$"
@@ -5260,11 +4927,11 @@ let module_deps_data = {
     "importedBy": [
       "9266"
     ],
-    "lines": 12
+    "lines": 11
   },
   "9090": {
     "deps": [
-      6372
+      "6372"
     ],
     "exports": [
       "$maybe-default$ <anonymouse-function> $maybe-default$"
@@ -5272,13 +4939,13 @@ let module_deps_data = {
     "importedBy": [
       "7645"
     ],
-    "lines": 233
+    "lines": 232
   },
   "9125": {
     "deps": [
-      4433,
-      6771,
-      7085
+      "4433",
+      "6771",
+      "7085"
     ],
     "exports": [
       "SourceMapConsumer"
@@ -5286,21 +4953,13 @@ let module_deps_data = {
     "importedBy": [
       "6252"
     ],
-    "lines": 4
-  },
-  "9166": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "1629"
-    ],
-    "lines": 2
+    "lines": 3
   },
   "9184": {
     "deps": [
-      5687,
-      8723,
-      5282
+      "\"https\"",
+      "8723",
+      "5282"
     ],
     "exports": [
       "$maybe-default$ s $maybe-default$"
@@ -5308,20 +4967,20 @@ let module_deps_data = {
     "importedBy": [
       "3668"
     ],
-    "lines": 65
+    "lines": 64
   },
   "9189": {
     "deps": [
-      3055,
-      299,
-      3076,
-      1133,
-      7744,
-      9657,
-      219,
-      9748,
-      8142,
-      9030
+      3055563,
+      "299",
+      "3076",
+      "1133",
+      "7744",
+      "9657",
+      "219",
+      "9748",
+      "8142",
+      "9030"
     ],
     "exports": [
       "Features",
@@ -5339,7 +4998,7 @@ let module_deps_data = {
       "9380",
       "main"
     ],
-    "lines": 389
+    "lines": 388
   },
   "9216": {
     "deps": [],
@@ -5351,14 +5010,14 @@ let module_deps_data = {
     "importedBy": [
       "6771"
     ],
-    "lines": 31
+    "lines": 30
   },
   "9253": {
     "deps": [
-      9962,
-      5158,
-      3580,
-      7310
+      "9962",
+      "5158",
+      "3580",
+      "\"url\""
     ],
     "exports": [
       "$maybe-default$ a $maybe-default$"
@@ -5368,12 +5027,12 @@ let module_deps_data = {
       "3668",
       "7625"
     ],
-    "lines": 105
+    "lines": 104
   },
   "9266": {
     "deps": [
-      3905,
-      9073
+      "3905",
+      "9073"
     ],
     "exports": [
       "$maybe-default$ <anonymouse-function> $maybe-default$"
@@ -5381,7 +5040,7 @@ let module_deps_data = {
     "importedBy": [
       "3458"
     ],
-    "lines": 26
+    "lines": 25
   },
   "9306": {
     "deps": [],
@@ -5391,34 +5050,34 @@ let module_deps_data = {
     "importedBy": [
       "1240"
     ],
-    "lines": 8
+    "lines": 7
   },
   "9334": {
     "deps": [
-      3055,
-      2277,
-      3076,
-      106,
-      6932,
-      1133,
-      9189,
-      9899,
-      2279,
-      3,
-      4419,
-      937,
-      6722,
-      7727,
-      4969,
-      766,
-      1006,
-      1124,
-      6333,
-      70,
-      6403,
-      8965,
-      5413,
-      750
+      3055563,
+      "2277",
+      "3076",
+      "106",
+      "6932",
+      "1133",
+      "9189",
+      "9899",
+      "2279",
+      "3",
+      "4419",
+      "937",
+      "6722",
+      "7727",
+      "4969",
+      "766",
+      "1006",
+      "1124",
+      "6333",
+      "70",
+      "6403",
+      "8965",
+      "5413",
+      "750"
     ],
     "exports": [
       "getGhostText",
@@ -5430,14 +5089,14 @@ let module_deps_data = {
       "2218",
       "3197"
     ],
-    "lines": 768
+    "lines": 767
   },
   "9351": {
     "deps": [
-      412,
-      3487,
-      2141,
-      6776
+      "412",
+      "3487",
+      "2141",
+      "6776"
     ],
     "exports": [
       "default"
@@ -5446,15 +5105,15 @@ let module_deps_data = {
       "6239",
       "8200"
     ],
-    "lines": 111
+    "lines": 110
   },
   "9380": {
     "deps": [
-      9496,
-      1133,
-      9189,
-      8142,
-      9899
+      "\"vscode\"",
+      "1133",
+      "9189",
+      "8142",
+      "9899"
     ],
     "exports": [
       "setupExperimentationService",
@@ -5463,11 +5122,11 @@ let module_deps_data = {
     "importedBy": [
       "4428"
     ],
-    "lines": 35
+    "lines": 34
   },
   "9382": {
     "deps": [
-      9958
+      "9958"
     ],
     "exports": [
       "RemoteDependencyDataConstants",
@@ -5476,12 +5135,12 @@ let module_deps_data = {
     "importedBy": [
       "5290"
     ],
-    "lines": 24
+    "lines": 23
   },
   "9407": {
     "deps": [
-      6113,
-      2781
+      "\"crypto\"",
+      "\"stream\""
     ],
     "exports": [
       "isFormData",
@@ -5493,12 +5152,12 @@ let module_deps_data = {
       "8359",
       "9575"
     ],
-    "lines": 84
+    "lines": 83
   },
   "9408": {
     "deps": [
-      2279,
-      6333
+      "2279",
+      "6333"
     ],
     "exports": [
       "registerDefaultHandlers"
@@ -5506,15 +5165,15 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 63
+    "lines": 62
   },
   "9425": {
     "deps": [
-      9496,
-      1133,
-      4197,
-      70,
-      4147
+      "\"vscode\"",
+      "1133",
+      "4197",
+      "70",
+      "4147"
     ],
     "exports": [
       "VSCodeEditorInfo",
@@ -5526,12 +5185,12 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 123
+    "lines": 122
   },
   "9428": {
     "deps": [
-      608,
-      4127
+      "608",
+      "4127"
     ],
     "exports": [
       "hasOwnProperty",
@@ -5540,12 +5199,12 @@ let module_deps_data = {
     "importedBy": [
       "7625"
     ],
-    "lines": 12
+    "lines": 11
   },
   "9434": {
     "deps": [
-      3487,
-      6776
+      "3487",
+      "6776"
     ],
     "exports": [
       "default"
@@ -5553,7 +5212,7 @@ let module_deps_data = {
     "importedBy": [
       "8200"
     ],
-    "lines": 71
+    "lines": 70
   },
   "9461": {
     "deps": [],
@@ -5561,13 +5220,13 @@ let module_deps_data = {
     "importedBy": [
       "2531"
     ],
-    "lines": 89
+    "lines": 88
   },
   "9477": {
     "deps": [
-      1808,
-      7310,
-      9496
+      "\"net\"",
+      "\"url\"",
+      "\"vscode\""
     ],
     "exports": [
       "initProxyEnvironment"
@@ -5575,44 +5234,11 @@ let module_deps_data = {
     "importedBy": [
       "main"
     ],
-    "lines": 68
-  },
-  "9491": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "3057",
-      "3964",
-      "4046",
-      "5468"
-    ],
-    "lines": 2
-  },
-  "9496": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "47",
-      "385",
-      "1862",
-      "1929",
-      "2990",
-      "3197",
-      "4398",
-      "6267",
-      "6857",
-      "7254",
-      "8129",
-      "9380",
-      "9425",
-      "9477",
-      "main"
-    ],
-    "lines": 2
+    "lines": 67
   },
   "9502": {
     "deps": [
-      9651
+      "9651"
     ],
     "exports": [
       "default"
@@ -5620,30 +5246,13 @@ let module_deps_data = {
     "importedBy": [
       "3924"
     ],
-    "lines": 6
-  },
-  "9512": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "7190",
-      "7645"
-    ],
-    "lines": 2
-  },
-  "9523": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "7645"
-    ],
-    "lines": 2
+    "lines": 5
   },
   "9562": {
     "deps": [
-      9012,
-      3964,
-      4046
+      "9012",
+      "3964",
+      "4046"
     ],
     "exports": [
       "$complex-export$ require(3964) $complex-export$",
@@ -5652,7 +5261,7 @@ let module_deps_data = {
     "importedBy": [
       "894"
     ],
-    "lines": 7
+    "lines": 6
   },
   "9565": {
     "deps": [],
@@ -5660,22 +5269,22 @@ let module_deps_data = {
     "importedBy": [
       "9822"
     ],
-    "lines": 39
+    "lines": 38
   },
   "9574": {
     "deps": [
-      894,
-      6281,
-      6639,
-      4350,
-      8723,
-      731,
-      9962,
-      5282,
-      3668,
-      1629,
-      1259,
-      5290
+      "894",
+      "6281",
+      "6639",
+      "4350",
+      "8723",
+      "731",
+      "9962",
+      "5282",
+      "3668",
+      "1629",
+      "1259",
+      "5290"
     ],
     "exports": [
       "TelemetryClient",
@@ -5693,22 +5302,22 @@ let module_deps_data = {
     "importedBy": [
       "4398"
     ],
-    "lines": 222
+    "lines": 221
   },
   "9575": {
     "deps": [
-      2781,
-      3055404,
-      3837,
-      8348,
-      8104,
-      1787,
-      9803,
-      7262,
-      3769,
-      4544,
-      9407,
-      5258
+      "\"stream\"",
+      "3055404",
+      "\"util\"",
+      "8348",
+      "8104",
+      "1787",
+      "9803",
+      "7262",
+      "3769",
+      "4544",
+      "9407",
+      "5258"
     ],
     "exports": [
       "request",
@@ -5723,7 +5332,7 @@ let module_deps_data = {
     "importedBy": [
       "3100"
     ],
-    "lines": 310
+    "lines": 309
   },
   "9608": {
     "deps": [],
@@ -5743,11 +5352,11 @@ let module_deps_data = {
       "5288",
       "9829"
     ],
-    "lines": 80
+    "lines": 79
   },
   "9651": {
     "deps": [
-      3487
+      "3487"
     ],
     "exports": [
       "default"
@@ -5755,7 +5364,7 @@ let module_deps_data = {
     "importedBy": [
       "9502"
     ],
-    "lines": 100
+    "lines": 99
   },
   "9657": {
     "deps": [],
@@ -5768,7 +5377,7 @@ let module_deps_data = {
       "4419",
       "9189"
     ],
-    "lines": 58
+    "lines": 57
   },
   "9697": {
     "deps": [],
@@ -5776,12 +5385,12 @@ let module_deps_data = {
     "importedBy": [
       "9958"
     ],
-    "lines": 10
+    "lines": 9
   },
   "9748": {
     "deps": [
-      2279,
-      219
+      "2279",
+      "219"
     ],
     "exports": [
       "ExpConfigNone",
@@ -5792,26 +5401,16 @@ let module_deps_data = {
       "9189",
       "main"
     ],
-    "lines": 51
-  },
-  "9796": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "2588",
-      "4544",
-      "7645"
-    ],
-    "lines": 2
+    "lines": 50
   },
   "9803": {
     "deps": [
-      3685,
-      5687,
-      2781,
-      8104,
-      1787,
-      4544
+      "\"http\"",
+      "\"https\"",
+      "\"stream\"",
+      "8104",
+      "1787",
+      "4544"
     ],
     "exports": [
       "request",
@@ -5821,13 +5420,13 @@ let module_deps_data = {
     "importedBy": [
       "9575"
     ],
-    "lines": 162
+    "lines": 161
   },
   "9813": {
     "deps": [
-      5290,
-      5740,
-      894
+      "5290",
+      "5740",
+      "894"
     ],
     "exports": [
       "$maybe-default$ s $maybe-default$"
@@ -5835,14 +5434,14 @@ let module_deps_data = {
     "importedBy": [
       "7625"
     ],
-    "lines": 250
+    "lines": 249
   },
   "9822": {
     "deps": [
-      3269,
-      9565,
-      7190,
-      6157
+      "3269",
+      "9565",
+      "7190",
+      "6157"
     ],
     "exports": [
       "$maybe-default$ u $maybe-default$"
@@ -5850,11 +5449,11 @@ let module_deps_data = {
     "importedBy": [
       "3223"
     ],
-    "lines": 98
+    "lines": 97
   },
   "9824": {
     "deps": [
-      8249
+      "8249"
     ],
     "exports": [
       "$complex-export$ void (r.algo.HMAC = o.extend({\n  init: function (e, t) {\n    e = this._hasher = new e.init(), \"string\" == typeof t && (t = i.parse(t));\n    var n = e.blockSize,\n      r = 4 * n;\n    t.sigBytes &gt; r && (t = e.finalize(t)), t.clamp();\n    for (var o = this._oKey = t.clone(), s = this._iKey = t.clone(), a = o.words, c = s.words, l = 0; l &lt; n; l++) a[l] ^= 1549556828, c[l] ^= 909522486;\n    o.sigBytes = s.sigBytes = r, this.reset();\n  },\n  reset: function () {\n    var e = this._hasher;\n    e.reset(), e.update(this._iKey);\n  },\n  update: function (e) {\n    return this._hasher.update(e), this;\n  },\n  finalize: function (e) {\n    var t = this._hasher,\n      n = t.finalize(e);\n    return t.reset(), t.finalize(this._oKey.clone().concat(n));\n  }\n})) $complex-export$"
@@ -5864,23 +5463,11 @@ let module_deps_data = {
       "1354",
       "2112"
     ],
-    "lines": 35
-  },
-  "9825": {
-    "deps": [
-      6143
-    ],
-    "exports": [
-      "$complex-export$ require(6143) $complex-export$"
-    ],
-    "importedBy": [
-      "2279"
-    ],
-    "lines": 2
+    "lines": 34
   },
   "9829": {
     "deps": [
-      9608
+      "9608"
     ],
     "exports": [
       "rebuildTree",
@@ -5896,12 +5483,12 @@ let module_deps_data = {
       "4855",
       "5288"
     ],
-    "lines": 120
+    "lines": 119
   },
   "9852": {
     "deps": [
-      7147,
-      1017
+      "\"fs\"",
+      "\"path\""
     ],
     "exports": [
       "prepareTokenizer",
@@ -5919,12 +5506,12 @@ let module_deps_data = {
       "4723",
       "7408"
     ],
-    "lines": 184
+    "lines": 183
   },
   "9864": {
     "deps": [
-      3487,
-      6776
+      "3487",
+      "6776"
     ],
     "exports": [
       "default"
@@ -5932,11 +5519,11 @@ let module_deps_data = {
     "importedBy": [
       "8200"
     ],
-    "lines": 96
+    "lines": 95
   },
   "9867": {
     "deps": [
-      6372
+      "6372"
     ],
     "exports": [
       "$maybe-default$ <anonymouse-function> $maybe-default$"
@@ -5946,7 +5533,7 @@ let module_deps_data = {
       "3964",
       "4046"
     ],
-    "lines": 119
+    "lines": 118
   },
   "9871": {
     "deps": [],
@@ -5954,12 +5541,12 @@ let module_deps_data = {
     "importedBy": [
       "9958"
     ],
-    "lines": 26
+    "lines": 25
   },
   "9872": {
     "deps": [
-      3685,
-      4544
+      "\"http\"",
+      "4544"
     ],
     "exports": [
       "Headers"
@@ -5971,13 +5558,13 @@ let module_deps_data = {
       "6143",
       "8359"
     ],
-    "lines": 113
+    "lines": 112
   },
   "9899": {
     "deps": [
-      299,
-      1133,
-      6333
+      "299",
+      "1133",
+      "6333"
     ],
     "exports": [
       "logger",
@@ -6005,12 +5592,12 @@ let module_deps_data = {
       "9380",
       "main"
     ],
-    "lines": 146
+    "lines": 145
   },
   "9931": {
     "deps": [
-      1788,
-      569
+      "1788",
+      "569"
     ],
     "exports": [
       "getNeighborSnippets",
@@ -6019,11 +5606,11 @@ let module_deps_data = {
     "importedBy": [
       "1747"
     ],
-    "lines": 77
+    "lines": 76
   },
   "9940": {
     "deps": [
-      464
+      "464"
     ],
     "exports": [
       "getNodeStart",
@@ -6034,28 +5621,25 @@ let module_deps_data = {
     "importedBy": [
       "4723"
     ],
-    "lines": 516
+    "lines": 515
   },
   "9958": {
     "deps": [
-      7220,
-      4101,
-      9871,
-      320,
-      8602,
-      495,
-      8934,
-      7300,
-      4526,
-      935,
-      8082,
-      901,
-      3092,
-      6279,
-      6290,
-      7339,
-      9697,
-      6376
+      "7220",
+      "9871",
+      "320",
+      "8602",
+      "495",
+      "7300",
+      "4526",
+      "935",
+      "8082",
+      "901",
+      "3092",
+      "6279",
+      "6290",
+      "7339",
+      "9697"
     ],
     "exports": [
       "AvailabilityData",
@@ -6081,12 +5665,12 @@ let module_deps_data = {
       "5290",
       "9382"
     ],
-    "lines": 22
+    "lines": 21
   },
   "9962": {
     "deps": [
-      5740,
-      5282
+      "5740",
+      "5282"
     ],
     "exports": [
       "$maybe-default$ i $maybe-default$"
@@ -6099,12 +5683,12 @@ let module_deps_data = {
       "9253",
       "9574"
     ],
-    "lines": 117
+    "lines": 116
   },
   "9968": {
     "deps": [
-      8249,
-      5109
+      "8249",
+      "5109"
     ],
     "exports": [
       "$complex-export$ r.mode.CTRGladman $complex-export$"
@@ -6112,22 +5696,12 @@ let module_deps_data = {
     "importedBy": [
       "1354"
     ],
-    "lines": 57
-  },
-  "305513": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "3055563"
-    ],
-    "lines": 2
+    "lines": 56
   },
   "305587": {
     "deps": [
-      3055622,
-      3055747,
-      3055622,
-      3055747
+      "\"path\"",
+      "\"fs\""
     ],
     "exports": [
       "$maybe-default$ i $maybe-default$",
@@ -6137,12 +5711,12 @@ let module_deps_data = {
       "3055306",
       "3055306"
     ],
-    "lines": 2847
+    "lines": 2846
   },
   "305594": {
     "deps": [
-      3055747,
-      3055622
+      "\"fs\"",
+      "\"path\""
     ],
     "exports": [
       "prepareTokenizer",
@@ -6160,12 +5734,12 @@ let module_deps_data = {
       "3055456",
       "3055563"
     ],
-    "lines": 184
+    "lines": 183
   },
   "3055125": {
     "deps": [
-      3055417,
-      3055404
+      "3055417",
+      "3055404"
     ],
     "exports": [
       "getNeighborSnippets",
@@ -6174,12 +5748,12 @@ let module_deps_data = {
     "importedBy": [
       "3055312"
     ],
-    "lines": 77
+    "lines": 76
   },
   "3055179": {
     "deps": [
-      3055622,
-      3055306
+      "\"path\"",
+      "3055306"
     ],
     "exports": [
       "extractLocalImportContext",
@@ -6188,12 +5762,12 @@ let module_deps_data = {
     "importedBy": [
       "3055312"
     ],
-    "lines": 278
+    "lines": 277
   },
   "3055250": {
     "deps": [
-      3055469,
-      3055617
+      "3055469",
+      "3055617"
     ],
     "exports": [
       "getWindowsDelineations"
@@ -6201,11 +5775,11 @@ let module_deps_data = {
     "importedBy": [
       "3055404"
     ],
-    "lines": 76
+    "lines": 75
   },
   "3055271": {
     "deps": [
-      3055747
+      "\"fs\""
     ],
     "exports": [
       "defaultFileSystem",
@@ -6214,13 +5788,12 @@ let module_deps_data = {
     "importedBy": [
       "3055563"
     ],
-    "lines": 19
+    "lines": 18
   },
   "3055306": {
     "deps": [
-      3055622,
-      305587,
-      305587
+      "\"path\"",
+      "305587"
     ],
     "exports": [
       "getFunctionPositions",
@@ -6247,17 +5820,17 @@ let module_deps_data = {
       "3055610",
       "3055670"
     ],
-    "lines": 293
+    "lines": 292
   },
   "3055312": {
     "deps": [
-      3055417,
-      3055179,
-      3055125,
-      3055670,
-      305594,
-      3055456,
-      3055395
+      "3055417",
+      "3055179",
+      "3055125",
+      "3055670",
+      "305594",
+      "3055456",
+      "3055395"
     ],
     "exports": [
       "getPrompt",
@@ -6285,11 +5858,11 @@ let module_deps_data = {
       "3055563",
       "3055670"
     ],
-    "lines": 355
+    "lines": 354
   },
   "3055395": {
     "deps": [
-      305594
+      "305594"
     ],
     "exports": [
       "findEditDistanceScore"
@@ -6297,12 +5870,12 @@ let module_deps_data = {
     "importedBy": [
       "3055312"
     ],
-    "lines": 38
+    "lines": 37
   },
   "3055404": {
     "deps": [
-      3055250,
-      3055467
+      "3055250",
+      "3055467"
     ],
     "exports": [
       "computeScore",
@@ -6314,7 +5887,7 @@ let module_deps_data = {
       "9575",
       "3055125"
     ],
-    "lines": 85
+    "lines": 84
   },
   "3055417": {
     "deps": [],
@@ -6330,12 +5903,12 @@ let module_deps_data = {
       "3055312",
       "3055563"
     ],
-    "lines": 316
+    "lines": 315
   },
   "3055456": {
     "deps": [
-      3055312,
-      305594
+      "3055312",
+      "305594"
     ],
     "exports": [
       "Priorities",
@@ -6348,11 +5921,11 @@ let module_deps_data = {
     "importedBy": [
       "3055312"
     ],
-    "lines": 307
+    "lines": 306
   },
   "3055467": {
     "deps": [
-      3055312
+      "3055312"
     ],
     "exports": [
       "splitIntoWords",
@@ -6362,12 +5935,12 @@ let module_deps_data = {
     "importedBy": [
       "3055404"
     ],
-    "lines": 268
+    "lines": 267
   },
   "3055469": {
     "deps": [
-      3055876,
-      3055617
+      "3055876",
+      "3055617"
     ],
     "exports": [
       "parseTree",
@@ -6383,18 +5956,18 @@ let module_deps_data = {
     "importedBy": [
       "3055250"
     ],
-    "lines": 208
+    "lines": 207
   },
   "3055563": {
     "deps": [
-      3055622,
-      305513,
-      3055306,
-      3055610,
-      3055312,
-      305594,
-      3055417,
-      3055271
+      "\"path\"",
+      "\"worker_threads\"",
+      "3055306",
+      "3055610",
+      "3055312",
+      "305594",
+      "3055417",
+      "3055271"
     ],
     "exports": [
       "createWorker",
@@ -6403,13 +5976,20 @@ let module_deps_data = {
       "languageCommentMarkers"
     ],
     "importedBy": [
-      "3055"
+      "3055",
+      "766",
+      "1133",
+      "2533",
+      "4969",
+      "9189",
+      "9334",
+      "main"
     ],
-    "lines": 51
+    "lines": 50
   },
   "3055610": {
     "deps": [
-      3055306
+      "3055306"
     ],
     "exports": [
       "getNodeStart",
@@ -6420,11 +6000,11 @@ let module_deps_data = {
     "importedBy": [
       "3055563"
     ],
-    "lines": 516
+    "lines": 515
   },
   "3055617": {
     "deps": [
-      3055876
+      "3055876"
     ],
     "exports": [
       "rebuildTree",
@@ -6440,25 +6020,12 @@ let module_deps_data = {
       "3055250",
       "3055469"
     ],
-    "lines": 120
-  },
-  "3055622": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "305587",
-      "305587",
-      "305594",
-      "3055179",
-      "3055306",
-      "3055563"
-    ],
-    "lines": 2
+    "lines": 119
   },
   "3055670": {
     "deps": [
-      3055312,
-      3055306
+      "3055312",
+      "3055306"
     ],
     "exports": [
       "getSiblingFunctionStart",
@@ -6467,18 +6034,7 @@ let module_deps_data = {
     "importedBy": [
       "3055312"
     ],
-    "lines": 93
-  },
-  "3055747": {
-    "deps": [],
-    "exports": [],
-    "importedBy": [
-      "305587",
-      "305587",
-      "305594",
-      "3055271"
-    ],
-    "lines": 2
+    "lines": 92
   },
   "3055876": {
     "deps": [],
@@ -6498,51 +6054,51 @@ let module_deps_data = {
       "3055469",
       "3055617"
     ],
-    "lines": 80
+    "lines": 79
   },
   "main": {
     "deps": [
-      3055,
-      406,
-      9496,
-      362,
-      299,
-      1133,
-      4197,
-      7870,
-      9408,
-      1839,
-      9189,
-      9748,
-      8965,
-      5413,
-      9899,
-      2279,
-      1547,
-      4419,
-      6722,
-      2533,
-      766,
-      6333,
-      956,
-      70,
-      8771,
-      6403,
-      3136,
-      7057,
-      3197,
-      1862,
-      9425,
-      3060,
-      1929,
-      6267,
-      2990,
-      6857,
-      9477,
-      7254,
-      4428,
-      8129,
-      385
+      3055563,
+      "406",
+      "\"vscode\"",
+      "362",
+      "299",
+      "1133",
+      "4197",
+      "7870",
+      "9408",
+      "1839",
+      "9189",
+      "9748",
+      "8965",
+      "5413",
+      "9899",
+      "2279",
+      "1547",
+      "4419",
+      "6722",
+      "2533",
+      "766",
+      "6333",
+      "956",
+      "70",
+      "8771",
+      "6403",
+      "3136",
+      "7057",
+      "3197",
+      "1862",
+      "9425",
+      "3060",
+      "1929",
+      "6267",
+      "2990",
+      "6857",
+      "9477",
+      "7254",
+      "4428",
+      "8129",
+      "385"
     ],
     "exports": [
       "deactivate",
@@ -6550,6 +6106,6 @@ let module_deps_data = {
       "init"
     ],
     "importedBy": [],
-    "lines": 250
+    "lines": 249
   }
 }

@@ -1,9 +1,9 @@
 module = require.nmd(module);
 var r,
   o = require(9125).SourceMapConsumer,
-  i = require(1017);
+  i = require("path");
 try {
-  if ((r = require(7147)).existsSync && r.readFileSync) {
+  if ((r = require("fs")).existsSync && r.readFileSync) {
     r = null;
   }
 } catch (e) {}

@@ -1,4 +1,4 @@
-const { validateHeaderName: r, validateHeaderValue: o } = require(3685),
+const { validateHeaderName: r, validateHeaderValue: o } = require("http"),
   { isPlainObject: i } = require(4544),
   s = Symbol("Headers internals"),
   a = (e) => {

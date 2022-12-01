@@ -9,10 +9,10 @@ var r =
           }
       return e;
     },
-  o = require(3685),
-  i = require(5687),
-  s = require(7310),
-  a = require(2057),
+  o = require("http"),
+  i = require("https"),
+  s = require("url"),
+  a = require("constants"),
   c = require(5282),
   l = require(9036),
   u = (function () {

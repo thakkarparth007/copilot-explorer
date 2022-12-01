@@ -1,4 +1,4 @@
-var r = require(5687),
+var r = require("https"),
   o = require(8723),
   i = require(5282),
   s = (function () {

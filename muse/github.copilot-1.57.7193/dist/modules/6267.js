@@ -2,7 +2,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.commandOpenPanel = exports.completionContextForEditor = undefined;
-const r = require(9496),
+const r = require("vscode"),
   o = require(256);
 function completionContextForEditor(e, t, n) {
   return n || o.completionContextForDocument(e, t.document, t.selection.active);

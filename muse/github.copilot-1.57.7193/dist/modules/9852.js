@@ -1,5 +1,5 @@
-const r = require(7147),
-  o = require(1017),
+const r = require("fs"),
+  o = require("path"),
   i = (e, t) => Array.from(Array(t).keys()).slice(e),
   s = (e) => e.charCodeAt(0),
   a = new TextDecoder("utf-8"),

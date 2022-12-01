@@ -27,7 +27,7 @@ exports.azureCoreTracing = {
   versionSpecifier: ">= 1.0.0 < 2.0.0",
   patch: function (e) {
     try {
-      var s = new (0, require(8028).BasicTracer)(
+      var s = new (0, require("@opentelemetry/tracing").BasicTracer)(
           o.channel.spanContextPropagator
             ? {
                 scopeManager: o.channel.spanContextPropagator,

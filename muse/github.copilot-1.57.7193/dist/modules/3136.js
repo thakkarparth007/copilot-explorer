@@ -2,7 +2,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.TextDocumentManager = exports.getRelativePath = undefined;
-const r = require(1017);
+const r = require("path");
 exports.getRelativePath = function (e, t) {
   for (const n of e) {
     const e = n.fsPath;

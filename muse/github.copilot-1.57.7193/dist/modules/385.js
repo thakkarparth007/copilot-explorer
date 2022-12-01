@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.ExtensionTextDocumentManager = undefined;
-const r = require(1017),
-  o = require(9496),
+const r = require("path"),
+  o = require("vscode"),
   i = require(3136);
 class ExtensionTextDocumentManager extends i.TextDocumentManager {
   constructor() {

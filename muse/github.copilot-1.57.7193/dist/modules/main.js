@@ -2,9 +2,9 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.deactivate = exports.activate = exports.init = undefined;
-const t = require(3055);
+const t = require(3055563);
 require(406);
-const o = require(9496),
+const o = require("vscode"),
   i = require(362),
   s = require(299),
   a = require(1133),

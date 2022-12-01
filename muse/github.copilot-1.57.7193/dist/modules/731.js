@@ -1,5 +1,5 @@
-var r = require(3685),
-  o = require(5687),
+var r = require("http"),
+  o = require("https"),
   i = require(5282),
   s = require(5740),
   a = require(9036),

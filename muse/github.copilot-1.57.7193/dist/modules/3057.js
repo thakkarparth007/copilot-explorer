@@ -1,4 +1,4 @@
-var r = require(9491),
+var r = require("assert"),
   o = require(9867),
   i = "error@context";
 function s(e) {

@@ -19,7 +19,7 @@ exports.getFunctionPositions =
   exports.isSupportedLanguageId =
   exports.WASMLanguage =
     undefined;
-const r = require(1017),
+const r = require("path"),
   o = require(4087),
   i = require(4087);
 var s;

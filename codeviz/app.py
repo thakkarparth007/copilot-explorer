@@ -7,9 +7,9 @@ from pathlib import Path
 app = Flask(__name__)
 
 cur_dir = Path(__file__).parent
-muse_dir = cur_dir / '../muse/github.copilot-1.57.7193/dist'
-module_deps_data = "let module_deps_data = " + open(muse_dir/'module_deps.json').read()
-module_codes_data = "let module_codes_data = " + open(muse_dir/'module_codes.json').read()
+data_dir = cur_dir / 'data'
+module_deps_data = open(data_dir/'module_deps.js').read()
+module_codes_data = open(data_dir/'module_codes.js').read()
 
 @app.route('/')
 def home():

@@ -7,6 +7,7 @@ const path = require('path');
 const prettier = require("prettier");
 
 const rootPath = path.join(__dirname, "muse/github.copilot-1.57.7193/dist");
+const outPath = path.join(__dirname, "codeviz/data");
 // const srcFile = path.join(rootPath, 'extension_expanded.js');
 const srcFile = path.join(rootPath, 'extension_expanded_v2.js'); // this modifies module 3055 by splitting it into multiple modules (originally 3055 consisted of multiple nested modules which weren't being extracted automatically. So I extracted them manually)
 const mainModuleSrcFile = path.join(rootPath, "extension_expanded_main.js");
@@ -256,7 +257,7 @@ function collectModuleDepsAndExports(moduleId, moduleCodeRaw, metadata) {
             assert.equal(requireCall.node.arguments.length, 1);
             const depId = requireCall.node.arguments[0].value;
             // metadata["deps"].push({depId, path: getModulePath(depId)});
-            metadata["deps"].push(depId);
+            metadata["deps"].push(depId + "");
         }
     }
 
@@ -426,7 +427,7 @@ function handleModule(moduleId, moduleAst, metadata) {
 
     const moduleCode2 = prettier.format(moduleCode, {
         parser: "babel",
-    });
+    }).trim();
     
     fs.writeFileSync(getModulePath(moduleId), moduleCode2);
 }
@@ -472,24 +473,104 @@ for (const moduleId in moduleDeps) {
     }
 }
 
+function removeDups(arr) {
+    return [...new Set(arr)];
+}
+function removeModule(moduleId) {
+    if (!moduleDeps[moduleId]) {
+        return;
+    }
+
+    const importers = moduleDeps[moduleId]["importedBy"];
+    for (const importer of importers) {
+        if (!moduleDeps[importer]) {
+            console.log("WARNING: " + importer + " imports " + moduleId + " but it's not in the list of modules");
+            continue;
+        }
+        
+        const metadata = moduleDeps[importer];
+        metadata["deps"] = metadata["deps"].filter(dep => dep != moduleId);
+    }
+    delete moduleDeps[moduleId];
+}
+
 const moduleCodes = {};
 // add line number info
 for (const moduleId in moduleDeps) {
     const metadata = moduleDeps[moduleId];
-    const moduleCode = fs.readFileSync(getModulePath(moduleId), "utf8");
+    const moduleCode = fs.readFileSync(getModulePath(moduleId), "utf8").trim();
     const lines = moduleCode.split("\n");
     metadata["lines"] = lines.length;
+    if (lines.length == 1)
+    {
+        const isEmptyFunction = moduleCode == "module.exports = function () {};"
+        const stdLibAliasMatch = moduleCode.match(/^module.exports = require\(("[^"]+")\);?$/);
+        const internalAliasMatch = moduleCode.match(/^module.exports = require\(([\d_]+)\);?$/);
+
+        if (isEmptyFunction)
+        {
+            // it's an empty module. Remove it. We don't want noise.
+            removeModule(moduleId);
+            console.log("Removing empty module " + moduleId);
+            continue;
+        } else if (stdLibAliasMatch || internalAliasMatch) {
+            // it's an alias to another module. Remove the aliasing and
+            // make modules that import it import the original module.
+            // we're not doing this recursively because it's not needed for this project.
+
+            const originalModuleId = stdLibAliasMatch ? stdLibAliasMatch[1] : parseInt(internalAliasMatch[1].replace("_", ""));
+            const aliasingModule = moduleId;
+            const importers = moduleDeps[aliasingModule]["importedBy"];
+
+            // step 0: update originalModule's importedBy for internal modules
+            if (internalAliasMatch) {
+                moduleDeps[originalModuleId]["importedBy"] = removeDups(
+                    moduleDeps[originalModuleId]["importedBy"].concat(
+                        moduleDeps[aliasingModule]["importedBy"]
+                    )
+                );
+            }
+
+            // update the deps and code
+            for (const importer of importers) {
+                if (!moduleDeps[importer]) {
+                    console.log("WARNING: " + importer + " imports " + moduleId + " but it's not in the list of modules");
+                    console.log(importers)
+                }
+                // step 1: update the importers
+                const metadata = moduleDeps[importer];
+                metadata["deps"] = removeDups(
+                    metadata["deps"].map(x => x == aliasingModule ? originalModuleId : x)
+                );
+
+                // step 2: update the code
+                const moduleCode = fs.readFileSync(getModulePath(importer), "utf8").trim();
+                // replace all occurences of `require(aliasingModule)` with `require(originalModule)`
+                const newModuleCode = moduleCode.replace(
+                    new RegExp(`require\\(${aliasingModule}\\)`, "g"),
+                    `require(${originalModuleId})`
+                );
+                fs.writeFileSync(getModulePath(importer), newModuleCode);
+            }
+
+            // finally remove the aliasing module
+            delete moduleDeps[moduleId];
+            console.log("Removing aliasing module " + moduleId + " (aliasing " + originalModuleId + ")");
+            continue;
+        }
+    }
+    // if it's not an empty/alias module, add it to the list of modules
     moduleCodes[moduleId] = moduleCode;
 }
 
 // write the module dependency graph
 fs.writeFileSync(
-    path.join(rootPath, "module_deps.json"),
-    JSON.stringify(moduleDeps, null, 2)
+    path.join(outPath, "module_deps.js"),
+    "let module_deps_data = " + JSON.stringify(moduleDeps, null, 2),
 );
 
 // write the module codes
 fs.writeFileSync(
-    path.join(rootPath, "module_codes.json"),
-    JSON.stringify(moduleCodes, null, 2)
+    path.join(outPath, "module_codes.js"),
+    "let module_codes_data = " + JSON.stringify(moduleCodes, null, 2),
 );

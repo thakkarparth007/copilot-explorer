@@ -1,1 +1,1 @@
-module.exports = n(1017);
+module.exports = require("path");

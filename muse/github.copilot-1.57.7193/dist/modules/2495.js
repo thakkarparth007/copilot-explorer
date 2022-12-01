@@ -2,7 +2,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 var r = require(4953),
-  o = require(2781);
+  o = require("stream");
 exports.console = {
   versionSpecifier: ">= 4.0.0",
   patch: function (e) {
@@ -60,5 +60,5 @@ exports.console = {
 };
 exports.enable = function () {
   r.channel.registerMonkeyPatch("console", exports.console);
-  require(6206);
+  require("console");
 };

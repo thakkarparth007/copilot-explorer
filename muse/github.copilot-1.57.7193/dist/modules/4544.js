@@ -1,14 +1,14 @@
 const {
     constants: { MAX_LENGTH: r },
-  } = require(4300),
-  { pipeline: o, PassThrough: i } = require(2781),
-  { promisify: s } = require(3837),
+  } = require("buffer"),
+  { pipeline: o, PassThrough: i } = require("stream"),
+  { promisify: s } = require("util"),
   {
     createGunzip: a,
     createInflate: c,
     createBrotliDecompress: l,
     constants: { Z_SYNC_FLUSH: u },
-  } = require(9796),
+  } = require("zlib"),
   d = require(8104)("helix-fetch:utils"),
   p = s(o),
   h = (e, t) => {

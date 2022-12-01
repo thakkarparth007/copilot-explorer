@@ -1,4 +1,4 @@
-const { EventEmitter: r } = require(2361);
+const { EventEmitter: r } = require("events");
 module.exports = () => {
   const e = {},
     t = new r();

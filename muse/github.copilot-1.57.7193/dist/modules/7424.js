@@ -1,9 +1,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
-var r = require(1017),
+var r = require("path"),
   o = require(4014),
-  i = require(8188),
+  i = require("module"),
   s = Object.keys(process.binding("natives")),
   a = i.prototype.require;
 exports.makePatchingRequire = function (e) {

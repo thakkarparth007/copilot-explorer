@@ -2,7 +2,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.defaultFileSystem = exports.FileSystem = undefined;
-const r = require(7147);
+const r = require("fs");
 exports.FileSystem = class {};
 exports.defaultFileSystem = {
   readFile: (e) => r.promises.readFile(e),

@@ -1,5 +1,5 @@
-const { EventEmitter: r } = require(2361),
-  { Readable: o } = require(2781),
+const { EventEmitter: r } = require("events"),
+  { Readable: o } = require("stream"),
   i = require(8104)("helix-fetch"),
   s = require(8348),
   { Body: a } = require(5600),

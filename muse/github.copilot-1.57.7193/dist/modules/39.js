@@ -1,5 +1,5 @@
-const r = require(6224),
-  o = require(3837);
+const r = require("tty"),
+  o = require("util");
 exports.init = function (e) {
   e.inspectOpts = {};
   const n = Object.keys(exports.inspectOpts);

@@ -14,7 +14,7 @@ r =
     }
     if (!r)
       try {
-        r = require(6113);
+        r = require("crypto");
       } catch (e) {}
     var o = function () {
         if (r) {

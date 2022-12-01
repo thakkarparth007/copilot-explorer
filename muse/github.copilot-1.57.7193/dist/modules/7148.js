@@ -9,7 +9,7 @@ var r =
           }
       return e;
     },
-  o = require(2037),
+  o = require("os"),
   i = require(5290),
   s = require(3580),
   a = require(5740),

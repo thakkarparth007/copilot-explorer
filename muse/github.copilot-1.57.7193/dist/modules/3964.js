@@ -1,7 +1,7 @@
-const r = require(3837),
-  o = require(9491),
+const r = require("util"),
+  o = require("assert"),
   i = require(9867),
-  s = require(852),
+  s = require("async_hooks"),
   a = "error@context",
   c = process.env.DEBUG_CLS_HOOKED;
 let l = -1;

@@ -39,7 +39,7 @@ var o = require(9253),
       if (e.isNodeVersionCompatible()) {
         if (null == e._metricsAvailable && t && !this._isInitialized)
           try {
-            var a = require(9166);
+            var a = require("applicationinsights-native-metrics");
             (e._emitter = new a()),
               (e._metricsAvailable = !0),
               s.info("Native metrics module successfully loaded!");

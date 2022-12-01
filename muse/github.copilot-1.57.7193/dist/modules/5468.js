@@ -1,10 +1,10 @@
-require(1808);
+require("net");
 var debug,
   o = require(3055_404),
-  i = require(3685),
-  s = require(5687),
-  a = require(2361),
-  c = (require(9491), require(3837));
+  i = require("http"),
+  s = require("https"),
+  a = require("events"),
+  c = (require("assert"), require("util"));
 function l(e) {
   var t = this;
   t.options = e || {};

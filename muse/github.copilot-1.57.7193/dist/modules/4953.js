@@ -106,7 +106,7 @@ var i = function (e) {
   })();
 if (global.diagnosticsSource) {
   global.diagnosticsSource = new s();
-  require(8188).prototype.require = r.makePatchingRequire(
+  require("module").prototype.require = r.makePatchingRequire(
     global.diagnosticsSource.getPatchesObject()
   );
 }

@@ -34,8 +34,8 @@ exports.createWorker =
   exports.comment =
   exports.languageCommentMarkers =
     undefined;
-const i = require(1017),
-  s = require(1267);
+const i = require("path"),
+  s = require("worker_threads");
 o(require(464), exports);
 o(require(9940), exports);
 o(require(1747), exports);

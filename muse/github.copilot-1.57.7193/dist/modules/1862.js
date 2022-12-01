@@ -6,7 +6,7 @@ exports.VSCodeCopilotTokenManager =
   exports.setExtensionContext =
   exports.telemetryAcceptanceKey =
     undefined;
-const r = require(9496),
+const r = require("vscode"),
   o = require(362),
   i = require(6794),
   s = require(9899),

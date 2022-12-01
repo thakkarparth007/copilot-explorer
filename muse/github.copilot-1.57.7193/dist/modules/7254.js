@@ -2,7 +2,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.CopilotStatusBar = undefined;
-const r = require(9496),
+const r = require("vscode"),
   o = require(106),
   i = require(1133),
   s = require(6333),

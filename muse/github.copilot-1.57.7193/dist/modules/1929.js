@@ -2,7 +2,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.OpenCopilotActionProvider = undefined;
-const r = require(9496),
+const r = require("vscode"),
   o = require(256),
   i = require(6333),
   s = require(3060),

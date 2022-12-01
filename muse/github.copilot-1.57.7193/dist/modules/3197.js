@@ -8,7 +8,7 @@ exports.registerGhostText =
   exports.ghostTextLogger =
   exports.getInsertionTextFromCompletion =
     undefined;
-const r = require(9496),
+const r = require("vscode"),
   o = require(1133),
   i = require(2218),
   s = require(9334),

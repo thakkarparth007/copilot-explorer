@@ -1,6 +1,6 @@
-var r = require(2037),
-  o = require(7147),
-  i = require(1017),
+var r = require("os"),
+  o = require("fs"),
+  i = require("path"),
   s = require(5290),
   a = require(5282),
   c = (function () {

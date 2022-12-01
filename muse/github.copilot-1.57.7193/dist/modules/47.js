@@ -2,7 +2,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.getGithubAccount = exports.getSession = undefined;
-const r = require(9496),
+const r = require("vscode"),
   o = ["read:user"];
 let i,
   s = !1;

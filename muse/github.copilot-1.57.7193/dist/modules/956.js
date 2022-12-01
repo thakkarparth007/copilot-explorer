@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.readTestingGitHubToken = exports.makeTestingCopilotTokenManager =
   undefined;
-const r = require(7147),
+const r = require("fs"),
   o = require(362);
 function readTestingGitHubToken() {
   const e = `${process.env.HOME}/.copilot-testing-gh-token`;

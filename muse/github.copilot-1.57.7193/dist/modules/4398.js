@@ -2,10 +2,10 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 process.env.APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = !0;
-var r = require(7147),
-  o = require(2037),
-  i = require(1017),
-  s = require(9496),
+var r = require("fs"),
+  o = require("os"),
+  i = require("path"),
+  s = require("vscode"),
   a = require(9574),
   c = (function () {
     function e(e, t, n, o) {

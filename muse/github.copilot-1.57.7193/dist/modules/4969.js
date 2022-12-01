@@ -6,7 +6,7 @@ exports.extractPrompt =
   exports._contextTooShort =
   exports.MIN_PROMPT_CHARS =
     undefined;
-const r = require(3055),
+const r = require(3055563),
   o = require(1133),
   i = require(1839),
   s = require(9189),

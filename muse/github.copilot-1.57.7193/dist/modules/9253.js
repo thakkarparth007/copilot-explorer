@@ -1,7 +1,7 @@
 var r = require(9962),
   o = require(5158),
   i = require(3580),
-  s = require(7310),
+  s = require("url"),
   a = (function () {
     function e(t) {
       var n = this;

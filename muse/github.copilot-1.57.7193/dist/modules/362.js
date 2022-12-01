@@ -11,7 +11,7 @@ exports.refreshToken =
   exports.nowSeconds =
   exports.TOKEN_REFRESHED_EVENT =
     undefined;
-const r = require(2361),
+const r = require("events"),
   o = require(1133),
   i = require(9899),
   s = require(2279),

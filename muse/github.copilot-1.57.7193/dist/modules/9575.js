@@ -1,8 +1,8 @@
-const { Readable: r } = require(2781),
+const { Readable: r } = require("stream"),
   o = require(3055_404),
   {
     types: { isAnyArrayBuffer: i },
-  } = require(3837),
+  } = require("util"),
   s = require(8348),
   a = require(8104)("helix-fetch:core"),
   { RequestAbortedError: c } = require(1787),

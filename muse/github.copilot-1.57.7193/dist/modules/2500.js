@@ -1,4 +1,4 @@
-const { Readable: r } = require(2781),
+const { Readable: r } = require("stream"),
   { Headers: o } = require(9872),
   { Response: i } = require(2981),
   s = Symbol("CacheableResponse internals");

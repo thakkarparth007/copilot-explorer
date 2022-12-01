@@ -1,5 +1,5 @@
-const { connect: r, constants: o } = require(1995),
-  { Readable: i } = require(2781),
+const { connect: r, constants: o } = require("http2"),
+  { Readable: i } = require("stream"),
   s = require(8104)("helix-fetch:h2"),
   { RequestAbortedError: a } = require(1787),
   { decodeStream: c } = require(4544),

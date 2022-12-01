@@ -1,4 +1,4 @@
-var r = require(2037),
+var r = require("os"),
   o = require(3580),
   i = (function () {
     function e(t, n, r) {

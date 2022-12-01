@@ -6,7 +6,7 @@ exports.getGhostText =
   exports.ResultType =
   exports.ghostTextLogger =
     undefined;
-const r = require(3055),
+const r = require(3055563),
   o = require(2277),
   i = require(3076),
   s = require(106),

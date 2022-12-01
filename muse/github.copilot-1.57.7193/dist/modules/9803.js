@@ -1,6 +1,6 @@
-const r = require(3685),
-  o = require(5687),
-  { Readable: i } = require(2781),
+const r = require("http"),
+  o = require("https"),
+  { Readable: i } = require("stream"),
   s = require(8104)("helix-fetch:h1"),
   { RequestAbortedError: a } = require(1787),
   { decodeStream: c } = require(4544);

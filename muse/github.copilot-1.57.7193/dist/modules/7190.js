@@ -1,4 +1,4 @@
-const r = require(9512);
+const r = require("timers");
 function o() {}
 function i() {}
 function s() {}

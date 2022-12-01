@@ -1,1 +1,1 @@
-module.exports = n(7147);
+module.exports = require("fs");

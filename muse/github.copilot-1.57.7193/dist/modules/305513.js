@@ -1,1 +1,1 @@
-module.exports = n(1267);
+module.exports = require("worker_threads");
