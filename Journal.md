@@ -60,3 +60,32 @@
    The color coding is based on my dependency extraction code. That's not perfect yet. So the color coding is not perfect either. But it's a great starting point.
 
 3. IMPORTANT PIECE MISSING: So far I've only extracted modules, but the REAL top level code is still untouched. That's in extension_expanded.js. Gotta work on that next.
+
+## Nov 29-Dec 1:
+
+1. Filtered out modules that are aliases or built-in nodejs modules. This reduced the number of modules by 37.
+
+2. Provided means to rename modules with localStorage persistance. This isn't ideal. I'd like the annotations to persist in a central DB or allow PRs to the repo. But this is good enough for now.
+
+3. Failed experiments with collpasing/expanding of nodes.
+
+4. What's needed now are two things:
+   1. Ability to mark nodes as "interesting" or "uninteresting". This will help in filtering out the noise.
+   2. Renaming variables to make the code more readable. Here's an idea:
+      1. Track data flow of variables.
+      2. If any of the variables/fields the variable is assigned to has a readable name, then rename the variable to that name. If there are multiple, raise a conflict and let the user decide initially till we can automate it.
+
+## Dec 6:
+
+1. Enabled debug-level logging in copilot extension. Found some interesting things:
+   1. Module 2209's actual name is "streamChoices" (very few modules choose to create their own loggers, so this isn't very useful for automation)
+   2. Interesting logging strings:
+      - `Getting completions for user-typing flow - remaining prefix` (found in v1.62, dk if it's there in our current version)
+      - `[post-insertion] [2022-12-07T05:41:59.356Z] stillInCode: Found! Completion <...> in file <...> ...`
+      - Many ABTestexperiment flags are enabled
+      - Model name was found to be cushman-ml! Which means copilot is still based on 12B model. (found in v1.62, dk if it's there in our current version)
+      - Model outputs seem to have logprobs set to null, meaning there might be a way to enable logprobs from client side.
+      - Tokens are streamed one-word-at-a-time
+      - Temperature was set to 0 and n=1 in my case.
+      - Suffix appears to be used now!
+   3. 
