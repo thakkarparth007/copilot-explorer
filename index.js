@@ -567,6 +567,35 @@ for (const moduleId in moduleDeps) {
     moduleCodes[moduleId] = moduleCode;
 }
 
+function findDuplicateModules() {
+    // I noticed some modules have been repeated. I'm not sure why.
+    // This thing checks if a module's code already exists in another module.
+    // If it does, we can remove the module.
+
+    const duplicates = [];
+    for (const moduleId in moduleDeps) {
+        let moduleCode = moduleCodes[moduleId];
+        // remove indentation
+        moduleCode = moduleCode.split("\n").map(line => line.trim()).join("\n");
+
+        for (const otherModuleId in moduleDeps) {
+            if (otherModuleId <= moduleId) {
+                continue;
+            }
+            let otherModuleCode = moduleCodes[otherModuleId];
+            otherModuleCode = otherModuleCode.split("\n").map(line => line.trim()).join("\n");
+            if (otherModuleCode.includes(moduleCode)) {
+                console.log("Module " + moduleId + " is already in " + otherModuleId);
+                duplicates.push(moduleId);
+            }
+        }
+    }
+    return duplicates;
+}
+
+// for now, we're not removing duplicate modules
+const duplicates = findDuplicateModules();
+
 // write the module dependency graph
 fs.writeFileSync(
     path.join(outPath, "module_deps.js"),
@@ -577,4 +606,11 @@ fs.writeFileSync(
 fs.writeFileSync(
     path.join(outPath, "module_codes.js"),
     "let module_codes_data = " + JSON.stringify(moduleCodes, null, 2),
+);
+
+console.log(
+`This is where you'd call predict_annotations.py to predict names and categories for the modules. (predicting_annotations requires a bit of manual labelling first so that we can call codex in few-shot manner. That was done manually once, and there's no need to do it again.)
+
+After that, you'd run the rename_modules.js to rename the modules as per the mix of gold and predicted annotations.
+`
 );

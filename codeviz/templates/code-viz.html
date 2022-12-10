@@ -16,6 +16,14 @@
             height: 100vh;
             width: 100vw;
         }
+        #network-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 35%;
+            height: 35px;
+            z-index: 100;
+        }
         #mynetwork {
             width: 35%;
             height: 100vh;
@@ -36,6 +44,12 @@
             height: 100%;
             overflow: auto;
         }
+        .module-category-color-box {
+            width: 10px;
+            height: 10px;
+            display: inline-block;
+            /* margin: 5px 5px -5px 0; */
+        }
     </style>
 
     <!-- Select2 -->
@@ -48,19 +62,34 @@
 
 <body>
     <div id="main">
+        <div id="network-overlay">
+            <!-- <name for="hide-uninteresting-modules">Hide uninteresting modules:</name> -->
+            <!-- <input type="checkbox" id="hide-uninteresting-modules" checked /> -->
+            <fieldset id="show-modules-with-category-fieldset">
+                <legend>Show selected module types:</legend>
+                <!-- <input type="checkbox" name="show-modules-with-category" value="$unk$"> -->
+            </fieldset>
+        </div>
         <div id="mynetwork"></div>
         <div id="info-panel">
             <div id="code-block">
 
             </div>
             <div id="module-info-wrapper">
-                <label for="module-dropdown">Module</label>
+                <name for="module-dropdown">Module</name>
                 <select id="module-dropdown">
-                    <option value="0">Select a module</option>
+                    <option value="$unk$">Select a module</option>
                 </select>
                 <br>
-                <label for="module-label">Module Name:</label>
-                <input id="module-label" type="text" placeholder="Module label" />
+                <name for="module-name">Module Name:</name>
+                <input id="module-name" type="text" placeholder="Module name" />
+                <br>
+                <!-- <name for="module-interesting">Interesting:</name> -->
+                <!-- <input id="module-interesting" type="checkbox" /> -->
+                <name for="selected-module-category-dropdown">Module Category:</name>
+                <select id="selected-module-category-dropdown">
+                    <option value="$unk$">Unclassified</option>
+                </select>
                 <div id="module-info">
                     Module info
                 </div>
@@ -68,44 +97,71 @@
         </div>
     </div>
     <script type="text/javascript" src="../data/module_deps.js"></script>
-    <script type="text/javascript" src="../data/module_codes.js"></script>
-    <script type="text/javascript" src="../data/parths_annotations.js"></script>
+    <script type="text/javascript" src="../data/module_codes_renamed.js"></script>
+    <script type="text/javascript" src="../data/module_categories.js"></script>
+    <script type="text/javascript" src="../data/gold_and_predicted_annotations.js"></script>
+    <!-- <script type="text/javascript" src="../data/predicted_annotations.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Select2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script type="text/javascript">
-        // function $(i#d) {
-        //     return document.getElementById(id);
-        // }
+        // load and store annotations
+        function getAnnotations(module_id) {
+            let annotIdent = "module-annotations-" + module_id;
+            let annotation = localStorage.getItem(annotIdent);
+            if (annotation === null) {
+                return gold_and_predicted_annotations[annotIdent] || {};
+            } else {
+                return JSON.parse(annotation);
+            }
+        }
+        function getAnnotation(module_id, key) {
+            return getAnnotations(module_id)[key];
+        }
 
+        function setAnnotation(module_id, key, value) {
+            annotations = getAnnotations(module_id);
+            annotations[key] = value;
+            localStorage.setItem("module-annotations-" + module_id, JSON.stringify(annotations));
+        }
+
+        // apply gold annotations to localstorage - maybe this isn't the best thing to do.
+        // Will overwrite any local changes if the gold annotations change. :(
         try {
-            // merge entries from parths annotations into localstorage if not already there
+            // merge entries from gold annotations into localstorage if not already there
             let changes = false;
-            for (var key in parths_annotations) {
-                if (localStorage.getItem(key) === null) {
-                    localStorage.setItem(key, parths_annotations[key]);
-                    changes = true;
+            for (var key in gold_and_predicted_annotations) {
+                let stored = localStorage.getItem(key);
+                if (stored === null) {
+                    // merge keys
+                    for (let [annot, val] of Object.entries(gold_and_predicted_annotations[key])) {
+                        if (stored[annot] === undefined) {
+                            // only overwrite if not already set
+                            stored[annot] = val;
+                            changes = true;
+                        } else if (stored[annot] !== val) {
+                            console.log(`Annotation mismatch for ${key}: gold=${val}, local=${stored[annot]} (for module ${key.split("-")[2]})`);
+                        }
+                    }
+                    localStorage.setItem(key, JSON.stringify(stored));
                 }
             }
             if (changes) {
-                console.log("Merged parths annotations into localstorage");
+                console.log("Merged gold annotations into localstorage");
             } else {
                 console.log("No changes to annotations in localstorage");
             }
         } catch (e) {
             // do nothing
         }
+    </script>
+    <script type="text/javascript">
         
         // fill the select box with the module names
         var moduleDropdown = $('#module-dropdown');
         for (let module_id of Object.keys(module_deps_data)) {
-            // var option = document.createElement('option');
-            // option.value = module_id;
-            // // right now modules are not named
-            // option.text = module_id + "(" + module_deps_data[module_id].lines + " LOC)";
-            // moduleDropdown.appendChild(option);
-            
-            let module_name = localStorage.getItem("module-label-" + module_id) || module_id;
+            let module_name = getAnnotation(module_id, "name") || module_id;
+            let module_category = getAnnotation(module_id, "category") || "$unk$";
             let module_display_name = module_name + "(" + module_id + ")";
             if (module_name == module_id) {
                 module_display_name = module_id + "(" + module_deps_data[module_id].lines + " LOC)";
@@ -118,6 +174,81 @@
         }
 
         $(moduleDropdown).select2();
+
+        // populate the module categories select box
+        var showModulesWithSelectedCategoriesFieldSet = $('#show-modules-with-category-fieldset');
+        var showModulesWithSelectedCategories = $("input[name='show-modules-with-category']");
+        var selectedModuleCategoryDropdown = $('#selected-module-category-dropdown');
+        
+        /********* Color stuff *********/
+        var moduleCategoryColors = {}; // map from category to color
+        var MAIN_COLOR = "#d11141";
+        var NOT_INTERESTING_COLOR = "lightgray"
+        var allColors = ["#00b159", "#00aedb", "#f37735", "#ffc425", "#58668b", "#f9caa7", "yellow", "#d0e1f9"];
+        function getSelectedModuleCategories() {
+            return $("input[name='show-modules-with-category']").filter(function() {
+                return this.checked;
+            }).map(function() {
+                return this.value;
+            }).get();
+        }
+        function getColorOfNode(node) {
+            if (node.id == "main") {
+                return MAIN_COLOR;
+            }
+            let is_interesting = getSelectedModuleCategories().includes(node.category);
+            if (is_interesting) {
+                return moduleCategoryColors[node.category];
+            }
+            return NOT_INTERESTING_COLOR;
+        }
+        function getCategoryColorBox(categoryId) {
+            return `<span class='module-category-color-box' style='background-color: ${moduleCategoryColors[categoryId]}'></span>`;
+        }
+        module_categories["$unk$"] = "Unclassified";
+        /********* /Color stuff *********/
+
+        for (let [category_id, category_name] of Object.entries(module_categories)) {
+            moduleCategoryColors[category_id] = allColors.shift();
+            let currColor = moduleCategoryColors[category_id];
+
+            var newOption = $(`
+                <span>
+                    <input type='checkbox' name='show-modules-with-category' value='${category_id}' checked='checked'>
+                    ${getCategoryColorBox(category_id)}
+                    ${category_name}
+                </span>
+            `)
+            // newOption.attr("id", "show-module-category-option-" + category_id);
+            showModulesWithSelectedCategoriesFieldSet.append(newOption);
+
+            var newOption2 = new Option(
+                category_name, category_id, false, false
+            );
+            newOption2.id = "module-category-option-" + category_id;
+            selectedModuleCategoryDropdown.append(newOption2);
+
+        }
+        $(selectedModuleCategoryDropdown).select2({
+            templateResult: function (state) {
+                if (!state.id) {
+                    return state.text;
+                }
+                var $state = $(
+                    `<span>${getCategoryColorBox(state.id)} ` + state.text + "</span>"
+                );
+                return $state;
+            },
+            templateSelection: function (state) {
+                if (!state.id) {
+                    return state.text;
+                }
+                var $state = $(
+                    `<span>${getCategoryColorBox(state.id)} ` + state.text + "</span>"
+                );
+                return $state;
+            }
+        });
     </script>
     <!-- viz.js -->
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
@@ -133,30 +264,54 @@
         var raw_nodes = Object.entries(module_deps_data).map(
             ([key, value]) => ({
                 id: key,
-                label: localStorage.getItem("module-label-" + key) || key,
-                color: value.importedBy.length == 0 ? "red"
-                        : value.deps.length == 0 ? 'orange'
-                        : 'green',
+                name: getAnnotation(key, "name") || key,
+                label: getAnnotation(key, "name") || key,
                 importedBy: value.importedBy,
                 exports: value.exports,
                 lines: value.lines,
-                deps: []
+                deps: [],
+                category: getAnnotation(key, "category") || "$unk$",
+                // is_interesting: value.is_interesting,
+                // hidden: !value.is_interesting
             })
         );
         // update code from local storage
         for (let node of raw_nodes) {
-            module_codes_data[node.id] = localStorage.getItem("module-code-" + node.id) || module_codes_data[node.id];
+            module_codes_data[node.id] = getAnnotation(node.id, "code") || module_codes_data[node.id];
         }
         var nodes = new vis.DataSet(raw_nodes);
+        // add colors
+        for (let node of nodes.get()) {
+            nodes.update({id: node.id, color: getColorOfNode(node)});
+        }
 
         var raw_edges = [];
         for (const [key, value] of Object.entries(module_deps_data)) {
+            if (!nodes.get(key)) {
+                // library dependency
+                console.log("Node not found: " + key);
+                continue;
+            }
             nodes.get(key).deps = value.deps;
             for (const dep of value.deps) {
+                if (!nodes.get(dep)) {
+                    if (dep.startsWith('"') && dep.endsWith('"')) {
+                        // library dependency
+                        continue;
+                    }
+                    console.log("Missing dependency: " + dep);
+                    continue;
+                }
+                // edge is only interesting if dep is interesting
+                let is_interesting = getColorOfNode(nodes.get(dep)) != NOT_INTERESTING_COLOR;
                 raw_edges.push({
                     from: key,
                     to: dep,
-                    arrows: 'to'
+                    arrows: 'to',
+                    color: {
+                        color: is_interesting ? "black" : "lightgray",
+                        // highlight: 'green'
+                    }
                 });
             }
         }
@@ -173,7 +328,8 @@
             layout: {
                 // improvedLayout: false,
                 // hierarchical: {
-                //   direction: "UD",
+                //   direction: "DU",
+                //   sortMethod: "directed",
                 // },
             },
             physics: {
@@ -184,7 +340,7 @@
                     springLength: 95
                 },
                 stabilization: {
-                    iterations: 10,
+                    iterations: 50,
                 },
                 // enabled: false,
             },
@@ -308,7 +464,11 @@
             if ($("#module-dropdown").val() != moduleId) {
                 $("#module-dropdown").val(moduleId).trigger('change');
             }
-            $("#module-label").val(nodes.get(moduleId).label);
+            $("#module-name").val(nodes.get(moduleId).name);
+            // $("#module-interesting").prop("checked", nodes.get(moduleId).is_interesting);
+            if ($("#selected-module-category-dropdown").val() != nodes.get(moduleId).category) {
+                $("#selected-module-category-dropdown").val(nodes.get(moduleId).category || "$unk$").trigger('change');
+            }
 
             // fetch(`/data/module_code/${moduleId}`)
             //     .then(response => response.text())
@@ -336,7 +496,7 @@
                     <h3>Imports</h3>
                     <ul>
                         ${imports.map(e =>
-                            `<li><a href='#m${e}' onclick='displayModule("${e}")'>${nodes.get(e) ? nodes.get(e).label : e}</a></li>`
+                            `<li>${getCategoryColorBox(nodes.get(e) ? nodes.get(e).category : '$unk$')}<a href='#m${e}' onclick='displayModule("${e}")'>${nodes.get(e) ? nodes.get(e).name : e}</a></li>`
                         ).join("")}
                     </ul>
                 </div>
@@ -344,7 +504,7 @@
                     <h3>Imported by</h3>
                     <ul>
                         ${importedBy.map(e =>
-                            `<li><a href='#m${e}' onclick='displayModule("${e}")'>${nodes.get(e) ? nodes.get(e).label : e}</a></li>`
+                            `<li>${getCategoryColorBox(nodes.get(e) ? nodes.get(e).category : '$unk$')}<a href='#m${e}' onclick='displayModule("${e}")'>${nodes.get(e) ? nodes.get(e).name : e}</a></li>`
                         ).join("")}
                     </ul>
                 </div>
@@ -357,15 +517,15 @@
             displayModule(this.value);
         });
 
-        $("#module-label").change(function () {
+        $("#module-name").change(function () {
             let moduleId = moduleDropdown.val();
             let node = nodes.get(moduleId);
-            let oldLabel = node.label;
-            node.label = this.value;
+            let oldName = node.name;
+            node.name = this.value;
             nodes.update(node);
             $("#module-option-" + moduleId).text(this.value + " (" + moduleId + ")");
             $("#module-dropdown").select2(); // refresh select2
-            localStorage.setItem("module-label-" + moduleId, this.value);
+            setAnnotation(moduleId, "name", this.value);
             // update all code that does require("module")
             for (const importerId of node.importedBy) {
                 if (!nodes.get(importerId)) {
@@ -374,12 +534,57 @@
                 }
                 let oldCode = module_codes_data[importerId];
                 let newCode = oldCode.replace(
-                    new RegExp(`require\\((["']?${oldLabel}["']?|${moduleId})\\)`, 'g'),
+                    new RegExp(`require\\((["']?${oldName}["']?|${moduleId})\\)`, 'g'),
                     `require("${this.value}")`
                 );
                 module_codes_data[importerId] = newCode;
-                localStorage.setItem("module-code-" + importerId, newCode);
+                setAnnotation(importerId, "code", newCode);
             }
+        });
+
+        // $("#module-interesting").change(function () {
+        //     let moduleId = moduleDropdown.val();
+        //     let node = nodes.get(moduleId);
+        //     node.is_interesting = this.checked;
+        //     node._orig_color = moduleId == "main" ? MAIN_COLOR : (
+        //         node.is_interesting ? INTERESTING_COLOR : NOT_INTERESTING_COLOR
+        //     );
+        //     node.color = node.color == 'cyan' ? node.color : node._orig_color;
+        //     nodes.update(node);
+        //     // should update the <option> element too but will do it later
+        //     setAnnotation(moduleId, "is_interesting", node.is_interesting);
+        // });
+        $("#selected-module-category-dropdown").change(function () {
+            let moduleId = moduleDropdown.val();
+            let node = nodes.get(moduleId);
+            if (node.category == this.value) {
+                return;
+            }
+            node.category = this.value;
+            node.color = getColorOfNode(node);
+            nodes.update(node);
+            setAnnotation(moduleId, "category", node.category);
+        });
+
+        $("input[name='show-modules-with-category']").change(function () {
+            // let hide = this.checked;
+            let selectedCategories = getSelectedModuleCategories();
+            for (const node of nodes.get()) {
+                if (node.id == "main") {
+                    continue;
+                }
+                node.color = getColorOfNode(node);
+                for (const dep of node.deps) {
+                    if (!nodes.get(dep)) {
+                        // library dependency
+                        continue;
+                    }
+                    let edge = raw_edges.find(e => e.from == node.id && e.to == dep);
+                    edge.color.color = getColorOfNode(nodes.get(dep)) != NOT_INTERESTING_COLOR ? "black" : "lightgray";
+                }
+            }
+            nodes.update(nodes.get());
+            edges.update(edges.get());
         });
 
         
