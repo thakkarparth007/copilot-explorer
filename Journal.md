@@ -88,4 +88,10 @@
       - Tokens are streamed one-word-at-a-time
       - Temperature was set to 0 and n=1 in my case.
       - Suffix appears to be used now!
-   3. 
+
+## Dec 9:
+
+1. Moved away from interesting/uninteresting modules to module categories.
+2. Added script to predict module names and categories using codex (using few shot learning on the gold annotations).
+3. Added script to rename imports and import variables.
+4. Some UI changes.
