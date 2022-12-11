@@ -1503,7 +1503,7 @@ let gold_and_predicted_annotations = {
       "inline-completion-provider"
     ],
     "predictedCategories": [
-      "prompt-context-collection"
+      "completion-from-ghost-text"
     ]
   },
   "module-annotations-3223": {
@@ -3964,7 +3964,7 @@ let gold_and_predicted_annotations = {
       "ghost-text-provider"
     ],
     "predictedCategories": [
-      "network-comms"
+      "model-response-post-processing"
     ]
   },
   "module-annotations-9351": {

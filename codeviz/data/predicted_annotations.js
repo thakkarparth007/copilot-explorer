@@ -1265,7 +1265,7 @@ let predicted_annotations = {
       "inline-completion-provider"
     ],
     "category": [
-      "prompt-context-collection"
+      "completion-from-ghost-text"
     ],
     "name_is_predicted": false,
     "category_is_predicted": true
@@ -3346,7 +3346,7 @@ let predicted_annotations = {
       "ghost-text-provider"
     ],
     "category": [
-      "network-comms"
+      "model-response-post-processing"
     ],
     "name_is_predicted": false,
     "category_is_predicted": true
