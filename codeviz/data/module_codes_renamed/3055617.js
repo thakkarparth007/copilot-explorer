@@ -107,13 +107,13 @@ exports.foldTree = function (e, t, n, r) {
 };
 exports.rebuildTree = function (e, t, n) {
   const o = (e) => {
-      if (undefined !== n && n(e)) return e;
-      {
-        const n = e.subs.map(o).filter((e) => undefined !== e);
-        e.subs = n;
-        return t(e);
-      }
-    },
-    i = o(e);
+    if (undefined !== n && n(e)) return e;
+    {
+      const n = e.subs.map(o).filter((e) => undefined !== e);
+      e.subs = n;
+      return t(e);
+    }
+  };
+  const i = o(e);
   return undefined !== i ? i : M_parse_tree_utils.topNode();
 };

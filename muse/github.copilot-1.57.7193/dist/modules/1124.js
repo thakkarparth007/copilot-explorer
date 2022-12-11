@@ -2,11 +2,11 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.checkSuffix = exports.postProcessChoice = undefined;
-const r = require(9189),
-  o = require(2533),
-  i = require(6333),
-  s = require(70),
-  a = require(9657);
+const r = require(9189);
+const o = require(2533);
+const i = require(6333);
+const s = require(70);
+const a = require(9657);
 exports.postProcessChoice = async function (e, t, n, c, l, u, d) {
   if (
     a.isRepetitive(l.tokens, await e.get(r.Features).repetitionFilterMode())
@@ -21,8 +21,8 @@ exports.postProcessChoice = async function (e, t, n, c, l, u, d) {
   };
   if (
     (function (e, t, n) {
-      let r = "",
-        o = t.line + 1;
+      let r = "";
+      let o = t.line + 1;
       for (; "" === r && o < e.lineCount; ) {
         r = e.lineAt(o).text.trim();
         if (r === n.trim()) return !0;
@@ -56,8 +56,8 @@ exports.postProcessChoice = async function (e, t, n, c, l, u, d) {
     } catch (e) {}
     let l = r.length;
     do {
-      const o = r.lastIndexOf("\n", l - 2) + 1,
-        a = r.substring(o, l);
+      const o = r.lastIndexOf("\n", l - 2) + 1;
+      const a = r.substring(o, l);
       if (a.trim() === c) {
         for (let e = n.line; e < t.lineCount; e++) {
           let s = t.lineAt(e).text;

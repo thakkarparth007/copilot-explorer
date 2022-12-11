@@ -6,16 +6,16 @@ exports.VSCodeCopilotTokenManager =
   exports.setExtensionContext =
   exports.telemetryAcceptanceKey =
     undefined;
-const r = require("vscode"),
-  o = require(362),
-  i = require(6794),
-  s = require(9899),
-  a = require(6333),
-  c = require(47);
+const r = require("vscode");
+const o = require(362);
+const i = require(6794);
+const s = require(9899);
+const a = require(6333);
+const c = require(47);
 exports.telemetryAcceptanceKey = `github.copilot.telemetryAccepted.${i.LAST_TELEMETRY_TERMS_UPDATE}`;
 const l = new s.Logger(s.LogLevel.INFO, "auth");
-let u,
-  d = !1;
+let u;
+let d = !1;
 exports.setExtensionContext = function (e) {
   u = e;
 };
@@ -89,8 +89,8 @@ class VSCodeCopilotTokenManager extends o.CopilotTokenManager {
                 ? undefined
                 : n.label;
             if (!s) return !1;
-            const l = s,
-              d = o.get(exports.telemetryAcceptanceKey, undefined);
+            const l = s;
+            const d = o.get(exports.telemetryAcceptanceKey, undefined);
             if (d && d === s) return !0;
             const p = await r.window.showWarningMessage(
               `I agree to these [telemetry terms](${i.TELEMETRY_TERMS_URL}) as part of the GitHub Copilot technical preview.`,

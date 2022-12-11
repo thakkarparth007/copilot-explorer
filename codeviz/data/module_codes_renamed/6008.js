@@ -1,4 +1,4 @@
-var M_get_url_protocol_NOTSURE = require("get-url-protocol");
+var M_get_url_protocol_maybe = require("get-url-protocol");
 module.exports = function (e) {
   var t = {
     protocols: [],
@@ -17,7 +17,7 @@ module.exports = function (e) {
   };
   try {
     var n = new URL(e);
-    t.protocols = M_get_url_protocol_NOTSURE(n);
+    t.protocols = M_get_url_protocol_maybe(n);
     t.protocol = t.protocols[0];
     t.port = n.port;
     t.resource = n.hostname;

@@ -13,11 +13,11 @@ exports.ComputationStatus =
   exports.isNotRepo =
   exports.isRepoInfo =
     undefined;
-const M_getPrompt_main_stuff = require("getPrompt-main-stuff"),
-  M_git_url_parser = require("git-url-parser"),
-  i = require("path"),
-  M_copilot_github_auth_stuff = require("copilot-github-auth-stuff"),
-  M_prompt_cache = require("prompt-cache");
+const M_getPrompt_main_stuff = require("getPrompt-main-stuff");
+const M_git_url_parser = require("git-url-parser");
+const M_path = require("path");
+const M_copilot_github_auth_stuff = require("copilot-github-auth-stuff");
+const M_prompt_cache = require("prompt-cache");
 var c;
 function tryGetGitHubNWO(e) {
   if (undefined !== e && e !== f.PENDING)
@@ -30,7 +30,8 @@ exports.isNotRepo = function (e) {
   return undefined === e;
 };
 exports.getUserKind = async function (e) {
-  var t, n;
+  var t;
+  var n;
   const r =
     null !==
       (t = (
@@ -69,15 +70,15 @@ exports.getDogFood = function (e) {
 exports.tryGetGitHubNWO = tryGetGitHubNWO;
 exports.extractRepoInfoInBackground = function (e, t) {
   if (!t) return;
-  const n = i.dirname(t);
+  const n = M_path.dirname(t);
   return u(e, n);
 };
 const u = (function (e, t) {
-  const n = new M_prompt_cache.LRUCache(1e4),
-    r = new Set();
+  const n = new M_prompt_cache.LRUCache(1e4);
+  const r = new Set();
   return (t, ...o) => {
-    const i = JSON.stringify(o),
-      s = n.get(i);
+    const i = JSON.stringify(o);
+    const s = n.get(i);
     if (s) return s.result;
     if (r.has(i)) return f.PENDING;
     const a = e(t, ...o);
@@ -95,7 +96,7 @@ async function d(e, t) {
     let n = t + "_add_to_make_longer";
     const o = e.get(M_getPrompt_main_stuff.FileSystem);
     for (; t.length > 1 && t.length < n.length; ) {
-      const e = i.join(t, ".git", "config");
+      const e = M_path.join(t, ".git", "config");
       let r = !1;
       try {
         await o.stat(e);
@@ -105,19 +106,18 @@ async function d(e, t) {
       }
       if (r) return t;
       n = t;
-      t = i.dirname(t);
+      t = M_path.dirname(t);
     }
   })(e, t);
   if (!o) return;
-  const s = e.get(M_getPrompt_main_stuff.FileSystem),
-    a = i.join(o, ".git", "config"),
-    c =
-      null !==
-        (n = getRepoUrlFromConfigText((await s.readFile(a)).toString())) &&
-      undefined !== n
-        ? n
-        : "",
-    l = parseRepoUrl(c);
+  const s = e.get(M_getPrompt_main_stuff.FileSystem);
+  const a = M_path.join(o, ".git", "config");
+  const c =
+    null !== (n = getRepoUrlFromConfigText((await s.readFile(a)).toString())) &&
+    undefined !== n
+      ? n
+      : "";
+  const l = parseRepoUrl(c);
   return undefined === l
     ? {
         baseFolder: o,
@@ -151,13 +151,13 @@ function parseRepoUrl(e) {
 }
 function getRepoUrlFromConfigText(e) {
   var t;
-  const n = /^\s*\[\s*remote\s+"((\\\\|\\"|[^\\"])+)"/,
-    r = /^\s*\[remote.([^"\s]+)/,
-    o = /^\s*url\s*=\s*([^\s#;]+)/,
-    i = /^\s*\[/;
-  let s,
-    a,
-    c = !1;
+  const n = /^\s*\[\s*remote\s+"((\\\\|\\"|[^\\"])+)"/;
+  const r = /^\s*\[remote.([^"\s]+)/;
+  const o = /^\s*url\s*=\s*([^\s#;]+)/;
+  const i = /^\s*\[/;
+  let s;
+  let a;
+  let c = !1;
   for (const l of e.split("\n"))
     if (c && undefined !== s) {
       s += l;

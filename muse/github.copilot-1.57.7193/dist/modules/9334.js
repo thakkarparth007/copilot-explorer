@@ -6,60 +6,62 @@ exports.getGhostText =
   exports.ResultType =
   exports.ghostTextLogger =
     undefined;
-const r = require(3055563),
-  o = require(2277),
-  i = require(3076),
-  s = require(106),
-  a = require(6932),
-  c = require(1133),
-  l = require(9189),
-  u = require(9899),
-  d = require(2279),
-  p = require(3),
-  h = require(4419),
-  f = require(937),
-  m = require(6722),
-  g = require(7727),
-  _ = require(4969),
-  y = require(766),
-  v = require(1006),
-  b = require(1124),
-  w = require(6333),
-  x = require(70),
-  E = require(6403),
-  C = require(8965),
-  S = require(5413),
-  T = require(750);
+const r = require(3055563);
+const o = require(2277);
+const i = require(3076);
+const s = require(106);
+const a = require(6932);
+const c = require(1133);
+const l = require(9189);
+const u = require(9899);
+const d = require(2279);
+const p = require(3);
+const h = require(4419);
+const f = require(937);
+const m = require(6722);
+const g = require(7727);
+const _ = require(4969);
+const y = require(766);
+const v = require(1006);
+const b = require(1124);
+const w = require(6333);
+const x = require(70);
+const E = require(6403);
+const C = require(8965);
+const S = require(5413);
+const T = require(750);
 var k;
-let I, P;
+let I;
+let P;
 async function A(e, n, r, o, i, s, a) {
-  var u, p, m;
+  var u;
+  var p;
+  var m;
   exports.ghostTextLogger.debug(e, `Getting ${s} from network`);
   r = r.extendedBy();
   const g = await (async function (e, t) {
-      const n = await e.get(l.Features).overrideNumGhostCompletions();
-      return n
-        ? t.isCycling
-          ? Math.max(0, 3 - n)
-          : n
-        : c.shouldDoParsingTrimming(t.blockMode) && t.multiline
-        ? c.getConfig(e, c.ConfigKey.InlineSuggestCount)
-        : t.isCycling
-        ? 2
-        : 1;
-    })(e, n),
-    _ = f.getTemperatureForSamples(e, g),
-    y = {
-      stream: !0,
-      n: g,
-      temperature: _,
-      extra: {
-        language: n.languageId,
-        next_indent:
-          null !== (u = n.indentation.next) && undefined !== u ? u : 0,
-        trim_by_indentation: c.shouldDoServerTrimming(n.blockMode),
-      },
-    };
+    const n = await e.get(l.Features).overrideNumGhostCompletions();
+    return n
+      ? t.isCycling
+        ? Math.max(0, 3 - n)
+        : n
+      : c.shouldDoParsingTrimming(t.blockMode) && t.multiline
+      ? c.getConfig(e, c.ConfigKey.InlineSuggestCount)
+      : t.isCycling
+      ? 2
+      : 1;
+  })(e, n);
+  const _ = f.getTemperatureForSamples(e, g);
+  const y = {
+    stream: !0,
+    n: g,
+    temperature: _,
+    extra: {
+      language: n.languageId,
+      next_indent: null !== (u = n.indentation.next) && undefined !== u ? u : 0,
+      trim_by_indentation: c.shouldDoServerTrimming(n.blockMode),
+    },
+  };
   if (n.multiline) {
     y.stop = ["\n"];
   }
@@ -68,20 +70,20 @@ async function A(e, n, r, o, i, s, a) {
       50256: -100,
     };
   }
-  const v = Date.now(),
-    b = {
-      endpoint: "completions",
-      uiKind: h.CopilotUiKind.GhostText,
-      isCycling: JSON.stringify(n.isCycling),
-      temperature: JSON.stringify(_),
-      n: JSON.stringify(g),
-      stop:
-        null !== (p = JSON.stringify(y.stop)) && undefined !== p ? p : "unset",
-      logit_bias: JSON.stringify(
-        null !== (m = y.logit_bias) && undefined !== m ? m : null
-      ),
-    },
-    E = w.telemetrizePromptLength(n.prompt);
+  const v = Date.now();
+  const b = {
+    endpoint: "completions",
+    uiKind: h.CopilotUiKind.GhostText,
+    isCycling: JSON.stringify(n.isCycling),
+    temperature: JSON.stringify(_),
+    n: JSON.stringify(g),
+    stop:
+      null !== (p = JSON.stringify(y.stop)) && undefined !== p ? p : "unset",
+    logit_bias: JSON.stringify(
+      null !== (m = y.logit_bias) && undefined !== m ? m : null
+    ),
+  };
+  const E = w.telemetrizePromptLength(n.prompt);
   Object.assign(r.properties, b);
   Object.assign(r.measurements, E);
   try {
@@ -160,8 +162,8 @@ function R(e, t) {
   P = t;
 }
 function M(e, n, r) {
-  const o = i.keyForPrompt(n.prompt),
-    s = exports.completionCache.get(o);
+  const o = i.keyForPrompt(n.prompt);
+  const s = exports.completionCache.get(o);
   if (s && s.multiline === r.multiline) {
     exports.completionCache.put(o, {
       multiline: s.multiline,
@@ -213,15 +215,15 @@ function $(e, t, n) {
   };
 }
 function D(e, n) {
-  const r = n.requestId,
-    o = {
-      choiceIndex: n.choiceIndex.toString(),
-    },
-    i = {
-      numTokens: n.numTokens,
-      compCharLen: n.completionText.length,
-      numLines: n.completionText.split("\n").length,
-    };
+  const r = n.requestId;
+  const o = {
+    choiceIndex: n.choiceIndex.toString(),
+  };
+  const i = {
+    numTokens: n.numTokens,
+    compCharLen: n.completionText.length,
+    numLines: n.completionText.split("\n").length,
+  };
   if (n.meanLogProb) {
     i.meanLogProb = n.meanLogProb;
   }
@@ -239,25 +241,26 @@ function D(e, n) {
   return s;
 }
 function F(e, t, n, r, o) {
-  const i = Date.now() - r,
-    s = i - o,
-    a = n.telemetryData.extendedBy(
-      {},
-      {
-        completionCharLen: n.completionText.length,
-        requestTimeMs: i,
-        processingTimeMs: o,
-        deltaMs: s,
-        meanLogProb: n.meanLogProb || NaN,
-        meanAlternativeLogProb: n.meanAlternativeLogProb || NaN,
-        numTokens: n.numTokens,
-      }
-    );
+  const i = Date.now() - r;
+  const s = i - o;
+  const a = n.telemetryData.extendedBy(
+    {},
+    {
+      completionCharLen: n.completionText.length,
+      requestTimeMs: i,
+      processingTimeMs: o,
+      deltaMs: s,
+      meanLogProb: n.meanLogProb || NaN,
+      meanAlternativeLogProb: n.meanAlternativeLogProb || NaN,
+      numTokens: n.numTokens,
+    }
+  );
   a.extendWithRequestId(n.requestId);
   w.telemetry(e, `ghostText.${t}`, a);
 }
 exports.getGhostText = async function (e, n, s, u, d, f) {
-  var v, j;
+  var v;
+  var j;
   const q = await _.extractPrompt(e, n, s);
   if ("contextTooShort" === q.type) {
     exports.ghostTextLogger.debug(e, "Breaking, not enough context");
@@ -275,11 +278,11 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
   }
   const B = (function (e, t) {
     const n =
-        ((o = t), 0 != e.lineAt(o).text.substr(o.character).trim().length),
-      r = (function (e, t) {
-        const n = t.lineAt(e).text.substr(e.character).trim();
-        return /^\s*[)}\]"'`]*\s*[:{;,]?\s*$/.test(n);
-      })(t, e);
+      ((o = t), 0 != e.lineAt(o).text.substr(o.character).trim().length);
+    const r = (function (e, t) {
+      const n = t.lineAt(e).text.substr(e.character).trim();
+      return /^\s*[)}\]"'`]*\s*[:{;,]?\s*$/.test(n);
+    })(t, e);
     var o;
     if (!n || r) return n && r;
   })(n, s);
@@ -290,72 +293,72 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
       reason: "Invalid middle of the line",
     };
   }
-  const U = e.get(m.StatusReporter),
-    H = e.get(E.LocationFactory),
-    z = await (async function (e, t, n, o, i, s) {
-      const a = await e.get(c.BlockModeConfig).forLanguage(e, t.languageId);
-      switch (a) {
-        case c.BlockMode.Server:
-          return {
-            blockMode: c.BlockMode.Server,
-            requestMultiline: !0,
-            isCyclingRequest: i,
-            finishedCb: async (e) => {},
-          };
-        case c.BlockMode.Parsing:
-        case c.BlockMode.ParsingAndServer:
-        default: {
-          const c = await (async function (e, t, n, o) {
-            if (t.lineCount >= 8e3)
-              w.telemetry(
-                e,
-                "ghostText.longFileMultilineSkip",
-                w.TelemetryData.createAndMarkAsIssued({
-                  languageId: t.languageId,
-                  lineCount: String(t.lineCount),
-                  currentLine: String(n.line),
-                })
+  const U = e.get(m.StatusReporter);
+  const H = e.get(E.LocationFactory);
+  const z = await (async function (e, t, n, o, i, s) {
+    const a = await e.get(c.BlockModeConfig).forLanguage(e, t.languageId);
+    switch (a) {
+      case c.BlockMode.Server:
+        return {
+          blockMode: c.BlockMode.Server,
+          requestMultiline: !0,
+          isCyclingRequest: i,
+          finishedCb: async (e) => {},
+        };
+      case c.BlockMode.Parsing:
+      case c.BlockMode.ParsingAndServer:
+      default: {
+        const c = await (async function (e, t, n, o) {
+          if (t.lineCount >= 8e3)
+            w.telemetry(
+              e,
+              "ghostText.longFileMultilineSkip",
+              w.TelemetryData.createAndMarkAsIssued({
+                languageId: t.languageId,
+                lineCount: String(t.lineCount),
+                currentLine: String(n.line),
+              })
+            );
+          else {
+            if (!o && r.isSupportedLanguageId(t.languageId))
+              return await g.isEmptyBlockStart(t, n);
+            if (o && r.isSupportedLanguageId(t.languageId))
+              return (
+                (await g.isEmptyBlockStart(t, n)) ||
+                (await g.isEmptyBlockStart(t, t.lineAt(n).range.end))
               );
-            else {
-              if (!o && r.isSupportedLanguageId(t.languageId))
-                return await g.isEmptyBlockStart(t, n);
-              if (o && r.isSupportedLanguageId(t.languageId))
-                return (
-                  (await g.isEmptyBlockStart(t, n)) ||
-                  (await g.isEmptyBlockStart(t, t.lineAt(n).range.end))
-                );
+          }
+          return !1;
+        })(e, t, n, s);
+        return c
+          ? {
+              blockMode: a,
+              requestMultiline: !0,
+              isCyclingRequest: !1,
+              finishedCb: async (r) => {
+                let i;
+                i =
+                  o.trailingWs.length > 0 &&
+                  !o.prompt.prefix.endsWith(o.trailingWs)
+                    ? e
+                        .get(E.LocationFactory)
+                        .position(
+                          n.line,
+                          Math.max(n.character - o.trailingWs.length, 0)
+                        )
+                    : n;
+                return g.isBlockBodyFinished(e, t, i, r);
+              },
             }
-            return !1;
-          })(e, t, n, s);
-          return c
-            ? {
-                blockMode: a,
-                requestMultiline: !0,
-                isCyclingRequest: !1,
-                finishedCb: async (r) => {
-                  let i;
-                  i =
-                    o.trailingWs.length > 0 &&
-                    !o.prompt.prefix.endsWith(o.trailingWs)
-                      ? e
-                          .get(E.LocationFactory)
-                          .position(
-                            n.line,
-                            Math.max(n.character - o.trailingWs.length, 0)
-                          )
-                      : n;
-                  return g.isBlockBodyFinished(e, t, i, r);
-                },
-              }
-            : {
-                blockMode: a,
-                requestMultiline: !1,
-                isCyclingRequest: i,
-                finishedCb: async (e) => {},
-              };
-        }
+          : {
+              blockMode: a,
+              requestMultiline: !1,
+              isCyclingRequest: i,
+              finishedCb: async (e) => {},
+            };
       }
-    })(e, n, s, q, u, B);
+    }
+  })(e, n, s, q, u, B);
   if (null == f ? undefined : f.isCancellationRequested) {
     exports.ghostTextLogger.info(e, "Cancelled after requestMultiline");
     return {
@@ -415,60 +418,60 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
     })(e, n, r, o);
     return a && a.length > 0 ? [a, k.Cache] : undefined;
   })(e, G, q.prompt, z.requestMultiline);
-  const W = o.v4(),
-    K = y.extractRepoInfoInBackground(e, n.fileName),
-    J = await p.getEngineURL(
-      e,
-      y.tryGetGitHubNWO(K),
-      n.languageId,
-      y.getDogFood(K),
-      await y.getUserKind(e),
-      d
-    ),
-    X = await e
-      .get(l.Features)
-      .beforeRequestWaitMs(y.tryGetGitHubNWO(K) || "", n.languageId),
-    Q = await e
-      .get(l.Features)
-      .multiLogitBias(y.tryGetGitHubNWO(K) || "", n.languageId),
-    Y = {
-      blockMode: z.blockMode,
-      languageId: n.languageId,
-      repoInfo: K,
-      engineURL: J,
-      ourRequestId: W,
-      prefix: G,
-      prompt: q.prompt,
-      multiline: z.requestMultiline,
-      indentation: g.contextIndentation(n, s),
-      isCycling: u,
-      delayMs: X,
-      multiLogitBias: Q,
-    },
-    Z = await e.get(l.Features).debouncePredict(),
-    ee = await e.get(l.Features).contextualFilterEnable(),
-    te = await e.get(l.Features).contextualFilterAcceptThreshold();
+  const W = o.v4();
+  const K = y.extractRepoInfoInBackground(e, n.fileName);
+  const J = await p.getEngineURL(
+    e,
+    y.tryGetGitHubNWO(K),
+    n.languageId,
+    y.getDogFood(K),
+    await y.getUserKind(e),
+    d
+  );
+  const X = await e
+    .get(l.Features)
+    .beforeRequestWaitMs(y.tryGetGitHubNWO(K) || "", n.languageId);
+  const Q = await e
+    .get(l.Features)
+    .multiLogitBias(y.tryGetGitHubNWO(K) || "", n.languageId);
+  const Y = {
+    blockMode: z.blockMode,
+    languageId: n.languageId,
+    repoInfo: K,
+    engineURL: J,
+    ourRequestId: W,
+    prefix: G,
+    prompt: q.prompt,
+    multiline: z.requestMultiline,
+    indentation: g.contextIndentation(n, s),
+    isCycling: u,
+    delayMs: X,
+    multiLogitBias: Q,
+  };
+  const Z = await e.get(l.Features).debouncePredict();
+  const ee = await e.get(l.Features).contextualFilterEnable();
+  const te = await e.get(l.Features).contextualFilterAcceptThreshold();
   let ne = !1;
   if (Z || ee) {
     ne = !0;
   }
   const re = (function (e, t, n, r, o, i, s) {
-    const a = e.get(E.LocationFactory),
-      c = t.lineAt(r.line),
-      l = t.getText(a.range(c.range.start, r)),
-      u = t.getText(a.range(r, c.range.end)),
-      d = {
-        languageId: t.languageId,
-        beforeCursorWhitespace: JSON.stringify("" === l.trim()),
-        afterCursorWhitespace: JSON.stringify("" === u.trim()),
-      },
-      p = {
-        ...w.telemetrizePromptLength(o.prompt),
-        promptEndPos: t.offsetAt(r),
-        documentLength: t.getText().length,
-        delayMs: n.delayMs,
-      },
-      f = i.extendedBy(d, p);
+    const a = e.get(E.LocationFactory);
+    const c = t.lineAt(r.line);
+    const l = t.getText(a.range(c.range.start, r));
+    const u = t.getText(a.range(r, c.range.end));
+    const d = {
+      languageId: t.languageId,
+      beforeCursorWhitespace: JSON.stringify("" === l.trim()),
+      afterCursorWhitespace: JSON.stringify("" === u.trim()),
+    };
+    const p = {
+      ...w.telemetrizePromptLength(o.prompt),
+      promptEndPos: t.offsetAt(r),
+      documentLength: t.getText().length,
+      delayMs: n.delayMs,
+    };
+    const f = i.extendedBy(d, p);
     f.properties.promptChoices = JSON.stringify(o.promptChoices, (e, t) =>
       t instanceof Map
         ? Array.from(t.entries()).reduce(
@@ -731,11 +734,11 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
       reason: "internal error: choices should be defined after network call",
       telemetryData: T.mkBasicResultTelemetry(re),
     };
-  const [oe, ie] = V,
-    se = a.asyncIterableMapFilter(a.asyncIterableFromArray(oe), async (r) =>
-      b.postProcessChoice(e, "ghostText", n, s, r, B, exports.ghostTextLogger)
-    ),
-    ae = [];
+  const [oe, ie] = V;
+  const se = a.asyncIterableMapFilter(a.asyncIterableFromArray(oe), async (r) =>
+    b.postProcessChoice(e, "ghostText", n, s, r, B, exports.ghostTextLogger)
+  );
+  const ae = [];
   for await (const r of se) {
     const o = B && b.checkSuffix(n, s, r);
     if (null == f ? undefined : f.isCancellationRequested) {
@@ -749,13 +752,13 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
         telemetryData: T.mkCanceledResultTelemetry(re),
       };
     }
-    const i = D(e, r),
-      a = {
-        completion: $(r.choiceIndex, r.completionText, q.trailingWs),
-        telemetry: i,
-        isMiddleOfTheLine: B,
-        coversSuffix: o,
-      };
+    const i = D(e, r);
+    const a = {
+      completion: $(r.choiceIndex, r.completionText, q.trailingWs),
+      telemetry: i,
+      isMiddleOfTheLine: B,
+      coversSuffix: o,
+    };
     ae.push(a);
   }
   return {

@@ -1,5 +1,5 @@
-var M_channel_NOTSURE = require("channel"),
-  o = [];
+var M_channel_maybe = require("channel");
+var o = [];
 exports.qP = function (e) {
   o.forEach(function (t) {
     if ("info" !== e.data.commandObj.command) {
@@ -18,7 +18,7 @@ exports.qP = function (e) {
 exports.wp = function (e, n) {
   if (e) {
     if (0 === o.length) {
-      M_channel_NOTSURE.channel.subscribe("redis", exports.qP);
+      M_channel_maybe.channel.subscribe("redis", exports.qP);
     }
     o.push(n);
   } else {
@@ -28,7 +28,7 @@ exports.wp = function (e, n) {
         return e != n;
       })).length
     ) {
-      M_channel_NOTSURE.channel.unsubscribe("redis", exports.qP);
+      M_channel_maybe.channel.unsubscribe("redis", exports.qP);
     }
   }
 };

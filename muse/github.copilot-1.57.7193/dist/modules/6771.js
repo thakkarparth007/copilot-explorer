@@ -1,8 +1,8 @@
-var r = require(2728),
-  o = require(9216),
-  i = require(8213).I,
-  s = require(6400),
-  a = require(2826).U;
+var r = require(2728);
+var o = require(9216);
+var i = require(8213).I;
+var s = require(6400);
+var a = require(2826).U;
 function SourceMapConsumer(e, t) {
   var n = e;
   if ("string" == typeof e) {
@@ -15,13 +15,13 @@ function l(e, t) {
   if ("string" == typeof e) {
     n = r.parseSourceMapInput(e);
   }
-  var o = r.getArg(n, "version"),
-    s = r.getArg(n, "sources"),
-    a = r.getArg(n, "names", []),
-    c = r.getArg(n, "sourceRoot", null),
-    l = r.getArg(n, "sourcesContent", null),
-    u = r.getArg(n, "mappings"),
-    d = r.getArg(n, "file", null);
+  var o = r.getArg(n, "version");
+  var s = r.getArg(n, "sources");
+  var a = r.getArg(n, "names", []);
+  var c = r.getArg(n, "sourceRoot", null);
+  var l = r.getArg(n, "sourcesContent", null);
+  var u = r.getArg(n, "mappings");
+  var d = r.getArg(n, "file", null);
   if (o != this._version) throw new Error("Unsupported version: " + o);
   if (c) {
     c = r.normalize(c);
@@ -56,8 +56,8 @@ function d(e, t) {
   if ("string" == typeof e) {
     n = r.parseSourceMapInput(e);
   }
-  var o = r.getArg(n, "version"),
-    s = r.getArg(n, "sections");
+  var o = r.getArg(n, "version");
+  var s = r.getArg(n, "sections");
   if (o != this._version) throw new Error("Unsupported version: " + o);
   this._sources = new i();
   this._names = new i();
@@ -68,9 +68,9 @@ function d(e, t) {
   this._sections = s.map(function (e) {
     if (e.url)
       throw new Error("Support for url field in sections not implemented.");
-    var n = r.getArg(e, "offset"),
-      o = r.getArg(n, "line"),
-      i = r.getArg(n, "column");
+    var n = r.getArg(e, "offset");
+    var o = r.getArg(n, "line");
+    var i = r.getArg(n, "column");
     if (o < a.line || (o === a.line && i < a.column))
       throw new Error("Section offsets must be ordered and non-overlapping.");
     a = n;
@@ -121,8 +121,8 @@ SourceMapConsumer.ORIGINAL_ORDER = 2;
 SourceMapConsumer.GREATEST_LOWER_BOUND = 1;
 SourceMapConsumer.LEAST_UPPER_BOUND = 2;
 SourceMapConsumer.prototype.eachMapping = function (e, t, n) {
-  var o,
-    i = t || null;
+  var o;
+  var i = t || null;
   switch (n || SourceMapConsumer.GENERATED_ORDER) {
     case SourceMapConsumer.GENERATED_ORDER:
       o = this._generatedMappings;
@@ -147,23 +147,23 @@ SourceMapConsumer.prototype.eachMapping = function (e, t, n) {
   }, this).forEach(e, i);
 };
 SourceMapConsumer.prototype.allGeneratedPositionsFor = function (e) {
-  var t = r.getArg(e, "line"),
-    n = {
-      source: r.getArg(e, "source"),
-      originalLine: t,
-      originalColumn: r.getArg(e, "column", 0),
-    };
+  var t = r.getArg(e, "line");
+  var n = {
+    source: r.getArg(e, "source"),
+    originalLine: t,
+    originalColumn: r.getArg(e, "column", 0),
+  };
   n.source = this._findSourceIndex(n.source);
   if (n.source < 0) return [];
-  var i = [],
-    s = this._findMapping(
-      n,
-      this._originalMappings,
-      "originalLine",
-      "originalColumn",
-      r.compareByOriginalPositions,
-      o.LEAST_UPPER_BOUND
-    );
+  var i = [];
+  var s = this._findMapping(
+    n,
+    this._originalMappings,
+    "originalLine",
+    "originalColumn",
+    r.compareByOriginalPositions,
+    o.LEAST_UPPER_BOUND
+  );
   if (s >= 0) {
     var a = this._originalMappings[s];
     if (undefined === e.column)
@@ -195,8 +195,8 @@ exports.SourceMapConsumer = SourceMapConsumer;
 l.prototype = Object.create(SourceMapConsumer.prototype);
 l.prototype.consumer = SourceMapConsumer;
 l.prototype._findSourceIndex = function (e) {
-  var t,
-    n = e;
+  var t;
+  var n = e;
   if (null != this.sourceRoot) {
     n = r.relative(this.sourceRoot, n);
   }
@@ -206,9 +206,9 @@ l.prototype._findSourceIndex = function (e) {
   return -1;
 };
 l.fromSourceMap = function (e, t) {
-  var n = Object.create(l.prototype),
-    o = (n._names = i.fromArray(e._names.toArray(), !0)),
-    s = (n._sources = i.fromArray(e._sources.toArray(), !0));
+  var n = Object.create(l.prototype);
+  var o = (n._names = i.fromArray(e._names.toArray(), !0));
+  var s = (n._sources = i.fromArray(e._sources.toArray(), !0));
   n.sourceRoot = e._sourceRoot;
   n.sourcesContent = e._generateSourcesContent(
     n._sources.toArray(),
@@ -220,16 +220,22 @@ l.fromSourceMap = function (e, t) {
     return r.computeSourceURL(n.sourceRoot, e, t);
   });
   for (
-    var c = e._mappings.toArray().slice(),
-      d = (n.__generatedMappings = []),
-      p = (n.__originalMappings = []),
+    c = e._mappings.toArray().slice(),
+      d = n.__generatedMappings = [],
+      p = n.__originalMappings = [],
       h = 0,
-      f = c.length;
+      f = c.length,
+      undefined;
     h < f;
     h++
   ) {
-    var m = c[h],
-      g = new u();
+    var c;
+    var d;
+    var p;
+    var h;
+    var f;
+    var m = c[h];
+    var g = new u();
     g.generatedLine = m.generatedLine;
     g.generatedColumn = m.generatedColumn;
     if (m.source) {
@@ -254,12 +260,7 @@ Object.defineProperty(l.prototype, "sources", {
 });
 l.prototype._parseMappings = function (e, t) {
   for (
-    var n,
-      o,
-      i,
-      c,
-      l,
-      d = 1,
+    d = 1,
       p = 0,
       h = 0,
       f = 0,
@@ -270,10 +271,28 @@ l.prototype._parseMappings = function (e, t) {
       v = {},
       b = {},
       w = [],
-      x = [];
+      x = [],
+      undefined;
     y < _;
 
-  )
+  ) {
+    var n;
+    var o;
+    var i;
+    var c;
+    var l;
+    var d;
+    var p;
+    var h;
+    var f;
+    var m;
+    var g;
+    var _;
+    var y;
+    var v;
+    var b;
+    var w;
+    var x;
     if (";" === e.charAt(y)) {
       d++;
       y++;
@@ -319,6 +338,7 @@ l.prototype._parseMappings = function (e, t) {
         w.push(n);
       }
     }
+  }
   a(x, r.compareByGeneratedPositionsDeflated);
   this.__generatedMappings = x;
   a(w, r.compareByOriginalPositions);
@@ -348,17 +368,17 @@ l.prototype.computeColumnSpans = function () {
 };
 l.prototype.originalPositionFor = function (e) {
   var t = {
-      generatedLine: r.getArg(e, "line"),
-      generatedColumn: r.getArg(e, "column"),
-    },
-    n = this._findMapping(
-      t,
-      this._generatedMappings,
-      "generatedLine",
-      "generatedColumn",
-      r.compareByGeneratedPositionsDeflated,
-      r.getArg(e, "bias", SourceMapConsumer.GREATEST_LOWER_BOUND)
-    );
+    generatedLine: r.getArg(e, "line"),
+    generatedColumn: r.getArg(e, "column"),
+  };
+  var n = this._findMapping(
+    t,
+    this._generatedMappings,
+    "generatedLine",
+    "generatedColumn",
+    r.compareByGeneratedPositionsDeflated,
+    r.getArg(e, "bias", SourceMapConsumer.GREATEST_LOWER_BOUND)
+  );
   if (n >= 0) {
     var o = this._generatedMappings[n];
     if (o.generatedLine === t.generatedLine) {
@@ -399,8 +419,8 @@ l.prototype.sourceContentFor = function (e, t) {
   if (!this.sourcesContent) return null;
   var n = this._findSourceIndex(e);
   if (n >= 0) return this.sourcesContent[n];
-  var o,
-    i = e;
+  var o;
+  var i = e;
   if (null != this.sourceRoot) {
     i = r.relative(this.sourceRoot, i);
   }
@@ -423,18 +443,18 @@ l.prototype.generatedPositionFor = function (e) {
       lastColumn: null,
     };
   var n = {
-      source: t,
-      originalLine: r.getArg(e, "line"),
-      originalColumn: r.getArg(e, "column"),
-    },
-    o = this._findMapping(
-      n,
-      this._originalMappings,
-      "originalLine",
-      "originalColumn",
-      r.compareByOriginalPositions,
-      r.getArg(e, "bias", SourceMapConsumer.GREATEST_LOWER_BOUND)
-    );
+    source: t,
+    originalLine: r.getArg(e, "line"),
+    originalColumn: r.getArg(e, "column"),
+  };
+  var o = this._findMapping(
+    n,
+    this._originalMappings,
+    "originalLine",
+    "originalColumn",
+    r.compareByOriginalPositions,
+    r.getArg(e, "bias", SourceMapConsumer.GREATEST_LOWER_BOUND)
+  );
   if (o >= 0) {
     var i = this._originalMappings[o];
     if (i.source === n.source)
@@ -455,24 +475,27 @@ d.prototype.constructor = SourceMapConsumer;
 d.prototype._version = 3;
 Object.defineProperty(d.prototype, "sources", {
   get: function () {
-    for (var e = [], t = 0; t < this._sections.length; t++)
+    for (e = [], t = 0, undefined; t < this._sections.length; t++) {
+      var e;
+      var t;
       for (var n = 0; n < this._sections[t].consumer.sources.length; n++)
         e.push(this._sections[t].consumer.sources[n]);
+    }
     return e;
   },
 });
 d.prototype.originalPositionFor = function (e) {
   var t = {
-      generatedLine: r.getArg(e, "line"),
-      generatedColumn: r.getArg(e, "column"),
-    },
-    n = o.search(t, this._sections, function (e, t) {
-      return (
-        e.generatedLine - t.generatedOffset.generatedLine ||
-        e.generatedColumn - t.generatedOffset.generatedColumn
-      );
-    }),
-    i = this._sections[n];
+    generatedLine: r.getArg(e, "line"),
+    generatedColumn: r.getArg(e, "column"),
+  };
+  var n = o.search(t, this._sections, function (e, t) {
+    return (
+      e.generatedLine - t.generatedOffset.generatedLine ||
+      e.generatedColumn - t.generatedOffset.generatedColumn
+    );
+  });
+  var i = this._sections[n];
   return i
     ? i.consumer.originalPositionFor({
         line: t.generatedLine - (i.generatedOffset.generatedLine - 1),
@@ -529,12 +552,18 @@ d.prototype._parseMappings = function (e, t) {
   this.__originalMappings = [];
   for (var n = 0; n < this._sections.length; n++)
     for (
-      var o = this._sections[n], i = o.consumer._generatedMappings, s = 0;
+      o = this._sections[n],
+        i = o.consumer._generatedMappings,
+        s = 0,
+        undefined;
       s < i.length;
       s++
     ) {
-      var c = i[s],
-        l = o.consumer._sources.at(c.source);
+      var o;
+      var i;
+      var s;
+      var c = i[s];
+      var l = o.consumer._sources.at(c.source);
       l = r.computeSourceURL(o.consumer.sourceRoot, l, this._sourceMapURL);
       this._sources.add(l);
       l = this._sources.indexOf(l);

@@ -40,7 +40,8 @@ class Scope {
     return `${e}${(this._names[e] || this._nameGroup(e)).index++}`;
   }
   _nameGroup(e) {
-    var t, n;
+    var t;
+    var n;
     if (
       (null ===
         (n =
@@ -91,17 +92,17 @@ exports.ValueScope = class extends Scope {
     var n;
     if (undefined === t.ref)
       throw new Error("CodeGen: ref must be passed in value");
-    const r = this.toName(e),
-      { prefix: o } = r,
-      i = null !== (n = t.key) && undefined !== n ? n : t.ref;
+    const r = this.toName(e);
+    const { prefix: o } = r;
+    const i = null !== (n = t.key) && undefined !== n ? n : t.ref;
     let s = this._values[o];
     if (s) {
       const e = s.get(i);
       if (e) return e;
     } else s = this._values[o] = new Map();
     s.set(i, r);
-    const a = this._scope[o] || (this._scope[o] = []),
-      c = a.length;
+    const a = this._scope[o] || (this._scope[o] = []);
+    const c = a.length;
     a[c] = t.ref;
     r.setValue(t, {
       property: o,

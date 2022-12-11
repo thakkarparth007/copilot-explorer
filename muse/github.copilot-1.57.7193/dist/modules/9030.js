@@ -2,9 +2,9 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.GranularityDirectory = undefined;
-const r = require(8142),
-  o = require(862),
-  i = r.Filter.CopilotClientTimeBucket;
+const r = require(8142);
+const o = require(862);
+const i = r.Filter.CopilotClientTimeBucket;
 exports.GranularityDirectory = class {
   constructor(e, t) {
     this.specs = new Map();
@@ -28,8 +28,8 @@ exports.GranularityDirectory = class {
     }
   }
   extendFilters(e) {
-    const t = this.selectGranularity(e),
-      [n, r] = t.getCurrentAndUpComingValues(this.clock.now());
+    const t = this.selectGranularity(e);
+    const [n, r] = t.getCurrentAndUpComingValues(this.clock.now());
     return {
       newFilterSettings: e.withChange(i, n),
       otherFilterSettingsToPrefetch: r.map((t) => e.withChange(i, t)),

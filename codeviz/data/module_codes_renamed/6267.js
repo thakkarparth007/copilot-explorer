@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.commandOpenPanel = exports.completionContextForEditor = undefined;
-const r = require("vscode"),
-  M_completion_context = require("completion-context");
+const M_vscode = require("vscode");
+const M_completion_context = require("completion-context");
 function completionContextForEditor(e, t, n) {
   return (
     n ||
@@ -16,27 +16,31 @@ function completionContextForEditor(e, t, n) {
 }
 exports.completionContextForEditor = completionContextForEditor;
 exports.commandOpenPanel = function (e, t) {
-  const n = r.window.activeTextEditor;
+  const n = M_vscode.window.activeTextEditor;
   if (!n) return;
-  if (!r.workspace.getConfiguration("editor", n.document.uri).get("codeLens"))
-    return void r.window
+  if (
+    !M_vscode.workspace
+      .getConfiguration("editor", n.document.uri)
+      .get("codeLens")
+  )
+    return void M_vscode.window
       .showInformationMessage(
         "GitHub Copilot Panel requires having Code Lens enabled. Please update your settings and then try again.",
         "Open Settings"
       )
       .then((e) => {
         if ("Open Settings" === e) {
-          r.commands.executeCommand(
+          M_vscode.commands.executeCommand(
             "workbench.action.openSettings",
             "editor.codeLens"
           );
         }
       });
   t = completionContextForEditor(e, n, t);
-  const s = M_completion_context.encodeLocation(n.document.uri, t),
-    a = n.document.languageId;
-  r.workspace.openTextDocument(s).then((e) => {
-    r.languages.setTextDocumentLanguage(e, a);
-    r.window.showTextDocument(e, r.ViewColumn.Beside);
+  const s = M_completion_context.encodeLocation(n.document.uri, t);
+  const a = n.document.languageId;
+  M_vscode.workspace.openTextDocument(s).then((e) => {
+    M_vscode.languages.setTextDocumentLanguage(e, a);
+    M_vscode.window.showTextDocument(e, M_vscode.ViewColumn.Beside);
   });
 };

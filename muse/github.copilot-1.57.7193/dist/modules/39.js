@@ -1,5 +1,5 @@
-const r = require("tty"),
-  o = require("util");
+const r = require("tty");
+const o = require("util");
 exports.init = function (e) {
   e.inspectOpts = {};
   const n = Object.keys(exports.inspectOpts);
@@ -12,9 +12,9 @@ exports.log = function (...e) {
 exports.formatArgs = function (n) {
   const { namespace: r, useColors: o } = this;
   if (o) {
-    const t = this.color,
-      o = "[3" + (t < 8 ? t : "8;5;" + t),
-      i = `  ${o};1m${r} [0m`;
+    const t = this.color;
+    const o = "[3" + (t < 8 ? t : "8;5;" + t);
+    const i = `  ${o};1m${r} [0m`;
     n[0] = i + n[0].split("\n").join("\n" + i);
     n.push(o + "m+" + module.exports.humanize(this.diff) + "[0m");
   } else

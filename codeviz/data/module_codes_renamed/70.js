@@ -25,7 +25,9 @@ class RuntimeMode {
       testMode: e,
       recordInput: i(process.argv, process.env),
     });
-    var t, r, s;
+    var t;
+    var r;
+    var s;
   }
 }
 function isRunningInTest(e) {

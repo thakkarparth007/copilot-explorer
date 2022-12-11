@@ -10,8 +10,8 @@ exports.formatArgs = function (t) {
   if (!this.useColors) return;
   const n = "color: " + this.color;
   t.splice(1, 0, n, "color: inherit");
-  let r = 0,
-    o = 0;
+  let r = 0;
+  let o = 0;
   t[0].replace(/%[a-zA-Z%]/g, (e) => {
     if ("%%" !== e) {
       r++;

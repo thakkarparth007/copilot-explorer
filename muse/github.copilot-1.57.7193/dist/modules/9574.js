@@ -1,17 +1,17 @@
 Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
-var r,
-  o = require(894),
-  i = require(6281),
-  s = require(6639),
-  a = require(4350),
-  c = require(8723),
-  l = require(731),
-  u = require(9962),
-  d = require(5282),
-  p = require(3668),
-  h = require(1629);
+var r;
+var o = require(894);
+var i = require(6281);
+var s = require(6639);
+var a = require(4350);
+var c = require(8723);
+var l = require(731);
+var u = require(9962);
+var d = require(5282);
+var p = require(3668);
+var h = require(1629);
 exports.TelemetryClient = require(1259);
 exports.Contracts = require(5290);
 (function (e) {
@@ -21,28 +21,28 @@ exports.Contracts = require(5290);
   (r =
     exports.DistributedTracingModes || (exports.DistributedTracingModes = {}))
 );
-var f,
-  m,
-  g,
-  _,
-  y,
-  v,
-  b,
-  w,
-  x,
-  E = !0,
-  C = !1,
-  S = !0,
-  T = !0,
-  k = !0,
-  I = !0,
-  P = !0,
-  A = !0,
-  O = !1,
-  N = !0,
-  R = undefined,
-  M = undefined,
-  L = !1;
+var f;
+var m;
+var g;
+var _;
+var y;
+var v;
+var b;
+var w;
+var x;
+var E = !0;
+var C = !1;
+var S = !0;
+var T = !0;
+var k = !0;
+var I = !0;
+var P = !0;
+var A = !0;
+var O = !1;
+var N = !0;
+var R = undefined;
+var M = undefined;
+var L = !1;
 function start() {
   if (exports.defaultClient) {
     L = !0;

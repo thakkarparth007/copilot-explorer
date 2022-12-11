@@ -8,9 +8,9 @@ exports.extendErrors =
   exports.keyword$DataError =
   exports.keywordError =
     undefined;
-const r = require(3487),
-  o = require(6776),
-  i = require(2141);
+const r = require(3487);
+const o = require(6776);
+const i = require(2141);
 function s(e, t) {
   const n = e.const("err", t);
   e.if(
@@ -39,9 +39,9 @@ exports.keyword$DataError = {
       : r.str`"${e}" keyword is invalid ($data)`,
 };
 exports.reportError = function (e, n = exports.keywordError, o, i) {
-  const { it: c } = e,
-    { gen: u, compositeRule: d, allErrors: p } = c,
-    h = l(e, n, o);
+  const { it: c } = e;
+  const { gen: u, compositeRule: d, allErrors: p } = c;
+  const h = l(e, n, o);
   if (null != i ? i : d || p) {
     s(u, h);
   } else {
@@ -49,8 +49,8 @@ exports.reportError = function (e, n = exports.keywordError, o, i) {
   }
 };
 exports.reportExtraError = function (e, n = exports.keywordError, r) {
-  const { it: o } = e,
-    { gen: c, compositeRule: u, allErrors: d } = o;
+  const { it: o } = e;
+  const { gen: c, compositeRule: u, allErrors: d } = o;
   s(c, l(e, n, r));
   if (u || d) {
     a(o, i.default.vErrors);
@@ -105,11 +105,16 @@ function l(e, t, n) {
   return !1 === o
     ? r._`{}`
     : (function (e, t, n = {}) {
-        const { gen: o, it: s } = e,
-          a = [u(s, n), d(e, n)];
+        const { gen: o, it: s } = e;
+        const a = [u(s, n), d(e, n)];
         (function (e, { params: t, message: n }, o) {
-          const { keyword: s, data: a, schemaValue: l, it: u } = e,
-            { opts: d, propertyName: p, topSchemaRef: h, schemaPath: f } = u;
+          const { keyword: s, data: a, schemaValue: l, it: u } = e;
+          const {
+            opts: d,
+            propertyName: p,
+            topSchemaRef: h,
+            schemaPath: f,
+          } = u;
           o.push(
             [c.keyword, s],
             [c.params, "function" == typeof t ? t(e) : t || r._`{}`]

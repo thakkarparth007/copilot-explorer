@@ -1,14 +1,14 @@
-var M_vlq_NOTSURE = require("vlq"),
-  M_url_utils_NOTSURE = require("url-utils"),
-  i = require("ordered-set").I,
-  s = require("sorted_array").H;
+var M_vlq_maybe = require("vlq");
+var M_url_utils_maybe = require("url-utils");
+var i = require("ordered-set").I;
+var s = require("sorted_array").H;
 function h(e) {
   if (e) {
     e = {};
   }
-  this._file = M_url_utils_NOTSURE.getArg(e, "file", null);
-  this._sourceRoot = M_url_utils_NOTSURE.getArg(e, "sourceRoot", null);
-  this._skipValidation = M_url_utils_NOTSURE.getArg(e, "skipValidation", !1);
+  this._file = M_url_utils_maybe.getArg(e, "file", null);
+  this._sourceRoot = M_url_utils_maybe.getArg(e, "sourceRoot", null);
+  this._skipValidation = M_url_utils_maybe.getArg(e, "skipValidation", !1);
   this._sources = new i();
   this._names = new i();
   this._mappings = new s();
@@ -16,11 +16,11 @@ function h(e) {
 }
 h.prototype._version = 3;
 h.fromSourceMap = function (e) {
-  var t = e.sourceRoot,
-    n = new h({
-      file: e.file,
-      sourceRoot: t,
-    });
+  var t = e.sourceRoot;
+  var n = new h({
+    file: e.file,
+    sourceRoot: t,
+  });
   e.eachMapping(function (e) {
     var r = {
       generated: {
@@ -31,7 +31,7 @@ h.fromSourceMap = function (e) {
     if (null != e.source) {
       r.source = e.source;
       if (null != t) {
-        r.source = M_url_utils_NOTSURE.relative(t, r.source);
+        r.source = M_url_utils_maybe.relative(t, r.source);
       }
       r.original = {
         line: e.originalLine,
@@ -46,7 +46,7 @@ h.fromSourceMap = function (e) {
   e.sources.forEach(function (r) {
     var i = r;
     if (null !== t) {
-      i = M_url_utils_NOTSURE.relative(t, r);
+      i = M_url_utils_maybe.relative(t, r);
     }
     if (n._sources.has(i)) {
       n._sources.add(i);
@@ -59,10 +59,10 @@ h.fromSourceMap = function (e) {
   return n;
 };
 h.prototype.addMapping = function (e) {
-  var t = M_url_utils_NOTSURE.getArg(e, "generated"),
-    n = M_url_utils_NOTSURE.getArg(e, "original", null),
-    r = M_url_utils_NOTSURE.getArg(e, "source", null),
-    i = M_url_utils_NOTSURE.getArg(e, "name", null);
+  var t = M_url_utils_maybe.getArg(e, "generated");
+  var n = M_url_utils_maybe.getArg(e, "original", null);
+  var r = M_url_utils_maybe.getArg(e, "source", null);
+  var i = M_url_utils_maybe.getArg(e, "name", null);
   if (this._skipValidation) {
     this._validateMapping(t, n, r, i);
   }
@@ -90,16 +90,16 @@ h.prototype.addMapping = function (e) {
 h.prototype.setSourceContent = function (e, t) {
   var n = e;
   if (null != this._sourceRoot) {
-    n = M_url_utils_NOTSURE.relative(this._sourceRoot, n);
+    n = M_url_utils_maybe.relative(this._sourceRoot, n);
   }
   if (null != t) {
     if (this._sourcesContents) {
       this._sourcesContents = Object.create(null);
     }
-    this._sourcesContents[M_url_utils_NOTSURE.toSetString(n)] = t;
+    this._sourcesContents[M_url_utils_maybe.toSetString(n)] = t;
   } else {
     if (this._sourcesContents) {
-      delete this._sourcesContents[M_url_utils_NOTSURE.toSetString(n)];
+      delete this._sourcesContents[M_url_utils_maybe.toSetString(n)];
       if (0 === Object.keys(this._sourcesContents).length) {
         this._sourcesContents = null;
       }
@@ -117,10 +117,10 @@ h.prototype.applySourceMap = function (e, t, n) {
   }
   var s = this._sourceRoot;
   if (null != s) {
-    r = M_url_utils_NOTSURE.relative(s, r);
+    r = M_url_utils_maybe.relative(s, r);
   }
-  var a = new i(),
-    c = new i();
+  var a = new i();
+  var c = new i();
   this._mappings.unsortedForEach(function (t) {
     if (t.source === r && null != t.originalLine) {
       var i = e.originalPositionFor({
@@ -130,10 +130,10 @@ h.prototype.applySourceMap = function (e, t, n) {
       if (null != i.source) {
         t.source = i.source;
         if (null != n) {
-          t.source = M_url_utils_NOTSURE.join(n, t.source);
+          t.source = M_url_utils_maybe.join(n, t.source);
         }
         if (null != s) {
-          t.source = M_url_utils_NOTSURE.relative(s, t.source);
+          t.source = M_url_utils_maybe.relative(s, t.source);
         }
         t.originalLine = i.line;
         t.originalColumn = i.column;
@@ -157,10 +157,10 @@ h.prototype.applySourceMap = function (e, t, n) {
     var r = e.sourceContentFor(t);
     if (null != r) {
       if (null != n) {
-        t = M_url_utils_NOTSURE.join(n, t);
+        t = M_url_utils_maybe.join(n, t);
       }
       if (null != s) {
-        t = M_url_utils_NOTSURE.relative(s, t);
+        t = M_url_utils_maybe.relative(s, t);
       }
       this.setSourceContent(t, r);
     }
@@ -202,11 +202,7 @@ h.prototype._validateMapping = function (e, t, n, r) {
 };
 h.prototype._serializeMappings = function () {
   for (
-    var e,
-      t,
-      n,
-      i,
-      s = 0,
+    s = 0,
       a = 1,
       c = 0,
       l = 0,
@@ -215,31 +211,46 @@ h.prototype._serializeMappings = function () {
       p = "",
       h = this._mappings.toArray(),
       f = 0,
-      m = h.length;
+      m = h.length,
+      undefined;
     f < m;
     f++
   ) {
+    var e;
+    var t;
+    var n;
+    var i;
+    var s;
+    var a;
+    var c;
+    var l;
+    var u;
+    var d;
+    var p;
+    var h;
+    var f;
+    var m;
     e = "";
     if ((t = h[f]).generatedLine !== a)
       for (s = 0; t.generatedLine !== a; ) (e += ";"), a++;
     else if (f > 0) {
-      if (!M_url_utils_NOTSURE.compareByGeneratedPositionsInflated(t, h[f - 1]))
+      if (!M_url_utils_maybe.compareByGeneratedPositionsInflated(t, h[f - 1]))
         continue;
       e += ",";
     }
-    e += M_vlq_NOTSURE.encode(t.generatedColumn - s);
+    e += M_vlq_maybe.encode(t.generatedColumn - s);
     s = t.generatedColumn;
     if (null != t.source) {
       i = this._sources.indexOf(t.source);
-      e += M_vlq_NOTSURE.encode(i - d);
+      e += M_vlq_maybe.encode(i - d);
       d = i;
-      e += M_vlq_NOTSURE.encode(t.originalLine - 1 - l);
+      e += M_vlq_maybe.encode(t.originalLine - 1 - l);
       l = t.originalLine - 1;
-      e += M_vlq_NOTSURE.encode(t.originalColumn - c);
+      e += M_vlq_maybe.encode(t.originalColumn - c);
       c = t.originalColumn;
       if (null != t.name) {
         n = this._names.indexOf(t.name);
-        e += M_vlq_NOTSURE.encode(n - u);
+        e += M_vlq_maybe.encode(n - u);
         u = n;
       }
     }
@@ -251,9 +262,9 @@ h.prototype._generateSourcesContent = function (e, t) {
   return e.map(function (e) {
     if (!this._sourcesContents) return null;
     if (null != t) {
-      e = M_url_utils_NOTSURE.relative(t, e);
+      e = M_url_utils_maybe.relative(t, e);
     }
-    var n = M_url_utils_NOTSURE.toSetString(e);
+    var n = M_url_utils_maybe.toSetString(e);
     return Object.prototype.hasOwnProperty.call(this._sourcesContents, n)
       ? this._sourcesContents[n]
       : null;

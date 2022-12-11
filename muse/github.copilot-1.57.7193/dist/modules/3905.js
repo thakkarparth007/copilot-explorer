@@ -9,11 +9,11 @@ var o = r(require(6008));
 const i = (e, t) => t.some((t) => (t instanceof RegExp ? t.test(e) : t === e));
 const s = (e, t = !1) => {
   const n =
-      /^(?:([a-z_][a-z0-9_-]{0,31})@|https?:\/\/)([\w\.\-@]+)[\/:]([\~,\.\w,\-,\_,\/]+?(?:\.git|\/)?)$/,
-    r = (t) => {
-      const n = new Error(t);
-      throw ((n.subject_url = e), n);
-    };
+    /^(?:([a-z_][a-z0-9_-]{0,31})@|https?:\/\/)([\w\.\-@]+)[\/:]([\~,\.\w,\-,\_,\/]+?(?:\.git|\/)?)$/;
+  const r = (t) => {
+    const n = new Error(t);
+    throw ((n.subject_url = e), n);
+  };
   if ("string" == typeof e && e.trim()) {
     r("Invalid url.");
   }

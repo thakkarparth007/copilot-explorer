@@ -8,28 +8,28 @@ exports.getSchemaRefs =
   exports.getFullPath =
   exports.inlineRef =
     undefined;
-const M_ajv_utils_NOTSURE = require("ajv-utils"),
-  M_deep_equal_NOTSURE = require("deep-equal"),
-  M_json_schema_traverse_NOTSURE = require("json-schema-traverse"),
-  M_regexp_lib_NOTSURE = require("regexp-lib"),
-  a = new Set([
-    "type",
-    "format",
-    "pattern",
-    "maxLength",
-    "minLength",
-    "maxProperties",
-    "minProperties",
-    "maxItems",
-    "minItems",
-    "maximum",
-    "minimum",
-    "uniqueItems",
-    "multipleOf",
-    "required",
-    "enum",
-    "const",
-  ]);
+const M_ajv_utils_maybe = require("ajv-utils");
+const M_deep_equal_maybe = require("deep-equal");
+const M_json_schema_traverse_maybe = require("json-schema-traverse");
+const M_regexp_lib_maybe = require("regexp-lib");
+const a = new Set([
+  "type",
+  "format",
+  "pattern",
+  "maxLength",
+  "minLength",
+  "maxProperties",
+  "minProperties",
+  "maxItems",
+  "minItems",
+  "maximum",
+  "minimum",
+  "uniqueItems",
+  "multipleOf",
+  "required",
+  "enum",
+  "const",
+]);
 exports.inlineRef = function (e, t = !0) {
   return "boolean" == typeof e || (!0 === t ? !l(e) : !!t && u(e) <= t);
 };
@@ -57,7 +57,7 @@ function u(e) {
     if (
       !a.has(n) &&
       ("object" == typeof e[n] &&
-        (0, M_ajv_utils_NOTSURE.eachItem)(e[n], (e) => (t += u(e))),
+        (0, M_ajv_utils_maybe.eachItem)(e[n], (e) => (t += u(e))),
       t === 1 / 0)
     )
       return 1 / 0;
@@ -68,10 +68,10 @@ function getFullPath(e = "", t) {
   if (!1 !== t) {
     e = normalizeId(e);
   }
-  return _getFullPath(M_regexp_lib_NOTSURE.parse(e));
+  return _getFullPath(M_regexp_lib_maybe.parse(e));
 }
 function _getFullPath(e) {
-  return M_regexp_lib_NOTSURE.serialize(e).split("#")[0] + "#";
+  return M_regexp_lib_maybe.serialize(e).split("#")[0] + "#";
 }
 exports.getFullPath = getFullPath;
 exports._getFullPath = _getFullPath;
@@ -82,20 +82,20 @@ function normalizeId(e) {
 exports.normalizeId = normalizeId;
 exports.resolveUrl = function (e, t) {
   t = normalizeId(t);
-  return M_regexp_lib_NOTSURE.resolve(e, t);
+  return M_regexp_lib_maybe.resolve(e, t);
 };
 const m = /^[a-z_][-a-z0-9._]*$/i;
 exports.getSchemaRefs = function (e, t) {
   if ("boolean" == typeof e) return {};
-  const { schemaId: n } = this.opts,
-    r = normalizeId(e[n] || t),
-    a = {
-      "": r,
-    },
-    c = getFullPath(r, !1),
-    l = {},
-    u = new Set();
-  M_json_schema_traverse_NOTSURE(
+  const { schemaId: n } = this.opts;
+  const r = normalizeId(e[n] || t);
+  const a = {
+    "": r,
+  };
+  const c = getFullPath(r, !1);
+  const l = {};
+  const u = new Set();
+  M_json_schema_traverse_maybe(
     e,
     {
       allKeys: !0,
@@ -105,7 +105,7 @@ exports.getSchemaRefs = function (e, t) {
       const i = c + t;
       let d = a[o];
       function g(t) {
-        t = normalizeId(d ? M_regexp_lib_NOTSURE.resolve(d, t) : t);
+        t = normalizeId(d ? M_regexp_lib_maybe.resolve(d, t) : t);
         if (u.has(t)) throw h(t);
         u.add(t);
         let n = this.refs[t];
@@ -142,7 +142,7 @@ exports.getSchemaRefs = function (e, t) {
   );
   return l;
   function p(e, t, n) {
-    if (undefined !== t && !M_deep_equal_NOTSURE(e, t)) throw h(n);
+    if (undefined !== t && !M_deep_equal_maybe(e, t)) throw h(n);
   }
   function h(e) {
     return new Error(`reference "${e}" resolves to more than one schema`);

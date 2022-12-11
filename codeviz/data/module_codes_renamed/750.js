@@ -8,23 +8,23 @@ exports.handleGhostTextResultTelemetry =
   exports.telemetryAccepted =
   exports.telemetryShown =
     undefined;
-const M_telemetry_stuff = require("telemetry-stuff"),
-  M_contextual_filter_manager = require("contextual-filter-manager");
+const M_telemetry_stuff = require("telemetry-stuff");
+const M_contextual_filter_manager = require("contextual-filter-manager");
 exports.telemetryShown = function (e, t, n, o) {
   n.markAsDisplayed();
   const i = o ? `${t}.shownFromCache` : `${t}.shown`;
   M_telemetry_stuff.telemetry(e, i, n);
 };
 exports.telemetryAccepted = function (e, t, n) {
-  const i = t + ".accepted",
-    s = e.get(M_contextual_filter_manager.ContextualFilterManager);
+  const i = t + ".accepted";
+  const s = e.get(M_contextual_filter_manager.ContextualFilterManager);
   s.previousLabel = 1;
   s.previousLabelTimestamp = Date.now();
   M_telemetry_stuff.telemetry(e, i, n);
 };
 exports.telemetryRejected = function (e, t, n) {
-  const i = t + ".rejected",
-    s = e.get(M_contextual_filter_manager.ContextualFilterManager);
+  const i = t + ".rejected";
+  const s = e.get(M_contextual_filter_manager.ContextualFilterManager);
   s.previousLabel = 0;
   s.previousLabelTimestamp = Date.now();
   M_telemetry_stuff.telemetry(e, i, n);

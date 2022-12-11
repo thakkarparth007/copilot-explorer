@@ -5,40 +5,56 @@ require(8214);
 require(888);
 require(5109);
 (function () {
-  var e = r,
-    t = e.lib.StreamCipher,
-    n = e.algo,
-    o = (n.RC4 = t.extend({
-      _doReset: function () {
-        for (
-          var e = this._key,
-            t = e.words,
-            n = e.sigBytes,
-            r = (this._S = []),
-            o = 0;
-          o < 256;
-          o++
-        )
-          r[o] = o;
-        o = 0;
-        for (var i = 0; o < 256; o++) {
-          var s = o % n,
-            a = (t[s >>> 2] >>> (24 - (s % 4) * 8)) & 255;
-          i = (i + r[o] + a) % 256;
-          var c = r[o];
-          r[o] = r[i];
-          r[i] = c;
-        }
-        this._i = this._j = 0;
-      },
-      _doProcessBlock: function (e, t) {
-        e[t] ^= i.call(this);
-      },
-      keySize: 8,
-      ivSize: 0,
-    }));
+  var e = r;
+  var t = e.lib.StreamCipher;
+  var n = e.algo;
+  var o = (n.RC4 = t.extend({
+    _doReset: function () {
+      for (
+        e = this._key,
+          t = e.words,
+          n = e.sigBytes,
+          r = this._S = [],
+          o = 0,
+          undefined;
+        o < 256;
+        o++
+      ) {
+        var e;
+        var t;
+        var n;
+        var r;
+        var o;
+        r[o] = o;
+      }
+      o = 0;
+      for (var i = 0; o < 256; o++) {
+        var s = o % n;
+        var a = (t[s >>> 2] >>> (24 - (s % 4) * 8)) & 255;
+        i = (i + r[o] + a) % 256;
+        var c = r[o];
+        r[o] = r[i];
+        r[i] = c;
+      }
+      this._i = this._j = 0;
+    },
+    _doProcessBlock: function (e, t) {
+      e[t] ^= i.call(this);
+    },
+    keySize: 8,
+    ivSize: 0,
+  }));
   function i() {
-    for (var e = this._S, t = this._i, n = this._j, r = 0, o = 0; o < 4; o++) {
+    for (
+      e = this._S, t = this._i, n = this._j, r = 0, o = 0, undefined;
+      o < 4;
+      o++
+    ) {
+      var e;
+      var t;
+      var n;
+      var r;
+      var o;
       n = (n + e[(t = (t + 1) % 256)]) % 256;
       var i = e[t];
       e[t] = e[n];

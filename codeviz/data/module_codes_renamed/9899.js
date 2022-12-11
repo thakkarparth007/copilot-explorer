@@ -12,9 +12,9 @@ exports.logger =
   exports.LogVerbose =
   exports.LogLevel =
     undefined;
-const M_clock = require("clock"),
-  M_config_stuff = require("config-stuff"),
-  M_telemetry_stuff = require("telemetry-stuff");
+const M_clock = require("clock");
+const M_config_stuff = require("config-stuff");
+const M_telemetry_stuff = require("telemetry-stuff");
 var s;
 !(function (e) {
   e[(e.DEBUG = 0)] = "DEBUG";
@@ -94,16 +94,17 @@ class Logger {
         n
       );
     }
-    const c = e.get(LogTarget),
-      u = c.shouldLog(e, t);
+    const c = e.get(LogTarget);
+    const u = c.shouldLog(e, t);
     if (!1 === u) return;
     if (undefined === u && !this.shouldLog(e, t, this.context)) return;
-    const d = e.get(M_clock.Clock).now().toISOString(),
-      p = `[${a}] [${this.context}] [${d}]`;
+    const d = e.get(M_clock.Clock).now().toISOString();
+    const p = `[${a}] [${this.context}] [${d}]`;
     c.logIt(e, t, p, ...o);
   }
   shouldLog(e, t, n) {
-    var r, i;
+    var r;
+    var i;
     if (verboseLogging(e)) return !0;
     const s = M_config_stuff.getConfig(
       e,

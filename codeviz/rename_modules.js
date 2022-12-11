@@ -63,8 +63,8 @@ function renameImportsHelper(left, requireCall, scope, mergedAnnotations) {
             console.log(`WARNING: no annotations for module ${importedModule}`);
             return;
         } else {
-            // for non-numeric modules, just return the module name
-            return '"' + importedModule + '"';
+            // for non-numeric modules, just rename the import variable
+            annotations = { name: importedModule, isNameGold: true };
         }
     }
     let name = annotations.name;
@@ -72,7 +72,7 @@ function renameImportsHelper(left, requireCall, scope, mergedAnnotations) {
     
     let importVarName = "M_" + name.replace(/-/g, "_");
     if (!isNameGold) {
-        importVarName += "_NOTSURE";
+        importVarName += "_maybe";
     }
     // console.log(left.name, importVarName);
     if (left) {
@@ -144,6 +144,7 @@ function renameImportsOfModule(moduleId, moduleCode, moduleImportIds, mergedAnno
 
     // print un-renamed modules
     for (let importId of moduleImportIds) {
+        importId = importId.replace(/"/g, ""); // ugly thing, needed because dep extraction code was careless
         if (!renamedModules.includes(importId)) {
             console.log(`WARNING: module ${moduleId} has an import that is not renamed: ${importId}`);
         }

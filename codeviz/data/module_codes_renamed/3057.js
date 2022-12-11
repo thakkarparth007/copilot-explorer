@@ -1,6 +1,6 @@
-var r = require("assert"),
-  M_event_listener_wrap_NOTSURE = require("event-listener-wrap"),
-  i = "error@context";
+var M_assert = require("assert");
+var M_event_listener_wrap_maybe = require("event-listener-wrap");
+var i = "error@context";
 function s(e) {
   this.name = e;
   this.active = null;
@@ -12,8 +12,8 @@ function a(e) {
 }
 function c(e) {
   var t = a(e);
-  r.ok(t, "can't delete nonexistent namespace!");
-  r.ok(t.id, "don't assign to process.namespaces directly!");
+  M_assert.ok(t, "can't delete nonexistent namespace!");
+  M_assert.ok(t.id, "don't assign to process.namespaces directly!");
   process.removeAsyncListener(t.id);
   process.namespaces[e] = null;
 }
@@ -78,27 +78,27 @@ s.prototype.bind = function (e, t) {
   };
 };
 s.prototype.enter = function (e) {
-  r.ok(e, "context must be provided for entering");
+  M_assert.ok(e, "context must be provided for entering");
   this._set.push(this.active);
   this.active = e;
 };
 s.prototype.exit = function (e) {
-  r.ok(e, "context must be provided for exiting");
+  M_assert.ok(e, "context must be provided for exiting");
   if (this.active === e)
     return (
-      r.ok(this._set.length, "can't remove top context"),
+      M_assert.ok(this._set.length, "can't remove top context"),
       void (this.active = this._set.pop())
     );
   var t = this._set.lastIndexOf(e);
-  r.ok(t >= 0, "context not currently entered; can't exit");
-  r.ok(t, "can't remove top context");
+  M_assert.ok(t >= 0, "context not currently entered; can't exit");
+  M_assert.ok(t, "can't remove top context");
   this._set.splice(t, 1);
 };
 s.prototype.bindEmitter = function (e) {
-  r.ok(e.on && e.addListener && e.emit, "can only bind real EEs");
-  var t = this,
-    n = "context@" + this.name;
-  M_event_listener_wrap_NOTSURE(
+  M_assert.ok(e.on && e.addListener && e.emit, "can only bind real EEs");
+  var t = this;
+  var n = "context@" + this.name;
+  M_event_listener_wrap_maybe(
     e,
     function (e) {
       if (e) {
@@ -113,8 +113,8 @@ s.prototype.bindEmitter = function (e) {
     },
     function (e) {
       if (!e || !e["cls@contexts"]) return e;
-      var t = e,
-        n = e["cls@contexts"];
+      var t = e;
+      var n = e["cls@contexts"];
       Object.keys(n).forEach(function (e) {
         var r = n[e];
         t = r.namespace.bind(t, r.context);
@@ -132,7 +132,7 @@ if (process.namespaces) {
 module.exports = {
   getNamespace: a,
   createNamespace: function (e) {
-    r.ok(e, "namespace must be given a name!");
+    M_assert.ok(e, "namespace must be given a name!");
     var t = new s(e);
     t.id = process.addAsyncListener({
       create: function () {

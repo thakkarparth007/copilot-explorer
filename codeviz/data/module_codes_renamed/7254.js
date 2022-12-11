@@ -2,32 +2,37 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.CopilotStatusBar = undefined;
-const r = require("vscode"),
-  M_debouncer = require("debouncer"),
-  M_config_stuff = require("config-stuff"),
-  M_telemetry_stuff = require("telemetry-stuff"),
-  M_copilot_vscode_cmds = require("copilot-vscode-cmds");
+const M_vscode = require("vscode");
+const M_debouncer = require("debouncer");
+const M_config_stuff = require("config-stuff");
+const M_telemetry_stuff = require("telemetry-stuff");
+const M_copilot_vscode_cmds = require("copilot-vscode-cmds");
 exports.CopilotStatusBar = class {
   constructor(e) {
     this.ctx = e;
     this.showingMessage = !1;
     this.status = "Normal";
     this.errorMessage = "";
-    this.disabledColor = new r.ThemeColor("statusBarItem.warningBackground");
+    this.disabledColor = new M_vscode.ThemeColor(
+      "statusBarItem.warningBackground"
+    );
     this.delayedUpdateDisplay = M_debouncer.debounce(100, () => {
       this.updateDisplay();
     });
     this.enabled = this.checkEnabledForLanguage();
-    this.item = r.window.createStatusBarItem(r.StatusBarAlignment.Right, 0);
+    this.item = M_vscode.window.createStatusBarItem(
+      M_vscode.StatusBarAlignment.Right,
+      0
+    );
     this.updateDisplay();
     this.item.show();
-    r.window.onDidChangeActiveTextEditor(() => {
+    M_vscode.window.onDidChangeActiveTextEditor(() => {
       this.updateStatusBarIndicator();
     });
-    r.workspace.onDidCloseTextDocument(() => {
+    M_vscode.workspace.onDidCloseTextDocument(() => {
       this.updateStatusBarIndicator();
     });
-    r.workspace.onDidOpenTextDocument(() => {
+    M_vscode.workspace.onDidOpenTextDocument(() => {
       this.updateStatusBarIndicator();
     });
   }
@@ -99,13 +104,13 @@ exports.CopilotStatusBar = class {
   }
   toggleStatusBar() {
     var e;
-    const t = this.ctx.get(M_config_stuff.ConfigProvider),
-      n = this.enabled,
-      o =
-        null === (e = r.window.activeTextEditor) || undefined === e
-          ? undefined
-          : e.document.languageId,
-      a = "editor.action.inlineSuggest.hide";
+    const t = this.ctx.get(M_config_stuff.ConfigProvider);
+    const n = this.enabled;
+    const o =
+      null === (e = M_vscode.window.activeTextEditor) || undefined === e
+        ? undefined
+        : e.document.languageId;
+    const a = "editor.action.inlineSuggest.hide";
     if (this.showingMessage) return;
     const c = M_telemetry_stuff.TelemetryData.createAndMarkAsIssued({
       languageId: o || "*",
@@ -118,11 +123,11 @@ exports.CopilotStatusBar = class {
       setTimeout(() => {
         this.showingMessage = !1;
       }, 15e3);
-      const e = n ? "Disable" : "Enable",
-        i = `${e} Globally`,
-        l = `${e} for ${o}`,
-        u = o ? [i, l] : [i];
-      r.window
+      const e = n ? "Disable" : "Enable";
+      const i = `${e} Globally`;
+      const l = `${e} for ${o}`;
+      const u = o ? [i, l] : [i];
+      M_vscode.window
         .showInformationMessage(
           `Would you like to ${n ? "disable" : "enable"} Copilot?`,
           ...u
@@ -141,7 +146,7 @@ exports.CopilotStatusBar = class {
             c
           );
           if (n) {
-            r.commands.executeCommand(a);
+            M_vscode.commands.executeCommand(a);
           }
           const u = l ? "*" : o;
           t.updateEnabledConfig(this.ctx, u, !n).then(() => {
@@ -156,7 +161,7 @@ exports.CopilotStatusBar = class {
         c
       );
       if (n) {
-        r.commands.executeCommand(a);
+        M_vscode.commands.executeCommand(a);
       }
       t.updateEnabledConfig(this.ctx, o || "*", !n).then(() => {
         this.enabled = !n;
@@ -172,7 +177,7 @@ exports.CopilotStatusBar = class {
     if (this.errorRetry) {
       t.push("Retry");
     }
-    r.window.showWarningMessage(this.errorMessage, ...t).then((t) => {
+    M_vscode.window.showWarningMessage(this.errorMessage, ...t).then((t) => {
       this.showingMessage = !1;
       if ("Show Output log" === t) {
         e.show();

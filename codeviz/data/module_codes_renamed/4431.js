@@ -2,13 +2,13 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.findEditDistanceScore = undefined;
-const M_tokenizer_NOTSURE = require("tokenizer");
+const M_tokenizer_maybe = require("tokenizer");
 exports.findEditDistanceScore = function (e, t) {
   if ("string" == typeof e) {
-    e = M_tokenizer_NOTSURE.tokenize(e);
+    e = M_tokenizer_maybe.tokenize(e);
   }
   if ("string" == typeof t) {
-    t = M_tokenizer_NOTSURE.tokenize(t);
+    t = M_tokenizer_maybe.tokenize(t);
   }
   if (0 === e.length || 0 === t.length)
     return {

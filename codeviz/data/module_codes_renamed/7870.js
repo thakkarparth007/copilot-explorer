@@ -38,7 +38,8 @@ exports.Context = class {
     this.instances.set(e, t);
   }
   toString() {
-    var e, t;
+    var e;
+    var t;
     let n = "    Context created at:\n";
     for (const e of this.constructionStack || []) n += `    ${e}\n`;
     n +=

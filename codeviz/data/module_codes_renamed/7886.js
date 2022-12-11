@@ -1,5 +1,5 @@
-var M_channel_NOTSURE = require("channel"),
-  o = [];
+var M_channel_maybe = require("channel");
+var o = [];
 exports.qP = function (e) {
   e.data.event.commandName;
   o.forEach(function (t) {
@@ -20,7 +20,7 @@ exports.qP = function (e) {
 exports.wp = function (e, n) {
   if (e) {
     if (0 === o.length) {
-      M_channel_NOTSURE.channel.subscribe("mongodb", exports.qP);
+      M_channel_maybe.channel.subscribe("mongodb", exports.qP);
     }
     o.push(n);
   } else {
@@ -30,7 +30,7 @@ exports.wp = function (e, n) {
         return e != n;
       })).length
     ) {
-      M_channel_NOTSURE.channel.unsubscribe("mongodb", exports.qP);
+      M_channel_maybe.channel.unsubscribe("mongodb", exports.qP);
     }
   }
 };

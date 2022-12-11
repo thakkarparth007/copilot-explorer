@@ -1,7 +1,8 @@
 module.exports = (e, t) =>
   class extends e {
     constructor(e) {
-      var n, r;
+      var n;
+      var r;
       super(function (e, i) {
         n = this;
         r = [

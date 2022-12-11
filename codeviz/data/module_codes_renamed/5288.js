@@ -11,21 +11,21 @@ exports.parseTree =
   exports.labelLines =
   exports.parseRaw =
     undefined;
-const M_tree_NOTSURE = require("tree"),
-  M_tree_utils_NOTSURE = require("tree-utils");
+const M_tree_maybe = require("tree");
+const M_tree_utils_maybe = require("tree-utils");
 function parseRaw(e) {
-  const t = e.split("\n"),
-    n = t.map((e) => e.match(/^\s*/)[0].length),
-    o = t.map((e) => e.trimLeft());
+  const t = e.split("\n");
+  const n = t.map((e) => e.match(/^\s*/)[0].length);
+  const o = t.map((e) => e.trimLeft());
   function i(e) {
     const [t, i] = s(e + 1, n[e]);
-    return [M_tree_NOTSURE.lineNode(n[e], e, o[e], t), i];
+    return [M_tree_maybe.lineNode(n[e], e, o[e], t), i];
   }
   function s(e, t) {
     let s;
     const a = [];
-    let c,
-      l = e;
+    let c;
+    let l = e;
     for (; l < o.length && ("" === o[l] || n[l] > t); )
       if ("" === o[l]) {
         if (undefined === c) {
@@ -34,7 +34,7 @@ function parseRaw(e) {
         l += 1;
       } else {
         if (undefined !== c) {
-          for (let e = c; e < l; e++) a.push(M_tree_NOTSURE.blankNode(e));
+          for (let e = c; e < l; e++) a.push(M_tree_maybe.blankNode(e));
           c = undefined;
         }
         [s, l] = i(l);
@@ -48,20 +48,20 @@ function parseRaw(e) {
   const [a, c] = s(0, -1);
   let l = c;
   for (; l < o.length && "" === o[l]; ) {
-    a.push(M_tree_NOTSURE.blankNode(l));
+    a.push(M_tree_maybe.blankNode(l));
     l += 1;
   }
   if (l < o.length)
     throw new Error(
       `Parsing did not go to end of file. Ended at ${l} out of ${o.length}`
     );
-  return M_tree_NOTSURE.topNode(a);
+  return M_tree_maybe.topNode(a);
 }
 function labelLines(e, t) {
-  M_tree_utils_NOTSURE.visitTree(
+  M_tree_utils_maybe.visitTree(
     e,
     function (e) {
-      if (M_tree_NOTSURE.isLine(e)) {
+      if (M_tree_maybe.isLine(e)) {
         const n = t.find((t) => t.matches(e.sourceLine));
         if (n) {
           e.label = n.label;
@@ -82,7 +82,7 @@ function buildLabelRules(e) {
   });
 }
 function combineClosersAndOpeners(e) {
-  const t = M_tree_utils_NOTSURE.rebuildTree(e, function (e) {
+  const t = M_tree_utils_maybe.rebuildTree(e, function (e) {
     if (
       0 === e.subs.length ||
       -1 ===
@@ -92,20 +92,20 @@ function combineClosersAndOpeners(e) {
     const t = [];
     let n;
     for (let o = 0; o < e.subs.length; o++) {
-      const i = e.subs[o],
-        s = e.subs[o - 1];
-      if ("opener" === i.label && undefined !== s && M_tree_NOTSURE.isLine(s)) {
+      const i = e.subs[o];
+      const s = e.subs[o - 1];
+      if ("opener" === i.label && undefined !== s && M_tree_maybe.isLine(s)) {
         s.subs.push(i);
         i.subs.forEach((e) => s.subs.push(e));
         i.subs = [];
       } else if (
         "closer" === i.label &&
         undefined !== n &&
-        (M_tree_NOTSURE.isLine(i) || M_tree_NOTSURE.isVirtual(i)) &&
+        (M_tree_maybe.isLine(i) || M_tree_maybe.isVirtual(i)) &&
         i.indentation >= n.indentation
       ) {
         let e = t.length - 1;
-        for (; e > 0 && M_tree_NOTSURE.isBlank(t[e]); ) e -= 1;
+        for (; e > 0 && M_tree_maybe.isBlank(t[e]); ) e -= 1;
         n.subs.push(...t.splice(e + 1));
         if (i.subs.length > 0) {
           const e = n.subs.findIndex((e) => "newVirtual" !== e.label),
@@ -114,7 +114,7 @@ function combineClosersAndOpeners(e) {
             s =
               o.length > 0
                 ? [
-                    (0, M_tree_NOTSURE.virtualNode)(
+                    (0, M_tree_maybe.virtualNode)(
                       i.indentation,
                       o,
                       "newVirtual"
@@ -125,7 +125,7 @@ function combineClosersAndOpeners(e) {
         } else n.subs.push(i);
       } else {
         t.push(i);
-        if (M_tree_NOTSURE.isBlank(i)) {
+        if (M_tree_maybe.isBlank(i)) {
           n = i;
         }
       }
@@ -133,17 +133,17 @@ function combineClosersAndOpeners(e) {
     e.subs = t;
     return e;
   });
-  M_tree_utils_NOTSURE.clearLabelsIf(e, (e) => "newVirtual" === e);
+  M_tree_utils_maybe.clearLabelsIf(e, (e) => "newVirtual" === e);
   return t;
 }
 exports.parseRaw = parseRaw;
 exports.labelLines = labelLines;
 exports.labelVirtualInherited = function (e) {
-  M_tree_utils_NOTSURE.visitTree(
+  M_tree_utils_maybe.visitTree(
     e,
     function (e) {
-      if (M_tree_NOTSURE.isVirtual(e) && undefined === e.label) {
-        const t = e.subs.filter((e) => !M_tree_NOTSURE.isBlank(e));
+      if (M_tree_maybe.isVirtual(e) && undefined === e.label) {
+        const t = e.subs.filter((e) => !M_tree_maybe.isBlank(e));
         if (1 === t.length) {
           e.label = t[0].label;
         }
@@ -154,29 +154,29 @@ exports.labelVirtualInherited = function (e) {
 };
 exports.buildLabelRules = buildLabelRules;
 exports.combineClosersAndOpeners = combineClosersAndOpeners;
-exports.groupBlocks = function (e, t = M_tree_NOTSURE.isBlank, n) {
-  return M_tree_utils_NOTSURE.rebuildTree(e, function (e) {
+exports.groupBlocks = function (e, t = M_tree_maybe.isBlank, n) {
+  return M_tree_utils_maybe.rebuildTree(e, function (e) {
     if (e.subs.length <= 1) return e;
     const o = [];
-    let i,
-      s = [],
-      a = !1;
+    let i;
+    let s = [];
+    let a = !1;
     function c(e = !1) {
       if (undefined !== i && (o.length > 0 || !e)) {
-        const e = M_tree_NOTSURE.virtualNode(i, s, n);
+        const e = M_tree_maybe.virtualNode(i, s, n);
         o.push(e);
       } else s.forEach((e) => o.push(e));
     }
     for (let n = 0; n < e.subs.length; n++) {
-      const o = e.subs[n],
-        l = t(o);
+      const o = e.subs[n];
+      const l = t(o);
       if (!l && a) {
         c();
         s = [];
       }
       a = l;
       s.push(o);
-      if (M_tree_NOTSURE.isBlank(o)) {
+      if (M_tree_maybe.isBlank(o)) {
         i = null != i ? i : o.indentation;
       }
     }
@@ -186,30 +186,30 @@ exports.groupBlocks = function (e, t = M_tree_NOTSURE.isBlank, n) {
   });
 };
 exports.flattenVirtual = function (e) {
-  return M_tree_utils_NOTSURE.rebuildTree(e, function (e) {
-    return M_tree_NOTSURE.isVirtual(e) &&
+  return M_tree_utils_maybe.rebuildTree(e, function (e) {
+    return M_tree_maybe.isVirtual(e) &&
       undefined === e.label &&
       e.subs.length <= 1
       ? 0 === e.subs.length
         ? undefined
         : e.subs[0]
       : (1 === e.subs.length &&
-          M_tree_NOTSURE.isVirtual(e.subs[0]) &&
+          M_tree_maybe.isVirtual(e.subs[0]) &&
           undefined === e.subs[0].label &&
           (e.subs = e.subs[0].subs),
         e);
   });
 };
 const l = buildLabelRules({
-    opener: /^[\[({]/,
-    closer: /^[\])}]/,
-  }),
-  u = {};
+  opener: /^[\[({]/,
+  closer: /^[\])}]/,
+});
+const u = {};
 exports.registerLanguageSpecificParser = function (e, t) {
   u[e] = t;
 };
 exports.parseTree = function (e, t) {
-  const n = parseRaw(e),
-    r = u[null != t ? t : ""];
+  const n = parseRaw(e);
+  const r = u[null != t ? t : ""];
   return r ? r(n) : (labelLines(n, l), combineClosersAndOpeners(n));
 };

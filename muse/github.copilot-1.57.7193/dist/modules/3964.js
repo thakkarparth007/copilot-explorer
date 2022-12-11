@@ -1,9 +1,9 @@
-const r = require("util"),
-  o = require("assert"),
-  i = require(9867),
-  s = require("async_hooks"),
-  a = "error@context",
-  c = process.env.DEBUG_CLS_HOOKED;
+const r = require("util");
+const o = require("assert");
+const i = require(9867);
+const s = require("async_hooks");
+const a = "error@context";
+const c = process.env.DEBUG_CLS_HOOKED;
 let l = -1;
 function u(e) {
   this.name = e;
@@ -254,9 +254,9 @@ u.prototype.set = function (e, t) {
 u.prototype.get = function (e) {
   if (this.active) {
     if (c) {
-      const t = s.executionAsyncId(),
-        n = s.triggerAsyncId(),
-        o = " ".repeat(this._indent < 0 ? 0 : this._indent);
+      const t = s.executionAsyncId();
+      const n = s.triggerAsyncId();
+      const o = " ".repeat(this._indent < 0 ? 0 : this._indent);
       h(
         o +
           "CONTEXT-GETTING KEY:" +
@@ -285,8 +285,8 @@ u.prototype.get = function (e) {
     return this.active[e];
   }
   if (c) {
-    const t = s.currentId(),
-      n = s.triggerAsyncId();
+    const t = s.currentId();
+    const n = s.triggerAsyncId();
     h(
       `${" ".repeat(
         this._indent < 0 ? 0 : this._indent
@@ -326,8 +326,8 @@ u.prototype.run = function (e) {
   this.enter(t);
   try {
     if (c) {
-      const e = s.triggerAsyncId(),
-        n = s.executionAsyncId();
+      const e = s.triggerAsyncId();
+      const n = s.executionAsyncId();
       h(
         `${" ".repeat(
           this._indent < 0 ? 0 : this._indent
@@ -344,8 +344,8 @@ u.prototype.run = function (e) {
     throw (e && (e[a] = t), e);
   } finally {
     if (c) {
-      const e = s.triggerAsyncId(),
-        n = s.executionAsyncId();
+      const e = s.triggerAsyncId();
+      const n = s.executionAsyncId();
       h(
         `${" ".repeat(this._indent < 0 ? 0 : this._indent)}CONTEXT-RUN END: (${
           this.name
@@ -488,8 +488,8 @@ u.prototype.exit = function (e) {
 };
 u.prototype.bindEmitter = function (e) {
   o.ok(e.on && e.addListener && e.emit, "can only bind real EEs");
-  let t = this,
-    n = "context@" + this.name;
+  let t = this;
+  let n = "context@" + this.name;
   i(
     e,
     function (e) {
@@ -505,8 +505,8 @@ u.prototype.bindEmitter = function (e) {
     },
     function (e) {
       if (!e || !e["cls@contexts"]) return e;
-      let t = e,
-        n = e["cls@contexts"];
+      let t = e;
+      let n = e["cls@contexts"];
       Object.keys(n).forEach(function (e) {
         let r = n[e];
         t = r.namespace.bind(t, r.context);

@@ -2,24 +2,24 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.boolOrEmptySchema = exports.topBoolOrEmptySchema = undefined;
-const r = require(4181),
-  o = require(3487),
-  i = require(2141),
-  s = {
-    message: "boolean schema is false",
-  };
+const r = require(4181);
+const o = require(3487);
+const i = require(2141);
+const s = {
+  message: "boolean schema is false",
+};
 function a(e, t) {
-  const { gen: n, data: o } = e,
-    i = {
-      gen: n,
-      keyword: "false schema",
-      data: o,
-      schema: !1,
-      schemaCode: !1,
-      schemaValue: !1,
-      params: {},
-      it: e,
-    };
+  const { gen: n, data: o } = e;
+  const i = {
+    gen: n,
+    keyword: "false schema",
+    data: o,
+    schema: !1,
+    schemaCode: !1,
+    schemaValue: !1,
+    params: {},
+    it: e,
+  };
   r.reportError(i, s, undefined, t);
 }
 exports.topBoolOrEmptySchema = function (e) {

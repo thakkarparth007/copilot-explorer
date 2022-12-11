@@ -7,7 +7,7 @@ exports.ValueScope =
   exports.varKinds =
   exports.UsedValueState =
     undefined;
-const M_codegen_NOTSURE = require("codegen");
+const M_codegen_maybe = require("codegen");
 class o extends Error {
   constructor(e) {
     super(`CodeGen: "code" for ${e} not defined`);
@@ -20,9 +20,9 @@ var i;
   e[(e.Completed = 1)] = "Completed";
 })((i = exports.UsedValueState || (exports.UsedValueState = {})));
 exports.varKinds = {
-  const: new M_codegen_NOTSURE.Name("const"),
-  let: new M_codegen_NOTSURE.Name("let"),
-  var: new M_codegen_NOTSURE.Name("var"),
+  const: new M_codegen_maybe.Name("const"),
+  let: new M_codegen_maybe.Name("let"),
+  var: new M_codegen_maybe.Name("var"),
 };
 class Scope {
   constructor({ prefixes: e, parent: t } = {}) {
@@ -31,16 +31,17 @@ class Scope {
     this._parent = t;
   }
   toName(e) {
-    return e instanceof M_codegen_NOTSURE.Name ? e : this.name(e);
+    return e instanceof M_codegen_maybe.Name ? e : this.name(e);
   }
   name(e) {
-    return new M_codegen_NOTSURE.Name(this._newName(e));
+    return new M_codegen_maybe.Name(this._newName(e));
   }
   _newName(e) {
     return `${e}${(this._names[e] || this._nameGroup(e)).index++}`;
   }
   _nameGroup(e) {
-    var t, n;
+    var t;
+    var n;
     if (
       (null ===
         (n =
@@ -59,20 +60,18 @@ class Scope {
   }
 }
 exports.Scope = Scope;
-class ValueScopeName extends M_codegen_NOTSURE.Name {
+class ValueScopeName extends M_codegen_maybe.Name {
   constructor(e, t) {
     super(t);
     this.prefix = e;
   }
   setValue(e, { property: t, itemIndex: n }) {
     this.value = e;
-    this.scopePath = M_codegen_NOTSURE._`.${new M_codegen_NOTSURE.Name(
-      t
-    )}[${n}]`;
+    this.scopePath = M_codegen_maybe._`.${new M_codegen_maybe.Name(t)}[${n}]`;
   }
 }
 exports.ValueScopeName = ValueScopeName;
-const c = M_codegen_NOTSURE._`\n`;
+const c = M_codegen_maybe._`\n`;
 exports.ValueScope = class extends Scope {
   constructor(e) {
     super(e);
@@ -80,7 +79,7 @@ exports.ValueScope = class extends Scope {
     this._scope = e.scope;
     this.opts = {
       ...e,
-      _n: e.lines ? c : M_codegen_NOTSURE.nil,
+      _n: e.lines ? c : M_codegen_maybe.nil,
     };
   }
   get() {
@@ -93,17 +92,17 @@ exports.ValueScope = class extends Scope {
     var n;
     if (undefined === t.ref)
       throw new Error("CodeGen: ref must be passed in value");
-    const r = this.toName(e),
-      { prefix: o } = r,
-      i = null !== (n = t.key) && undefined !== n ? n : t.ref;
+    const r = this.toName(e);
+    const { prefix: o } = r;
+    const i = null !== (n = t.key) && undefined !== n ? n : t.ref;
     let s = this._values[o];
     if (s) {
       const e = s.get(i);
       if (e) return e;
     } else s = this._values[o] = new Map();
     s.set(i, r);
-    const a = this._scope[o] || (this._scope[o] = []),
-      c = a.length;
+    const a = this._scope[o] || (this._scope[o] = []);
+    const c = a.length;
     a[c] = t.ref;
     r.setValue(t, {
       property: o,
@@ -119,7 +118,7 @@ exports.ValueScope = class extends Scope {
     return this._reduceValues(t, (t) => {
       if (undefined === t.scopePath)
         throw new Error(`CodeGen: name "${t}" has no value`);
-      return M_codegen_NOTSURE._`${e}${t.scopePath}`;
+      return M_codegen_maybe._`${e}${t.scopePath}`;
     });
   }
   scopeCode(e = this._values, t, n) {
@@ -135,7 +134,7 @@ exports.ValueScope = class extends Scope {
     );
   }
   _reduceValues(e, n, s = {}, a) {
-    let c = M_codegen_NOTSURE.nil;
+    let c = M_codegen_maybe.nil;
     for (const l in e) {
       const u = e[l];
       if (!u) continue;
@@ -148,10 +147,10 @@ exports.ValueScope = class extends Scope {
           const n = this.opts.es5
             ? exports.varKinds.var
             : exports.varKinds.const;
-          c = M_codegen_NOTSURE._`${c}${n} ${e} = ${s};${this.opts._n}`;
+          c = M_codegen_maybe._`${c}${n} ${e} = ${s};${this.opts._n}`;
         } else {
           if (!(s = null == a ? undefined : a(e))) throw new o(e);
-          c = M_codegen_NOTSURE._`${c}${s}${this.opts._n}`;
+          c = M_codegen_maybe._`${c}${s}${this.opts._n}`;
         }
         d.set(e, i.Completed);
       });

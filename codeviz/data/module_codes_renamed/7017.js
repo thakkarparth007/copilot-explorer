@@ -5,45 +5,45 @@ exports.postInsertionTasks =
   exports.postRejectionTasks =
   exports.captureCode =
     undefined;
-const M_change_tracker = require("change-tracker"),
-  M_ghost_text_telemetry = require("ghost-text-telemetry"),
-  M_logging_utils = require("logging-utils"),
-  M_context_extractor_from_identation_maybe = require("context-extractor-from-identation-maybe"),
-  M_prompt_extractor = require("prompt-extractor"),
-  M_edit_distance_NOTSURE = require("edit-distance"),
-  M_telemetry_stuff = require("telemetry-stuff"),
-  M_text_doc_relative_path = require("text-doc-relative-path"),
-  d = new M_logging_utils.Logger(
-    M_logging_utils.LogLevel.INFO,
-    "post-insertion"
-  ),
-  p = [
-    {
-      seconds: 15,
-      captureCode: !1,
-      captureRejection: !1,
-    },
-    {
-      seconds: 30,
-      captureCode: !0,
-      captureRejection: !0,
-    },
-    {
-      seconds: 120,
-      captureCode: !1,
-      captureRejection: !1,
-    },
-    {
-      seconds: 300,
-      captureCode: !1,
-      captureRejection: !1,
-    },
-    {
-      seconds: 600,
-      captureCode: !1,
-      captureRejection: !1,
-    },
-  ];
+const M_change_tracker = require("change-tracker");
+const M_ghost_text_telemetry = require("ghost-text-telemetry");
+const M_logging_utils = require("logging-utils");
+const M_context_extractor_from_identation_maybe = require("context-extractor-from-identation-maybe");
+const M_prompt_extractor = require("prompt-extractor");
+const M_edit_distance_maybe = require("edit-distance");
+const M_telemetry_stuff = require("telemetry-stuff");
+const M_text_doc_relative_path = require("text-doc-relative-path");
+const d = new M_logging_utils.Logger(
+  M_logging_utils.LogLevel.INFO,
+  "post-insertion"
+);
+const p = [
+  {
+    seconds: 15,
+    captureCode: !1,
+    captureRejection: !1,
+  },
+  {
+    seconds: 30,
+    captureCode: !0,
+    captureRejection: !0,
+  },
+  {
+    seconds: 120,
+    captureCode: !1,
+    captureRejection: !1,
+  },
+  {
+    seconds: 300,
+    captureCode: !1,
+    captureRejection: !1,
+  },
+  {
+    seconds: 600,
+    captureCode: !1,
+    captureRejection: !1,
+  },
+];
 async function captureCode(e, t, n) {
   const r = await e
     .get(M_text_doc_relative_path.TextDocumentManager)
@@ -64,31 +64,32 @@ async function captureCode(e, t, n) {
       terminationOffset: 0,
     };
   }
-  const o = r.getText(),
-    i = o.substring(0, n),
-    c = r.positionAt(n),
-    l = await M_prompt_extractor.extractPrompt(e, r, c),
-    p =
-      "prompt" === l.type
-        ? l.prompt
-        : {
-            prefix: i,
-            suffix: "",
-            isFimEnabled: !1,
-            promptElementRanges: [],
-          },
-    h = o.substring(n),
-    f = M_context_extractor_from_identation_maybe.contextIndentationFromText(
+  const o = r.getText();
+  const i = o.substring(0, n);
+  const c = r.positionAt(n);
+  const l = await M_prompt_extractor.extractPrompt(e, r, c);
+  const p =
+    "prompt" === l.type
+      ? l.prompt
+      : {
+          prefix: i,
+          suffix: "",
+          isFimEnabled: !1,
+          promptElementRanges: [],
+        };
+  const h = o.substring(n);
+  const f =
+    M_context_extractor_from_identation_maybe.contextIndentationFromText(
       i,
       n,
       r.languageId
-    ),
-    m = M_context_extractor_from_identation_maybe.indentationBlockFinished(
-      f,
-      undefined
-    ),
-    g = await m(h),
-    _ = Math.min(o.length, n + (g ? 2 * g : 500));
+    );
+  const m = M_context_extractor_from_identation_maybe.indentationBlockFinished(
+    f,
+    undefined
+  );
+  const g = await m(h);
+  const _ = Math.min(o.length, n + (g ? 2 * g : 500));
   return {
     prompt: p,
     capturedCode: o.substring(n, _),
@@ -97,15 +98,15 @@ async function captureCode(e, t, n) {
 }
 function f(e, t, n, r) {
   const o = e.substring(
-      Math.max(0, r - n),
-      Math.min(e.length, r + t.length + n)
-    ),
-    i = M_edit_distance_NOTSURE.lexEditDistance(o, t),
-    s = i.lexDistance / i.needleLexLength,
-    { distance: a } = M_edit_distance_NOTSURE.editDistance(
-      o.substring(i.startOffset, i.endOffset),
-      t
-    );
+    Math.max(0, r - n),
+    Math.min(e.length, r + t.length + n)
+  );
+  const i = M_edit_distance_maybe.lexEditDistance(o, t);
+  const s = i.lexDistance / i.needleLexLength;
+  const { distance: a } = M_edit_distance_maybe.editDistance(
+    o.substring(i.startOffset, i.endOffset),
+    t
+  );
   return {
     relativeLexEditDistance: s,
     charEditDistance: a,
@@ -125,12 +126,12 @@ exports.postRejectionTasks = function (e, t, n, i, s) {
   p.filter((e) => e.captureRejection).map((r) => {
     a.push(async () => {
       d.debug(e, `Original offset: ${n}, Tracked offset: ${a.offset}`);
-      const { completionTelemetryData: o } = s[0],
-        {
-          prompt: c,
-          capturedCode: u,
-          terminationOffset: p,
-        } = await captureCode(e, i, a.offset);
+      const { completionTelemetryData: o } = s[0];
+      const {
+        prompt: c,
+        capturedCode: u,
+        terminationOffset: p,
+      } = await captureCode(e, i, a.offset);
       let f;
       f = c.isFimEnabled
         ? {
@@ -164,8 +165,8 @@ exports.postRejectionTasks = function (e, t, n, i, s) {
 exports.postInsertionTasks = async function (e, t, n, i, s, a) {
   d.debug(e, `${t}.accepted choiceIndex: ${a.properties.choiceIndex}`);
   M_ghost_text_telemetry.telemetryAccepted(e, t, a);
-  const c = new M_change_tracker.ChangeTracker(e, s, i),
-    m = n.trim();
+  const c = new M_change_tracker.ChangeTracker(e, s, i);
+  const m = n.trim();
   p.map((n) =>
     c.push(
       () =>

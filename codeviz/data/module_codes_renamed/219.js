@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.ExpConfig = exports.ExpTreatmentVariables = undefined;
-const M_telemetry_stuff = require("telemetry-stuff"),
-  M_exp_service_telemetry_names_NOTSURE = require("exp-service-telemetry-names");
+const M_telemetry_stuff = require("telemetry-stuff");
+const M_exp_service_telemetry_names_maybe = require("exp-service-telemetry-names");
 var i;
 (i = exports.ExpTreatmentVariables || (exports.ExpTreatmentVariables = {})).AA =
   "copilotaa";
@@ -43,10 +43,10 @@ class ExpConfig {
   }
   addToTelemetry(e) {
     e.properties[
-      M_exp_service_telemetry_names_NOTSURE.ExpServiceTelemetryNames.featuresTelemetryPropertyName
+      M_exp_service_telemetry_names_maybe.ExpServiceTelemetryNames.featuresTelemetryPropertyName
     ] = this.features;
     e.properties[
-      M_exp_service_telemetry_names_NOTSURE.ExpServiceTelemetryNames.assignmentContextTelemetryPropertyName
+      M_exp_service_telemetry_names_maybe.ExpServiceTelemetryNames.assignmentContextTelemetryPropertyName
     ] = this.assignmentContext;
   }
 }

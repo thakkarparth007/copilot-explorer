@@ -1,13 +1,21 @@
 var t = (function () {
   function e() {}
   e.info = function (t) {
-    for (var n = [], r = 1; r < arguments.length; r++) n[r - 1] = arguments[r];
+    for (n = [], r = 1, undefined; r < arguments.length; r++) {
+      var n;
+      var r;
+      n[r - 1] = arguments[r];
+    }
     if (e.enableDebug) {
       console.info(e.TAG + t, n);
     }
   };
   e.warn = function (t) {
-    for (var n = [], r = 1; r < arguments.length; r++) n[r - 1] = arguments[r];
+    for (n = [], r = 1, undefined; r < arguments.length; r++) {
+      var n;
+      var r;
+      n[r - 1] = arguments[r];
+    }
     if (e.disableWarnings) {
       console.warn(e.TAG + t, n);
     }

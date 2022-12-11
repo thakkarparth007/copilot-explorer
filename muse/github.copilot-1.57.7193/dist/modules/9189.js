@@ -2,16 +2,16 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.Features = exports.Task = undefined;
-const r = require(3055563),
-  o = require(299),
-  i = require(3076),
-  s = require(1133),
-  a = require(7744),
-  c = require(9657),
-  l = require(219),
-  u = require(9748),
-  d = require(8142),
-  p = require(9030);
+const r = require(3055563);
+const o = require(299);
+const i = require(3076);
+const s = require(1133);
+const a = require(7744);
+const c = require(9657);
+const l = require(219);
+const u = require(9748);
+const d = require(8142);
+const p = require(9030);
 class h {
   constructor(e) {
     this.ctx = e;
@@ -99,10 +99,11 @@ class Features {
     this.upcomingDynamicFilters[e] = t;
   }
   async getAssignment(e, t = {}, n) {
-    var r, o;
-    const i = this.makeFilterSettings(t),
-      s = this.granularityDirectory.extendFilters(i),
-      a = await this.getExpConfig(s.newFilterSettings);
+    var r;
+    var o;
+    const i = this.makeFilterSettings(t);
+    const s = this.granularityDirectory.extendFilters(i);
+    const a = await this.getExpConfig(s.newFilterSettings);
     this.granularityDirectory.update(
       i,
       +(null !==
@@ -117,9 +118,9 @@ class Features {
         ? o
         : NaN)
     );
-    const c = this.granularityDirectory.extendFilters(i),
-      u = c.newFilterSettings,
-      d = await this.getExpConfig(u);
+    const c = this.granularityDirectory.extendFilters(i);
+    const u = c.newFilterSettings;
+    const d = await this.getExpConfig(u);
     let p = new Promise((e) =>
       setTimeout(e, Features.upcomingDynamicFilterCheckDelayMs)
     );

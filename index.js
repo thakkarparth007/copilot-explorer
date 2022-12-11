@@ -223,7 +223,19 @@ function makeModuleReadable(moduleId, moduleCodeRaw) {
             path.replaceWithSourceString("undefined");
             return;
           }
-        }
+        },
+        VariableDeclaration(path) {
+            // change `const a = 1, b = 2;` to `const a = 1; const b = 2;`
+            if (path.node.declarations.length > 1) {
+                let newDecls = path.node.declarations.map(d => {
+                    return babel.types.variableDeclaration(
+                        path.node.kind,
+                        [d]
+                    );
+                });
+                path.replaceWithMultiple(newDecls);
+            }
+        },
     }
     traverse(moduleAst, moduleTransformer);
 

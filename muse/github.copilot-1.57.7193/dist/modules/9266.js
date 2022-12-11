@@ -1,5 +1,5 @@
-var r = require(3905),
-  o = require(9073);
+var r = require(3905);
+var o = require(9073);
 module.exports = function (e) {
   var t = r(e);
   t.token = "";

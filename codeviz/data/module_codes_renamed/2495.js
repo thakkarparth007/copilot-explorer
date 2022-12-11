@@ -1,17 +1,17 @@
 Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
-var M_channel_NOTSURE = require("channel"),
-  o = require("stream");
+var M_channel_maybe = require("channel");
+var M_stream = require("stream");
 exports.console = {
   versionSpecifier: ">= 4.0.0",
   patch: function (e) {
-    var t = new o.Writable(),
-      n = new o.Writable();
+    var t = new M_stream.Writable();
+    var n = new M_stream.Writable();
     t.write = function (e) {
       if (!e) return !0;
       var t = e.toString();
-      M_channel_NOTSURE.channel.publish("console", {
+      M_channel_maybe.channel.publish("console", {
         message: t,
       });
       return !0;
@@ -19,14 +19,14 @@ exports.console = {
     n.write = function (e) {
       if (!e) return !0;
       var t = e.toString();
-      M_channel_NOTSURE.channel.publish("console", {
+      M_channel_maybe.channel.publish("console", {
         message: t,
         stderr: !0,
       });
       return !0;
     };
     for (
-      var i = new e.Console(t, n),
+      i = new e.Console(t, n),
         s = function (t) {
           var n = e[t];
           if (n) {
@@ -50,15 +50,21 @@ exports.console = {
           "timeEnd",
           "trace",
           "assert",
-        ];
+        ],
+        undefined;
       a < c.length;
       a++
-    )
+    ) {
+      var i;
+      var s;
+      var a;
+      var c;
       s(c[a]);
+    }
     return e;
   },
 };
 exports.enable = function () {
-  M_channel_NOTSURE.channel.registerMonkeyPatch("console", exports.console);
+  M_channel_maybe.channel.registerMonkeyPatch("console", exports.console);
   require("console");
 };

@@ -2,31 +2,31 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.validateAdditionalItems = undefined;
-const r = require(3487),
-  o = require(6776),
-  i = {
-    keyword: "additionalItems",
-    type: "array",
-    schemaType: ["boolean", "object"],
-    before: "uniqueItems",
-    error: {
-      message: ({ params: { len: e } }) =>
-        r.str`must NOT have more than ${e} items`,
-      params: ({ params: { len: e } }) => r._`{limit: ${e}}`,
-    },
-    code(e) {
-      const { parentSchema: t, it: n } = e,
-        { items: r } = t;
-      if (Array.isArray(r)) {
-        validateAdditionalItems(e, r);
-      } else {
-        o.checkStrictMode(
-          n,
-          '"additionalItems" is ignored when "items" is not an array of schemas'
-        );
-      }
-    },
-  };
+const r = require(3487);
+const o = require(6776);
+const i = {
+  keyword: "additionalItems",
+  type: "array",
+  schemaType: ["boolean", "object"],
+  before: "uniqueItems",
+  error: {
+    message: ({ params: { len: e } }) =>
+      r.str`must NOT have more than ${e} items`,
+    params: ({ params: { len: e } }) => r._`{limit: ${e}}`,
+  },
+  code(e) {
+    const { parentSchema: t, it: n } = e;
+    const { items: r } = t;
+    if (Array.isArray(r)) {
+      validateAdditionalItems(e, r);
+    } else {
+      o.checkStrictMode(
+        n,
+        '"additionalItems" is ignored when "items" is not an array of schemas'
+      );
+    }
+  },
+};
 function validateAdditionalItems(e, t) {
   const { gen: n, schema: i, data: s, keyword: a, it: c } = e;
   c.items = !0;

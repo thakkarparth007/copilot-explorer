@@ -19,9 +19,9 @@ exports.getFunctionPositions =
   exports.isSupportedLanguageId =
   exports.WASMLanguage =
     undefined;
-const r = require("path"),
-  o = require(305587),
-  i = require(305587);
+const r = require("path");
+const o = require(305587);
+const i = require(305587);
 var s;
 !(function (e) {
   e.Python = "python";
@@ -49,107 +49,107 @@ exports.isSupportedLanguageId = function (e) {
 };
 exports.languageIdToWasmLanguage = languageIdToWasmLanguage;
 const l = {
-    python: [
-      [
-        "(function_definition body: (block\n             (expression_statement (string))? @docstring) @body) @function",
-      ],
-      ['(ERROR ("def" (identifier) (parameters))) @function'],
+  python: [
+    [
+      "(function_definition body: (block\n             (expression_statement (string))? @docstring) @body) @function",
     ],
-    javascript: [
-      [
-        "[\n            (function body: (statement_block) @body)\n            (function_declaration body: (statement_block) @body)\n            (generator_function body: (statement_block) @body)\n            (generator_function_declaration body: (statement_block) @body)\n            (method_definition body: (statement_block) @body)\n          ] @function",
-      ],
+    ['(ERROR ("def" (identifier) (parameters))) @function'],
+  ],
+  javascript: [
+    [
+      "[\n            (function body: (statement_block) @body)\n            (function_declaration body: (statement_block) @body)\n            (generator_function body: (statement_block) @body)\n            (generator_function_declaration body: (statement_block) @body)\n            (method_definition body: (statement_block) @body)\n          ] @function",
     ],
-    typescript: [
-      [
-        "[\n            (function body: (statement_block) @body)\n            (function_declaration body: (statement_block) @body)\n            (generator_function body: (statement_block) @body)\n            (generator_function_declaration body: (statement_block) @body)\n            (method_definition body: (statement_block) @body)\n          ] @function",
-      ],
+  ],
+  typescript: [
+    [
+      "[\n            (function body: (statement_block) @body)\n            (function_declaration body: (statement_block) @body)\n            (generator_function body: (statement_block) @body)\n            (generator_function_declaration body: (statement_block) @body)\n            (method_definition body: (statement_block) @body)\n          ] @function",
     ],
-    go: [
-      [
-        "[\n            (function_declaration body: (block) @body)\n            (method_declaration body: (block) @body)\n          ] @function",
-      ],
+  ],
+  go: [
+    [
+      "[\n            (function_declaration body: (block) @body)\n            (method_declaration body: (block) @body)\n          ] @function",
     ],
-    ruby: [
-      [
-        '[\n            (method name: (_) parameters: (method_parameters)? @params [(_)+ "end"] @body)\n            (singleton_method name: (_) parameters: (method_parameters)? @params [(_)+ "end"] @body)\n          ] @function',
-      ],
+  ],
+  ruby: [
+    [
+      '[\n            (method name: (_) parameters: (method_parameters)? @params [(_)+ "end"] @body)\n            (singleton_method name: (_) parameters: (method_parameters)? @params [(_)+ "end"] @body)\n          ] @function',
     ],
+  ],
+};
+const u =
+  '(variable_declarator value: (call_expression function: ((identifier) @req (#eq? @req "require"))))';
+const d = `\n    (lexical_declaration ${u}+)\n    (variable_declaration ${u}+)\n`;
+const p = {
+  python: [
+    ["(module (future_import_statement) @import)"],
+    ["(module (import_statement) @import)"],
+    ["(module (import_from_statement) @import)"],
+  ],
+  javascript: [
+    [`(program [ ${d} ] @import)`],
+    ["(program [ (import_statement) ] @import)"],
+  ],
+  typescript: [
+    [`(program [ ${d} ] @import)`],
+    ["(program [ (import_statement) (import_alias) ] @import)"],
+  ],
+  go: [],
+  ruby: [],
+};
+const h = {
+  python: [],
+  javascript: [["(program (export_statement) @export)"]],
+  typescript: [["(program (export_statement) @export)"]],
+  go: [],
+  ruby: [],
+};
+const f = {
+  python: [
+    ["(module (global_statement) @globalVar)"],
+    ["(module (expression_statement) @globalVar)"],
+  ],
+  javascript: [],
+  typescript: [],
+  go: [],
+  ruby: [],
+};
+const m = {
+  python: new Set(["function_definition"]),
+  javascript: new Set([
+    "function",
+    "function_declaration",
+    "generator_function",
+    "generator_function_declaration",
+    "method_definition",
+    "arrow_function",
+  ]),
+  typescript: new Set([
+    "function",
+    "function_declaration",
+    "generator_function",
+    "generator_function_declaration",
+    "method_definition",
+    "arrow_function",
+  ]),
+  go: new Set(["function_declaration", "method_declaration"]),
+  ruby: new Set(["method", "singleton_method"]),
+};
+const g = {
+  python: (e) => {
+    var t;
+    return (
+      "module" === e.type ||
+      ("block" === e.type &&
+        "class_definition" ===
+          (null === (t = e.parent) || undefined === t ? undefined : t.type))
+    );
   },
-  u =
-    '(variable_declarator value: (call_expression function: ((identifier) @req (#eq? @req "require"))))',
-  d = `\n    (lexical_declaration ${u}+)\n    (variable_declaration ${u}+)\n`,
-  p = {
-    python: [
-      ["(module (future_import_statement) @import)"],
-      ["(module (import_statement) @import)"],
-      ["(module (import_from_statement) @import)"],
-    ],
-    javascript: [
-      [`(program [ ${d} ] @import)`],
-      ["(program [ (import_statement) ] @import)"],
-    ],
-    typescript: [
-      [`(program [ ${d} ] @import)`],
-      ["(program [ (import_statement) (import_alias) ] @import)"],
-    ],
-    go: [],
-    ruby: [],
-  },
-  h = {
-    python: [],
-    javascript: [["(program (export_statement) @export)"]],
-    typescript: [["(program (export_statement) @export)"]],
-    go: [],
-    ruby: [],
-  },
-  f = {
-    python: [
-      ["(module (global_statement) @globalVar)"],
-      ["(module (expression_statement) @globalVar)"],
-    ],
-    javascript: [],
-    typescript: [],
-    go: [],
-    ruby: [],
-  },
-  m = {
-    python: new Set(["function_definition"]),
-    javascript: new Set([
-      "function",
-      "function_declaration",
-      "generator_function",
-      "generator_function_declaration",
-      "method_definition",
-      "arrow_function",
-    ]),
-    typescript: new Set([
-      "function",
-      "function_declaration",
-      "generator_function",
-      "generator_function_declaration",
-      "method_definition",
-      "arrow_function",
-    ]),
-    go: new Set(["function_declaration", "method_declaration"]),
-    ruby: new Set(["method", "singleton_method"]),
-  },
-  g = {
-    python: (e) => {
-      var t;
-      return (
-        "module" === e.type ||
-        ("block" === e.type &&
-          "class_definition" ===
-            (null === (t = e.parent) || undefined === t ? undefined : t.type))
-      );
-    },
-    javascript: (e) => "program" === e.type || "class_body" === e.type,
-    typescript: (e) => "program" === e.type || "class_body" === e.type,
-    go: (e) => "source_file" === e.type,
-    ruby: (e) => "program" === e.type || "class" === e.type,
-  },
-  _ = new Map();
+  javascript: (e) => "program" === e.type || "class_body" === e.type,
+  typescript: (e) => "program" === e.type || "class_body" === e.type,
+  go: (e) => "source_file" === e.type,
+  ruby: (e) => "program" === e.type || "class" === e.type,
+};
+const _ = new Map();
 async function getLanguage(e) {
   const t = languageIdToWasmLanguage(e);
   if (!_.has(t)) {
@@ -187,8 +187,8 @@ function queryFunctions(e, t) {
 exports.getLanguage = getLanguage;
 exports.parseTree = parseTree;
 exports.parsesWithoutError = async function (e, t) {
-  const n = await parseTree(e, t),
-    r = !n.rootNode.hasError();
+  const n = await parseTree(e, t);
+  const r = !n.rootNode.hasError();
   n.delete();
   return r;
 };

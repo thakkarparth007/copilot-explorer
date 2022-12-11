@@ -4,45 +4,45 @@ Object.defineProperty(exports, "__esModule", {
 exports.deactivate = exports.activate = exports.init = undefined;
 const t = require(3055563);
 require(406);
-const o = require("vscode"),
-  i = require(362),
-  s = require(299),
-  a = require(1133),
-  c = require(4197),
-  l = require(7870),
-  u = require(9408),
-  d = require(1839),
-  p = require(9189),
-  h = require(9748),
-  f = require(8965),
-  m = require(5413),
-  g = require(9899),
-  _ = require(2279),
-  y = require(1547),
-  v = require(4419),
-  b = require(6722),
-  w = require(2533),
-  x = require(766),
-  E = require(6333),
-  C = require(956),
-  S = require(70),
-  T = require(8771),
-  k = require(6403),
-  I = require(3136),
-  P = require(7057),
-  A = require(3197),
-  O = require(1862),
-  N = require(9425),
-  R = require(3060),
-  M = (require(1929), require(6267)),
-  L = require(2990),
-  $ = require(6857),
-  D = require(9477),
-  F = require(7254),
-  j = require(4428),
-  q = require(8129),
-  B = require(385),
-  U = o.window.createOutputChannel("GitHub Copilot");
+const o = require("vscode");
+const i = require(362);
+const s = require(299);
+const a = require(1133);
+const c = require(4197);
+const l = require(7870);
+const u = require(9408);
+const d = require(1839);
+const p = require(9189);
+const h = require(9748);
+const f = require(8965);
+const m = require(5413);
+const g = require(9899);
+const _ = require(2279);
+const y = require(1547);
+const v = require(4419);
+const b = require(6722);
+const w = require(2533);
+const x = require(766);
+const E = require(6333);
+const C = require(956);
+const S = require(70);
+const T = require(8771);
+const k = require(6403);
+const I = require(3136);
+const P = require(7057);
+const A = require(3197);
+const O = require(1862);
+const N = require(9425);
+const R = require(3060);
+const M = (require(1929), require(6267));
+const L = require(2990);
+const $ = require(6857);
+const D = require(9477);
+const F = require(7254);
+const j = require(4428);
+const q = require(8129);
+const B = require(385);
+const U = o.window.createOutputChannel("GitHub Copilot");
 function init() {
   _.init(new a.BuildInfo().getVersion());
 }
@@ -104,8 +104,8 @@ exports.activate = async function (e) {
   N.setExtension(e.extension);
   O.setExtensionContext(e);
   e.globalState.setKeysForSync([O.telemetryAcceptanceKey]);
-  const V = a.getBuildType(n) === a.BuildType.DEV,
-    W = "GitHub.copilot-nightly" === e.extension.id;
+  const V = a.getBuildType(n) === a.BuildType.DEV;
+  const W = "GitHub.copilot-nightly" === e.extension.id;
   if (W && o.extensions.all.find((e) => "GitHub.copilot" === e.id))
     return void (
       "Uninstall" ===
@@ -209,8 +209,8 @@ exports.activate = async function (e) {
     );
     try {
       e.subscriptions.push(...A.registerGhostText(n));
-      const t = o.workspace.getConfiguration(),
-        r = t.inspect("editor.inlineSuggest.enabled");
+      const t = o.workspace.getConfiguration();
+      const r = t.inspect("editor.inlineSuggest.enabled");
       if (undefined === (null == r ? undefined : r.globalValue)) {
         t.update(
           "editor.inlineSuggest.enabled",

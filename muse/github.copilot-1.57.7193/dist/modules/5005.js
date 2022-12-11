@@ -6,10 +6,10 @@ exports.validateKeywordUsage =
   exports.funcKeywordCode =
   exports.macroKeywordCode =
     undefined;
-const r = require(3487),
-  o = require(2141),
-  i = require(412),
-  s = require(4181);
+const r = require(3487);
+const o = require(2141);
+const i = require(412);
+const s = require(4181);
 function a(e) {
   const { gen: t, data: n, it: o } = e;
   t.if(o.parentData, () =>
@@ -31,9 +31,9 @@ function c(e, t, n) {
   );
 }
 exports.macroKeywordCode = function (e, t) {
-  const { gen: n, keyword: o, schema: i, parentSchema: s, it: a } = e,
-    l = t.macro.call(a.self, i, s, a),
-    u = c(n, o, l);
+  const { gen: n, keyword: o, schema: i, parentSchema: s, it: a } = e;
+  const l = t.macro.call(a.self, i, s, a);
+  const u = c(n, o, l);
   if (!1 !== a.opts.validateSchema) {
     a.self.validateSchema(l, !0);
   }
@@ -56,12 +56,12 @@ exports.funcKeywordCode = function (e, t) {
   !(function ({ schemaEnv: e }, t) {
     if (t.async && !e.$async) throw new Error("async keyword in sync schema");
   })(f, t);
-  const m = !h && t.compile ? t.compile.call(f.self, d, p, f) : t.validate,
-    g = c(l, u, m),
-    _ = l.let("valid");
+  const m = !h && t.compile ? t.compile.call(f.self, d, p, f) : t.validate;
+  const g = c(l, u, m);
+  const _ = l.let("valid");
   function y(n = t.async ? r._`await ` : r.nil) {
-    const s = f.opts.passContext ? o.default.this : o.default.self,
-      a = !(("compile" in t && !h) || !1 === t.schema);
+    const s = f.opts.passContext ? o.default.this : o.default.self;
+    const a = !(("compile" in t && !h) || !1 === t.schema);
     l.assign(_, r._`${n}${i.callValidateCode(e, g, s, a)}`, t.modifying);
   }
   function v(e) {

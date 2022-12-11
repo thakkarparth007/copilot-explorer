@@ -2,11 +2,15 @@ var r =
   (this && this.__assign) ||
   Object.assign ||
   function (e) {
-    for (var t, n = 1, r = arguments.length; n < r; n++)
+    for (n = 1, r = arguments.length, undefined; n < r; n++) {
+      var t;
+      var n;
+      var r;
       for (var o in (t = arguments[n]))
         if (Object.prototype.hasOwnProperty.call(t, o)) {
           e[o] = t[o];
         }
+    }
     return e;
   };
 Object.defineProperty(exports, "__esModule", {
@@ -28,13 +32,13 @@ exports.azureCoreTracing = {
   patch: function (e) {
     try {
       var s = new (0, require("@opentelemetry/tracing").BasicTracer)(
-          o.channel.spanContextPropagator
-            ? {
-                scopeManager: o.channel.spanContextPropagator,
-              }
-            : undefined
-        ),
-        a = s.startSpan;
+        o.channel.spanContextPropagator
+          ? {
+              scopeManager: o.channel.spanContextPropagator,
+            }
+          : undefined
+      );
+      var a = s.startSpan;
       s.startSpan = function (e, t) {
         if (!t || !t.parent) {
           var n = s.getCurrentSpan();

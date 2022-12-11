@@ -15,9 +15,9 @@ exports.validateUnion =
   exports.checkMissingProp =
   exports.checkReportMissingProp =
     undefined;
-const r = require(3487),
-  o = require(6776),
-  i = require(2141);
+const r = require(3487);
+const o = require(6776);
+const i = require(2141);
 function hasPropFunc(e) {
   return e.scopeValue("func", {
     ref: Object.prototype.hasOwnProperty,
@@ -88,13 +88,13 @@ exports.callValidateCode = function (
   u,
   d
 ) {
-  const p = d ? r._`${e}, ${t}, ${o}${s}` : t,
-    h = [
-      [i.default.instancePath, r.strConcat(i.default.instancePath, a)],
-      [i.default.parentData, c.parentData],
-      [i.default.parentDataProperty, c.parentDataProperty],
-      [i.default.rootData, i.default.rootData],
-    ];
+  const p = d ? r._`${e}, ${t}, ${o}${s}` : t;
+  const h = [
+    [i.default.instancePath, r.strConcat(i.default.instancePath, a)],
+    [i.default.parentData, c.parentData],
+    [i.default.parentDataProperty, c.parentDataProperty],
+    [i.default.rootData, i.default.rootData],
+  ];
   if (c.opts.dynamicRef) {
     h.push([i.default.dynamicAnchors, i.default.dynamicAnchors]);
   }
@@ -110,8 +110,8 @@ exports.usePattern = function ({ gen: e, it: { opts: t } }, n) {
   });
 };
 exports.validateArray = function (e) {
-  const { gen: t, data: n, keyword: i, it: s } = e,
-    a = t.name("valid");
+  const { gen: t, data: n, keyword: i, it: s } = e;
+  const a = t.name("valid");
   if (s.allErrors) {
     const e = t.let("valid", !0);
     c(() => t.assign(e, !1));
@@ -139,8 +139,8 @@ exports.validateUnion = function (e) {
   const { gen: t, schema: n, keyword: i, it: s } = e;
   if (!Array.isArray(n)) throw new Error("ajv implementation error");
   if (n.some((e) => o.alwaysValidSchema(s, e)) && !s.opts.unevaluated) return;
-  const a = t.let("valid", !1),
-    c = t.name("_valid");
+  const a = t.let("valid", !1);
+  const c = t.name("_valid");
   t.block(() =>
     n.forEach((n, o) => {
       const s = e.subschema(

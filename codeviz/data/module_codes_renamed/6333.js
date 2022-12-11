@@ -22,13 +22,13 @@ exports.forceSendingTelemetry =
   exports.APP_INSIGHTS_KEY_SECURE =
   exports.APP_INSIGHTS_KEY =
     undefined;
-const M_json_schema_stuff = require("json-schema-stuff"),
-  M_telemetry_sender = require("telemetry-sender"),
-  M_config_stuff = require("config-stuff"),
-  M_task_NOTSURE = require("task"),
-  M_exp_service_telemetry_names_NOTSURE = require("exp-service-telemetry-names"),
-  M_runtime_mode_NOTSURE = require("runtime-mode"),
-  M_redactor_NOTSURE = require("redactor");
+const M_json_schema_stuff = require("json-schema-stuff");
+const M_telemetry_sender = require("telemetry-sender");
+const M_config_stuff = require("config-stuff");
+const M_task_maybe = require("task");
+const M_exp_service_telemetry_names_maybe = require("exp-service-telemetry-names");
+const M_runtime_mode_maybe = require("runtime-mode");
+const M_redactor_maybe = require("redactor");
 exports.APP_INSIGHTS_KEY = "7d7048df-6dd0-4048-bb23-b716c1461f8f";
 exports.APP_INSIGHTS_KEY_SECURE = "3fdd7f28-937a-48c8-9a21-ba337db23bd1";
 class TelemetryReporters {
@@ -41,7 +41,7 @@ class TelemetryReporters {
   }
   getSecureReporter(e) {
     if (y()) return this.reporterSecure;
-    if (M_runtime_mode_NOTSURE.shouldFailForDebugPurposes(e))
+    if (M_runtime_mode_maybe.shouldFailForDebugPurposes(e))
       throw new Error("Internal error: telemetry opt-out");
   }
   setReporter(e) {
@@ -94,10 +94,10 @@ function p(e, t, n, r) {
 }
 exports.TelemetryReporters = TelemetryReporters;
 exports.setupStandardReporters = function (e, n) {
-  const r = M_config_stuff.getVersion(e),
-    o = p(e, n, r, exports.APP_INSIGHTS_KEY),
-    s = p(e, n, r, exports.APP_INSIGHTS_KEY_SECURE),
-    a = e.get(TelemetryReporters);
+  const r = M_config_stuff.getVersion(e);
+  const o = p(e, n, r, exports.APP_INSIGHTS_KEY);
+  const s = p(e, n, r, exports.APP_INSIGHTS_KEY_SECURE);
+  const a = e.get(TelemetryReporters);
   a.setReporter(o);
   a.setSecureReporter(s);
   return a;
@@ -116,14 +116,14 @@ class TelemetryData {
   }
   extendedBy(e, t) {
     const n = {
-        ...this.properties,
-        ...e,
-      },
-      r = {
-        ...this.measurements,
-        ...t,
-      },
-      o = new TelemetryData(n, r, this.issuedTime);
+      ...this.properties,
+      ...e,
+    };
+    const r = {
+      ...this.measurements,
+      ...t,
+    };
+    const o = new TelemetryData(n, r, this.issuedTime);
     o.displayedTime = this.displayedTime;
     o.filtersAndExp = this.filtersAndExp;
     return o;
@@ -135,7 +135,7 @@ class TelemetryData {
   }
   async extendWithExpTelemetry(e) {
     if (this.filtersAndExp) {
-      await e.get(M_task_NOTSURE.Features).addExpAndFilterToTelemetry(this);
+      await e.get(M_task_maybe.Features).addExpAndFilterToTelemetry(this);
     }
     this.filtersAndExp.exp.addToTelemetry(this);
     this.filtersAndExp.filters.addToTelemetry(this);
@@ -238,7 +238,7 @@ class TelemetryData {
         : ((r.problem = "both"), (r.error += `; ${e}`));
     }
     if (undefined === r) return !0;
-    if (M_runtime_mode_NOTSURE.shouldFailForDebugPurposes(e))
+    if (M_runtime_mode_maybe.shouldFailForDebugPurposes(e))
       throw new Error(
         `Invalid telemetry data: ${r.problem} ${
           r.error
@@ -330,9 +330,9 @@ TelemetryData.validateTelemetryMeasurements = TelemetryData.ajv.compile({
   required: [],
 });
 TelemetryData.keysExemptedFromSanitization = [
-  M_exp_service_telemetry_names_NOTSURE.ExpServiceTelemetryNames
+  M_exp_service_telemetry_names_maybe.ExpServiceTelemetryNames
     .assignmentContextTelemetryPropertyName,
-  M_exp_service_telemetry_names_NOTSURE.ExpServiceTelemetryNames
+  M_exp_service_telemetry_names_maybe.ExpServiceTelemetryNames
     .featuresTelemetryPropertyName,
 ];
 TelemetryData.keysToRemoveFromStandardTelemetryHack = [
@@ -369,8 +369,8 @@ class TelemetryEndpointUrl {
 function configureReporter(e, t) {
   const n = t;
   if (n.appInsightsClient) {
-    const t = n.appInsightsClient.commonProperties,
-      r = TelemetryData.sanitizeKeys(t);
+    const t = n.appInsightsClient.commonProperties;
+    const r = TelemetryData.sanitizeKeys(t);
     n.appInsightsClient.commonProperties = r;
     n.appInsightsClient.context.tags[
       n.appInsightsClient.context.keys.cloudRoleInstance
@@ -423,15 +423,15 @@ exports.telemetryRaw = async function (e, t, n, r) {
   });
 };
 exports.telemetryException = async function (e, t, n, r) {
-  const o = t instanceof Error ? t : new Error("Non-error thrown: " + t),
-    i = y(),
-    s = TelemetryData.createAndMarkAsIssued({
-      origin: M_redactor_NOTSURE.redactPaths(n),
-      reason: i
-        ? "Exception logged to restricted telemetry"
-        : "Exception, not logged due to opt-out",
-      ...r,
-    });
+  const o = t instanceof Error ? t : new Error("Non-error thrown: " + t);
+  const i = y();
+  const s = TelemetryData.createAndMarkAsIssued({
+    origin: M_redactor_maybe.redactPaths(n),
+    reason: i
+      ? "Exception logged to restricted telemetry"
+      : "Exception, not logged due to opt-out",
+    ...r,
+  });
   await s.makeReadyForSending(e, !1, "IncludeExp");
   f(e, !1, "exception", s);
   if (!i) return;

@@ -1,7 +1,7 @@
-var r = require("source-map-consumer").h,
-  M_url_utils_NOTSURE = require("url-utils"),
-  i = /(\r?\n)/,
-  s = "$$$isSourceNode$$$";
+var r = require("source-map-consumer").h;
+var M_url_utils_maybe = require("url-utils");
+var i = /(\r?\n)/;
+var s = "$$$isSourceNode$$$";
 function a(e, t, n, r, o) {
   this.children = [];
   this.sourceContents = {};
@@ -15,18 +15,18 @@ function a(e, t, n, r, o) {
   }
 }
 a.fromStringWithSourceMap = function (e, t, n) {
-  var r = new a(),
-    s = e.split(i),
-    c = 0,
-    l = function () {
-      return e() + (e() || "");
-      function e() {
-        return c < s.length ? s[c++] : undefined;
-      }
-    },
-    u = 1,
-    d = 0,
-    p = null;
+  var r = new a();
+  var s = e.split(i);
+  var c = 0;
+  var l = function () {
+    return e() + (e() || "");
+    function e() {
+      return c < s.length ? s[c++] : undefined;
+    }
+  };
+  var u = 1;
+  var d = 0;
+  var p = null;
   t.eachMapping(function (e) {
     if (null !== p) {
       if (!(u < e.generatedLine)) {
@@ -62,7 +62,7 @@ a.fromStringWithSourceMap = function (e, t, n) {
     var i = t.sourceContentFor(e);
     if (null != i) {
       if (null != n) {
-        e = M_url_utils_NOTSURE.join(n, e);
+        e = M_url_utils_maybe.join(n, e);
       }
       r.setSourceContent(e, i);
     }
@@ -71,7 +71,7 @@ a.fromStringWithSourceMap = function (e, t, n) {
   function h(e, t) {
     if (null === e || undefined === e.source) r.add(t);
     else {
-      var i = n ? M_url_utils_NOTSURE.join(n, e.source) : e.source;
+      var i = n ? M_url_utils_maybe.join(n, e.source) : e.source;
       r.add(new a(e.originalLine, e.originalColumn, i, t, e.name));
     }
   }
@@ -107,7 +107,10 @@ a.prototype.prepend = function (e) {
   return this;
 };
 a.prototype.walk = function (e) {
-  for (var t, n = 0, r = this.children.length; n < r; n++)
+  for (n = 0, r = this.children.length, undefined; n < r; n++) {
+    var t;
+    var n;
+    var r;
     if ((t = this.children[n])[s]) {
       t.walk(e);
     } else {
@@ -120,11 +123,12 @@ a.prototype.walk = function (e) {
         });
       }
     }
+  }
 };
 a.prototype.join = function (e) {
-  var t,
-    n,
-    r = this.children.length;
+  var t;
+  var n;
+  var r = this.children.length;
   if (r > 0) {
     for (t = [], n = 0; n < r - 1; n++) {
       t.push(this.children[n]);
@@ -149,16 +153,19 @@ a.prototype.replaceRight = function (e, t) {
   return this;
 };
 a.prototype.setSourceContent = function (e, t) {
-  this.sourceContents[M_url_utils_NOTSURE.toSetString(e)] = t;
+  this.sourceContents[M_url_utils_maybe.toSetString(e)] = t;
 };
 a.prototype.walkSourceContents = function (e) {
-  for (var t = 0, n = this.children.length; t < n; t++)
+  for (t = 0, n = this.children.length, undefined; t < n; t++) {
+    var t;
+    var n;
     if (this.children[t][s]) {
       this.children[t].walkSourceContents(e);
     }
+  }
   var r = Object.keys(this.sourceContents);
   for (t = 0, n = r.length; t < n; t++)
-    e(M_url_utils_NOTSURE.fromSetString(r[t]), this.sourceContents[r[t]]);
+    e(M_url_utils_maybe.fromSetString(r[t]), this.sourceContents[r[t]]);
 };
 a.prototype.toString = function () {
   var e = "";
@@ -169,16 +176,16 @@ a.prototype.toString = function () {
 };
 a.prototype.toStringWithSourceMap = function (e) {
   var t = {
-      code: "",
-      line: 1,
-      column: 0,
-    },
-    n = new r(e),
-    o = !1,
-    i = null,
-    s = null,
-    a = null,
-    c = null;
+    code: "",
+    line: 1,
+    column: 0,
+  };
+  var n = new r(e);
+  var o = !1;
+  var i = null;
+  var s = null;
+  var a = null;
+  var c = null;
   this.walk(function (e, r) {
     t.code += e;
     if (null !== r.source && null !== r.line && null !== r.column) {
@@ -213,7 +220,9 @@ a.prototype.toStringWithSourceMap = function (e) {
         o = !1;
       }
     }
-    for (var l = 0, u = e.length; l < u; l++)
+    for (l = 0, u = e.length, undefined; l < u; l++) {
+      var l;
+      var u;
       if (10 === e.charCodeAt(l)) {
         t.line++;
         t.column = 0;
@@ -239,6 +248,7 @@ a.prototype.toStringWithSourceMap = function (e) {
       } else {
         t.column++;
       }
+    }
   });
   this.walkSourceContents(function (e, t) {
     n.setSourceContent(e, t);

@@ -13,10 +13,10 @@ exports.getTemperatureForSamples =
   exports.getRequestId =
   exports.CopilotUiKind =
     undefined;
-const r = require(1133),
-  o = require(9899),
-  i = require(6333),
-  s = require(70);
+const r = require(1133);
+const o = require(9899);
+const i = require(6333);
+const s = require(70);
 var a = require(4419);
 function calculateMeanLogProb(e, t) {
   var n;
@@ -26,9 +26,9 @@ function calculateMeanLogProb(e, t) {
       : n.token_logprobs
   )
     try {
-      let e = 0,
-        n = 0,
-        r = 50;
+      let e = 0;
+      let n = 0;
+      let r = 50;
       for (
         let o = 0;
         o < t.logprobs.token_logprobs.length - 1 && r > 0;
@@ -50,9 +50,9 @@ function calculateMeanAlternativeLogProb(e, t) {
       : n.top_logprobs
   )
     try {
-      let e = 0,
-        n = 0,
-        r = 50;
+      let e = 0;
+      let n = 0;
+      let r = 50;
       for (
         let o = 0;
         o < t.logprobs.token_logprobs.length - 1 && r > 0;
@@ -94,9 +94,9 @@ exports.convertToAPIChoice = function (e, t, n, r, o, s, a, u) {
 exports.cleanupIndentChoices = async function* (e, t) {
   for await (const n of e) {
     const e = {
-        ...n,
-      },
-      r = e.completionText.split("\n");
+      ...n,
+    };
+    const r = e.completionText.split("\n");
     for (let e = 0; e < r.length; ++e) {
       const n = r[e].trimLeft();
       r[e] = "" === n ? n : t + n;

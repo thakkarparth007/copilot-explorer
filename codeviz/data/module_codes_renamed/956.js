@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.readTestingGitHubToken = exports.makeTestingCopilotTokenManager =
   undefined;
-const r = require("fs"),
-  M_copilot_github_auth_stuff = require("copilot-github-auth-stuff");
+const M_fs = require("fs");
+const M_copilot_github_auth_stuff = require("copilot-github-auth-stuff");
 function readTestingGitHubToken() {
   const e = `${process.env.HOME}/.copilot-testing-gh-token`;
-  if (r.existsSync(e)) return r.readFileSync(e).toString();
+  if (M_fs.existsSync(e)) return M_fs.readFileSync(e).toString();
   throw new Error(
     `Tests: either GH_COPILOT_TOKEN, or GITHUB_TOKEN, must be set, or there must be a GitHub token from an app with access to Copilot in ${e}. Run "npm run get_token" to get one.`
   );

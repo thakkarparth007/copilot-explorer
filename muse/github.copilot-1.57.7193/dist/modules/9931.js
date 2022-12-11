@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.getNeighborSnippets = exports.neighborOptionToSelection = undefined;
-const r = require(1788),
-  o = require(569);
+const r = require(1788);
+const o = require(569);
 function i(e) {
   return [
     e.relativePath
@@ -39,16 +39,16 @@ exports.neighborOptionToSelection = {
   },
 };
 exports.getNeighborSnippets = async function (e, n, s, a, c, l, u) {
-  const d = exports.neighborOptionToSelection[s],
-    p = (function (e, n, r, i) {
-      const s = {
-        ...exports.neighborOptionToSelection[n],
-      };
-      if (undefined !== r && undefined !== i) {
-        s.matcherFactory = o.IndentationBasedJaccardMatcher.FACTORY(r, i);
-      }
-      return s.matcherFactory.to(e);
-    })(e, s, a, c);
+  const d = exports.neighborOptionToSelection[s];
+  const p = (function (e, n, r, i) {
+    const s = {
+      ...exports.neighborOptionToSelection[n],
+    };
+    if (undefined !== r && undefined !== i) {
+      s.matcherFactory = o.IndentationBasedJaccardMatcher.FACTORY(r, i);
+    }
+    return s.matcherFactory.to(e);
+  })(e, s, a, c);
   return n
     .filter((e) => e.source.length < 1e4 && e.source.length > 0)
     .slice(0, 20)

@@ -1,8 +1,15 @@
-var r, o, i, s, a, c, l, M_random_stuff_NOTSURE;
-M_random_stuff_NOTSURE = require("random-stuff");
+var r;
+var o;
+var i;
+var s;
+var a;
+var c;
+var l;
+var M_random_stuff_maybe;
+M_random_stuff_maybe = require("random-stuff");
 require("sha1");
 require("hmac");
-i = (o = (r = M_random_stuff_NOTSURE).lib).Base;
+i = (o = (r = M_random_stuff_maybe).lib).Base;
 s = o.WordArray;
 c = (a = r.algo).MD5;
 l = a.EvpKDF = i.extend({
@@ -16,16 +23,23 @@ l = a.EvpKDF = i.extend({
   },
   compute: function (e, t) {
     for (
-      var n,
-        r = this.cfg,
+      r = this.cfg,
         o = r.hasher.create(),
         i = s.create(),
         a = i.words,
         c = r.keySize,
-        l = r.iterations;
+        l = r.iterations,
+        undefined;
       a.length < c;
 
     ) {
+      var n;
+      var r;
+      var o;
+      var i;
+      var a;
+      var c;
+      var l;
       if (n) {
         o.update(n);
       }
@@ -44,4 +58,4 @@ l = a.EvpKDF = i.extend({
 r.EvpKDF = function (e, t, n) {
   return l.create(n).compute(e, t);
 };
-module.exports = M_random_stuff_NOTSURE.EvpKDF;
+module.exports = M_random_stuff_maybe.EvpKDF;

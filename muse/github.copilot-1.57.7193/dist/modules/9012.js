@@ -12,11 +12,11 @@ n =
       }
     : function () {};
 exports.SEMVER_SPEC_VERSION = "2.0.0";
-var r = Number.MAX_SAFE_INTEGER || 9007199254740991,
-  o = (exports.re = []),
-  i = (exports.src = []),
-  s = 0,
-  a = s++;
+var r = Number.MAX_SAFE_INTEGER || 9007199254740991;
+var o = (exports.re = []);
+var i = (exports.src = []);
+var s = 0;
+var a = s++;
 i[a] = "0|[1-9]\\d*";
 var c = s++;
 i[c] = "[0-9]+";
@@ -38,11 +38,11 @@ var g = s++;
 i[g] = "[0-9A-Za-z-]+";
 var _ = s++;
 i[_] = "(?:\\+(" + i[g] + "(?:\\." + i[g] + ")*))";
-var y = s++,
-  v = "v?" + i[u] + i[f] + "?" + i[_] + "?";
+var y = s++;
+var v = "v?" + i[u] + i[f] + "?" + i[_] + "?";
 i[y] = "^" + v + "$";
-var b = "[v=\\s]*" + i[d] + i[m] + "?" + i[_] + "?",
-  w = s++;
+var b = "[v=\\s]*" + i[d] + i[m] + "?" + i[_] + "?";
+var w = s++;
 i[w] = "^" + b + "$";
 var x = s++;
 i[x] = "((?:<|>)?=?)";
@@ -226,8 +226,8 @@ SemVer.prototype.comparePre = function (e) {
   if (!this.prerelease.length && !e.prerelease.length) return 0;
   var t = 0;
   do {
-    var r = this.prerelease[t],
-      o = e.prerelease[t];
+    var r = this.prerelease[t];
+    var o = e.prerelease[t];
     n("prerelease compare", t, r, o);
     if (void 0 === r && void 0 === o) return 0;
     if (undefined === o) return 1;
@@ -328,9 +328,9 @@ exports.inc = function (e, t, n, r) {
 };
 exports.diff = function (e, t) {
   if (eq(e, t)) return null;
-  var n = parse(e),
-    r = parse(t),
-    o = "";
+  var n = parse(e);
+  var r = parse(t);
+  var o = "";
   if (n.prerelease.length || r.prerelease.length) {
     o = "pre";
     var i = "prerelease";
@@ -343,8 +343,8 @@ exports.diff = function (e, t) {
 exports.compareIdentifiers = compareIdentifiers;
 var W = /^[0-9]+$/;
 function compareIdentifiers(e, t) {
-  var n = W.test(e),
-    r = W.test(t);
+  var n = W.test(e);
+  var r = W.test(t);
   if (n && r) {
     e = +e;
     t = +t;
@@ -546,7 +546,11 @@ function le(e, t, n) {
   return t.test(e);
 }
 function ue(e, t, n, r) {
-  var o, i, s, a, c;
+  var o;
+  var i;
+  var s;
+  var a;
+  var c;
   switch (((e = new SemVer(e, r)), (t = new ie(t, r)), n)) {
     case ">":
       o = gt;
@@ -567,9 +571,9 @@ function ue(e, t, n, r) {
   }
   if (le(e, t, r)) return !1;
   for (var l = 0; l < t.set.length; ++l) {
-    var u = t.set[l],
-      d = null,
-      p = null;
+    var u = t.set[l];
+    var d = null;
+    var p = null;
     u.forEach(function (e) {
       if (e.semver === oe) {
         e = new re(">=0.0.0");
@@ -591,8 +595,8 @@ function ue(e, t, n, r) {
   return !0;
 }
 re.prototype.parse = function (e) {
-  var t = this.options.loose ? o[F] : o[j],
-    n = e.match(t);
+  var t = this.options.loose ? o[F] : o[j];
+  var n = e.match(t);
   if (!n) throw new TypeError("Invalid comparator: " + e);
   this.operator = n[1];
   if ("=" === this.operator) {
@@ -631,26 +635,26 @@ re.prototype.intersects = function (e, t) {
     return le(e.semver, n, t);
   }
   var r = !(
-      (">=" !== this.operator && ">" !== this.operator) ||
-      (">=" !== e.operator && ">" !== e.operator)
-    ),
-    o = !(
-      ("<=" !== this.operator && "<" !== this.operator) ||
-      ("<=" !== e.operator && "<" !== e.operator)
-    ),
-    i = this.semver.version === e.semver.version,
-    s = !(
-      (">=" !== this.operator && "<=" !== this.operator) ||
-      (">=" !== e.operator && "<=" !== e.operator)
-    ),
-    a =
-      ne(this.semver, "<", e.semver, t) &&
-      (">=" === this.operator || ">" === this.operator) &&
-      ("<=" === e.operator || "<" === e.operator),
-    c =
-      ne(this.semver, ">", e.semver, t) &&
-      ("<=" === this.operator || "<" === this.operator) &&
-      (">=" === e.operator || ">" === e.operator);
+    (">=" !== this.operator && ">" !== this.operator) ||
+    (">=" !== e.operator && ">" !== e.operator)
+  );
+  var o = !(
+    ("<=" !== this.operator && "<" !== this.operator) ||
+    ("<=" !== e.operator && "<" !== e.operator)
+  );
+  var i = this.semver.version === e.semver.version;
+  var s = !(
+    (">=" !== this.operator && "<=" !== this.operator) ||
+    (">=" !== e.operator && "<=" !== e.operator)
+  );
+  var a =
+    ne(this.semver, "<", e.semver, t) &&
+    (">=" === this.operator || ">" === this.operator) &&
+    ("<=" === e.operator || "<" === e.operator);
+  var c =
+    ne(this.semver, ">", e.semver, t) &&
+    ("<=" === this.operator || "<" === this.operator) &&
+    (">=" === e.operator || ">" === e.operator);
   return r || o || (i && s) || a || c;
 };
 exports.Range = ie;
@@ -677,75 +681,62 @@ ie.prototype.parseRange = function (e) {
   e = (e = (e = e.replace(o[O], "$1~")).replace(o[L], "$1^"))
     .split(/\s+/)
     .join(" ");
-  var i = t ? o[F] : o[j],
-    s = e
-      .split(" ")
-      .map(function (e) {
-        return (function (e, t) {
-          n("comp", e, t);
-          e = (function (e, t) {
-            return e
-              .trim()
-              .split(/\s+/)
-              .map(function (e) {
-                return (function (e, t) {
-                  n("caret", e, t);
-                  var r = t.loose ? o[D] : o[$];
-                  return e.replace(r, function (t, r, o, i, s) {
-                    var a;
-                    n("caret", e, t, r, o, i, s);
-                    if (se(r)) {
-                      a = "";
+  var i = t ? o[F] : o[j];
+  var s = e
+    .split(" ")
+    .map(function (e) {
+      return (function (e, t) {
+        n("comp", e, t);
+        e = (function (e, t) {
+          return e
+            .trim()
+            .split(/\s+/)
+            .map(function (e) {
+              return (function (e, t) {
+                n("caret", e, t);
+                var r = t.loose ? o[D] : o[$];
+                return e.replace(r, function (t, r, o, i, s) {
+                  var a;
+                  n("caret", e, t, r, o, i, s);
+                  if (se(r)) {
+                    a = "";
+                  } else {
+                    if (se(o)) {
+                      a = ">=" + r + ".0.0 <" + (+r + 1) + ".0.0";
                     } else {
-                      if (se(o)) {
-                        a = ">=" + r + ".0.0 <" + (+r + 1) + ".0.0";
+                      if (se(i)) {
+                        a =
+                          "0" === r
+                            ? ">=" +
+                              r +
+                              "." +
+                              o +
+                              ".0 <" +
+                              r +
+                              "." +
+                              (+o + 1) +
+                              ".0"
+                            : ">=" + r + "." + o + ".0 <" + (+r + 1) + ".0.0";
                       } else {
-                        if (se(i)) {
+                        if (s) {
+                          n("replaceCaret pr", s);
                           a =
                             "0" === r
-                              ? ">=" +
-                                r +
-                                "." +
-                                o +
-                                ".0 <" +
-                                r +
-                                "." +
-                                (+o + 1) +
-                                ".0"
-                              : ">=" + r + "." + o + ".0 <" + (+r + 1) + ".0.0";
-                        } else {
-                          if (s) {
-                            n("replaceCaret pr", s);
-                            a =
-                              "0" === r
-                                ? "0" === o
-                                  ? ">=" +
-                                    r +
-                                    "." +
-                                    o +
-                                    "." +
-                                    i +
-                                    "-" +
-                                    s +
-                                    " <" +
-                                    r +
-                                    "." +
-                                    o +
-                                    "." +
-                                    (+i + 1)
-                                  : ">=" +
-                                    r +
-                                    "." +
-                                    o +
-                                    "." +
-                                    i +
-                                    "-" +
-                                    s +
-                                    " <" +
-                                    r +
-                                    "." +
-                                    (+o + 1) +
-                                    ".0"
+                              ? "0" === o
+                                ? ">=" +
+                                  r +
+                                  "." +
+                                  o +
+                                  "." +
+                                  i +
+                                  "-" +
+                                  s +
+                                  " <" +
+                                  r +
+                                  "." +
+                                  o +
+                                  "." +
+                                  (+i + 1)
                                 : ">=" +
                                   r +
                                   "." +
@@ -755,36 +746,38 @@ ie.prototype.parseRange = function (e) {
                                   "-" +
                                   s +
                                   " <" +
-                                  (+r + 1) +
-                                  ".0.0";
-                          } else {
-                            n("no pr");
-                            a =
-                              "0" === r
-                                ? "0" === o
-                                  ? ">=" +
-                                    r +
-                                    "." +
-                                    o +
-                                    "." +
-                                    i +
-                                    " <" +
-                                    r +
-                                    "." +
-                                    o +
-                                    "." +
-                                    (+i + 1)
-                                  : ">=" +
-                                    r +
-                                    "." +
-                                    o +
-                                    "." +
-                                    i +
-                                    " <" +
-                                    r +
-                                    "." +
-                                    (+o + 1) +
-                                    ".0"
+                                  r +
+                                  "." +
+                                  (+o + 1) +
+                                  ".0"
+                              : ">=" +
+                                r +
+                                "." +
+                                o +
+                                "." +
+                                i +
+                                "-" +
+                                s +
+                                " <" +
+                                (+r + 1) +
+                                ".0.0";
+                        } else {
+                          n("no pr");
+                          a =
+                            "0" === r
+                              ? "0" === o
+                                ? ">=" +
+                                  r +
+                                  "." +
+                                  o +
+                                  "." +
+                                  i +
+                                  " <" +
+                                  r +
+                                  "." +
+                                  o +
+                                  "." +
+                                  (+i + 1)
                                 : ">=" +
                                   r +
                                   "." +
@@ -792,171 +785,182 @@ ie.prototype.parseRange = function (e) {
                                   "." +
                                   i +
                                   " <" +
-                                  (+r + 1) +
-                                  ".0.0";
-                          }
+                                  r +
+                                  "." +
+                                  (+o + 1) +
+                                  ".0"
+                              : ">=" +
+                                r +
+                                "." +
+                                o +
+                                "." +
+                                i +
+                                " <" +
+                                (+r + 1) +
+                                ".0.0";
                         }
                       }
                     }
-                    n("caret return", a);
-                    return a;
-                  });
-                })(e, t);
-              })
-              .join(" ");
-          })(e, t);
-          n("caret", e);
-          e = (function (e, t) {
-            return e
-              .trim()
-              .split(/\s+/)
-              .map(function (e) {
-                return (function (e, t) {
-                  var r = t.loose ? o[R] : o[N];
-                  return e.replace(r, function (t, r, o, i, s) {
-                    var a;
-                    n("tilde", e, t, r, o, i, s);
-                    if (se(r)) {
-                      a = "";
+                  }
+                  n("caret return", a);
+                  return a;
+                });
+              })(e, t);
+            })
+            .join(" ");
+        })(e, t);
+        n("caret", e);
+        e = (function (e, t) {
+          return e
+            .trim()
+            .split(/\s+/)
+            .map(function (e) {
+              return (function (e, t) {
+                var r = t.loose ? o[R] : o[N];
+                return e.replace(r, function (t, r, o, i, s) {
+                  var a;
+                  n("tilde", e, t, r, o, i, s);
+                  if (se(r)) {
+                    a = "";
+                  } else {
+                    if (se(o)) {
+                      a = ">=" + r + ".0.0 <" + (+r + 1) + ".0.0";
                     } else {
-                      if (se(o)) {
-                        a = ">=" + r + ".0.0 <" + (+r + 1) + ".0.0";
+                      if (se(i)) {
+                        a =
+                          ">=" +
+                          r +
+                          "." +
+                          o +
+                          ".0 <" +
+                          r +
+                          "." +
+                          (+o + 1) +
+                          ".0";
                       } else {
-                        if (se(i)) {
+                        if (s) {
+                          n("replaceTilde pr", s);
                           a =
                             ">=" +
                             r +
                             "." +
                             o +
-                            ".0 <" +
+                            "." +
+                            i +
+                            "-" +
+                            s +
+                            " <" +
                             r +
                             "." +
                             (+o + 1) +
                             ".0";
                         } else {
-                          if (s) {
-                            n("replaceTilde pr", s);
-                            a =
-                              ">=" +
-                              r +
-                              "." +
-                              o +
-                              "." +
-                              i +
-                              "-" +
-                              s +
-                              " <" +
-                              r +
-                              "." +
-                              (+o + 1) +
-                              ".0";
-                          } else {
-                            a =
-                              ">=" +
-                              r +
-                              "." +
-                              o +
-                              "." +
-                              i +
-                              " <" +
-                              r +
-                              "." +
-                              (+o + 1) +
-                              ".0";
-                          }
+                          a =
+                            ">=" +
+                            r +
+                            "." +
+                            o +
+                            "." +
+                            i +
+                            " <" +
+                            r +
+                            "." +
+                            (+o + 1) +
+                            ".0";
                         }
                       }
                     }
-                    n("tilde return", a);
-                    return a;
-                  });
-                })(e, t);
-              })
-              .join(" ");
-          })(e, t);
-          n("tildes", e);
-          e = (function (e, t) {
-            n("replaceXRanges", e, t);
-            return e
-              .split(/\s+/)
-              .map(function (e) {
-                return (function (e, t) {
-                  e = e.trim();
-                  var r = t.loose ? o[I] : o[k];
-                  return e.replace(r, function (t, r, o, i, s, a) {
-                    n("xRange", e, t, r, o, i, s, a);
-                    var c = se(o),
-                      l = c || se(i),
-                      u = l || se(s);
-                    if ("=" === r && u) {
-                      r = "";
-                    }
-                    if (c) {
-                      t = ">" === r || "<" === r ? "<0.0.0" : "*";
-                    } else {
-                      if (r && u) {
+                  }
+                  n("tilde return", a);
+                  return a;
+                });
+              })(e, t);
+            })
+            .join(" ");
+        })(e, t);
+        n("tildes", e);
+        e = (function (e, t) {
+          n("replaceXRanges", e, t);
+          return e
+            .split(/\s+/)
+            .map(function (e) {
+              return (function (e, t) {
+                e = e.trim();
+                var r = t.loose ? o[I] : o[k];
+                return e.replace(r, function (t, r, o, i, s, a) {
+                  n("xRange", e, t, r, o, i, s, a);
+                  var c = se(o);
+                  var l = c || se(i);
+                  var u = l || se(s);
+                  if ("=" === r && u) {
+                    r = "";
+                  }
+                  if (c) {
+                    t = ">" === r || "<" === r ? "<0.0.0" : "*";
+                  } else {
+                    if (r && u) {
+                      if (l) {
+                        i = 0;
+                      }
+                      s = 0;
+                      if (">" === r) {
+                        r = ">=";
                         if (l) {
+                          o = +o + 1;
                           i = 0;
+                          s = 0;
+                        } else {
+                          i = +i + 1;
+                          s = 0;
                         }
-                        s = 0;
-                        if (">" === r) {
-                          r = ">=";
+                      } else {
+                        if ("<=" === r) {
+                          r = "<";
                           if (l) {
                             o = +o + 1;
-                            i = 0;
-                            s = 0;
                           } else {
                             i = +i + 1;
-                            s = 0;
-                          }
-                        } else {
-                          if ("<=" === r) {
-                            r = "<";
-                            if (l) {
-                              o = +o + 1;
-                            } else {
-                              i = +i + 1;
-                            }
-                          }
-                        }
-                        t = r + o + "." + i + "." + s;
-                      } else {
-                        if (l) {
-                          t = ">=" + o + ".0.0 <" + (+o + 1) + ".0.0";
-                        } else {
-                          if (u) {
-                            t =
-                              ">=" +
-                              o +
-                              "." +
-                              i +
-                              ".0 <" +
-                              o +
-                              "." +
-                              (+i + 1) +
-                              ".0";
                           }
                         }
                       }
+                      t = r + o + "." + i + "." + s;
+                    } else {
+                      if (l) {
+                        t = ">=" + o + ".0.0 <" + (+o + 1) + ".0.0";
+                      } else {
+                        if (u) {
+                          t =
+                            ">=" +
+                            o +
+                            "." +
+                            i +
+                            ".0 <" +
+                            o +
+                            "." +
+                            (+i + 1) +
+                            ".0";
+                        }
+                      }
                     }
-                    n("xRange return", t);
-                    return t;
-                  });
-                })(e, t);
-              })
-              .join(" ");
-          })(e, t);
-          n("xrange", e);
-          e = (function (e, t) {
-            n("replaceStars", e, t);
-            return e.trim().replace(o[H], "");
-          })(e, t);
-          n("stars", e);
-          return e;
-        })(e, this.options);
-      }, this)
-      .join(" ")
-      .split(/\s+/);
+                  }
+                  n("xRange return", t);
+                  return t;
+                });
+              })(e, t);
+            })
+            .join(" ");
+        })(e, t);
+        n("xrange", e);
+        e = (function (e, t) {
+          n("replaceStars", e, t);
+          return e.trim().replace(o[H], "");
+        })(e, t);
+        n("stars", e);
+        return e;
+      })(e, this.options);
+    }, this)
+    .join(" ")
+    .split(/\s+/);
   if (this.options.loose) {
     s = s.filter(function (e) {
       return !!e.match(i);
@@ -1000,8 +1004,8 @@ ie.prototype.test = function (e) {
 };
 exports.satisfies = le;
 exports.maxSatisfying = function (e, t, n) {
-  var r = null,
-    o = null;
+  var r = null;
+  var o = null;
   try {
     var i = new ie(t, n);
   } catch (e) {
@@ -1017,8 +1021,8 @@ exports.maxSatisfying = function (e, t, n) {
   return r;
 };
 exports.minSatisfying = function (e, t, n) {
-  var r = null,
-    o = null;
+  var r = null;
+  var o = null;
   try {
     var i = new ie(t, n);
   } catch (e) {

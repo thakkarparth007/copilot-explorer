@@ -11,12 +11,12 @@ exports.parseTree =
   exports.labelLines =
   exports.parseRaw =
     undefined;
-const r = require(9608),
-  o = require(9829);
+const r = require(9608);
+const o = require(9829);
 function parseRaw(e) {
-  const t = e.split("\n"),
-    n = t.map((e) => e.match(/^\s*/)[0].length),
-    o = t.map((e) => e.trimLeft());
+  const t = e.split("\n");
+  const n = t.map((e) => e.match(/^\s*/)[0].length);
+  const o = t.map((e) => e.trimLeft());
   function i(e) {
     const [t, i] = s(e + 1, n[e]);
     return [r.lineNode(n[e], e, o[e], t), i];
@@ -24,8 +24,8 @@ function parseRaw(e) {
   function s(e, t) {
     let s;
     const a = [];
-    let c,
-      l = e;
+    let c;
+    let l = e;
     for (; l < o.length && ("" === o[l] || n[l] > t); )
       if ("" === o[l]) {
         if (undefined === c) {
@@ -92,8 +92,8 @@ function combineClosersAndOpeners(e) {
     const t = [];
     let n;
     for (let o = 0; o < e.subs.length; o++) {
-      const i = e.subs[o],
-        s = e.subs[o - 1];
+      const i = e.subs[o];
+      const s = e.subs[o - 1];
       if ("opener" === i.label && undefined !== s && r.isLine(s)) {
         s.subs.push(i);
         i.subs.forEach((e) => s.subs.push(e));
@@ -152,9 +152,9 @@ exports.groupBlocks = function (e, t = r.isBlank, n) {
   return o.rebuildTree(e, function (e) {
     if (e.subs.length <= 1) return e;
     const o = [];
-    let i,
-      s = [],
-      a = !1;
+    let i;
+    let s = [];
+    let a = !1;
     function c(e = !1) {
       if (undefined !== i && (o.length > 0 || !e)) {
         const e = r.virtualNode(i, s, n);
@@ -162,8 +162,8 @@ exports.groupBlocks = function (e, t = r.isBlank, n) {
       } else s.forEach((e) => o.push(e));
     }
     for (let n = 0; n < e.subs.length; n++) {
-      const o = e.subs[n],
-        l = t(o);
+      const o = e.subs[n];
+      const l = t(o);
       if (!l && a) {
         c();
         s = [];
@@ -193,15 +193,15 @@ exports.flattenVirtual = function (e) {
   });
 };
 const l = buildLabelRules({
-    opener: /^[\[({]/,
-    closer: /^[\])}]/,
-  }),
-  u = {};
+  opener: /^[\[({]/,
+  closer: /^[\])}]/,
+});
+const u = {};
 exports.registerLanguageSpecificParser = function (e, t) {
   u[e] = t;
 };
 exports.parseTree = function (e, t) {
-  const n = parseRaw(e),
-    r = u[null != t ? t : ""];
+  const n = parseRaw(e);
+  const r = u[null != t ? t : ""];
   return r ? r(n) : (labelLines(n, l), combineClosersAndOpeners(n));
 };

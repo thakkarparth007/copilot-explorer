@@ -5,11 +5,11 @@ function editDistance(e, t, n = (e, t) => (e === t ? 0 : 1)) {
       startOffset: 0,
       endOffset: 0,
     };
-  let r = new Array(t.length + 1).fill(0),
-    o = new Array(t.length + 1).fill(0),
-    i = new Array(e.length + 1).fill(0),
-    s = new Array(e.length + 1).fill(0),
-    a = t[0];
+  let r = new Array(t.length + 1).fill(0);
+  let o = new Array(t.length + 1).fill(0);
+  let i = new Array(e.length + 1).fill(0);
+  let s = new Array(e.length + 1).fill(0);
+  let a = t[0];
   for (let t = 0; t < e.length + 1; t++) {
     r[t] = 0 === t ? 1 : n(e[t - 1], a, t - 1, 0);
     o[t] = t > 0 ? t - 1 : 0;
@@ -24,9 +24,9 @@ function editDistance(e, t, n = (e, t) => (e === t ? 0 : 1)) {
     a = t[c];
     r[0] = c + 1;
     for (let t = 1; t < e.length + 1; t++) {
-      const l = 1 + i[t],
-        u = 1 + r[t - 1],
-        d = n(e[t - 1], a, t - 1, c) + i[t - 1];
+      const l = 1 + i[t];
+      const u = 1 + r[t - 1];
+      const d = n(e[t - 1], a, t - 1, c) + i[t - 1];
       r[t] = Math.min(u, l, d);
       if (r[t] === d) {
         o[t] = s[t - 1];
@@ -59,8 +59,8 @@ function reverseLexDictionary(e) {
   return t;
 }
 function* lexGeneratorWords(e) {
-  let t,
-    n = "";
+  let t;
+  let n = "";
   !(function (e) {
     e[(e.Word = 0)] = "Word";
     e[(e.Space = 1)] = "Space";
@@ -117,8 +117,8 @@ exports.reverseLexDictionary = reverseLexDictionary;
 exports.lexGeneratorWords = lexGeneratorWords;
 exports.lexicalAnalyzer = lexicalAnalyzer;
 exports.lexEditDistance = function (e, t, c = lexGeneratorWords) {
-  const [l, u] = lexicalAnalyzer(e, emptyLexDictionary(), c, a),
-    [d, p] = lexicalAnalyzer(t, u, c, a);
+  const [l, u] = lexicalAnalyzer(e, emptyLexDictionary(), c, a);
+  const [d, p] = lexicalAnalyzer(t, u, c, a);
   if (0 === d.length || 0 === l.length)
     return {
       lexDistance: d.length,
@@ -127,24 +127,24 @@ exports.lexEditDistance = function (e, t, c = lexGeneratorWords) {
       haystackLexLength: l.length,
       needleLexLength: d.length,
     };
-  const h = reverseLexDictionary(p),
-    f = d.length,
-    m = h[d[0][0]],
-    g = h[d[f - 1][0]],
-    _ = editDistance(
-      l.map((e) => e[0]),
-      d.map((e) => e[0]),
-      function (e, t, n, r) {
-        if (0 === r || r === f - 1) {
-          const e = h[l[n][0]];
-          return (0 == r && e.endsWith(m)) || (r == f - 1 && e.startsWith(g))
-            ? 0
-            : 1;
-        }
-        return e === t ? 0 : 1;
+  const h = reverseLexDictionary(p);
+  const f = d.length;
+  const m = h[d[0][0]];
+  const g = h[d[f - 1][0]];
+  const _ = editDistance(
+    l.map((e) => e[0]),
+    d.map((e) => e[0]),
+    function (e, t, n, r) {
+      if (0 === r || r === f - 1) {
+        const e = h[l[n][0]];
+        return (0 == r && e.endsWith(m)) || (r == f - 1 && e.startsWith(g))
+          ? 0
+          : 1;
       }
-    ),
-    y = l[_.startOffset][1];
+      return e === t ? 0 : 1;
+    }
+  );
+  const y = l[_.startOffset][1];
   let v = _.endOffset < l.length ? l[_.endOffset][1] : e.length;
   if (v > 0 && " " === e[v - 1]) {
     --v;

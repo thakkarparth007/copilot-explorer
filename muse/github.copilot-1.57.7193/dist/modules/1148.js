@@ -1,4 +1,5 @@
-var r, o;
+var r;
+var o;
 o = require(8249);
 require(5109);
 (r = o.lib.BlockCipherMode.extend()).Encryptor = r.extend({

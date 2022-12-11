@@ -1,11 +1,11 @@
-const r = require("util"),
-  o = require("assert"),
-  M_event_listener_wrap_NOTSURE = require("event-listener-wrap"),
-  M_async_hook_jl_NOTSURE = require("async-hook-jl"),
-  a = "error@context",
-  c = [];
-for (let e in M_async_hook_jl_NOTSURE.providers)
-  c[M_async_hook_jl_NOTSURE.providers[e]] = e;
+const M_util = require("util");
+const M_assert = require("assert");
+const M_event_listener_wrap_maybe = require("event-listener-wrap");
+const M_async_hook_jl_maybe = require("async-hook-jl");
+const a = "error@context";
+const c = [];
+for (let e in M_async_hook_jl_maybe.providers)
+  c[M_async_hook_jl_maybe.providers[e]] = e;
 const l = process.env.DEBUG_CLS_HOOKED;
 let u = -1;
 function d(e) {
@@ -20,8 +20,11 @@ function p(e) {
 }
 function h(e) {
   let t = p(e);
-  o.ok(t, "can't delete nonexistent namespace! \"" + e + '"');
-  o.ok(t.id, "don't assign to process.namespaces directly! " + r.inspect(t));
+  M_assert.ok(t, "can't delete nonexistent namespace! \"" + e + '"');
+  M_assert.ok(
+    t.id,
+    "don't assign to process.namespaces directly! " + M_util.inspect(t)
+  );
   process.namespaces[e] = null;
 }
 function f(e) {
@@ -46,13 +49,13 @@ function m(e) {
 module.exports = {
   getNamespace: p,
   createNamespace: function (e) {
-    o.ok(e, "namespace must be given a name.");
+    M_assert.ok(e, "namespace must be given a name.");
     if (l) {
       f("CREATING NAMESPACE " + e);
     }
     let t = new d(e);
     t.id = u;
-    M_async_hook_jl_NOTSURE.addHooks({
+    M_async_hook_jl_maybe.addHooks({
       init(n, o, i, s, a) {
         u = n;
         if (s) {
@@ -76,7 +79,7 @@ module.exports = {
               " provider:" +
               c[i] +
               " active:" +
-              r.inspect(t.active, !0)
+              M_util.inspect(t.active, !0)
           );
         }
       },
@@ -93,7 +96,7 @@ module.exports = {
                 " handle:" +
                 m(o) +
                 " context:" +
-                r.inspect(i)
+                M_util.inspect(i)
             );
           }
           t.enter(i);
@@ -116,7 +119,7 @@ module.exports = {
                 " handle:" +
                 m(o) +
                 " context:" +
-                r.inspect(i)
+                M_util.inspect(i)
             );
           }
           t.exit(i);
@@ -135,9 +138,9 @@ module.exports = {
               " uid:" +
               n +
               " context:" +
-              r.inspect(t._contexts.get(u)) +
+              M_util.inspect(t._contexts.get(u)) +
               " active:" +
-              r.inspect(t.active, !0)
+              M_util.inspect(t.active, !0)
           );
         }
         t._contexts.delete(n);
@@ -173,7 +176,7 @@ d.prototype.set = function (e, t) {
         " uid:" +
         u +
         " active:" +
-        r.inspect(this.active, !0)
+        M_util.inspect(this.active, !0)
     );
   }
   this.active[e] = t;
@@ -192,7 +195,7 @@ d.prototype.get = function (e) {
           " uid:" +
           u +
           " active:" +
-          r.inspect(this.active, !0)
+          M_util.inspect(this.active, !0)
       );
     }
     return this.active[e];
@@ -206,7 +209,7 @@ d.prototype.get = function (e) {
         " uid:" +
         u +
         " active:" +
-        r.inspect(this.active, !0)
+        M_util.inspect(this.active, !0)
     );
   }
 };
@@ -220,7 +223,7 @@ d.prototype.createContext = function () {
         " len:" +
         this._set.length +
         "  active:" +
-        r.inspect(this.active, !0, 2, !0)
+        M_util.inspect(this.active, !0, 2, !0)
     );
   }
   let e = Object.create(this.active ? this.active : Object.prototype);
@@ -235,7 +238,7 @@ d.prototype.createContext = function () {
         " len:" +
         this._set.length +
         "  context:" +
-        r.inspect(e, !0, 2, !0)
+        M_util.inspect(e, !0, 2, !0)
     );
   }
   return e;
@@ -253,7 +256,7 @@ d.prototype.run = function (e) {
           " len:" +
           this._set.length +
           " " +
-          r.inspect(t)
+          M_util.inspect(t)
       );
     }
     e(t);
@@ -270,7 +273,7 @@ d.prototype.run = function (e) {
           " len:" +
           this._set.length +
           " " +
-          r.inspect(t)
+          M_util.inspect(t)
       );
     }
     this.exit(t);
@@ -297,7 +300,7 @@ d.prototype.runPromise = function (e) {
         " len:" +
         this._set.length +
         " " +
-        r.inspect(t)
+        M_util.inspect(t)
     );
   }
   return n
@@ -312,7 +315,7 @@ d.prototype.runPromise = function (e) {
               " len:" +
               this._set.length +
               " " +
-              r.inspect(t)
+              M_util.inspect(t)
           ),
         this.exit(t),
         e
@@ -330,7 +333,7 @@ d.prototype.runPromise = function (e) {
               " len:" +
               this._set.length +
               " " +
-              r.inspect(t)
+              M_util.inspect(t)
           ),
         this.exit(t),
         e)
@@ -354,7 +357,7 @@ d.prototype.bind = function (e, t) {
   };
 };
 d.prototype.enter = function (e) {
-  o.ok(e, "context must be provided for entering");
+  M_assert.ok(e, "context must be provided for entering");
   if (l) {
     f(
       "  ENTER " +
@@ -364,14 +367,14 @@ d.prototype.enter = function (e) {
         " len:" +
         this._set.length +
         " context: " +
-        r.inspect(e)
+        M_util.inspect(e)
     );
   }
   this._set.push(this.active);
   this.active = e;
 };
 d.prototype.exit = function (e) {
-  o.ok(e, "context must be provided for exiting");
+  M_assert.ok(e, "context must be provided for exiting");
   if (l) {
     f(
       "  EXIT " +
@@ -381,38 +384,39 @@ d.prototype.exit = function (e) {
         " len:" +
         this._set.length +
         " context: " +
-        r.inspect(e)
+        M_util.inspect(e)
     );
   }
   if (this.active === e)
     return (
-      o.ok(this._set.length, "can't remove top context"),
+      M_assert.ok(this._set.length, "can't remove top context"),
       void (this.active = this._set.pop())
     );
   let t = this._set.lastIndexOf(e);
   if (t < 0) {
     if (l) {
       f(
-        "??ERROR?? context exiting but not entered - ignoring: " + r.inspect(e)
+        "??ERROR?? context exiting but not entered - ignoring: " +
+          M_util.inspect(e)
       );
     }
-    o.ok(
+    M_assert.ok(
       t >= 0,
       "context not currently entered; can't exit. \n" +
-        r.inspect(this) +
+        M_util.inspect(this) +
         "\n" +
-        r.inspect(e)
+        M_util.inspect(e)
     );
   } else {
-    o.ok(t, "can't remove top context");
+    M_assert.ok(t, "can't remove top context");
     this._set.splice(t, 1);
   }
 };
 d.prototype.bindEmitter = function (e) {
-  o.ok(e.on && e.addListener && e.emit, "can only bind real EEs");
-  let t = this,
-    n = "context@" + this.name;
-  M_event_listener_wrap_NOTSURE(
+  M_assert.ok(e.on && e.addListener && e.emit, "can only bind real EEs");
+  let t = this;
+  let n = "context@" + this.name;
+  M_event_listener_wrap_maybe(
     e,
     function (e) {
       if (e) {
@@ -427,8 +431,8 @@ d.prototype.bindEmitter = function (e) {
     },
     function (e) {
       if (!e || !e["cls@contexts"]) return e;
-      let t = e,
-        n = e["cls@contexts"];
+      let t = e;
+      let n = e["cls@contexts"];
       Object.keys(n).forEach(function (e) {
         let r = n[e];
         t = r.namespace.bind(t, r.context);
@@ -441,11 +445,11 @@ d.prototype.fromException = function (e) {
   return e[a];
 };
 process.namespaces = {};
-if (M_async_hook_jl_NOTSURE._state && !M_async_hook_jl_NOTSURE._state.enabled) {
-  M_async_hook_jl_NOTSURE.enable();
+if (M_async_hook_jl_maybe._state && !M_async_hook_jl_maybe._state.enabled) {
+  M_async_hook_jl_maybe.enable();
 }
 if (l) {
-  var M_stack_chain_NOTSURE = require("stack-chain");
-  for (var _ in M_stack_chain_NOTSURE.filter._modifiers)
-    M_stack_chain_NOTSURE.filter.deattach(_);
+  var M_stack_chain_maybe = require("stack-chain");
+  for (var _ in M_stack_chain_maybe.filter._modifiers)
+    M_stack_chain_maybe.filter.deattach(_);
 }

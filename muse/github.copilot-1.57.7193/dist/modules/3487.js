@@ -19,8 +19,8 @@ exports.or =
   exports.str =
   exports._ =
     undefined;
-const r = require(7023),
-  o = require(8490);
+const r = require(7023);
+const o = require(8490);
 var i = require(7023);
 exports._ = i._;
 exports.str = i.str;
@@ -63,8 +63,8 @@ class c extends a {
     this.rhs = n;
   }
   render({ es5: e, _n: t }) {
-    const n = e ? o.varKinds.var : this.varKind,
-      r = undefined === this.rhs ? "" : ` = ${this.rhs}`;
+    const n = e ? o.varKinds.var : this.varKind;
+    const r = undefined === this.rhs ? "" : ` = ${this.rhs}`;
     return `${n} ${this.name}${r};` + t;
   }
   optimizeNames(e, t) {
@@ -296,8 +296,8 @@ class x extends b {
     this.to = r;
   }
   render(e) {
-    const t = e.es5 ? o.varKinds.var : this.varKind,
-      { name: n, from: r, to: i } = this;
+    const t = e.es5 ? o.varKinds.var : this.varKind;
+    const { name: n, from: r, to: i } = this;
     return `for(${t} ${n}=${r}; ${n}<${i}; ${n}++)` + super.render(e);
   }
   get names() {
@@ -362,7 +362,8 @@ class T extends g {
     return t;
   }
   optimizeNodes() {
-    var e, t;
+    var e;
+    var t;
     super.optimizeNodes();
     if (null === (e = this.catch) || undefined === e) {
       e.optimizeNodes();
@@ -373,7 +374,8 @@ class T extends g {
     return this;
   }
   optimizeNames(e, t) {
-    var n, r;
+    var n;
+    var r;
     super.optimizeNames(e, t);
     if (null === (n = this.catch) || undefined === n) {
       n.optimizeNames(e, t);

@@ -1,79 +1,79 @@
-const { Readable: r } = require("stream"),
-  o = require("tls"),
-  {
-    types: { isAnyArrayBuffer: i },
-  } = require("util"),
-  s = require(8348),
-  a = require(8104)("helix-fetch:core"),
-  { RequestAbortedError: c } = require(1787),
-  l = require(9803),
-  u = require(7262),
-  d = require(3769),
-  { isPlainObject: p } = require(4544),
-  { isFormData: h, FormDataSerializer: f } = require(9407),
-  { version: m } = require(5258),
-  g = "h2",
-  _ = "h2c",
-  y = "http/1.0",
-  v = "http/1.1",
-  b = 100,
-  w = 36e5,
-  x = [g, v, y],
-  E = `helix-fetch/${m}`,
-  C = {
-    method: "GET",
-    compress: !0,
-    decode: !0,
-  };
+const { Readable: r } = require("stream");
+const o = require("tls");
+const {
+  types: { isAnyArrayBuffer: i },
+} = require("util");
+const s = require(8348);
+const a = require(8104)("helix-fetch:core");
+const { RequestAbortedError: c } = require(1787);
+const l = require(9803);
+const u = require(7262);
+const d = require(3769);
+const { isPlainObject: p } = require(4544);
+const { isFormData: h, FormDataSerializer: f } = require(9407);
+const { version: m } = require(5258);
+const g = "h2";
+const _ = "h2c";
+const y = "http/1.0";
+const v = "http/1.1";
+const b = 100;
+const w = 36e5;
+const x = [g, v, y];
+const E = `helix-fetch/${m}`;
+const C = {
+  method: "GET",
+  compress: !0,
+  decode: !0,
+};
 let S = 0;
-const T = d(),
-  k = (e, t) =>
-    new Promise((n, r) => {
-      const { signal: i } = t;
-      let s;
-      const l = () => {
-        i.removeEventListener("abort", l);
-        const e = new c();
-        r(e);
-        if (s) {
-          s.destroy(e);
-        }
-      };
-      if (i) {
-        if (i.aborted) return void r(new c());
-        i.addEventListener("abort", l);
+const T = d();
+const k = (e, t) =>
+  new Promise((n, r) => {
+    const { signal: i } = t;
+    let s;
+    const l = () => {
+      i.removeEventListener("abort", l);
+      const e = new c();
+      r(e);
+      if (s) {
+        s.destroy(e);
       }
-      const u = +e.port || 443,
-        d = (t) => {
-          if (i) {
-            i.removeEventListener("abort", l);
-          }
-          if (t instanceof c) {
-            a(`connecting to ${e.hostname}:${u} failed with: ${t.message}`);
-            r(t);
-          }
-        };
-      s = o.connect(u, e.hostname, t);
-      s.once("secureConnect", () => {
-        if (i) {
-          i.removeEventListener("abort", l);
-        }
-        s.off("error", d);
-        S += 1;
-        s.id = S;
-        s.secureConnecting = !1;
-        a(`established TLS connection: #${s.id} (${s.servername})`);
-        n(s);
-      });
-      s.once("error", d);
+    };
+    if (i) {
+      if (i.aborted) return void r(new c());
+      i.addEventListener("abort", l);
+    }
+    const u = +e.port || 443;
+    const d = (t) => {
+      if (i) {
+        i.removeEventListener("abort", l);
+      }
+      if (t instanceof c) {
+        a(`connecting to ${e.hostname}:${u} failed with: ${t.message}`);
+        r(t);
+      }
+    };
+    s = o.connect(u, e.hostname, t);
+    s.once("secureConnect", () => {
+      if (i) {
+        i.removeEventListener("abort", l);
+      }
+      s.off("error", d);
+      S += 1;
+      s.id = S;
+      s.secureConnecting = !1;
+      a(`established TLS connection: #${s.id} (${s.servername})`);
+      n(s);
     });
+    s.once("error", d);
+  });
 module.exports = {
   request: async (e, t, n) => {
-    const o = new URL(t),
-      s = {
-        ...C,
-        ...(n || {}),
-      };
+    const o = new URL(t);
+    const s = {
+      ...C,
+      ...(n || {}),
+    };
     let c;
     if ("string" == typeof s.method) {
       s.method = s.method.toUpperCase();
@@ -140,95 +140,95 @@ module.exports = {
     if (s.compress && undefined === s.headers["accept-encoding"]) {
       s.headers["accept-encoding"] = "gzip,deflate,br";
     }
-    const { signal: d } = s,
-      { protocol: m, socket: b = null } = e.socketFactory
-        ? await (async (e, t, n, r) => {
-            const o = "https:" === t.protocol;
-            let i;
-            i = t.port ? t.port : o ? 443 : 80;
-            const s = {
-                ...n,
-                host: t.host,
-                port: i,
-              },
-              a = await e(s);
-            if (o) {
-              const e = {
-                ...s,
-                ALPNProtocols: r,
-              };
-              e.socket = a;
-              const n = await k(t, e);
-              return {
-                protocol: n.alpnProtocol || v,
-                socket: n,
-              };
-            }
-            return {
-              protocol: a.alpnProtocol || v,
-              socket: a,
+    const { signal: d } = s;
+    const { protocol: m, socket: b = null } = e.socketFactory
+      ? await (async (e, t, n, r) => {
+          const o = "https:" === t.protocol;
+          let i;
+          i = t.port ? t.port : o ? 443 : 80;
+          const s = {
+            ...n,
+            host: t.host,
+            port: i,
+          };
+          const a = await e(s);
+          if (o) {
+            const e = {
+              ...s,
+              ALPNProtocols: r,
             };
-          })(e.socketFactory, o, s, e.alpnProtocols)
-        : await (async (e, t, n) => {
-            const r = `${t.protocol}//${t.host}`;
-            let o = e.alpnCache.get(r);
-            if (o)
+            e.socket = a;
+            const n = await k(t, e);
+            return {
+              protocol: n.alpnProtocol || v,
+              socket: n,
+            };
+          }
+          return {
+            protocol: a.alpnProtocol || v,
+            socket: a,
+          };
+        })(e.socketFactory, o, s, e.alpnProtocols)
+      : await (async (e, t, n) => {
+          const r = `${t.protocol}//${t.host}`;
+          let o = e.alpnCache.get(r);
+          if (o)
+            return {
+              protocol: o,
+            };
+          switch (t.protocol) {
+            case "http:":
+              o = v;
+              e.alpnCache.set(r, o);
               return {
                 protocol: o,
               };
-            switch (t.protocol) {
-              case "http:":
-                o = v;
-                e.alpnCache.set(r, o);
-                return {
-                  protocol: o,
-                };
-              case "http2:":
-                o = _;
-                e.alpnCache.set(r, o);
-                return {
-                  protocol: o,
-                };
-              case "https:":
-                break;
-              default:
-                throw new TypeError(`unsupported protocol: ${t.protocol}`);
+            case "http2:":
+              o = _;
+              e.alpnCache.set(r, o);
+              return {
+                protocol: o,
+              };
+            case "https:":
+              break;
+            default:
+              throw new TypeError(`unsupported protocol: ${t.protocol}`);
+          }
+          const {
+            options: { rejectUnauthorized: i, h1: s = {}, h2: a = {} },
+          } = e;
+          const c = !(
+            !1 === i ||
+            !1 === s.rejectUnauthorized ||
+            !1 === a.rejectUnauthorized
+          );
+          const l = {
+            servername: t.hostname,
+            ALPNProtocols: e.alpnProtocols,
+            signal: n,
+            rejectUnauthorized: c,
+          };
+          const u = await (async (e, t) => {
+            let n = await T.acquire(e.origin);
+            try {
+              if (n) {
+                n = await k(e, t);
+              }
+              return n;
+            } finally {
+              T.release(e.origin, n);
             }
-            const {
-                options: { rejectUnauthorized: i, h1: s = {}, h2: a = {} },
-              } = e,
-              c = !(
-                !1 === i ||
-                !1 === s.rejectUnauthorized ||
-                !1 === a.rejectUnauthorized
-              ),
-              l = {
-                servername: t.hostname,
-                ALPNProtocols: e.alpnProtocols,
-                signal: n,
-                rejectUnauthorized: c,
-              },
-              u = await (async (e, t) => {
-                let n = await T.acquire(e.origin);
-                try {
-                  if (n) {
-                    n = await k(e, t);
-                  }
-                  return n;
-                } finally {
-                  T.release(e.origin, n);
-                }
-              })(t, l);
-            o = u.alpnProtocol;
-            if (o) {
-              o = v;
-            }
-            e.alpnCache.set(r, o);
-            return {
-              protocol: o,
-              socket: u,
-            };
-          })(e, o, d);
+          })(t, l);
+          o = u.alpnProtocol;
+          if (o) {
+            o = v;
+          }
+          e.alpnCache.set(r, o);
+          return {
+            protocol: o,
+            socket: u,
+          };
+        })(e, o, d);
     switch ((a(`${o.host} -> ${m}`), m)) {
       case g:
         try {

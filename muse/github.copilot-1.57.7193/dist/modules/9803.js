@@ -1,42 +1,42 @@
-const r = require("http"),
-  o = require("https"),
-  { Readable: i } = require("stream"),
-  s = require(8104)("helix-fetch:h1"),
-  { RequestAbortedError: a } = require(1787),
-  { decodeStream: c } = require(4544);
+const r = require("http");
+const o = require("https");
+const { Readable: i } = require("stream");
+const s = require(8104)("helix-fetch:h1");
+const { RequestAbortedError: a } = require(1787);
+const { decodeStream: c } = require(4544);
 module.exports = {
   request: async (e, t, n) => {
-    const { request: l } = "https:" === t.protocol ? o : r,
-      u = ((e, t) => {
-        const {
-          h1: n,
-          options: { h1: i, rejectUnauthorized: s },
-        } = e;
-        return "https:" === t
+    const { request: l } = "https:" === t.protocol ? o : r;
+    const u = ((e, t) => {
+      const {
+        h1: n,
+        options: { h1: i, rejectUnauthorized: s },
+      } = e;
+      return "https:" === t
+        ? n.httpsAgent
           ? n.httpsAgent
-            ? n.httpsAgent
-            : i || "boolean" == typeof s
-            ? ((n.httpsAgent = new o.Agent(
-                "boolean" == typeof s
-                  ? {
-                      ...(i || {}),
-                      rejectUnauthorized: s,
-                    }
-                  : i
-              )),
-              n.httpsAgent)
-            : undefined
-          : n.httpAgent
-          ? n.httpAgent
-          : i
-          ? ((n.httpAgent = new r.Agent(i)), n.httpAgent)
-          : undefined;
-      })(e, t.protocol),
-      d = {
-        ...n,
-        agent: u,
-      },
-      { socket: p, body: h } = d;
+          : i || "boolean" == typeof s
+          ? ((n.httpsAgent = new o.Agent(
+              "boolean" == typeof s
+                ? {
+                    ...(i || {}),
+                    rejectUnauthorized: s,
+                  }
+                : i
+            )),
+            n.httpsAgent)
+          : undefined
+        : n.httpAgent
+        ? n.httpAgent
+        : i
+        ? ((n.httpAgent = new r.Agent(i)), n.httpAgent)
+        : undefined;
+    })(e, t.protocol);
+    const d = {
+      ...n,
+      agent: u,
+    };
+    const { socket: p, body: h } = d;
     if (p) {
       delete d.socket;
       if (p.assigned) {
@@ -64,20 +64,20 @@ module.exports = {
     return new Promise((e, n) => {
       let r;
       s(`${d.method} ${t.href}`);
-      const { signal: o } = d,
-        u = () => {
-          o.removeEventListener("abort", u);
-          if (p && !p.inUse) {
-            s(
-              `discarding redundant socket used for ALPN: #${p.id} ${p.servername}`
-            );
-            p.destroy();
-          }
-          n(new a());
-          if (r) {
-            r.abort();
-          }
-        };
+      const { signal: o } = d;
+      const u = () => {
+        o.removeEventListener("abort", u);
+        if (p && !p.inUse) {
+          s(
+            `discarding redundant socket used for ALPN: #${p.id} ${p.servername}`
+          );
+          p.destroy();
+        }
+        n(new a());
+        if (r) {
+          r.abort();
+        }
+      };
       if (o) {
         if (o.aborted) return void n(new a());
         o.addEventListener("abort", u);
@@ -96,14 +96,14 @@ module.exports = {
         e(
           ((e, t, n) => {
             const {
-                statusCode: r,
-                statusMessage: o,
-                httpVersion: i,
-                httpVersionMajor: s,
-                httpVersionMinor: a,
-                headers: l,
-              } = e,
-              u = t ? c(r, l, e, n) : e;
+              statusCode: r,
+              statusMessage: o,
+              httpVersion: i,
+              httpVersionMajor: s,
+              httpVersionMinor: a,
+              headers: l,
+            } = e;
+            const u = t ? c(r, l, e, n) : e;
             return {
               statusCode: r,
               statusText: o,

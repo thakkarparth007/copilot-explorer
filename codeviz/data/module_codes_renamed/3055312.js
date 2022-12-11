@@ -20,18 +20,28 @@ exports.getPrompt =
   exports.MAX_EDIT_DISTANCE_LENGTH =
   exports.MAX_PROMPT_LENGTH =
     undefined;
-const M_language_marker_constants = require("language-marker-constants"),
-  M_imports_and_docs_extractor = require("imports-and-docs-extractor"),
-  M_neighbor_snippet_selector = require("neighbor-snippet-selector"),
-  M_sibling_function_fetcher = require("sibling-function-fetcher"),
-  M_tokenizer = require("tokenizer"),
-  M_prompt_choices_and_wishlist = require("prompt-choices-and-wishlist"),
-  M_edit_distance = require("edit-distance");
+const M_language_marker_constants = require("language-marker-constants");
+const M_imports_and_docs_extractor = require("imports-and-docs-extractor");
+const M_neighbor_snippet_selector = require("neighbor-snippet-selector");
+const M_sibling_function_fetcher = require("sibling-function-fetcher");
+const M_tokenizer = require("tokenizer");
+const M_prompt_choices_and_wishlist = require("prompt-choices-and-wishlist");
+const M_edit_distance = require("edit-distance");
 let u = {
   text: "",
   tokens: [],
 };
-var d, p, h, f, m, g, _, y, v, b, w;
+var d;
+var p;
+var h;
+var f;
+var m;
+var g;
+var _;
+var y;
+var v;
+var b;
+var w;
 exports.MAX_PROMPT_LENGTH = 1500;
 exports.MAX_EDIT_DISTANCE_LENGTH = 50;
 exports.TOKENS_RESERVED_FOR_SUFFIX_ENCODING = 5;
@@ -176,24 +186,25 @@ exports.getPrompt = async function (e, n, g = {}, y = []) {
   const { source: k, offset: I } = n;
   if (I < 0 || I > k.length) throw new Error(`Offset ${I} is out of range.`);
   n.languageId = normalizeLanguageId(n.languageId);
-  const P = new M_prompt_choices_and_wishlist.Priorities(),
-    A = P.justBelow(M_prompt_choices_and_wishlist.Priorities.TOP),
-    O =
-      E.languageMarker == d.Always
-        ? P.justBelow(M_prompt_choices_and_wishlist.Priorities.TOP)
-        : P.justBelow(A),
-    N =
-      E.pathMarker == p.Always
-        ? P.justBelow(M_prompt_choices_and_wishlist.Priorities.TOP)
-        : P.justBelow(A),
-    R =
-      E.includeSiblingFunctions == h.ContextOverSiblings
-        ? P.justBelow(A)
-        : P.justAbove(A),
-    M = P.justBelow(A, R),
-    L = P.justBelow(M),
-    $ = new M_prompt_choices_and_wishlist.PromptWishlist(E.lineEnding);
-  let D, F;
+  const P = new M_prompt_choices_and_wishlist.Priorities();
+  const A = P.justBelow(M_prompt_choices_and_wishlist.Priorities.TOP);
+  const O =
+    E.languageMarker == d.Always
+      ? P.justBelow(M_prompt_choices_and_wishlist.Priorities.TOP)
+      : P.justBelow(A);
+  const N =
+    E.pathMarker == p.Always
+      ? P.justBelow(M_prompt_choices_and_wishlist.Priorities.TOP)
+      : P.justBelow(A);
+  const R =
+    E.includeSiblingFunctions == h.ContextOverSiblings
+      ? P.justBelow(A)
+      : P.justAbove(A);
+  const M = P.justBelow(A, R);
+  const L = P.justBelow(M);
+  const $ = new M_prompt_choices_and_wishlist.PromptWishlist(E.lineEnding);
+  let D;
+  let F;
   if (E.languageMarker != d.NoMarker) {
     const e = newLineEnded(M_language_marker_constants.getLanguageMarker(n));
     D = $.append(
@@ -277,9 +288,9 @@ exports.getPrompt = async function (e, n, g = {}, y = []) {
     U = r;
   }
   if (E.neighboringTabsPosition == m.DirectlyAboveCursor) {
-    const e = U.lastIndexOf("\n") + 1,
-      t = U.substring(0, e),
-      n = U.substring(e);
+    const e = U.lastIndexOf("\n") + 1;
+    const t = U.substring(0, e);
+    const n = U.substring(e);
     $.appendLineForLine(
       t,
       M_prompt_choices_and_wishlist.PromptElementKind.BeforeCursor,
@@ -329,8 +340,8 @@ exports.getPrompt = async function (e, n, g = {}, y = []) {
       e = await M_sibling_function_fetcher.getSiblingFunctionStart(n);
     }
     const r = E.maxPromptLength - exports.TOKENS_RESERVED_FOR_SUFFIX_ENCODING;
-    let o = Math.floor((r * (100 - E.suffixPercent)) / 100),
-      i = $.fulfill(o);
+    let o = Math.floor((r * (100 - E.suffixPercent)) / 100);
+    let i = $.fulfill(o);
     const c = r - i.prefixLength;
     let d = k.slice(e);
     if (

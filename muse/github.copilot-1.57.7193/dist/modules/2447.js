@@ -1,14 +1,14 @@
 module.exports = function (e) {
   function t(e) {
-    let n,
-      o,
-      i,
-      s = null;
+    let n;
+    let o;
+    let i;
+    let s = null;
     function a(...e) {
       if (!a.enabled) return;
-      const r = a,
-        o = Number(new Date()),
-        i = o - (n || o);
+      const r = a;
+      const o = Number(new Date());
+      const i = o - (n || o);
       r.diff = i;
       r.prev = n;
       r.curr = o;
@@ -83,8 +83,8 @@ module.exports = function (e) {
     t.namespaces = e;
     t.names = [];
     t.skips = [];
-    const r = ("string" == typeof e ? e : "").split(/[\s,]+/),
-      o = r.length;
+    const r = ("string" == typeof e ? e : "").split(/[\s,]+/);
+    const o = r.length;
     for (n = 0; n < o; n++)
       if (r[n]) {
         if ("-" === (e = r[n].replace(/\*/g, ".*?"))[0]) {
@@ -96,7 +96,8 @@ module.exports = function (e) {
   };
   t.enabled = function (e) {
     if ("*" === e[e.length - 1]) return !0;
-    let n, r;
+    let n;
+    let r;
     for (n = 0, r = t.skips.length; n < r; n++)
       if (t.skips[n].test(e)) return !1;
     for (n = 0, r = t.names.length; n < r; n++)

@@ -1,6 +1,6 @@
-var r = require("assert"),
-  o = require(9867),
-  i = "error@context";
+var r = require("assert");
+var o = require(9867);
+var i = "error@context";
 function s(e) {
   this.name = e;
   this.active = null;
@@ -96,8 +96,8 @@ s.prototype.exit = function (e) {
 };
 s.prototype.bindEmitter = function (e) {
   r.ok(e.on && e.addListener && e.emit, "can only bind real EEs");
-  var t = this,
-    n = "context@" + this.name;
+  var t = this;
+  var n = "context@" + this.name;
   o(
     e,
     function (e) {
@@ -113,8 +113,8 @@ s.prototype.bindEmitter = function (e) {
     },
     function (e) {
       if (!e || !e["cls@contexts"]) return e;
-      var t = e,
-        n = e["cls@contexts"];
+      var t = e;
+      var n = e["cls@contexts"];
       Object.keys(n).forEach(function (e) {
         var r = n[e];
         t = r.namespace.bind(t, r.context);

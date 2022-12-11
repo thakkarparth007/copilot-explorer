@@ -2,13 +2,13 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.CopilotPanel = undefined;
-const r = require("vscode"),
-  o = require(1133),
-  i = require(4197),
-  s = require(256),
-  a = require(893),
-  c = require(7017),
-  l = require(3060);
+const r = require("vscode");
+const o = require(1133);
+const i = require(4197);
+const s = require(256);
+const a = require(893);
+const c = require(7017);
+const l = require(3060);
 exports.CopilotPanel = class {
   constructor(e) {
     this._onDidChange = new r.EventEmitter();
@@ -39,9 +39,9 @@ exports.CopilotPanel = class {
         ? undefined
         : t.model;
     if (n) return n.value;
-    const i = new r.CancellationTokenSource(),
-      [c, l] = s.decodeLocation(this._ctx, e),
-      u = await r.workspace.openTextDocument(c);
+    const i = new r.CancellationTokenSource();
+    const [c, l] = s.decodeLocation(this._ctx, e);
+    const u = await r.workspace.openTextDocument(c);
     n = new a.CopilotListDocument(
       this._ctx,
       e,
@@ -61,21 +61,21 @@ exports.CopilotPanel = class {
   getCodeLens(e) {
     const t = e.model;
     let n = t.numberHeaderLines;
-    const o = t.completionContext.insertPosition,
-      i = a.CopilotListDocument.separator.split("\n").length - 1;
+    const o = t.completionContext.insertPosition;
+    const i = a.CopilotListDocument.separator.split("\n").length - 1;
     return t.solutions().map((a, u) => {
-      const d = new r.Position(n + i, 0),
-        p = new r.Position(n + a.displayLines.length - 1, 0),
-        h = t.savedTelemetryData.extendedBy(
-          {
-            choiceIndex: a.choiceIndex.toString(),
-          },
-          {
-            compCharLen: a.completionText.length,
-            meanProb: a.meanProb,
-            rank: u,
-          }
-        );
+      const d = new r.Position(n + i, 0);
+      const p = new r.Position(n + a.displayLines.length - 1, 0);
+      const h = t.savedTelemetryData.extendedBy(
+        {
+          choiceIndex: a.choiceIndex.toString(),
+        },
+        {
+          compCharLen: a.completionText.length,
+          meanProb: a.meanProb,
+          rank: u,
+        }
+      );
       h.extendWithRequestId(a.requestId);
       h.markAsDisplayed();
       const f = new r.CodeLens(new r.Range(d, p), {

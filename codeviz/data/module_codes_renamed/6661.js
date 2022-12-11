@@ -2,35 +2,39 @@ var r =
   (this && this.__assign) ||
   Object.assign ||
   function (e) {
-    for (var t, n = 1, r = arguments.length; n < r; n++)
+    for (n = 1, r = arguments.length, undefined; n < r; n++) {
+      var t;
+      var n;
+      var r;
       for (var o in (t = arguments[n]))
         if (Object.prototype.hasOwnProperty.call(t, o)) {
           e[o] = t[o];
         }
+    }
     return e;
   };
 Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
-var M_channel_NOTSURE = require("channel");
+var M_channel_maybe = require("channel");
 exports.tedious = {
   versionSpecifier: ">= 6.0.0 < 9.0.0",
   patch: function (e) {
     var t = e.Connection.prototype.makeRequest;
     e.Connection.prototype.makeRequest = function () {
       function e(e) {
-        var t = process.hrtime(),
-          n = {
-            query: {},
-            database: {
-              host: null,
-              port: null,
-            },
-            result: null,
-            error: null,
-            duration: 0,
-          };
-        return M_channel_NOTSURE.channel.bindToContext(function (i, s, a) {
+        var t = process.hrtime();
+        var n = {
+          query: {},
+          database: {
+            host: null,
+            port: null,
+          },
+          result: null,
+          error: null,
+          duration: 0,
+        };
+        return M_channel_maybe.channel.bindToContext(function (i, s, a) {
           var c = process.hrtime(t);
           n = r({}, n, {
             database: {
@@ -47,7 +51,7 @@ exports.tedious = {
             error: i,
             duration: Math.ceil(1e3 * c[0] + c[1] / 1e6),
           });
-          M_channel_NOTSURE.channel.publish("tedious", n);
+          M_channel_maybe.channel.publish("tedious", n);
           e.call(this, i, s, a);
         });
       }
@@ -59,5 +63,5 @@ exports.tedious = {
   },
 };
 exports.enable = function () {
-  M_channel_NOTSURE.channel.registerMonkeyPatch("tedious", exports.tedious);
+  M_channel_maybe.channel.registerMonkeyPatch("tedious", exports.tedious);
 };

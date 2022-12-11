@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.ExpConfig = exports.ExpTreatmentVariables = undefined;
-const r = require(6333),
-  o = require(6500);
+const r = require(6333);
+const o = require(6500);
 var i;
 (i = exports.ExpTreatmentVariables || (exports.ExpTreatmentVariables = {})).AA =
   "copilotaa";

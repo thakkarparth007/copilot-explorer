@@ -6,65 +6,62 @@ exports.getGhostText =
   exports.ResultType =
   exports.ghostTextLogger =
     undefined;
-const M_getPrompt_main_stuff = require("getPrompt-main-stuff"),
-  M_uuid_utils = require("uuid-utils"),
-  M_prompt_cache = require("prompt-cache"),
-  M_debouncer = require("debouncer"),
-  M_async_iterable_utils_NOTSURE = require("async-iterable-utils"),
-  M_config_stuff = require("config-stuff"),
-  M_task_NOTSURE = require("task"),
-  M_logging_utils = require("logging-utils"),
-  M_helix_fetcher_and_network_stuff = require("helix-fetcher-and-network-stuff"),
-  M_openai_conn_utils = require("openai_conn_utils"),
-  M_live_openai_fetcher = require("live-openai-fetcher"),
-  M_openai_choices_utils = require("openai-choices-utils"),
-  M_status_reporter_NOTSURE = require("status-reporter"),
-  M_context_extractor_from_identation_maybe = require("context-extractor-from-identation-maybe"),
-  M_prompt_extractor = require("prompt-extractor"),
-  M_background_context_provider = require("background-context-provider"),
-  M_ghost_text_score_NOTSURE = require("ghost-text-score"),
-  M_postprocess_choice = require("postprocess-choice"),
-  M_telemetry_stuff = require("telemetry-stuff"),
-  M_runtime_mode_NOTSURE = require("runtime-mode"),
-  M_location_factory = require("location-factory"),
-  M_contextual_filter_manager = require("contextual-filter-manager"),
-  M_ghost_text_debouncer_NOTSURE = require("ghost-text-debouncer"),
-  M_ghost_text_telemetry = require("ghost-text-telemetry");
+const M_getPrompt_main_stuff = require("getPrompt-main-stuff");
+const M_uuid_utils = require("uuid-utils");
+const M_prompt_cache = require("prompt-cache");
+const M_debouncer = require("debouncer");
+const M_async_iterable_utils_maybe = require("async-iterable-utils");
+const M_config_stuff = require("config-stuff");
+const M_task_maybe = require("task");
+const M_logging_utils = require("logging-utils");
+const M_helix_fetcher_and_network_stuff = require("helix-fetcher-and-network-stuff");
+const M_openai_conn_utils = require("openai_conn_utils");
+const M_live_openai_fetcher = require("live-openai-fetcher");
+const M_openai_choices_utils = require("openai-choices-utils");
+const M_status_reporter_maybe = require("status-reporter");
+const M_context_extractor_from_identation_maybe = require("context-extractor-from-identation-maybe");
+const M_prompt_extractor = require("prompt-extractor");
+const M_background_context_provider = require("background-context-provider");
+const M_ghost_text_score_maybe = require("ghost-text-score");
+const M_postprocess_choice = require("postprocess-choice");
+const M_telemetry_stuff = require("telemetry-stuff");
+const M_runtime_mode_maybe = require("runtime-mode");
+const M_location_factory = require("location-factory");
+const M_contextual_filter_manager = require("contextual-filter-manager");
+const M_ghost_text_debouncer_maybe = require("ghost-text-debouncer");
+const M_ghost_text_telemetry = require("ghost-text-telemetry");
 var k;
-let I, P;
+let I;
+let P;
 async function A(e, n, r, o, i, s, a) {
-  var u, p, m;
+  var u;
+  var p;
+  var m;
   exports.ghostTextLogger.debug(e, `Getting ${s} from network`);
   r = r.extendedBy();
   const g = await (async function (e, t) {
-      const n = await e
-        .get(M_task_NOTSURE.Features)
-        .overrideNumGhostCompletions();
-      return n
-        ? t.isCycling
-          ? Math.max(0, 3 - n)
-          : n
-        : M_config_stuff.shouldDoParsingTrimming(t.blockMode) && t.multiline
-        ? M_config_stuff.getConfig(
-            e,
-            M_config_stuff.ConfigKey.InlineSuggestCount
-          )
-        : t.isCycling
-        ? 2
-        : 1;
-    })(e, n),
-    _ = M_openai_choices_utils.getTemperatureForSamples(e, g),
-    y = {
-      stream: !0,
-      n: g,
-      temperature: _,
-      extra: {
-        language: n.languageId,
-        next_indent:
-          null !== (u = n.indentation.next) && undefined !== u ? u : 0,
-        trim_by_indentation: M_config_stuff.shouldDoServerTrimming(n.blockMode),
-      },
-    };
+    const n = await e.get(M_task_maybe.Features).overrideNumGhostCompletions();
+    return n
+      ? t.isCycling
+        ? Math.max(0, 3 - n)
+        : n
+      : M_config_stuff.shouldDoParsingTrimming(t.blockMode) && t.multiline
+      ? M_config_stuff.getConfig(e, M_config_stuff.ConfigKey.InlineSuggestCount)
+      : t.isCycling
+      ? 2
+      : 1;
+  })(e, n);
+  const _ = M_openai_choices_utils.getTemperatureForSamples(e, g);
+  const y = {
+    stream: !0,
+    n: g,
+    temperature: _,
+    extra: {
+      language: n.languageId,
+      next_indent: null !== (u = n.indentation.next) && undefined !== u ? u : 0,
+      trim_by_indentation: M_config_stuff.shouldDoServerTrimming(n.blockMode),
+    },
+  };
   if (n.multiline) {
     y.stop = ["\n"];
   }
@@ -73,20 +70,20 @@ async function A(e, n, r, o, i, s, a) {
       50256: -100,
     };
   }
-  const v = Date.now(),
-    b = {
-      endpoint: "completions",
-      uiKind: M_live_openai_fetcher.CopilotUiKind.GhostText,
-      isCycling: JSON.stringify(n.isCycling),
-      temperature: JSON.stringify(_),
-      n: JSON.stringify(g),
-      stop:
-        null !== (p = JSON.stringify(y.stop)) && undefined !== p ? p : "unset",
-      logit_bias: JSON.stringify(
-        null !== (m = y.logit_bias) && undefined !== m ? m : null
-      ),
-    },
-    E = M_telemetry_stuff.telemetrizePromptLength(n.prompt);
+  const v = Date.now();
+  const b = {
+    endpoint: "completions",
+    uiKind: M_live_openai_fetcher.CopilotUiKind.GhostText,
+    isCycling: JSON.stringify(n.isCycling),
+    temperature: JSON.stringify(_),
+    n: JSON.stringify(g),
+    stop:
+      null !== (p = JSON.stringify(y.stop)) && undefined !== p ? p : "unset",
+    logit_bias: JSON.stringify(
+      null !== (m = y.logit_bias) && undefined !== m ? m : null
+    ),
+  };
+  const E = M_telemetry_stuff.telemetrizePromptLength(n.prompt);
   Object.assign(r.properties, b);
   Object.assign(r.measurements, E);
   try {
@@ -133,7 +130,7 @@ async function A(e, n, r, o, i, s, a) {
         }),
       };
     exports.ghostTextLogger.error(e, `Error on ghost text request ${n}`);
-    if ((0, M_runtime_mode_NOTSURE.shouldFailForDebugPurposes)(e)) throw n;
+    if ((0, M_runtime_mode_maybe.shouldFailForDebugPurposes)(e)) throw n;
     return {
       type: "failed",
       reason: "non-abort error on ghost text request",
@@ -168,8 +165,8 @@ function R(e, t) {
   P = t;
 }
 function M(e, n, r) {
-  const o = M_prompt_cache.keyForPrompt(n.prompt),
-    s = exports.completionCache.get(o);
+  const o = M_prompt_cache.keyForPrompt(n.prompt);
+  const s = exports.completionCache.get(o);
   if (s && s.multiline === r.multiline) {
     exports.completionCache.put(o, {
       multiline: s.multiline,
@@ -221,15 +218,15 @@ function $(e, t, n) {
   };
 }
 function D(e, n) {
-  const r = n.requestId,
-    o = {
-      choiceIndex: n.choiceIndex.toString(),
-    },
-    i = {
-      numTokens: n.numTokens,
-      compCharLen: n.completionText.length,
-      numLines: n.completionText.split("\n").length,
-    };
+  const r = n.requestId;
+  const o = {
+    choiceIndex: n.choiceIndex.toString(),
+  };
+  const i = {
+    numTokens: n.numTokens,
+    compCharLen: n.completionText.length,
+    numLines: n.completionText.split("\n").length,
+  };
   if (n.meanLogProb) {
     i.meanLogProb = n.meanLogProb;
   }
@@ -238,9 +235,11 @@ function D(e, n) {
   }
   const s = n.telemetryData.extendedBy(o, i);
   s.extendWithRequestId(r);
-  s.measurements.confidence =
-    M_ghost_text_score_NOTSURE.ghostTextScoreConfidence(e, s);
-  s.measurements.quantile = M_ghost_text_score_NOTSURE.ghostTextScoreQuantile(
+  s.measurements.confidence = M_ghost_text_score_maybe.ghostTextScoreConfidence(
+    e,
+    s
+  );
+  s.measurements.quantile = M_ghost_text_score_maybe.ghostTextScoreQuantile(
     e,
     s
   );
@@ -251,25 +250,26 @@ function D(e, n) {
   return s;
 }
 function F(e, t, n, r, o) {
-  const i = Date.now() - r,
-    s = i - o,
-    a = n.telemetryData.extendedBy(
-      {},
-      {
-        completionCharLen: n.completionText.length,
-        requestTimeMs: i,
-        processingTimeMs: o,
-        deltaMs: s,
-        meanLogProb: n.meanLogProb || NaN,
-        meanAlternativeLogProb: n.meanAlternativeLogProb || NaN,
-        numTokens: n.numTokens,
-      }
-    );
+  const i = Date.now() - r;
+  const s = i - o;
+  const a = n.telemetryData.extendedBy(
+    {},
+    {
+      completionCharLen: n.completionText.length,
+      requestTimeMs: i,
+      processingTimeMs: o,
+      deltaMs: s,
+      meanLogProb: n.meanLogProb || NaN,
+      meanAlternativeLogProb: n.meanAlternativeLogProb || NaN,
+      numTokens: n.numTokens,
+    }
+  );
   a.extendWithRequestId(n.requestId);
   M_telemetry_stuff.telemetry(e, `ghostText.${t}`, a);
 }
 exports.getGhostText = async function (e, n, s, u, d, f) {
-  var v, j;
+  var v;
+  var j;
   const q = await M_prompt_extractor.extractPrompt(e, n, s);
   if ("contextTooShort" === q.type) {
     exports.ghostTextLogger.debug(e, "Breaking, not enough context");
@@ -287,11 +287,11 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
   }
   const B = (function (e, t) {
     const n =
-        ((o = t), 0 != e.lineAt(o).text.substr(o.character).trim().length),
-      r = (function (e, t) {
-        const n = t.lineAt(e).text.substr(e.character).trim();
-        return /^\s*[)}\]"'`]*\s*[:{;,]?\s*$/.test(n);
-      })(t, e);
+      ((o = t), 0 != e.lineAt(o).text.substr(o.character).trim().length);
+    const r = (function (e, t) {
+      const n = t.lineAt(e).text.substr(e.character).trim();
+      return /^\s*[)}\]"'`]*\s*[:{;,]?\s*$/.test(n);
+    })(t, e);
     var o;
     if (!n || r) return n && r;
   })(n, s);
@@ -302,94 +302,91 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
       reason: "Invalid middle of the line",
     };
   }
-  const U = e.get(M_status_reporter_NOTSURE.StatusReporter),
-    H = e.get(M_location_factory.LocationFactory),
-    z = await (async function (e, t, n, o, i, s) {
-      const a = await e
-        .get(M_config_stuff.BlockModeConfig)
-        .forLanguage(e, t.languageId);
-      switch (a) {
-        case M_config_stuff.BlockMode.Server:
-          return {
-            blockMode: M_config_stuff.BlockMode.Server,
-            requestMultiline: !0,
-            isCyclingRequest: i,
-            finishedCb: async (e) => {},
-          };
-        case M_config_stuff.BlockMode.Parsing:
-        case M_config_stuff.BlockMode.ParsingAndServer:
-        default: {
-          const c = await (async function (e, t, n, o) {
-            if (t.lineCount >= 8e3)
-              M_telemetry_stuff.telemetry(
-                e,
-                "ghostText.longFileMultilineSkip",
-                M_telemetry_stuff.TelemetryData.createAndMarkAsIssued({
-                  languageId: t.languageId,
-                  lineCount: String(t.lineCount),
-                  currentLine: String(n.line),
-                })
+  const U = e.get(M_status_reporter_maybe.StatusReporter);
+  const H = e.get(M_location_factory.LocationFactory);
+  const z = await (async function (e, t, n, o, i, s) {
+    const a = await e
+      .get(M_config_stuff.BlockModeConfig)
+      .forLanguage(e, t.languageId);
+    switch (a) {
+      case M_config_stuff.BlockMode.Server:
+        return {
+          blockMode: M_config_stuff.BlockMode.Server,
+          requestMultiline: !0,
+          isCyclingRequest: i,
+          finishedCb: async (e) => {},
+        };
+      case M_config_stuff.BlockMode.Parsing:
+      case M_config_stuff.BlockMode.ParsingAndServer:
+      default: {
+        const c = await (async function (e, t, n, o) {
+          if (t.lineCount >= 8e3)
+            M_telemetry_stuff.telemetry(
+              e,
+              "ghostText.longFileMultilineSkip",
+              M_telemetry_stuff.TelemetryData.createAndMarkAsIssued({
+                languageId: t.languageId,
+                lineCount: String(t.lineCount),
+                currentLine: String(n.line),
+              })
+            );
+          else {
+            if (
+              !o &&
+              M_getPrompt_main_stuff.isSupportedLanguageId(t.languageId)
+            )
+              return await M_context_extractor_from_identation_maybe.isEmptyBlockStart(
+                t,
+                n
               );
-            else {
-              if (
-                !o &&
-                M_getPrompt_main_stuff.isSupportedLanguageId(t.languageId)
-              )
-                return await M_context_extractor_from_identation_maybe.isEmptyBlockStart(
+            if (o && M_getPrompt_main_stuff.isSupportedLanguageId(t.languageId))
+              return (
+                (await M_context_extractor_from_identation_maybe.isEmptyBlockStart(
                   t,
                   n
+                )) ||
+                (await M_context_extractor_from_identation_maybe.isEmptyBlockStart(
+                  t,
+                  t.lineAt(n).range.end
+                ))
+              );
+          }
+          return !1;
+        })(e, t, n, s);
+        return c
+          ? {
+              blockMode: a,
+              requestMultiline: !0,
+              isCyclingRequest: !1,
+              finishedCb: async (r) => {
+                let i;
+                i =
+                  o.trailingWs.length > 0 &&
+                  !o.prompt.prefix.endsWith(o.trailingWs)
+                    ? e
+                        .get(M_location_factory.LocationFactory)
+                        .position(
+                          n.line,
+                          Math.max(n.character - o.trailingWs.length, 0)
+                        )
+                    : n;
+                return M_context_extractor_from_identation_maybe.isBlockBodyFinished(
+                  e,
+                  t,
+                  i,
+                  r
                 );
-              if (
-                o &&
-                M_getPrompt_main_stuff.isSupportedLanguageId(t.languageId)
-              )
-                return (
-                  (await M_context_extractor_from_identation_maybe.isEmptyBlockStart(
-                    t,
-                    n
-                  )) ||
-                  (await M_context_extractor_from_identation_maybe.isEmptyBlockStart(
-                    t,
-                    t.lineAt(n).range.end
-                  ))
-                );
+              },
             }
-            return !1;
-          })(e, t, n, s);
-          return c
-            ? {
-                blockMode: a,
-                requestMultiline: !0,
-                isCyclingRequest: !1,
-                finishedCb: async (r) => {
-                  let i;
-                  i =
-                    o.trailingWs.length > 0 &&
-                    !o.prompt.prefix.endsWith(o.trailingWs)
-                      ? e
-                          .get(M_location_factory.LocationFactory)
-                          .position(
-                            n.line,
-                            Math.max(n.character - o.trailingWs.length, 0)
-                          )
-                      : n;
-                  return M_context_extractor_from_identation_maybe.isBlockBodyFinished(
-                    e,
-                    t,
-                    i,
-                    r
-                  );
-                },
-              }
-            : {
-                blockMode: a,
-                requestMultiline: !1,
-                isCyclingRequest: i,
-                finishedCb: async (e) => {},
-              };
-        }
+          : {
+              blockMode: a,
+              requestMultiline: !1,
+              isCyclingRequest: i,
+              finishedCb: async (e) => {},
+            };
       }
-    })(e, n, s, q, u, B);
+    }
+  })(e, n, s, q, u, B);
   if (null == f ? undefined : f.isCancellationRequested) {
     exports.ghostTextLogger.info(e, "Cancelled after requestMultiline");
     return {
@@ -451,72 +448,74 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
     })(e, n, r, o);
     return a && a.length > 0 ? [a, k.Cache] : undefined;
   })(e, G, q.prompt, z.requestMultiline);
-  const W = M_uuid_utils.v4(),
-    K = M_background_context_provider.extractRepoInfoInBackground(
-      e,
-      n.fileName
+  const W = M_uuid_utils.v4();
+  const K = M_background_context_provider.extractRepoInfoInBackground(
+    e,
+    n.fileName
+  );
+  const J = await M_openai_conn_utils.getEngineURL(
+    e,
+    M_background_context_provider.tryGetGitHubNWO(K),
+    n.languageId,
+    M_background_context_provider.getDogFood(K),
+    await M_background_context_provider.getUserKind(e),
+    d
+  );
+  const X = await e
+    .get(M_task_maybe.Features)
+    .beforeRequestWaitMs(
+      M_background_context_provider.tryGetGitHubNWO(K) || "",
+      n.languageId
+    );
+  const Q = await e
+    .get(M_task_maybe.Features)
+    .multiLogitBias(
+      M_background_context_provider.tryGetGitHubNWO(K) || "",
+      n.languageId
+    );
+  const Y = {
+    blockMode: z.blockMode,
+    languageId: n.languageId,
+    repoInfo: K,
+    engineURL: J,
+    ourRequestId: W,
+    prefix: G,
+    prompt: q.prompt,
+    multiline: z.requestMultiline,
+    indentation: M_context_extractor_from_identation_maybe.contextIndentation(
+      n,
+      s
     ),
-    J = await M_openai_conn_utils.getEngineURL(
-      e,
-      M_background_context_provider.tryGetGitHubNWO(K),
-      n.languageId,
-      M_background_context_provider.getDogFood(K),
-      await M_background_context_provider.getUserKind(e),
-      d
-    ),
-    X = await e
-      .get(M_task_NOTSURE.Features)
-      .beforeRequestWaitMs(
-        M_background_context_provider.tryGetGitHubNWO(K) || "",
-        n.languageId
-      ),
-    Q = await e
-      .get(M_task_NOTSURE.Features)
-      .multiLogitBias(
-        M_background_context_provider.tryGetGitHubNWO(K) || "",
-        n.languageId
-      ),
-    Y = {
-      blockMode: z.blockMode,
-      languageId: n.languageId,
-      repoInfo: K,
-      engineURL: J,
-      ourRequestId: W,
-      prefix: G,
-      prompt: q.prompt,
-      multiline: z.requestMultiline,
-      indentation: M_context_extractor_from_identation_maybe.contextIndentation(
-        n,
-        s
-      ),
-      isCycling: u,
-      delayMs: X,
-      multiLogitBias: Q,
-    },
-    Z = await e.get(M_task_NOTSURE.Features).debouncePredict(),
-    ee = await e.get(M_task_NOTSURE.Features).contextualFilterEnable(),
-    te = await e.get(M_task_NOTSURE.Features).contextualFilterAcceptThreshold();
+    isCycling: u,
+    delayMs: X,
+    multiLogitBias: Q,
+  };
+  const Z = await e.get(M_task_maybe.Features).debouncePredict();
+  const ee = await e.get(M_task_maybe.Features).contextualFilterEnable();
+  const te = await e
+    .get(M_task_maybe.Features)
+    .contextualFilterAcceptThreshold();
   let ne = !1;
   if (Z || ee) {
     ne = !0;
   }
   const re = (function (e, t, n, r, o, i, s) {
-    const a = e.get(M_location_factory.LocationFactory),
-      c = t.lineAt(r.line),
-      l = t.getText(a.range(c.range.start, r)),
-      u = t.getText(a.range(r, c.range.end)),
-      d = {
-        languageId: t.languageId,
-        beforeCursorWhitespace: JSON.stringify("" === l.trim()),
-        afterCursorWhitespace: JSON.stringify("" === u.trim()),
-      },
-      p = {
-        ...M_telemetry_stuff.telemetrizePromptLength(o.prompt),
-        promptEndPos: t.offsetAt(r),
-        documentLength: t.getText().length,
-        delayMs: n.delayMs,
-      },
-      f = i.extendedBy(d, p);
+    const a = e.get(M_location_factory.LocationFactory);
+    const c = t.lineAt(r.line);
+    const l = t.getText(a.range(c.range.start, r));
+    const u = t.getText(a.range(r, c.range.end));
+    const d = {
+      languageId: t.languageId,
+      beforeCursorWhitespace: JSON.stringify("" === l.trim()),
+      afterCursorWhitespace: JSON.stringify("" === u.trim()),
+    };
+    const p = {
+      ...M_telemetry_stuff.telemetrizePromptLength(o.prompt),
+      promptEndPos: t.offsetAt(r),
+      documentLength: t.getText().length,
+      delayMs: n.delayMs,
+    };
+    const f = i.extendedBy(d, p);
     f.properties.promptChoices = JSON.stringify(o.promptChoices, (e, t) =>
       t instanceof Map
         ? Array.from(t.entries()).reduce(
@@ -635,10 +634,7 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
           (V = [e, k.Cycling]);
       } else if (void 0 === V) return null == U || U.removeProgress(), n;
     } else {
-      const n = await (0, M_ghost_text_debouncer_NOTSURE.getDebounceLimit)(
-        e,
-        re
-      );
+      const n = await (0, M_ghost_text_debouncer_maybe.getDebounceLimit)(e, re);
       try {
         await N.debounce(n);
       } catch {
@@ -770,7 +766,7 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
               });
           });
           return (
-            (0, M_runtime_mode_NOTSURE.isRunningInTest)(e) && (await m),
+            (0, M_runtime_mode_maybe.isRunningInTest)(e) && (await m),
             {
               type: "success",
               value: O(d.value, {
@@ -797,21 +793,21 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
       reason: "internal error: choices should be defined after network call",
       telemetryData: M_ghost_text_telemetry.mkBasicResultTelemetry(re),
     };
-  const [oe, ie] = V,
-    se = M_async_iterable_utils_NOTSURE.asyncIterableMapFilter(
-      M_async_iterable_utils_NOTSURE.asyncIterableFromArray(oe),
-      async (r) =>
-        M_postprocess_choice.postProcessChoice(
-          e,
-          "ghostText",
-          n,
-          s,
-          r,
-          B,
-          exports.ghostTextLogger
-        )
-    ),
-    ae = [];
+  const [oe, ie] = V;
+  const se = M_async_iterable_utils_maybe.asyncIterableMapFilter(
+    M_async_iterable_utils_maybe.asyncIterableFromArray(oe),
+    async (r) =>
+      M_postprocess_choice.postProcessChoice(
+        e,
+        "ghostText",
+        n,
+        s,
+        r,
+        B,
+        exports.ghostTextLogger
+      )
+  );
+  const ae = [];
   for await (const r of se) {
     const o = B && M_postprocess_choice.checkSuffix(n, s, r);
     if (null == f ? undefined : f.isCancellationRequested) {
@@ -825,13 +821,13 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
         telemetryData: M_ghost_text_telemetry.mkCanceledResultTelemetry(re),
       };
     }
-    const i = D(e, r),
-      a = {
-        completion: $(r.choiceIndex, r.completionText, q.trailingWs),
-        telemetry: i,
-        isMiddleOfTheLine: B,
-        coversSuffix: o,
-      };
+    const i = D(e, r);
+    const a = {
+      completion: $(r.choiceIndex, r.completionText, q.trailingWs),
+      telemetry: i,
+      isMiddleOfTheLine: B,
+      coversSuffix: o,
+    };
     ae.push(a);
   }
   return {

@@ -1,6 +1,6 @@
-const r = require("os"),
-  o = require(6560),
-  i = process.env;
+const r = require("os");
+const o = require(6560);
+const i = process.env;
 let s;
 function a(e) {
   const t = (function (e) {

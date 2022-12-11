@@ -8,8 +8,8 @@ exports.Priorities =
   exports.PromptBackground =
   exports.PromptElementKind =
     undefined;
-const M_prompt_parsing_utils_NOTSURE = require("prompt-parsing-utils"),
-  M_tokenizer_NOTSURE = require("tokenizer");
+const M_prompt_parsing_utils_maybe = require("prompt-parsing-utils");
+const M_tokenizer_maybe = require("tokenizer");
 var i;
 !(function (e) {
   e.BeforeCursor = "BeforeCursor";
@@ -69,8 +69,8 @@ exports.PromptChoices = PromptChoices;
 class PromptElementRanges {
   constructor(e) {
     this.ranges = new Array();
-    let t,
-      n = 0;
+    let t;
+    let n = 0;
     for (const { element: r } of e)
       if (0 !== r.text.length) {
         if (t === i.BeforeCursor && r.kind === i.BeforeCursor) {
@@ -99,13 +99,13 @@ exports.PromptWishlist = class {
   convertLineEndings(e) {
     if (
       this.lineEndingOption ===
-      M_prompt_parsing_utils_NOTSURE.LineEndingOptions.ConvertToUnix
+      M_prompt_parsing_utils_maybe.LineEndingOptions.ConvertToUnix
     ) {
       e = e.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
     }
     return e;
   }
-  append(e, t, n, r = M_tokenizer_NOTSURE.tokenLength(e), i = NaN) {
+  append(e, t, n, r = M_tokenizer_maybe.tokenLength(e), i = NaN) {
     e = this.convertLineEndings(e);
     const s = this.content.length;
     this.content.push({
@@ -145,40 +145,40 @@ exports.PromptWishlist = class {
     return i;
   }
   require(e, t) {
-    const n = this.content.find((t) => t.id === e),
-      r = this.content.find((e) => e.id === t);
+    const n = this.content.find((t) => t.id === e);
+    const r = this.content.find((e) => e.id === t);
     if (n && r) {
       n.requires.push(r);
     }
   }
   exclude(e, t) {
-    const n = this.content.find((t) => t.id === e),
-      r = this.content.find((e) => e.id === t);
+    const n = this.content.find((t) => t.id === e);
+    const r = this.content.find((e) => e.id === t);
     if (n && r) {
       n.excludes.push(r);
     }
   }
   fulfill(e) {
-    const t = new PromptChoices(),
-      n = new PromptBackground(),
-      r = this.content.map((e, t) => ({
-        element: e,
-        index: t,
-      }));
+    const t = new PromptChoices();
+    const n = new PromptBackground();
+    const r = this.content.map((e, t) => ({
+      element: e,
+      index: t,
+    }));
     r.sort((e, t) =>
       e.element.priority === t.element.priority
         ? t.index - e.index
         : t.element.priority - e.element.priority
     );
-    const i = new Set(),
-      l = new Set();
+    const i = new Set();
+    const l = new Set();
     let u;
     const d = [];
     let p = e;
     r.forEach((e) => {
       var r;
-      const o = e.element,
-        s = e.index;
+      const o = e.element;
+      const s = e.index;
       if (
         p >= 0 &&
         (p > 0 || undefined === u) &&
@@ -189,8 +189,8 @@ exports.PromptWishlist = class {
         const c =
           null ===
             (r = (function (e, t) {
-              let n,
-                r = 1 / 0;
+              let n;
+              let r = 1 / 0;
               for (const o of e)
                 if (o.index > t && o.index < r) {
                   n = o;
@@ -219,8 +219,8 @@ exports.PromptWishlist = class {
       }
     });
     d.sort((e, t) => e.index - t.index);
-    let h = d.reduce((e, t) => e + t.element.text, ""),
-      f = M_tokenizer_NOTSURE.tokenLength(h);
+    let h = d.reduce((e, t) => e + t.element.text, "");
+    let f = M_tokenizer_maybe.tokenLength(h);
     for (; f > e; ) {
       d.sort((e, t) =>
         t.element.priority === e.element.priority
@@ -237,14 +237,14 @@ exports.PromptWishlist = class {
       }
       d.sort((e, t) => e.index - t.index);
       h = d.reduce((e, t) => e + t.element.text, "");
-      f = M_tokenizer_NOTSURE.tokenLength(h);
+      f = M_tokenizer_maybe.tokenLength(h);
     }
     const m = [...d];
     if (undefined !== u) {
       m.push(u);
       m.sort((e, t) => e.index - t.index);
-      const r = m.reduce((e, t) => e + t.element.text, ""),
-        i = M_tokenizer_NOTSURE.tokenLength(r);
+      const r = m.reduce((e, t) => e + t.element.text, "");
+      const i = M_tokenizer_maybe.tokenLength(r);
       if (i <= e) {
         t.markUsed(u.element);
         n.markUsed(u.element);
@@ -285,13 +285,13 @@ class Priorities {
     return e;
   }
   justAbove(...e) {
-    const t = Math.max(...e),
-      n = Math.min(...this.registeredPriorities.filter((e) => e > t));
+    const t = Math.max(...e);
+    const n = Math.min(...this.registeredPriorities.filter((e) => e > t));
     return this.register((n + t) / 2);
   }
   justBelow(...e) {
-    const t = Math.min(...e),
-      n = Math.max(...this.registeredPriorities.filter((e) => e < t));
+    const t = Math.min(...e);
+    const n = Math.max(...this.registeredPriorities.filter((e) => e < t));
     return this.register((n + t) / 2);
   }
   between(e, t) {

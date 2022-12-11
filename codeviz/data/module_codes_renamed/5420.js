@@ -1,8 +1,8 @@
-var t = Object.prototype.toString,
-  n =
-    "function" == typeof Buffer.alloc &&
-    "function" == typeof Buffer.allocUnsafe &&
-    "function" == typeof Buffer.from;
+var t = Object.prototype.toString;
+var n =
+  "function" == typeof Buffer.alloc &&
+  "function" == typeof Buffer.allocUnsafe &&
+  "function" == typeof Buffer.from;
 module.exports = function (e, r, o) {
   if ("number" == typeof e)
     throw new TypeError('"value" argument must not be a number');

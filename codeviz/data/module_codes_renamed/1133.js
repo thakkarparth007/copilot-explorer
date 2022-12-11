@@ -33,11 +33,12 @@ exports.editorVersionHeaders =
   exports.BlockMode =
   exports.ConfigKey =
     undefined;
-const M_getPrompt_main_stuff = require("getPrompt-main-stuff"),
-  M_copilot_scheme = require("copilot-scheme"),
-  M_task_NOTSURE = require("task"),
-  M_package_json_NOTSURE = require("package-json");
-var a, c;
+const M_getPrompt_main_stuff = require("getPrompt-main-stuff");
+const M_copilot_scheme = require("copilot-scheme");
+const M_task_maybe = require("task");
+const M_package_json_maybe = require("package-json");
+var a;
+var c;
 exports.ConfigKey = {
   Enable: "enable",
   InlineSuggestEnable: "inlineSuggest.enable",
@@ -105,7 +106,7 @@ exports.ConfigBlockModeConfig = class extends BlockModeConfig {
         default:
           return a.Parsing;
       }
-    const o = await e.get(M_task_NOTSURE.Features).overrideBlockMode();
+    const o = await e.get(M_task_maybe.Features).overrideBlockMode();
     return o
       ? u(o, n)
       : M_getPrompt_main_stuff.isSupportedLanguageId(n)
@@ -117,7 +118,7 @@ class ConfigProvider {}
 function getConfigDefaultForKey(e) {
   try {
     const t =
-      M_package_json_NOTSURE.contributes.configuration[0].properties[
+      M_package_json_maybe.contributes.configuration[0].properties[
         `${M_copilot_scheme.CopilotConfigPrefix}.${e}`
       ].default;
     if (undefined === t)
@@ -134,7 +135,7 @@ function getConfigDefaultForKey(e) {
 function getConfigDefaultForObjectKey(e, t) {
   try {
     const n =
-      M_package_json_NOTSURE.contributes.configuration[0].properties[
+      M_package_json_maybe.contributes.configuration[0].properties[
         `${M_copilot_scheme.CopilotConfigPrefix}.${e}`
       ].properties[t].default;
     if (undefined === n)
@@ -241,25 +242,25 @@ exports.suffixPercent = async function (e, n, r) {
     default: !1,
   })
     ? 15
-    : e.get(M_task_NOTSURE.Features).suffixPercent(n, r);
+    : e.get(M_task_maybe.Features).suffixPercent(n, r);
 };
 exports.suffixMatchThreshold = async function (e, n, r) {
   return getHiddenConfig(e, exports.ConfigKey.DebugUseSuffix, {
     default: !1,
   })
     ? 0
-    : e.get(M_task_NOTSURE.Features).suffixMatchThreshold(n, r);
+    : e.get(M_task_maybe.Features).suffixMatchThreshold(n, r);
 };
 exports.fimSuffixLengthThreshold = async function (e, n, r) {
   return getHiddenConfig(e, exports.ConfigKey.DebugUseSuffix, {
     default: !1,
   })
     ? -1
-    : e.get(M_task_NOTSURE.Features).fimSuffixLengthThreshold(n, r);
+    : e.get(M_task_maybe.Features).fimSuffixLengthThreshold(n, r);
 };
 class BuildInfo {
   constructor() {
-    this.packageJson = M_package_json_NOTSURE;
+    this.packageJson = M_package_json_maybe;
   }
   isProduction() {
     return "dev" != this.getBuildType();

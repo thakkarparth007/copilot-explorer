@@ -7,11 +7,11 @@ exports.VSCodeEditorInfo =
   exports.setExtension =
   exports.VSCodeConfigProvider =
     undefined;
-const r = require("vscode"),
-  o = require(1133),
-  i = require(4197),
-  s = require(70),
-  a = require(4147);
+const r = require("vscode");
+const o = require(1133);
+const i = require(4197);
+const s = require(70);
+const a = require(4147);
 function c(e) {
   return "string" == typeof e ? e : JSON.stringify(e);
 }

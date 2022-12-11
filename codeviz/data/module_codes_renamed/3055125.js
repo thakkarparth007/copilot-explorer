@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.getNeighborSnippets = exports.neighborOptionToSelection = undefined;
-const M_language_marker_constants = require("language-marker-constants"),
-  M_jaccard_scorer = require("jaccard-scorer");
+const M_language_marker_constants = require("language-marker-constants");
+const M_jaccard_scorer = require("jaccard-scorer");
 function i(e) {
   return [
     e.relativePath
@@ -39,17 +39,17 @@ exports.neighborOptionToSelection = {
   },
 };
 exports.getNeighborSnippets = async function (e, n, s, a, c, l, u) {
-  const d = exports.neighborOptionToSelection[s],
-    p = (function (e, n, r, i) {
-      const s = {
-        ...exports.neighborOptionToSelection[n],
-      };
-      if (undefined !== r && undefined !== i) {
-        s.matcherFactory =
-          M_jaccard_scorer.IndentationBasedJaccardMatcher.FACTORY(r, i);
-      }
-      return s.matcherFactory.to(e);
-    })(e, s, a, c);
+  const d = exports.neighborOptionToSelection[s];
+  const p = (function (e, n, r, i) {
+    const s = {
+      ...exports.neighborOptionToSelection[n],
+    };
+    if (undefined !== r && undefined !== i) {
+      s.matcherFactory =
+        M_jaccard_scorer.IndentationBasedJaccardMatcher.FACTORY(r, i);
+    }
+    return s.matcherFactory.to(e);
+  })(e, s, a, c);
   return n
     .filter((e) => e.source.length < 1e4 && e.source.length > 0)
     .slice(0, 20)

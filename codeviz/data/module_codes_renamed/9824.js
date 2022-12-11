@@ -1,7 +1,9 @@
-var M_random_stuff_NOTSURE, o, i;
-o = (M_random_stuff_NOTSURE = require("random-stuff")).lib.Base;
-i = M_random_stuff_NOTSURE.enc.Utf8;
-module.exports = void (M_random_stuff_NOTSURE.algo.HMAC = o.extend({
+var M_random_stuff_maybe;
+var o;
+var i;
+o = (M_random_stuff_maybe = require("random-stuff")).lib.Base;
+i = M_random_stuff_maybe.enc.Utf8;
+module.exports = void (M_random_stuff_maybe.algo.HMAC = o.extend({
   init: function (e, t) {
     (e = this._hasher = new e.init()), "string" == typeof t && (t = i.parse(t));
     var n = e.blockSize,

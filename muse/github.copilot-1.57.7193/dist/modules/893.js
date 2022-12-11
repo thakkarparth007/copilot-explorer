@@ -2,10 +2,10 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.CopilotListDocument = undefined;
-const r = require(106),
-  o = require(1133),
-  i = require(6333),
-  s = require(2388);
+const r = require(106);
+const o = require(1133);
+const i = require(6333);
+const s = require(2388);
 class CopilotListDocument {
   constructor(e, t, n, s, a, c) {
     this.targetDocument = n;

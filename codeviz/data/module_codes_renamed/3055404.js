@@ -5,8 +5,8 @@ exports.computeScore =
   exports.IndentationBasedJaccardMatcher =
   exports.FixedWindowSizeJaccardMatcher =
     undefined;
-const M_window_delineator = require("window-delineator"),
-  M_window_matcher = require("window-matcher");
+const M_window_delineator = require("window-delineator");
+const M_window_matcher = require("window-matcher");
 class FixedWindowSizeJaccardMatcher extends M_window_matcher.WindowedMatcher {
   constructor(e, t) {
     super(e);
@@ -16,8 +16,8 @@ class FixedWindowSizeJaccardMatcher extends M_window_matcher.WindowedMatcher {
     return "fixed:" + this.windowLength;
   }
   getWindowsDelineations(e) {
-    const t = [],
-      n = e.length;
+    const t = [];
+    const n = e.length;
     for (let e = 0; 0 == e || e < n - this.windowLength; e++) {
       const r = Math.min(e + this.windowLength, n);
       t.push([e, r]);

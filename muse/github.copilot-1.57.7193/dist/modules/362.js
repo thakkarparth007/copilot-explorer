@@ -11,35 +11,36 @@ exports.refreshToken =
   exports.nowSeconds =
   exports.TOKEN_REFRESHED_EVENT =
     undefined;
-const r = require("events"),
-  o = require(1133),
-  i = require(9899),
-  s = require(2279),
-  a = require(1547),
-  c = require(6333),
-  l = require(7057),
-  u = new i.Logger(i.LogLevel.INFO, "auth");
+const r = require("events");
+const o = require(1133);
+const i = require(9899);
+const s = require(2279);
+const a = require(1547);
+const c = require(6333);
+const l = require(7057);
+const u = new i.Logger(i.LogLevel.INFO, "auth");
 let d = 0;
 function nowSeconds() {
   return Math.floor(Date.now() / 1e3);
 }
 async function authFromGitHubToken(e, t) {
-  var n, r;
+  var n;
+  var r;
   c.telemetry(e, "auth.new_login");
   const i =
-      null !==
-        (r =
-          null === (n = t.devOverride) || undefined === n
-            ? undefined
-            : n.copilotTokenUrl) && undefined !== r
-        ? r
-        : "https://api.github.com/copilot_internal/v2/token",
-    a = await e.get(s.Fetcher).fetch(i, {
-      headers: {
-        Authorization: `token ${t.token}`,
-        ...o.editorVersionHeaders(e),
-      },
-    });
+    null !==
+      (r =
+        null === (n = t.devOverride) || undefined === n
+          ? undefined
+          : n.copilotTokenUrl) && undefined !== r
+      ? r
+      : "https://api.github.com/copilot_internal/v2/token";
+  const a = await e.get(s.Fetcher).fetch(i, {
+    headers: {
+      Authorization: `token ${t.token}`,
+      ...o.editorVersionHeaders(e),
+    },
+  });
   if (!a) {
     u.info(e, "Failed to get copilot token");
     c.telemetryError(e, "auth.request_failed");
@@ -133,37 +134,38 @@ function m(e, t, n) {
         u.error(e, `Error while sending notification: ${t.message}`);
       })
       .then(async (r) => {
-        const i = (null == r ? undefined : r.title) === t.title,
-          a = i || "Dismiss" === (null == r ? undefined : r.title);
+        const i = (null == r ? undefined : r.title) === t.title;
+        const a = i || "Dismiss" === (null == r ? undefined : r.title);
         if (i) {
-          const n = e.get(o.EditorAndPluginInfo).getEditorPluginInfo(e),
-            r = t.url.replace(
-              "{EDITOR}",
-              encodeURIComponent(n.name + "_" + n.version)
-            );
+          const n = e.get(o.EditorAndPluginInfo).getEditorPluginInfo(e);
+          const r = t.url.replace(
+            "{EDITOR}",
+            encodeURIComponent(n.name + "_" + n.version)
+          );
           await e.get(l.UrlOpener).open(r);
         }
         if ("notification_id" in t && a) {
           await (async function (e, t, n) {
-            var r, i;
+            var r;
+            var i;
             const a =
-                null !==
-                  (i =
-                    null === (r = n.devOverride) || undefined === r
-                      ? undefined
-                      : r.notificationUrl) && undefined !== i
-                  ? i
-                  : "https://api.github.com/copilot_internal/notification",
-              c = await e.get(s.Fetcher).fetch(a, {
-                headers: {
-                  Authorization: `token ${n.token}`,
-                  ...o.editorVersionHeaders(e),
-                },
-                method: "POST",
-                body: JSON.stringify({
-                  notification_id: t,
-                }),
-              });
+              null !==
+                (i =
+                  null === (r = n.devOverride) || undefined === r
+                    ? undefined
+                    : r.notificationUrl) && undefined !== i
+                ? i
+                : "https://api.github.com/copilot_internal/notification";
+            const c = await e.get(s.Fetcher).fetch(a, {
+              headers: {
+                Authorization: `token ${n.token}`,
+                ...o.editorVersionHeaders(e),
+              },
+              method: "POST",
+              body: JSON.stringify({
+                notification_id: t,
+              }),
+            });
             if (c && c.ok) {
               u.error(
                 e,
@@ -178,8 +180,8 @@ function m(e, t, n) {
   }
 }
 function extractTrackingIdFromToken(e) {
-  const t = null == e ? undefined : e.split(":")[0],
-    n = null == t ? undefined : t.split(";");
+  const t = null == e ? undefined : e.split(":")[0];
+  const n = null == t ? undefined : t.split(";");
   for (const e of n) {
     const [t, n] = e.split("=");
     if ("tid" === t) return n;
@@ -206,8 +208,8 @@ function refreshToken(e, n, r) {
   if (d > 0) {
     d++;
     setTimeout(async () => {
-      let r,
-        i = "";
+      let r;
+      let i = "";
       try {
         d--;
         await n.getCopilotToken(e, !0);

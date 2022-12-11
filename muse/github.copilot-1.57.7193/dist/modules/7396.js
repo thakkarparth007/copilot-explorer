@@ -5,19 +5,19 @@ var r = require(5282);
 exports.IsInitialized = !process.env.APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL;
 var o = "DiagnosticChannel";
 if (exports.IsInitialized) {
-  var i = require(4106),
-    s = (process.env.APPLICATION_INSIGHTS_NO_PATCH_MODULES || "").split(","),
-    a = {
-      bunyan: i.bunyan,
-      console: i.console,
-      mongodb: i.mongodb,
-      mongodbCore: i.mongodbCore,
-      mysql: i.mysql,
-      redis: i.redis,
-      pg: i.pg,
-      pgPool: i.pgPool,
-      winston: i.winston,
-    };
+  var i = require(4106);
+  var s = (process.env.APPLICATION_INSIGHTS_NO_PATCH_MODULES || "").split(",");
+  var a = {
+    bunyan: i.bunyan,
+    console: i.console,
+    mongodb: i.mongodb,
+    mongodbCore: i.mongodbCore,
+    mysql: i.mysql,
+    redis: i.redis,
+    pg: i.pg,
+    pgPool: i.pgPool,
+    winston: i.winston,
+  };
   for (var c in a)
     if (-1 === s.indexOf(c)) {
       a[c].enable();

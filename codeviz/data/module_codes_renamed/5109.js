@@ -1,27 +1,27 @@
-var M_random_stuff_NOTSURE,
-  o,
-  i,
-  s,
-  a,
-  c,
-  l,
-  u,
-  d,
-  p,
-  h,
-  f,
-  m,
-  g,
-  _,
-  y,
-  v,
-  b,
-  w;
-M_random_stuff_NOTSURE = require("random-stuff");
+var M_random_stuff_maybe;
+var o;
+var i;
+var s;
+var a;
+var c;
+var l;
+var u;
+var d;
+var p;
+var h;
+var f;
+var m;
+var g;
+var _;
+var y;
+var v;
+var b;
+var w;
+M_random_stuff_maybe = require("random-stuff");
 require("evpkdf");
 module.exports = void (
-  M_random_stuff_NOTSURE.lib.Cipher ||
-  ((o = M_random_stuff_NOTSURE),
+  M_random_stuff_maybe.lib.Cipher ||
+  ((o = M_random_stuff_maybe),
   (i = o.lib),
   (s = i.Base),
   (a = i.WordArray),

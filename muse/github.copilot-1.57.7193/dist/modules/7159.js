@@ -18,62 +18,82 @@ exports.stringify = o.stringify;
 exports.nil = o.nil;
 exports.Name = o.Name;
 exports.CodeGen = o.CodeGen;
-const i = require(7426),
-  s = require(6646),
-  a = require(3141),
-  c = require(5173),
-  l = require(3487),
-  u = require(2531),
-  d = require(453),
-  p = require(6776),
-  h = require(4775),
-  f = ["removeAdditional", "useDefaults", "coerceTypes"],
-  m = new Set([
-    "validate",
-    "serialize",
-    "parse",
-    "wrapper",
-    "root",
-    "schema",
-    "keyword",
-    "pattern",
-    "formats",
-    "validate$data",
-    "func",
-    "obj",
-    "Error",
-  ]),
-  g = {
-    errorDataPath: "",
-    format: "`validateFormats: false` can be used instead.",
-    nullable: '"nullable" keyword is supported by default.',
-    jsonPointers: "Deprecated jsPropertySyntax can be used instead.",
-    extendRefs: "Deprecated ignoreKeywordsWithRef can be used instead.",
-    missingRefs:
-      "Pass empty schema with $id that should be ignored to ajv.addSchema.",
-    processCode:
-      "Use option `code: {process: (code, schemaEnv: object) => string}`",
-    sourceCode: "Use option `code: {source: true}`",
-    strictDefaults: "It is default now, see option `strict`.",
-    strictKeywords: "It is default now, see option `strict`.",
-    uniqueItems: '"uniqueItems" keyword is always validated.',
-    unknownFormats:
-      "Disable strict mode or pass `true` to `ajv.addFormat` (or `formats` option).",
-    cache: "Map is used as cache, schema object as key.",
-    serialize: "Map is used as cache, schema object as key.",
-    ajvErrors: "It is default now.",
-  },
-  _ = {
-    ignoreKeywordsWithRef: "",
-    jsPropertySyntax: "",
-    unicode:
-      '"minLength"/"maxLength" account for unicode characters by default.',
-  };
+const i = require(7426);
+const s = require(6646);
+const a = require(3141);
+const c = require(5173);
+const l = require(3487);
+const u = require(2531);
+const d = require(453);
+const p = require(6776);
+const h = require(4775);
+const f = ["removeAdditional", "useDefaults", "coerceTypes"];
+const m = new Set([
+  "validate",
+  "serialize",
+  "parse",
+  "wrapper",
+  "root",
+  "schema",
+  "keyword",
+  "pattern",
+  "formats",
+  "validate$data",
+  "func",
+  "obj",
+  "Error",
+]);
+const g = {
+  errorDataPath: "",
+  format: "`validateFormats: false` can be used instead.",
+  nullable: '"nullable" keyword is supported by default.',
+  jsonPointers: "Deprecated jsPropertySyntax can be used instead.",
+  extendRefs: "Deprecated ignoreKeywordsWithRef can be used instead.",
+  missingRefs:
+    "Pass empty schema with $id that should be ignored to ajv.addSchema.",
+  processCode:
+    "Use option `code: {process: (code, schemaEnv: object) => string}`",
+  sourceCode: "Use option `code: {source: true}`",
+  strictDefaults: "It is default now, see option `strict`.",
+  strictKeywords: "It is default now, see option `strict`.",
+  uniqueItems: '"uniqueItems" keyword is always validated.',
+  unknownFormats:
+    "Disable strict mode or pass `true` to `ajv.addFormat` (or `formats` option).",
+  cache: "Map is used as cache, schema object as key.",
+  serialize: "Map is used as cache, schema object as key.",
+  ajvErrors: "It is default now.",
+};
+const _ = {
+  ignoreKeywordsWithRef: "",
+  jsPropertySyntax: "",
+  unicode: '"minLength"/"maxLength" account for unicode characters by default.',
+};
 function y(e) {
-  var t, n, r, o, i, s, a, c, l, u, d, p, h, f, m, g, _, y, v, b, w, x;
-  const E = e.strict,
-    C = null === (t = e.code) || undefined === t ? undefined : t.optimize,
-    S = !0 === C || undefined === C ? 1 : C || 0;
+  var t;
+  var n;
+  var r;
+  var o;
+  var i;
+  var s;
+  var a;
+  var c;
+  var l;
+  var u;
+  var d;
+  var p;
+  var h;
+  var f;
+  var m;
+  var g;
+  var _;
+  var y;
+  var v;
+  var b;
+  var w;
+  var x;
+  const E = e.strict;
+  const C = null === (t = e.code) || undefined === t ? undefined : t.optimize;
+  const S = !0 === C || undefined === C ? 1 : C || 0;
   return {
     strictSchema:
       null === (r = null !== (n = e.strictSchema) && undefined !== n ? n : E) ||
@@ -301,11 +321,11 @@ class v {
     let t;
     for (; "string" == typeof (t = w.call(this, e)); ) e = t;
     if (undefined === t) {
-      const { schemaId: n } = this.opts,
-        r = new c.SchemaEnv({
-          schema: {},
-          schemaId: n,
-        });
+      const { schemaId: n } = this.opts;
+      const r = new c.SchemaEnv({
+        schema: {},
+        schemaId: n,
+      });
       t = c.resolveSchema.call(this, r, e);
       if (!t) return;
       this.refs[e] = t;
@@ -430,8 +450,8 @@ class v {
       for (const e in n) {
         const t = n[e];
         if ("object" != typeof t) continue;
-        const { $data: r } = t.definition,
-          i = o[e];
+        const { $data: r } = t.definition;
+        const i = o[e];
         if (r && i) {
           o[e] = R(i);
         }
@@ -565,11 +585,11 @@ exports.default = v;
 v.ValidationError = i.default;
 v.MissingRefError = s.default;
 const T = {
-    log() {},
-    warn() {},
-    error() {},
-  },
-  k = /^[a-z_$][a-z0-9_$:-]*$/i;
+  log() {},
+  warn() {},
+  error() {},
+};
+const k = /^[a-z_$][a-z0-9_$:-]*$/i;
 function I(e, t) {
   const { RULES: n } = this;
   p.eachItem(e, (e) => {

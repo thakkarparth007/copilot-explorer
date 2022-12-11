@@ -1,4 +1,9 @@
-var r, o, i, s, a, c;
+var r;
+var o;
+var i;
+var s;
+var a;
+var c;
 c = require(8249);
 require(2153);
 o = (r = c).lib.WordArray;

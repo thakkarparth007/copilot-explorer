@@ -9,11 +9,11 @@ exports.reportTypeError =
   exports.getSchemaTypes =
   exports.DataType =
     undefined;
-const r = require(3141),
-  o = require(8876),
-  i = require(4181),
-  s = require(3487),
-  a = require(6776);
+const r = require(3141);
+const o = require(8876);
+const i = require(4181);
+const s = require(3487);
+const a = require(6776);
 var c;
 function getJSONTypes(e) {
   const t = Array.isArray(e) ? e : e ? [e] : [];
@@ -40,23 +40,23 @@ exports.getSchemaTypes = function (e) {
 };
 exports.getJSONTypes = getJSONTypes;
 exports.coerceAndCheckDataType = function (e, t) {
-  const { gen: n, data: r, opts: i } = e,
-    a = (function (e, t) {
-      return t
-        ? e.filter((e) => u.has(e) || ("array" === t && "array" === e))
-        : [];
-    })(t, i.coerceTypes),
-    l =
-      t.length > 0 &&
-      !(0 === a.length && 1 === t.length && o.schemaHasRulesForType(e, t[0]));
+  const { gen: n, data: r, opts: i } = e;
+  const a = (function (e, t) {
+    return t
+      ? e.filter((e) => u.has(e) || ("array" === t && "array" === e))
+      : [];
+  })(t, i.coerceTypes);
+  const l =
+    t.length > 0 &&
+    !(0 === a.length && 1 === t.length && o.schemaHasRulesForType(e, t[0]));
   if (l) {
     const o = checkDataTypes(t, r, i.strictNumbers, c.Wrong);
     n.if(o, () => {
       if (a.length) {
         (function (e, t, n) {
-          const { gen: r, data: o, opts: i } = e,
-            a = r.let("dataType", s._`typeof ${o}`),
-            c = r.let("coerced", s._`undefined`);
+          const { gen: r, data: o, opts: i } = e;
+          const a = r.let("dataType", s._`typeof ${o}`);
+          const c = r.let("coerced", s._`undefined`);
           if ("array" === i.coerceTypes) {
             r.if(
               s._`${a} == 'object' && Array.isArray(${o}) && ${o}.length == 1`,
@@ -186,8 +186,8 @@ const h = {
 };
 function reportTypeError(e) {
   const t = (function (e) {
-    const { gen: t, data: n, schema: r } = e,
-      o = a.schemaRefOrVal(e, r, "type");
+    const { gen: t, data: n, schema: r } = e;
+    const o = a.schemaRefOrVal(e, r, "type");
     return {
       gen: t,
       keyword: "type",

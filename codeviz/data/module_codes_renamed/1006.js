@@ -2,14 +2,14 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.ghostTextScoreQuantile = exports.ghostTextScoreConfidence = undefined;
-const M_logging_utils = require("logging-utils"),
-  M_ghost_text_display_constants_NOTSURE = require("ghost-text-display-constants"),
-  i =
-    (new M_logging_utils.Logger(M_logging_utils.LogLevel.INFO, "restraint"),
-    {
-      link: (e) => Math.exp(e) / (1 + Math.exp(e)),
-      unlink: (e) => Math.log(e / (1 - e)),
-    });
+const M_logging_utils = require("logging-utils");
+const M_ghost_text_display_constants_maybe = require("ghost-text-display-constants");
+const i =
+  (new M_logging_utils.Logger(M_logging_utils.LogLevel.INFO, "restraint"),
+  {
+    link: (e) => Math.exp(e) / (1 + Math.exp(e)),
+    unlink: (e) => Math.log(e / (1 - e)),
+  });
 class s {
   constructor(e, t, n) {
     this.name = e;
@@ -41,42 +41,42 @@ const a = new (class {
   }
   quantile(e, t) {
     return (function (e, t) {
-      const n = Math.min(...Array.from(t.keys()).filter((t) => t >= e)),
-        r = Math.max(...Array.from(t.keys()).filter((t) => t < e)),
-        o = t.get(n),
-        i = t.get(r);
+      const n = Math.min(...Array.from(t.keys()).filter((t) => t >= e));
+      const r = Math.max(...Array.from(t.keys()).filter((t) => t < e));
+      const o = t.get(n);
+      const i = t.get(r);
       return i + ((o - i) * (e - r)) / (n - r);
     })(this.predict(e, t), this.logitsToQuantiles);
   }
 })(
-  M_ghost_text_display_constants_NOTSURE.ghostTextDisplayInterceptParameter,
+  M_ghost_text_display_constants_maybe.ghostTextDisplayInterceptParameter,
   [
     new s(
       "compCharLen",
-      M_ghost_text_display_constants_NOTSURE.ghostTextDisplayLog1pcompCharLenParameter,
+      M_ghost_text_display_constants_maybe.ghostTextDisplayLog1pcompCharLenParameter,
       (e) => Math.log(1 + e)
     ),
     new s(
       "meanLogProb",
-      M_ghost_text_display_constants_NOTSURE.ghostTextDisplayMeanLogProbParameter
+      M_ghost_text_display_constants_maybe.ghostTextDisplayMeanLogProbParameter
     ),
     new s(
       "meanAlternativeLogProb",
-      M_ghost_text_display_constants_NOTSURE.ghostTextDisplayMeanAlternativeLogProbParameter
+      M_ghost_text_display_constants_maybe.ghostTextDisplayMeanAlternativeLogProbParameter
     ),
   ].concat(
     Object.entries(
-      M_ghost_text_display_constants_NOTSURE.ghostTextDisplayLanguageParameters
+      M_ghost_text_display_constants_maybe.ghostTextDisplayLanguageParameters
     ).map((e) => new s(e[0], e[1]))
   ),
-  M_ghost_text_display_constants_NOTSURE.ghostTextDisplayQuantiles
+  M_ghost_text_display_constants_maybe.ghostTextDisplayQuantiles
 );
 exports.ghostTextScoreConfidence = function (e, t) {
   const n = {
     ...t.measurements,
   };
   Object.keys(
-    M_ghost_text_display_constants_NOTSURE.ghostTextDisplayLanguageParameters
+    M_ghost_text_display_constants_maybe.ghostTextDisplayLanguageParameters
   ).forEach((e) => {
     n[e] = t.properties["customDimensions.languageId"] == e ? 1 : 0;
   });
@@ -87,7 +87,7 @@ exports.ghostTextScoreQuantile = function (e, t) {
     ...t.measurements,
   };
   Object.keys(
-    M_ghost_text_display_constants_NOTSURE.ghostTextDisplayLanguageParameters
+    M_ghost_text_display_constants_maybe.ghostTextDisplayLanguageParameters
   ).forEach((e) => {
     n[e] = t.properties["customDimensions.languageId"] == e ? 1 : 0;
   });

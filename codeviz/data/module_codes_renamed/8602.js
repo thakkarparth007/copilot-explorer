@@ -1,4 +1,4 @@
-var M_telemetry_type_NOTSURE = require("telemetry-type");
+var M_telemetry_type_maybe = require("telemetry-type");
 module.exports = function () {
-  this.kind = M_telemetry_type_NOTSURE.Measurement;
+  this.kind = M_telemetry_type_maybe.Measurement;
 };

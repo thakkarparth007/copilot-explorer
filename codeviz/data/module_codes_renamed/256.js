@@ -8,9 +8,9 @@ exports.decodeLocation =
   exports.completionTypeToString =
   exports.CompletionType =
     undefined;
-const M_path_NOTSURE = require("path"),
-  M_location_factory = require("location-factory"),
-  M_copilot_scheme = require("copilot-scheme");
+const M_path_maybe = require("path");
+const M_location_factory = require("location-factory");
+const M_copilot_scheme = require("copilot-scheme");
 var s;
 !(function (e) {
   e[(e.OPEN_COPILOT = 2)] = "OPEN_COPILOT";
@@ -42,9 +42,9 @@ class CompletionContext {
   }
   static fromJSONParse(e, t) {
     const n = e
-        .get(M_location_factory.LocationFactory)
-        .position(t.insertPosition.line, t.insertPosition.character),
-      r = new CompletionContext(e, n, t.completionType);
+      .get(M_location_factory.LocationFactory)
+      .position(t.insertPosition.line, t.insertPosition.character);
+    const r = new CompletionContext(e, n, t.completionType);
     r.prependToCompletion = t.prependToCompletion;
     r.appendToCompletion = t.appendToCompletion;
     r.indentation = t.indentation;
@@ -62,17 +62,17 @@ exports.completionContextForDocument = function (e, t, n) {
 };
 let c = 0;
 exports.encodeLocation = function (e, t) {
-  const n = e.toString().split("#"),
-    o = n.length > 1 ? n[1] : "",
-    s = JSON.stringify([n[0], t, o]);
-  return M_path_NOTSURE.URI.parse(
+  const n = e.toString().split("#");
+  const o = n.length > 1 ? n[1] : "";
+  const s = JSON.stringify([n[0], t, o]);
+  return M_path_maybe.URI.parse(
     `${M_copilot_scheme.CopilotScheme}:GitHub%20Copilot?${s}#${c++}`
   );
 };
 exports.decodeLocation = function (e, t) {
   const [n, o, i] = JSON.parse(t.query);
   return [
-    M_path_NOTSURE.URI.parse(i.length > 0 ? n + "#" + i : n),
+    M_path_maybe.URI.parse(i.length > 0 ? n + "#" + i : n),
     CompletionContext.fromJSONParse(e, o),
   ];
 };

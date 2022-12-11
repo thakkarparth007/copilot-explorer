@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.getNeighborSnippets = exports.neighborOptionToSelection = undefined;
-const M_language_marker_constants_NOTSURE = require("language-marker-constants"),
-  M_jaccard_matcher_NOTSURE = require("jaccard-matcher");
+const M_language_marker_constants_maybe = require("language-marker-constants");
+const M_jaccard_matcher_maybe = require("jaccard-matcher");
 function i(e) {
   return [
     e.relativePath
@@ -14,50 +14,47 @@ function i(e) {
 exports.neighborOptionToSelection = {
   none: {
     matcherFactory:
-      M_jaccard_matcher_NOTSURE.FixedWindowSizeJaccardMatcher.FACTORY(1),
+      M_jaccard_matcher_maybe.FixedWindowSizeJaccardMatcher.FACTORY(1),
     threshold: -1,
     numberOfSnippets: 0,
   },
   conservative: {
     matcherFactory:
-      M_jaccard_matcher_NOTSURE.FixedWindowSizeJaccardMatcher.FACTORY(10),
+      M_jaccard_matcher_maybe.FixedWindowSizeJaccardMatcher.FACTORY(10),
     threshold: 0.3,
     numberOfSnippets: 1,
   },
   medium: {
     matcherFactory:
-      M_jaccard_matcher_NOTSURE.FixedWindowSizeJaccardMatcher.FACTORY(20),
+      M_jaccard_matcher_maybe.FixedWindowSizeJaccardMatcher.FACTORY(20),
     threshold: 0.1,
     numberOfSnippets: 2,
   },
   eager: {
     matcherFactory:
-      M_jaccard_matcher_NOTSURE.FixedWindowSizeJaccardMatcher.FACTORY(60),
+      M_jaccard_matcher_maybe.FixedWindowSizeJaccardMatcher.FACTORY(60),
     threshold: 0,
     numberOfSnippets: 4,
   },
   eagerButLittle: {
     matcherFactory:
-      M_jaccard_matcher_NOTSURE.FixedWindowSizeJaccardMatcher.FACTORY(10),
+      M_jaccard_matcher_maybe.FixedWindowSizeJaccardMatcher.FACTORY(10),
     threshold: 0,
     numberOfSnippets: 1,
   },
 };
 exports.getNeighborSnippets = async function (e, n, s, a, c, l, u) {
-  const d = exports.neighborOptionToSelection[s],
-    p = (function (e, n, r, i) {
-      const s = {
-        ...exports.neighborOptionToSelection[n],
-      };
-      if (undefined !== r && undefined !== i) {
-        s.matcherFactory =
-          M_jaccard_matcher_NOTSURE.IndentationBasedJaccardMatcher.FACTORY(
-            r,
-            i
-          );
-      }
-      return s.matcherFactory.to(e);
-    })(e, s, a, c);
+  const d = exports.neighborOptionToSelection[s];
+  const p = (function (e, n, r, i) {
+    const s = {
+      ...exports.neighborOptionToSelection[n],
+    };
+    if (undefined !== r && undefined !== i) {
+      s.matcherFactory =
+        M_jaccard_matcher_maybe.IndentationBasedJaccardMatcher.FACTORY(r, i);
+    }
+    return s.matcherFactory.to(e);
+  })(e, s, a, c);
   return n
     .filter((e) => e.source.length < 1e4 && e.source.length > 0)
     .slice(0, 20)
@@ -79,7 +76,7 @@ exports.getNeighborSnippets = async function (e, n, s, a, c, l, u) {
       snippet: i(t)
         .map(
           (t) =>
-            M_language_marker_constants_NOTSURE.comment(t, e.languageId) + "\n"
+            M_language_marker_constants_maybe.comment(t, e.languageId) + "\n"
         )
         .join(""),
       startLine: t.startLine,

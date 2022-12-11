@@ -20,8 +20,8 @@ exports.checkStrictMode =
   exports.alwaysValidSchema =
   exports.toHash =
     undefined;
-const r = require(3487),
-  o = require(7023);
+const r = require(3487);
+const o = require(7023);
 function checkUnknownRules(e, t = e.schema) {
   const { opts: n, self: r } = e;
   if (!n.strictSchema) return;

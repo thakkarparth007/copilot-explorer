@@ -1,21 +1,26 @@
-var r = require(2728),
-  o = Object.prototype.hasOwnProperty,
-  i = "undefined" != typeof Map;
+var r = require(2728);
+var o = Object.prototype.hasOwnProperty;
+var i = "undefined" != typeof Map;
 function I() {
   this._array = [];
   this._set = i ? new Map() : Object.create(null);
 }
 I.fromArray = function (e, t) {
-  for (var n = new I(), r = 0, o = e.length; r < o; r++) n.add(e[r], t);
+  for (n = new I(), r = 0, o = e.length, undefined; r < o; r++) {
+    var n;
+    var r;
+    var o;
+    n.add(e[r], t);
+  }
   return n;
 };
 I.prototype.size = function () {
   return i ? this._set.size : Object.getOwnPropertyNames(this._set).length;
 };
 I.prototype.add = function (e, t) {
-  var n = i ? e : r.toSetString(e),
-    s = i ? this.has(e) : o.call(this._set, n),
-    a = this._array.length;
+  var n = i ? e : r.toSetString(e);
+  var s = i ? this.has(e) : o.call(this._set, n);
+  var a = this._array.length;
   if (s && !t) {
     this._array.push(e);
   }

@@ -1,4 +1,4 @@
-var M_stack_trace_NOTSURE = require("stack-trace");
+var M_stack_trace_maybe = require("stack-trace");
 function o() {
   this.extend = new a();
   this.filter = new a();
@@ -29,12 +29,15 @@ function a() {
   this._modifiers = [];
 }
 function c() {
-  this._formater = M_stack_trace_NOTSURE;
+  this._formater = M_stack_trace_maybe;
   this._previous = undefined;
 }
 a.prototype._modify = function (e, t) {
-  for (var n = 0, r = this._modifiers.length; n < r; n++)
+  for (n = 0, r = this._modifiers.length, undefined; n < r; n++) {
+    var n;
+    var r;
     t = this._modifiers[n](e, t);
+  }
   return t;
 };
 a.prototype.attach = function (e) {
@@ -52,14 +55,14 @@ c.prototype.replace = function (e) {
   }
 };
 c.prototype.restore = function () {
-  this._formater = M_stack_trace_NOTSURE;
+  this._formater = M_stack_trace_maybe;
   this._previous = undefined;
 };
 c.prototype._backup = function () {
   this._previous = this._formater;
 };
 c.prototype._roolback = function () {
-  if (this._previous === M_stack_trace_NOTSURE) {
+  if (this._previous === M_stack_trace_maybe) {
     this.replace(undefined);
   } else {
     this.replace(this._previous);
@@ -72,7 +75,7 @@ if (Error.prepareStackTrace) {
 var l = !1;
 function u(e, t) {
   if (i) return t;
-  if (l) return M_stack_trace_NOTSURE(e, t);
+  if (l) return M_stack_trace_maybe(e, t);
   var n = t.concat();
   n = s.extend._modify(e, n);
   n = (n = s.filter._modify(e, n)).slice(0, Error.stackTraceLimit);

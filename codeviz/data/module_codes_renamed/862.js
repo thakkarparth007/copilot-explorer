@@ -55,9 +55,9 @@ exports.TimeBucketGranularity = class extends GranularityImplementation {
     return this.timePeriodLengthMs ? this.dateToTimePartString(e) : "";
   }
   getUpcomingValues(e) {
-    const t = [],
-      n = this.getUpcomingTimePeriodBucketStrings(e),
-      r = this.getUpcomingByCallBucketStrings();
+    const t = [];
+    const n = this.getUpcomingTimePeriodBucketStrings(e);
+    const r = this.getUpcomingByCallBucketStrings();
     for (const e of n) for (const n of r) t.push(this.prefix + e + n);
     return t;
   }

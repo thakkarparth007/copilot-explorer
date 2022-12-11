@@ -9,12 +9,12 @@ exports.CodeGen =
   exports._ =
   exports.KeywordCxt =
     undefined;
-const r = require(7159),
-  o = require(3924),
-  i = require(1240),
-  s = require(98),
-  a = ["/properties"],
-  c = "http://json-schema.org/draft-07/schema";
+const r = require(7159);
+const o = require(3924);
+const i = require(1240);
+const s = require(98);
+const a = ["/properties"];
+const c = "http://json-schema.org/draft-07/schema";
 class l extends r.default {
   _addVocabularies() {
     super._addVocabularies();

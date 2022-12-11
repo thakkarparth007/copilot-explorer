@@ -2,30 +2,34 @@ var r =
   (this && this.__assign) ||
   Object.assign ||
   function (e) {
-    for (var t, n = 1, r = arguments.length; n < r; n++)
+    for (n = 1, r = arguments.length, undefined; n < r; n++) {
+      var t;
+      var n;
+      var r;
       for (var o in (t = arguments[n]))
         if (Object.prototype.hasOwnProperty.call(t, o)) {
           e[o] = t[o];
         }
+    }
     return e;
   };
 Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
-var M_channel_NOTSURE = require("channel");
+var M_channel_maybe = require("channel");
 exports.mongo2 = {
   versionSpecifier: ">= 2.0.0 <= 3.0.5",
   patch: function (e) {
     var t = e.instrument({
-        operationIdGenerator: {
-          next: function () {
-            return M_channel_NOTSURE.channel.bindToContext(function (e) {
-              return e();
-            });
-          },
+      operationIdGenerator: {
+        next: function () {
+          return M_channel_maybe.channel.bindToContext(function (e) {
+            return e();
+          });
         },
-      }),
-      n = {};
+      },
+    });
+    var n = {};
     t.on("started", function (e) {
       if (n[e.requestId]) {
         n[e.requestId] = r({}, e, {
@@ -40,14 +44,14 @@ exports.mongo2 = {
       }
       if ("function" == typeof e.operationId) {
         e.operationId(function () {
-          return M_channel_NOTSURE.channel.publish("mongodb", {
+          return M_channel_maybe.channel.publish("mongodb", {
             startedData: t,
             event: e,
             succeeded: !0,
           });
         });
       } else {
-        M_channel_NOTSURE.channel.publish("mongodb", {
+        M_channel_maybe.channel.publish("mongodb", {
           startedData: t,
           event: e,
           succeeded: !0,
@@ -61,14 +65,14 @@ exports.mongo2 = {
       }
       if ("function" == typeof e.operationId) {
         e.operationId(function () {
-          return M_channel_NOTSURE.channel.publish("mongodb", {
+          return M_channel_maybe.channel.publish("mongodb", {
             startedData: t,
             event: e,
             succeeded: !1,
           });
         });
       } else {
-        M_channel_NOTSURE.channel.publish("mongodb", {
+        M_channel_maybe.channel.publish("mongodb", {
           startedData: t,
           event: e,
           succeeded: !1,
@@ -81,12 +85,12 @@ exports.mongo2 = {
 exports.mongo3 = {
   versionSpecifier: "> 3.0.5 < 3.3.0",
   patch: function (e) {
-    var t = e.instrument(),
-      n = {},
-      i = {};
+    var t = e.instrument();
+    var n = {};
+    var i = {};
     t.on("started", function (e) {
       if (n[e.requestId]) {
-        i[e.requestId] = M_channel_NOTSURE.channel.bindToContext(function (e) {
+        i[e.requestId] = M_channel_maybe.channel.bindToContext(function (e) {
           return e();
         });
         n[e.requestId] = r({}, e, {
@@ -101,7 +105,7 @@ exports.mongo3 = {
       }
       if ("object" == typeof e && "function" == typeof i[e.requestId]) {
         i[e.requestId](function () {
-          return M_channel_NOTSURE.channel.publish("mongodb", {
+          return M_channel_maybe.channel.publish("mongodb", {
             startedData: t,
             event: e,
             succeeded: !0,
@@ -117,7 +121,7 @@ exports.mongo3 = {
       }
       if ("object" == typeof e && "function" == typeof i[e.requestId]) {
         i[e.requestId](function () {
-          return M_channel_NOTSURE.channel.publish("mongodb", {
+          return M_channel_maybe.channel.publish("mongodb", {
             startedData: t,
             event: e,
             succeeded: !1,
@@ -135,35 +139,31 @@ exports.mongo330 = {
     !(function (e) {
       var t = e.Server.prototype.connect;
       e.Server.prototype.connect = function () {
-        var e = t.apply(this, arguments),
-          n = this.s.coreTopology.s.pool.write;
+        var e = t.apply(this, arguments);
+        var n = this.s.coreTopology.s.pool.write;
         this.s.coreTopology.s.pool.write = function () {
           var e = "function" == typeof arguments[1] ? 1 : 2;
           if ("function" == typeof arguments[e]) {
-            arguments[e] = M_channel_NOTSURE.channel.bindToContext(
-              arguments[e]
-            );
+            arguments[e] = M_channel_maybe.channel.bindToContext(arguments[e]);
           }
           return n.apply(this, arguments);
         };
         var r = this.s.coreTopology.s.pool.logout;
         this.s.coreTopology.s.pool.logout = function () {
           if ("function" == typeof arguments[1]) {
-            arguments[1] = M_channel_NOTSURE.channel.bindToContext(
-              arguments[1]
-            );
+            arguments[1] = M_channel_maybe.channel.bindToContext(arguments[1]);
           }
           return r.apply(this, arguments);
         };
         return e;
       };
     })(e);
-    var t = e.instrument(),
-      n = {},
-      r = {};
+    var t = e.instrument();
+    var n = {};
+    var r = {};
     t.on("started", function (e) {
       if (n[e.requestId]) {
-        r[e.requestId] = M_channel_NOTSURE.channel.bindToContext(function (e) {
+        r[e.requestId] = M_channel_maybe.channel.bindToContext(function (e) {
           return e();
         });
         n[e.requestId] = e;
@@ -176,7 +176,7 @@ exports.mongo330 = {
       }
       if ("object" == typeof e && "function" == typeof r[e.requestId]) {
         r[e.requestId](function () {
-          return M_channel_NOTSURE.channel.publish("mongodb", {
+          return M_channel_maybe.channel.publish("mongodb", {
             startedData: t,
             event: e,
             succeeded: !0,
@@ -192,7 +192,7 @@ exports.mongo330 = {
       }
       if ("object" == typeof e && "function" == typeof r[e.requestId]) {
         r[e.requestId](function () {
-          return M_channel_NOTSURE.channel.publish("mongodb", {
+          return M_channel_maybe.channel.publish("mongodb", {
             startedData: t,
             event: e,
             succeeded: !1,
@@ -205,7 +205,7 @@ exports.mongo330 = {
   },
 };
 exports.enable = function () {
-  M_channel_NOTSURE.channel.registerMonkeyPatch("mongodb", exports.mongo2);
-  M_channel_NOTSURE.channel.registerMonkeyPatch("mongodb", exports.mongo3);
-  M_channel_NOTSURE.channel.registerMonkeyPatch("mongodb", exports.mongo330);
+  M_channel_maybe.channel.registerMonkeyPatch("mongodb", exports.mongo2);
+  M_channel_maybe.channel.registerMonkeyPatch("mongodb", exports.mongo3);
+  M_channel_maybe.channel.registerMonkeyPatch("mongodb", exports.mongo330);
 };

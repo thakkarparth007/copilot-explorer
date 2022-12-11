@@ -4,13 +4,13 @@ import time
 from manifest import Manifest
 
 sys.path.append(__file__ + "/..")
-from app import module_codes, module_deps, module_categories, data_dir
+from common import module_codes, module_deps, module_categories, data_dir, cur_dir
 
 gold_annots = json.loads(open(data_dir / "gold_annotations.js").read().replace("let gold_annotations = ", ""))
 
 M = Manifest(
     client_name = "openai",
-    client_connection = "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",
+    client_connection = open(cur_dir / ".openai-api-key").read().strip(),
     cache_name = "sqlite",
     cache_connection = "codeviz_openai_cache.db",
     engine = "code-davinci-002",
@@ -24,7 +24,9 @@ def predict_with_retries(*args, **kwargs):
             if "too many requests" in str(e).lower():
                 print("Too many requests, waiting 30 seconds...")
                 time.sleep(30)
-            continue
+                continue
+            else:
+                raise e
     raise Exception("Too many retries")
 
 def collect_module_prediction_context(module_id):
@@ -151,3 +153,21 @@ def predict_module_category(module_id, module_name):
     responses = predict_with_retries(prompt, max_tokens=10, temperature=0.1, stop_token="\n", n=3, top_k_return=3)
 
     return list(set(responses))
+
+#### Snippet description prediction ####
+
+def predict_snippet_description(module_id, module_name, snippet):
+    prompt = f"""\
+```js
+{snippet}
+```
+
+The above snippet is from module `{module_name}`. Here's a good docstring for this code:
+/**
+"""
+    print(prompt)
+    responses = predict_with_retries(
+        prompt, max_tokens=150, temperature=0.1, stop_token="*/", n=1, top_k_return=1
+    )
+
+    return "/**\n " + responses + "*/"

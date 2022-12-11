@@ -9,15 +9,15 @@ exports.reportTypeError =
   exports.getSchemaTypes =
   exports.DataType =
     undefined;
-const M_json_schema_rules_NOTSURE = require("json-schema-rules"),
-  M_schema_rule_filter_NOTSURE = require("schema-rule-filter"),
-  M_ajv_error_stuff_NOTSURE = require("ajv-error-stuff"),
-  M_codegen_NOTSURE = require("codegen"),
-  M_ajv_utils_NOTSURE = require("ajv-utils");
+const M_json_schema_rules_maybe = require("json-schema-rules");
+const M_schema_rule_filter_maybe = require("schema-rule-filter");
+const M_ajv_error_stuff_maybe = require("ajv-error-stuff");
+const M_codegen_maybe = require("codegen");
+const M_ajv_utils_maybe = require("ajv-utils");
 var c;
 function getJSONTypes(e) {
   const t = Array.isArray(e) ? e : e ? [e] : [];
-  if (t.every(M_json_schema_rules_NOTSURE.isJSONType)) return t;
+  if (t.every(M_json_schema_rules_maybe.isJSONType)) return t;
   throw new Error("type must be JSONType or JSONType[]: " + t.join(","));
 }
 !(function (e) {
@@ -40,40 +40,40 @@ exports.getSchemaTypes = function (e) {
 };
 exports.getJSONTypes = getJSONTypes;
 exports.coerceAndCheckDataType = function (e, t) {
-  const { gen: n, data: r, opts: i } = e,
-    a = (function (e, t) {
-      return t
-        ? e.filter((e) => u.has(e) || ("array" === t && "array" === e))
-        : [];
-    })(t, i.coerceTypes),
-    l =
-      t.length > 0 &&
-      !(
-        0 === a.length &&
-        1 === t.length &&
-        M_schema_rule_filter_NOTSURE.schemaHasRulesForType(e, t[0])
-      );
+  const { gen: n, data: r, opts: i } = e;
+  const a = (function (e, t) {
+    return t
+      ? e.filter((e) => u.has(e) || ("array" === t && "array" === e))
+      : [];
+  })(t, i.coerceTypes);
+  const l =
+    t.length > 0 &&
+    !(
+      0 === a.length &&
+      1 === t.length &&
+      M_schema_rule_filter_maybe.schemaHasRulesForType(e, t[0])
+    );
   if (l) {
     const o = checkDataTypes(t, r, i.strictNumbers, c.Wrong);
     n.if(o, () => {
       if (a.length) {
         (function (e, t, n) {
-          const { gen: r, data: o, opts: i } = e,
-            a = r.let("dataType", M_codegen_NOTSURE._`typeof ${o}`),
-            c = r.let("coerced", M_codegen_NOTSURE._`undefined`);
+          const { gen: r, data: o, opts: i } = e;
+          const a = r.let("dataType", M_codegen_maybe._`typeof ${o}`);
+          const c = r.let("coerced", M_codegen_maybe._`undefined`);
           if ("array" === i.coerceTypes) {
             r.if(
-              M_codegen_NOTSURE._`${a} == 'object' && Array.isArray(${o}) && ${o}.length == 1`,
+              M_codegen_maybe._`${a} == 'object' && Array.isArray(${o}) && ${o}.length == 1`,
               () =>
                 r
-                  .assign(o, M_codegen_NOTSURE._`${o}[0]`)
-                  .assign(a, M_codegen_NOTSURE._`typeof ${o}`)
+                  .assign(o, M_codegen_maybe._`${o}[0]`)
+                  .assign(a, M_codegen_maybe._`typeof ${o}`)
                   .if(checkDataTypes(t, o, i.strictNumbers), () =>
                     r.assign(c, o)
                   )
             );
           }
-          r.if(M_codegen_NOTSURE._`${c} !== undefined`);
+          r.if(M_codegen_maybe._`${c} !== undefined`);
           for (const e of n)
             if (u.has(e) || ("array" === e && "array" === i.coerceTypes)) {
               l(e);
@@ -83,53 +83,53 @@ exports.coerceAndCheckDataType = function (e, t) {
               case "string":
                 return void r
                   .elseIf(
-                    M_codegen_NOTSURE._`${a} == "number" || ${a} == "boolean"`
+                    M_codegen_maybe._`${a} == "number" || ${a} == "boolean"`
                   )
-                  .assign(c, M_codegen_NOTSURE._`"" + ${o}`)
-                  .elseIf(M_codegen_NOTSURE._`${o} === null`)
-                  .assign(c, M_codegen_NOTSURE._`""`);
+                  .assign(c, M_codegen_maybe._`"" + ${o}`)
+                  .elseIf(M_codegen_maybe._`${o} === null`)
+                  .assign(c, M_codegen_maybe._`""`);
               case "number":
                 return void r
                   .elseIf(
-                    M_codegen_NOTSURE._`${a} == "boolean" || ${o} === null
+                    M_codegen_maybe._`${a} == "boolean" || ${o} === null
               || (${a} == "string" && ${o} && ${o} == +${o})`
                   )
-                  .assign(c, M_codegen_NOTSURE._`+${o}`);
+                  .assign(c, M_codegen_maybe._`+${o}`);
               case "integer":
                 return void r
                   .elseIf(
-                    M_codegen_NOTSURE._`${a} === "boolean" || ${o} === null
+                    M_codegen_maybe._`${a} === "boolean" || ${o} === null
               || (${a} === "string" && ${o} && ${o} == +${o} && !(${o} % 1))`
                   )
-                  .assign(c, M_codegen_NOTSURE._`+${o}`);
+                  .assign(c, M_codegen_maybe._`+${o}`);
               case "boolean":
                 return void r
                   .elseIf(
-                    M_codegen_NOTSURE._`${o} === "false" || ${o} === 0 || ${o} === null`
+                    M_codegen_maybe._`${o} === "false" || ${o} === 0 || ${o} === null`
                   )
                   .assign(c, !1)
-                  .elseIf(M_codegen_NOTSURE._`${o} === "true" || ${o} === 1`)
+                  .elseIf(M_codegen_maybe._`${o} === "true" || ${o} === 1`)
                   .assign(c, !0);
               case "null":
                 r.elseIf(
-                  M_codegen_NOTSURE._`${o} === "" || ${o} === 0 || ${o} === false`
+                  M_codegen_maybe._`${o} === "" || ${o} === 0 || ${o} === false`
                 );
                 return void r.assign(c, null);
               case "array":
                 r.elseIf(
-                  M_codegen_NOTSURE._`${a} === "string" || ${a} === "number"
+                  M_codegen_maybe._`${a} === "string" || ${a} === "number"
               || ${a} === "boolean" || ${o} === null`
-                ).assign(c, M_codegen_NOTSURE._`[${o}]`);
+                ).assign(c, M_codegen_maybe._`[${o}]`);
             }
           }
           r.else();
           reportTypeError(e);
           r.endIf();
-          r.if(M_codegen_NOTSURE._`${c} !== undefined`, () => {
+          r.if(M_codegen_maybe._`${c} !== undefined`, () => {
             r.assign(o, c);
             (function ({ gen: e, parentData: t, parentDataProperty: n }, r) {
-              e.if(M_codegen_NOTSURE._`${t} !== undefined`, () =>
-                e.assign(M_codegen_NOTSURE._`${t}[${n}]`, r)
+              e.if(M_codegen_maybe._`${t} !== undefined`, () =>
+                e.assign(M_codegen_maybe._`${t}[${n}]`, r)
               );
             })(e, c);
           });
@@ -145,51 +145,51 @@ const u = new Set(["string", "number", "integer", "boolean", "null"]);
 function checkDataType(e, t, n, r = c.Correct) {
   const o =
     r === c.Correct
-      ? M_codegen_NOTSURE.operators.EQ
-      : M_codegen_NOTSURE.operators.NEQ;
+      ? M_codegen_maybe.operators.EQ
+      : M_codegen_maybe.operators.NEQ;
   let i;
   switch (e) {
     case "null":
-      return M_codegen_NOTSURE._`${t} ${o} null`;
+      return M_codegen_maybe._`${t} ${o} null`;
     case "array":
-      i = M_codegen_NOTSURE._`Array.isArray(${t})`;
+      i = M_codegen_maybe._`Array.isArray(${t})`;
       break;
     case "object":
-      i = M_codegen_NOTSURE._`${t} && typeof ${t} == "object" && !Array.isArray(${t})`;
+      i = M_codegen_maybe._`${t} && typeof ${t} == "object" && !Array.isArray(${t})`;
       break;
     case "integer":
-      i = a(M_codegen_NOTSURE._`!(${t} % 1) && !isNaN(${t})`);
+      i = a(M_codegen_maybe._`!(${t} % 1) && !isNaN(${t})`);
       break;
     case "number":
       i = a();
       break;
     default:
-      return M_codegen_NOTSURE._`typeof ${t} ${o} ${e}`;
+      return M_codegen_maybe._`typeof ${t} ${o} ${e}`;
   }
-  return r === c.Correct ? i : M_codegen_NOTSURE.not(i);
-  function a(e = M_codegen_NOTSURE.nil) {
-    return M_codegen_NOTSURE.and(
-      M_codegen_NOTSURE._`typeof ${t} == "number"`,
+  return r === c.Correct ? i : M_codegen_maybe.not(i);
+  function a(e = M_codegen_maybe.nil) {
+    return M_codegen_maybe.and(
+      M_codegen_maybe._`typeof ${t} == "number"`,
       e,
-      n ? M_codegen_NOTSURE._`isFinite(${t})` : M_codegen_NOTSURE.nil
+      n ? M_codegen_maybe._`isFinite(${t})` : M_codegen_maybe.nil
     );
   }
 }
 function checkDataTypes(e, t, n, r) {
   if (1 === e.length) return checkDataType(e[0], t, n, r);
   let o;
-  const i = M_ajv_utils_NOTSURE.toHash(e);
+  const i = M_ajv_utils_maybe.toHash(e);
   if (i.array && i.object) {
-    const e = M_codegen_NOTSURE._`typeof ${t} != "object"`;
-    o = i.null ? e : M_codegen_NOTSURE._`!${t} || ${e}`;
+    const e = M_codegen_maybe._`typeof ${t} != "object"`;
+    o = i.null ? e : M_codegen_maybe._`!${t} || ${e}`;
     delete i.null;
     delete i.array;
     delete i.object;
-  } else o = M_codegen_NOTSURE.nil;
+  } else o = M_codegen_maybe.nil;
   if (i.number) {
     delete i.integer;
   }
-  for (const e in i) o = M_codegen_NOTSURE.and(o, checkDataType(e, t, n, r));
+  for (const e in i) o = M_codegen_maybe.and(o, checkDataType(e, t, n, r));
   return o;
 }
 exports.checkDataType = checkDataType;
@@ -198,13 +198,13 @@ const h = {
   message: ({ schema: e }) => `must be ${e}`,
   params: ({ schema: e, schemaValue: t }) =>
     "string" == typeof e
-      ? M_codegen_NOTSURE._`{type: ${e}}`
-      : M_codegen_NOTSURE._`{type: ${t}}`,
+      ? M_codegen_maybe._`{type: ${e}}`
+      : M_codegen_maybe._`{type: ${t}}`,
 };
 function reportTypeError(e) {
   const t = (function (e) {
-    const { gen: t, data: n, schema: r } = e,
-      o = M_ajv_utils_NOTSURE.schemaRefOrVal(e, r, "type");
+    const { gen: t, data: n, schema: r } = e;
+    const o = M_ajv_utils_maybe.schemaRefOrVal(e, r, "type");
     return {
       gen: t,
       keyword: "type",
@@ -217,6 +217,6 @@ function reportTypeError(e) {
       it: e,
     };
   })(e);
-  M_ajv_error_stuff_NOTSURE.reportError(t, h);
+  M_ajv_error_stuff_maybe.reportError(t, h);
 }
 exports.reportTypeError = reportTypeError;

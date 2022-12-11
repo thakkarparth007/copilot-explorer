@@ -2,22 +2,22 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.CopilotPanel = undefined;
-const r = require("vscode"),
-  M_config_stuff = require("config-stuff"),
-  M_copilot_scheme = require("copilot-scheme"),
-  M_completion_context = require("completion-context"),
-  M_copilot_list_doc = require("copilot-list-doc"),
-  M_post_accept_or_reject_tasks = require("post-accept-or-reject-tasks"),
-  M_copilot_vscode_cmds = require("copilot-vscode-cmds");
+const M_vscode = require("vscode");
+const M_config_stuff = require("config-stuff");
+const M_copilot_scheme = require("copilot-scheme");
+const M_completion_context = require("completion-context");
+const M_copilot_list_doc = require("copilot-list-doc");
+const M_post_accept_or_reject_tasks = require("post-accept-or-reject-tasks");
+const M_copilot_vscode_cmds = require("copilot-vscode-cmds");
 exports.CopilotPanel = class {
   constructor(e) {
-    this._onDidChange = new r.EventEmitter();
+    this._onDidChange = new M_vscode.EventEmitter();
     this._documents = new Map();
-    this._editorDecoration = r.window.createTextEditorDecorationType({
+    this._editorDecoration = M_vscode.window.createTextEditorDecorationType({
       textDecoration: "underline",
     });
     this._ctx = e;
-    this._subscriptions = r.workspace.onDidCloseTextDocument((e) => {
+    this._subscriptions = M_vscode.workspace.onDidCloseTextDocument((e) => {
       if (e.isClosed && e.uri.scheme == M_copilot_scheme.CopilotScheme) {
         this._documents.delete(e.uri.toString());
       }
@@ -39,9 +39,9 @@ exports.CopilotPanel = class {
         ? undefined
         : t.model;
     if (n) return n.value;
-    const i = new r.CancellationTokenSource(),
-      [c, l] = M_completion_context.decodeLocation(this._ctx, e),
-      u = await r.workspace.openTextDocument(c);
+    const i = new M_vscode.CancellationTokenSource();
+    const [c, l] = M_completion_context.decodeLocation(this._ctx, e);
+    const u = await M_vscode.workspace.openTextDocument(c);
     n = new M_copilot_list_doc.CopilotListDocument(
       this._ctx,
       e,
@@ -61,25 +61,25 @@ exports.CopilotPanel = class {
   getCodeLens(e) {
     const t = e.model;
     let n = t.numberHeaderLines;
-    const o = t.completionContext.insertPosition,
-      i =
-        M_copilot_list_doc.CopilotListDocument.separator.split("\n").length - 1;
+    const o = t.completionContext.insertPosition;
+    const i =
+      M_copilot_list_doc.CopilotListDocument.separator.split("\n").length - 1;
     return t.solutions().map((a, u) => {
-      const d = new r.Position(n + i, 0),
-        p = new r.Position(n + a.displayLines.length - 1, 0),
-        h = t.savedTelemetryData.extendedBy(
-          {
-            choiceIndex: a.choiceIndex.toString(),
-          },
-          {
-            compCharLen: a.completionText.length,
-            meanProb: a.meanProb,
-            rank: u,
-          }
-        );
+      const d = new M_vscode.Position(n + i, 0);
+      const p = new M_vscode.Position(n + a.displayLines.length - 1, 0);
+      const h = t.savedTelemetryData.extendedBy(
+        {
+          choiceIndex: a.choiceIndex.toString(),
+        },
+        {
+          compCharLen: a.completionText.length,
+          meanProb: a.meanProb,
+          rank: u,
+        }
+      );
       h.extendWithRequestId(a.requestId);
       h.markAsDisplayed();
-      const f = new r.CodeLens(new r.Range(d, p), {
+      const f = new M_vscode.CodeLens(new M_vscode.Range(d, p), {
         title: "Accept Solution",
         tooltip: "Replace code with this solution",
         command: M_copilot_vscode_cmds.CMDAcceptPanelSolution,
@@ -91,7 +91,7 @@ exports.CopilotPanel = class {
             M_completion_context.CompletionType.UNKNOWN_FUNCTION_QUICK_FIX,
           async () => {
             const n = (
-              await r.workspace.openTextDocument(t.targetUri)
+              await M_vscode.workspace.openTextDocument(t.targetUri)
             ).offsetAt(o);
             e.cts.cancel();
             await M_post_accept_or_reject_tasks.postInsertionTasks(

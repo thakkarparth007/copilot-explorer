@@ -1,4 +1,7 @@
-var r, o, i, s;
+var r;
+var o;
+var i;
+var s;
 s = require(8249);
 require(5109);
 o = (r = s).lib.CipherParams;

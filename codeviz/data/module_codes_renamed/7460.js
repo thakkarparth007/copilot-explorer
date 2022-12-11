@@ -1,8 +1,15 @@
-var r, o, i, s, a, c, l, M_random_stuff_NOTSURE;
-M_random_stuff_NOTSURE = require("random-stuff");
+var r;
+var o;
+var i;
+var s;
+var a;
+var c;
+var l;
+var M_random_stuff_maybe;
+M_random_stuff_maybe = require("random-stuff");
 require("crypto-js-x64-core");
 require("sha512");
-o = (r = M_random_stuff_NOTSURE).x64;
+o = (r = M_random_stuff_maybe).x64;
 i = o.Word;
 s = o.WordArray;
 a = r.algo;
@@ -28,4 +35,4 @@ l = a.SHA384 = c.extend({
 });
 r.SHA384 = c._createHelper(l);
 r.HmacSHA384 = c._createHmacHelper(l);
-module.exports = M_random_stuff_NOTSURE.SHA384;
+module.exports = M_random_stuff_maybe.SHA384;

@@ -1,13 +1,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
-var r = require(4953),
-  o = require("stream");
+var r = require(4953);
+var o = require("stream");
 exports.console = {
   versionSpecifier: ">= 4.0.0",
   patch: function (e) {
-    var t = new o.Writable(),
-      n = new o.Writable();
+    var t = new o.Writable();
+    var n = new o.Writable();
     t.write = function (e) {
       if (!e) return !0;
       var t = e.toString();
@@ -26,7 +26,7 @@ exports.console = {
       return !0;
     };
     for (
-      var i = new e.Console(t, n),
+      i = new e.Console(t, n),
         s = function (t) {
           var n = e[t];
           if (n) {
@@ -50,11 +50,17 @@ exports.console = {
           "timeEnd",
           "trace",
           "assert",
-        ];
+        ],
+        undefined;
       a < c.length;
       a++
-    )
+    ) {
+      var i;
+      var s;
+      var a;
+      var c;
       s(c[a]);
+    }
     return e;
   },
 };

@@ -1,103 +1,103 @@
 const t =
-    "object" == typeof performance &&
-    performance &&
-    "function" == typeof performance.now
-      ? performance
-      : Date,
-  n =
-    "function" == typeof AbortController
-      ? AbortController
-      : class {
-          constructor() {
-            this.signal = new i();
-          }
-          abort() {
-            this.signal.dispatchEvent("abort");
-          }
-        },
-  r = "function" == typeof AbortSignal,
-  o = "function" == typeof n.AbortSignal,
-  i = r
-    ? AbortSignal
-    : o
-    ? n.AbortController
+  "object" == typeof performance &&
+  performance &&
+  "function" == typeof performance.now
+    ? performance
+    : Date;
+const n =
+  "function" == typeof AbortController
+    ? AbortController
     : class {
         constructor() {
-          this.aborted = !1;
-          this._listeners = [];
+          this.signal = new i();
         }
-        dispatchEvent(e) {
-          if ("abort" === e) {
-            this.aborted = !0;
-            const t = {
-              type: e,
-              target: this,
-            };
-            this.onabort(t);
-            this._listeners.forEach((e) => e(t), this);
-          }
+        abort() {
+          this.signal.dispatchEvent("abort");
         }
-        onabort() {}
-        addEventListener(e, t) {
-          if ("abort" === e) {
-            this._listeners.push(t);
-          }
+      };
+const r = "function" == typeof AbortSignal;
+const o = "function" == typeof n.AbortSignal;
+const i = r
+  ? AbortSignal
+  : o
+  ? n.AbortController
+  : class {
+      constructor() {
+        this.aborted = !1;
+        this._listeners = [];
+      }
+      dispatchEvent(e) {
+        if ("abort" === e) {
+          this.aborted = !0;
+          const t = {
+            type: e,
+            target: this,
+          };
+          this.onabort(t);
+          this._listeners.forEach((e) => e(t), this);
         }
-        removeEventListener(e, t) {
-          if ("abort" === e) {
-            this._listeners = this._listeners.filter((e) => e !== t);
-          }
+      }
+      onabort() {}
+      addEventListener(e, t) {
+        if ("abort" === e) {
+          this._listeners.push(t);
         }
-      },
-  s = new Set(),
-  a = (e, t) => {
-    const n = `LRU_CACHE_OPTION_${e}`;
-    if (u(n)) {
-      d(n, `${e} option`, `options.${t}`, g);
-    }
-  },
-  c = (e, t) => {
-    const n = `LRU_CACHE_METHOD_${e}`;
-    if (u(n)) {
-      const { prototype: r } = g,
-        { get: o } = Object.getOwnPropertyDescriptor(r, e);
-      d(n, `${e} method`, `cache.${t}()`, o);
-    }
-  },
-  l = (...e) => {
-    if (
-      "object" == typeof process &&
-      process &&
-      "function" == typeof process.emitWarning
-    ) {
-      process.emitWarning(...e);
-    } else {
-      console.error(...e);
-    }
-  },
-  u = (e) => !s.has(e),
-  d = (e, t, n, r) => {
-    s.add(e);
-    l(
-      `The ${t} is deprecated. Please use ${n} instead.`,
-      "DeprecationWarning",
-      e,
-      r
-    );
-  },
-  p = (e) => e && e === Math.floor(e) && e > 0 && isFinite(e),
-  h = (e) =>
-    p(e)
-      ? e <= Math.pow(2, 8)
-        ? Uint8Array
-        : e <= Math.pow(2, 16)
-        ? Uint16Array
-        : e <= Math.pow(2, 32)
-        ? Uint32Array
-        : e <= Number.MAX_SAFE_INTEGER
-        ? f
-        : null
-      : null;
+      }
+      removeEventListener(e, t) {
+        if ("abort" === e) {
+          this._listeners = this._listeners.filter((e) => e !== t);
+        }
+      }
+    };
+const s = new Set();
+const a = (e, t) => {
+  const n = `LRU_CACHE_OPTION_${e}`;
+  if (u(n)) {
+    d(n, `${e} option`, `options.${t}`, g);
+  }
+};
+const c = (e, t) => {
+  const n = `LRU_CACHE_METHOD_${e}`;
+  if (u(n)) {
+    const { prototype: r } = g;
+    const { get: o } = Object.getOwnPropertyDescriptor(r, e);
+    d(n, `${e} method`, `cache.${t}()`, o);
+  }
+};
+const l = (...e) => {
+  if (
+    "object" == typeof process &&
+    process &&
+    "function" == typeof process.emitWarning
+  ) {
+    process.emitWarning(...e);
+  } else {
+    console.error(...e);
+  }
+};
+const u = (e) => !s.has(e);
+const d = (e, t, n, r) => {
+  s.add(e);
+  l(
+    `The ${t} is deprecated. Please use ${n} instead.`,
+    "DeprecationWarning",
+    e,
+    r
+  );
+};
+const p = (e) => e && e === Math.floor(e) && e > 0 && isFinite(e);
+const h = (e) =>
+  p(e)
+    ? e <= Math.pow(2, 8)
+      ? Uint8Array
+      : e <= Math.pow(2, 16)
+      ? Uint16Array
+      : e <= Math.pow(2, 32)
+      ? Uint32Array
+      : e <= Number.MAX_SAFE_INTEGER
+      ? f
+      : null
+    : null;
 class f extends Array {
   constructor(e) {
     super(e);
@@ -121,25 +121,25 @@ class m {
 class g {
   constructor(e = {}) {
     const {
-        max: t = 0,
-        ttl: n,
-        ttlResolution: r = 1,
-        ttlAutopurge: o,
-        updateAgeOnGet: i,
-        updateAgeOnHas: c,
-        allowStale: d,
-        dispose: f,
-        disposeAfter: _,
-        noDisposeOnSet: y,
-        noUpdateTTL: v,
-        maxSize: b = 0,
-        sizeCalculation: w,
-        fetchMethod: x,
-        fetchContext: E,
-        noDeleteOnFetchRejection: C,
-        noDeleteOnStaleGet: S,
-      } = e,
-      { length: T, maxAge: k, stale: I } = e instanceof g ? {} : e;
+      max: t = 0,
+      ttl: n,
+      ttlResolution: r = 1,
+      ttlAutopurge: o,
+      updateAgeOnGet: i,
+      updateAgeOnHas: c,
+      allowStale: d,
+      dispose: f,
+      disposeAfter: _,
+      noDisposeOnSet: y,
+      noUpdateTTL: v,
+      maxSize: b = 0,
+      sizeCalculation: w,
+      fetchMethod: x,
+      fetchContext: E,
+      noDeleteOnFetchRejection: C,
+      noDeleteOnStaleGet: S,
+    } = e;
+    const { length: T, maxAge: k, stale: I } = e instanceof g ? {} : e;
     if (0 !== t && !p(t))
       throw new TypeError("max option must be a nonnegative integer");
     const P = t ? h(t) : Array;
@@ -389,11 +389,11 @@ class g {
     for (const n of this.indexes({
       allowStale: !0,
     })) {
-      const r = this.keyList[n],
-        o = this.valList[n],
-        i = {
-          value: this.isBackgroundFetch(o) ? o.__staleWhileFetching : o,
-        };
+      const r = this.keyList[n];
+      const o = this.valList[n];
+      const i = {
+        value: this.isBackgroundFetch(o) ? o.__staleWhileFetching : o,
+      };
       if (this.ttls) {
         i.ttl = this.ttls[n];
         const e = t.now() - this.starts[n];
@@ -490,9 +490,9 @@ class g {
     }
   }
   evict(e) {
-    const t = this.head,
-      n = this.keyList[t],
-      r = this.valList[t];
+    const t = this.head;
+    const n = this.keyList[t];
+    const r = this.valList[t];
     if (this.isBackgroundFetch(r)) {
       r.__abortController.abort();
     } else {
@@ -528,28 +528,28 @@ class g {
   backgroundFetch(e, t, r, o) {
     const i = undefined === t ? undefined : this.valList[t];
     if (this.isBackgroundFetch(i)) return i;
-    const s = new n(),
-      a = {
-        signal: s.signal,
-        options: r,
-        context: o,
-      },
-      c = new Promise((t) => t(this.fetchMethod(e, i, a))).then(
-        (t) => (s.signal.aborted || this.set(e, t, a.options), t),
-        (n) => {
-          if (this.valList[t] === c) {
-            if (
-              r.noDeleteOnFetchRejection &&
-              undefined !== c.__staleWhileFetching
-            ) {
-              this.valList[t] = c.__staleWhileFetching;
-            } else {
-              this.delete(e);
-            }
+    const s = new n();
+    const a = {
+      signal: s.signal,
+      options: r,
+      context: o,
+    };
+    const c = new Promise((t) => t(this.fetchMethod(e, i, a))).then(
+      (t) => (s.signal.aborted || this.set(e, t, a.options), t),
+      (n) => {
+        if (this.valList[t] === c) {
+          if (
+            r.noDeleteOnFetchRejection &&
+            undefined !== c.__staleWhileFetching
+          ) {
+            this.valList[t] = c.__staleWhileFetching;
+          } else {
+            this.delete(e);
           }
-          if (c.__returned === c) throw n;
         }
-      );
+        if (c.__returned === c) throw n;
+      }
+    );
     c.__abortController = s;
     c.__staleWhileFetching = i;
     c.__returned = null;
@@ -638,8 +638,8 @@ class g {
   ) {
     const o = this.keyMap.get(e);
     if (undefined !== o) {
-      const i = this.valList[o],
-        s = this.isBackgroundFetch(i);
+      const i = this.valList[o];
+      const s = this.isBackgroundFetch(i);
       if (this.isStale(o))
         return s
           ? t
@@ -756,8 +756,8 @@ class g {
     ((e, t) => {
       const n = "LRU_CACHE_PROPERTY_length";
       if (u(n)) {
-        const { prototype: t } = g,
-          { get: r } = Object.getOwnPropertyDescriptor(t, e);
+        const { prototype: t } = g;
+        const { get: r } = Object.getOwnPropertyDescriptor(t, e);
         d(n, "length property", "cache.size", r);
       }
     })("length");

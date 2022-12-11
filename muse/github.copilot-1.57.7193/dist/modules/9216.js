@@ -1,6 +1,6 @@
 function n(e, r, o, i, s, a) {
-  var c = Math.floor((r - e) / 2) + e,
-    l = s(o, i[c], !0);
+  var c = Math.floor((r - e) / 2) + e;
+  var l = s(o, i[c], !0);
   return 0 === l
     ? c
     : l > 0

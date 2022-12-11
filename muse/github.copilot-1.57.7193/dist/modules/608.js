@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 var r = require(5290);
 function getSamplingHashCode(e) {
-  var t = 2147483647,
-    n = 5381;
+  var t = 2147483647;
+  var n = 5381;
   if (!e) return 0;
   for (; e.length < 8; ) e += e;
   for (var r = 0; r < e.length; r++)

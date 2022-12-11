@@ -1,13 +1,13 @@
-const { AbortSignal: r } = require(6829),
-  { Body: o, cloneStream: i, guessContentType: s } = require(5600),
-  { Headers: a } = require(9872),
-  { isPlainObject: c } = require(4544),
-  { isFormData: l, FormDataSerializer: u } = require(9407),
-  d = Symbol("Request internals");
+const { AbortSignal: r } = require(6829);
+const { Body: o, cloneStream: i, guessContentType: s } = require(5600);
+const { Headers: a } = require(9872);
+const { isPlainObject: c } = require(4544);
+const { isFormData: l, FormDataSerializer: u } = require(9407);
+const d = Symbol("Request internals");
 class p extends o {
   constructor(e, t = {}) {
-    const n = e instanceof p ? e : null,
-      o = n ? new URL(n.url) : new URL(e);
+    const n = e instanceof p ? e : null;
+    const o = n ? new URL(n.url) : new URL(e);
     let h = t.method || (n && n.method) || "GET";
     h = h.toUpperCase();
     if (

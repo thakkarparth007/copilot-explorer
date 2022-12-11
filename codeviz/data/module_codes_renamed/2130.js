@@ -1,21 +1,21 @@
-const r = require("os"),
-  M_has_flag_NOTSURE = require("has-flag"),
-  i = process.env;
+const M_os = require("os");
+const M_has_flag_maybe = require("has-flag");
+const i = process.env;
 let s;
 function a(e) {
   const t = (function (e) {
     if (!1 === s) return 0;
     if (
-      M_has_flag_NOTSURE("color=16m") ||
-      M_has_flag_NOTSURE("color=full") ||
-      M_has_flag_NOTSURE("color=truecolor")
+      M_has_flag_maybe("color=16m") ||
+      M_has_flag_maybe("color=full") ||
+      M_has_flag_maybe("color=truecolor")
     )
       return 3;
-    if (M_has_flag_NOTSURE("color=256")) return 2;
+    if (M_has_flag_maybe("color=256")) return 2;
     if (e && !e.isTTY && !0 !== s) return 0;
     const t = s ? 1 : 0;
     if ("win32" === process.platform) {
-      const e = r.release().split(".");
+      const e = M_os.release().split(".");
       return Number(process.versions.node.split(".")[0]) >= 8 &&
         Number(e[0]) >= 10 &&
         Number(e[2]) >= 10586
@@ -62,17 +62,17 @@ function a(e) {
   })(t);
 }
 if (
-  M_has_flag_NOTSURE("no-color") ||
-  M_has_flag_NOTSURE("no-colors") ||
-  M_has_flag_NOTSURE("color=false")
+  M_has_flag_maybe("no-color") ||
+  M_has_flag_maybe("no-colors") ||
+  M_has_flag_maybe("color=false")
 ) {
   s = !1;
 } else {
   if (
-    M_has_flag_NOTSURE("color") ||
-    M_has_flag_NOTSURE("colors") ||
-    M_has_flag_NOTSURE("color=true") ||
-    M_has_flag_NOTSURE("color=always")
+    M_has_flag_maybe("color") ||
+    M_has_flag_maybe("colors") ||
+    M_has_flag_maybe("color=true") ||
+    M_has_flag_maybe("color=always")
   ) {
     s = !0;
   }

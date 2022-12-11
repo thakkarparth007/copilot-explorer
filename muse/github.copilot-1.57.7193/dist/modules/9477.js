@@ -2,9 +2,9 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.initProxyEnvironment = undefined;
-const r = require("net"),
-  o = require("url"),
-  i = require("vscode");
+const r = require("net");
+const o = require("url");
+const i = require("vscode");
 exports.initProxyEnvironment = function (e, t) {
   let n =
     i.workspace.getConfiguration("http").get("proxy") ||
@@ -14,9 +14,9 @@ exports.initProxyEnvironment = function (e, t) {
       );
     })(t);
   if (n) {
-    const t = {},
-      s = i.workspace.getConfiguration("http").get("proxyAuthorization"),
-      a = i.workspace.getConfiguration("http").get("proxyStrictSSL", !0);
+    const t = {};
+    const s = i.workspace.getConfiguration("http").get("proxyAuthorization");
+    const a = i.workspace.getConfiguration("http").get("proxyStrictSSL", !0);
     if (s) {
       t["Proxy-Authorization"] = s;
     }
@@ -24,8 +24,8 @@ exports.initProxyEnvironment = function (e, t) {
     const l = n.split(":");
     if (l.length > 2) {
       if (n.includes("[")) {
-        const e = n.indexOf("["),
-          t = n.indexOf("]");
+        const e = n.indexOf("[");
+        const t = n.indexOf("]");
         c = n.substring(e + 1, t);
       }
     } else c = l[0];
@@ -44,18 +44,18 @@ exports.initProxyEnvironment = function (e, t) {
       }
     }
     const {
-        hostname: d,
-        port: p,
-        username: h,
-        password: f,
-      } = (function (e) {
-        try {
-          return new o.URL(e);
-        } catch (t) {
-          throw new Error(`Invalid proxy URL: '${e}'`);
-        }
-      })(n),
-      m = h && f && `${h}:${f}`;
+      hostname: d,
+      port: p,
+      username: h,
+      password: f,
+    } = (function (e) {
+      try {
+        return new o.URL(e);
+      } catch (t) {
+        throw new Error(`Invalid proxy URL: '${e}'`);
+      }
+    })(n);
+    const m = h && f && `${h}:${f}`;
     e.proxySettings = {
       host: d,
       port: parseInt(p),

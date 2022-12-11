@@ -1,5 +1,5 @@
-const r = require("tty"),
-  o = require("util");
+const M_tty = require("tty");
+const M_util = require("util");
 exports.init = function (e) {
   e.inspectOpts = {};
   const n = Object.keys(exports.inspectOpts);
@@ -7,14 +7,14 @@ exports.init = function (e) {
     e.inspectOpts[n[r]] = exports.inspectOpts[n[r]];
 };
 exports.log = function (...e) {
-  return process.stderr.write(o.format(...e) + "\n");
+  return process.stderr.write(M_util.format(...e) + "\n");
 };
 exports.formatArgs = function (n) {
   const { namespace: r, useColors: o } = this;
   if (o) {
-    const t = this.color,
-      o = "[3" + (t < 8 ? t : "8;5;" + t),
-      i = `  ${o};1m${r} [0m`;
+    const t = this.color;
+    const o = "[3" + (t < 8 ? t : "8;5;" + t);
+    const i = `  ${o};1m${r} [0m`;
     n[0] = i + n[0].split("\n").join("\n" + i);
     n.push(o + "m+" + module.exports.humanize(this.diff) + "[0m");
   } else
@@ -37,16 +37,16 @@ exports.load = function () {
 exports.useColors = function () {
   return "colors" in exports.inspectOpts
     ? Boolean(exports.inspectOpts.colors)
-    : r.isatty(process.stderr.fd);
+    : M_tty.isatty(process.stderr.fd);
 };
-exports.destroy = o.deprecate(() => {},
+exports.destroy = M_util.deprecate(() => {},
 "Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.");
 exports.colors = [6, 2, 3, 4, 5, 1];
 try {
-  const M_color_support_NOTSURE = require("color-support");
+  const M_color_support_maybe = require("color-support");
   if (
-    M_color_support_NOTSURE &&
-    (M_color_support_NOTSURE.stderr || M_color_support_NOTSURE).level >= 2
+    M_color_support_maybe &&
+    (M_color_support_maybe.stderr || M_color_support_maybe).level >= 2
   ) {
     exports.colors = [
       20, 21, 26, 27, 32, 33, 38, 39, 40, 41, 42, 43, 44, 45, 56, 57, 62, 63,
@@ -76,13 +76,12 @@ module.exports = require("debug")(exports);
 const { formatters: i } = module.exports;
 i.o = function (e) {
   this.inspectOpts.colors = this.useColors;
-  return o
-    .inspect(e, this.inspectOpts)
+  return M_util.inspect(e, this.inspectOpts)
     .split("\n")
     .map((e) => e.trim())
     .join(" ");
 };
 i.O = function (e) {
   this.inspectOpts.colors = this.useColors;
-  return o.inspect(e, this.inspectOpts);
+  return M_util.inspect(e, this.inspectOpts);
 };

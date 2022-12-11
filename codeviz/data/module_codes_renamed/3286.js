@@ -8,8 +8,8 @@ exports.normalizeIndentCharacter = function (e, t, n) {
     return e
       .split("\n")
       .map((e) => {
-        const t = e.replace(r, ""),
-          o = e.length - t.length;
+        const t = e.replace(r, "");
+        const o = e.length - t.length;
         return n(o) + t;
       })
       .join("\n");

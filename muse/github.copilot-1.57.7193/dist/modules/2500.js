@@ -1,7 +1,7 @@
-const { Readable: r } = require("stream"),
-  { Headers: o } = require(9872),
-  { Response: i } = require(2981),
-  s = Symbol("CacheableResponse internals");
+const { Readable: r } = require("stream");
+const { Headers: o } = require(9872);
+const { Response: i } = require(2981);
+const s = Symbol("CacheableResponse internals");
 class a extends i {
   constructor(e, t) {
     super(e, t);
@@ -66,16 +66,16 @@ class a extends i {
 }
 module.exports = {
   cacheableResponse: async (e) => {
-    const t = await e.buffer(),
-      {
-        url: n,
-        status: r,
-        statusText: o,
-        headers: i,
-        httpVersion: s,
-        decoded: c,
-        counter: l,
-      } = e;
+    const t = await e.buffer();
+    const {
+      url: n,
+      status: r,
+      statusText: o,
+      headers: i,
+      httpVersion: s,
+      decoded: c,
+      counter: l,
+    } = e;
     return new a(t, {
       url: n,
       status: r,

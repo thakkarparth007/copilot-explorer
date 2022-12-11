@@ -2,10 +2,10 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.CopilotListDocument = undefined;
-const M_debouncer = require("debouncer"),
-  M_config_stuff = require("config-stuff"),
-  M_telemetry_stuff = require("telemetry-stuff"),
-  M_completion_normalizer = require("completion-normalizer");
+const M_debouncer = require("debouncer");
+const M_config_stuff = require("config-stuff");
+const M_telemetry_stuff = require("telemetry-stuff");
+const M_completion_normalizer = require("completion-normalizer");
 class CopilotListDocument {
   constructor(e, t, n, s, a, c) {
     this.targetDocument = n;

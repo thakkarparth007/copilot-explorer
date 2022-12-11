@@ -2,14 +2,14 @@ const r = require("timers");
 function o() {}
 function i() {}
 function s() {}
-const a = new Map(),
-  c = new Map(),
-  l = new Map();
-let u = null,
-  d = !1;
+const a = new Map();
+const c = new Map();
+const l = new Map();
+let u = null;
+let d = !1;
 function p(e, t, n, o, i, s, a) {
-  const c = r[n],
-    l = r[o];
+  const c = r[n];
+  const l = r[o];
   r[n] = function () {
     if (!t.enabled) return c.apply(r, arguments);
     const n = new Array(arguments.length);
@@ -17,8 +17,8 @@ function p(e, t, n, o, i, s, a) {
     const o = n[0];
     if ("function" != typeof o)
       throw new TypeError('"callback" argument must be a function');
-    const l = new i(),
-      p = --t.counter;
+    const l = new i();
+    const p = --t.counter;
     let h;
     e.init.call(l, p, 0, null, null);
     n[0] = function () {

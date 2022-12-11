@@ -5,9 +5,9 @@ exports.getEngineURL =
   exports.TEST_ENGINE_PATHS =
   exports.OPENAI_PROXY_HOST =
     undefined;
-const r = require(1133),
-  o = require(9189),
-  i = require(70);
+const r = require(1133);
+const o = require(9189);
+const i = require(70);
 exports.OPENAI_PROXY_HOST = "https://copilot-proxy.githubusercontent.com";
 const s = "/v1/engines/copilot-codex";
 exports.TEST_ENGINE_PATHS = [s];

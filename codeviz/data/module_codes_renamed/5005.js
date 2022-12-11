@@ -6,14 +6,14 @@ exports.validateKeywordUsage =
   exports.funcKeywordCode =
   exports.macroKeywordCode =
     undefined;
-const M_codegen_NOTSURE = require("codegen"),
-  M_json_schema_default_names_NOTSURE = require("json-schema-default-names"),
-  M_validate_properties_NOTSURE = require("validate-properties"),
-  M_ajv_error_stuff_NOTSURE = require("ajv-error-stuff");
+const M_codegen_maybe = require("codegen");
+const M_json_schema_default_names_maybe = require("json-schema-default-names");
+const M_validate_properties_maybe = require("validate-properties");
+const M_ajv_error_stuff_maybe = require("ajv-error-stuff");
 function a(e) {
   const { gen: t, data: n, it: o } = e;
   t.if(o.parentData, () =>
-    t.assign(n, M_codegen_NOTSURE._`${o.parentData}[${o.parentDataProperty}]`)
+    t.assign(n, M_codegen_maybe._`${o.parentData}[${o.parentDataProperty}]`)
   );
 }
 function c(e, t, n) {
@@ -26,14 +26,14 @@ function c(e, t, n) {
         }
       : {
           ref: n,
-          code: M_codegen_NOTSURE.stringify(n),
+          code: M_codegen_maybe.stringify(n),
         }
   );
 }
 exports.macroKeywordCode = function (e, t) {
-  const { gen: n, keyword: o, schema: i, parentSchema: s, it: a } = e,
-    l = t.macro.call(a.self, i, s, a),
-    u = c(n, o, l);
+  const { gen: n, keyword: o, schema: i, parentSchema: s, it: a } = e;
+  const l = t.macro.call(a.self, i, s, a);
+  const u = c(n, o, l);
   if (!1 !== a.opts.validateSchema) {
     a.self.validateSchema(l, !0);
   }
@@ -41,7 +41,7 @@ exports.macroKeywordCode = function (e, t) {
   e.subschema(
     {
       schema: l,
-      schemaPath: M_codegen_NOTSURE.nil,
+      schemaPath: M_codegen_maybe.nil,
       errSchemaPath: `${a.errSchemaPath}/${o}`,
       topSchemaRef: u,
       compositeRule: !0,
@@ -56,19 +56,17 @@ exports.funcKeywordCode = function (e, t) {
   !(function ({ schemaEnv: e }, t) {
     if (t.async && !e.$async) throw new Error("async keyword in sync schema");
   })(f, t);
-  const m = !h && t.compile ? t.compile.call(f.self, d, p, f) : t.validate,
-    g = c(l, u, m),
-    _ = l.let("valid");
-  function y(
-    n = t.async ? M_codegen_NOTSURE._`await ` : M_codegen_NOTSURE.nil
-  ) {
+  const m = !h && t.compile ? t.compile.call(f.self, d, p, f) : t.validate;
+  const g = c(l, u, m);
+  const _ = l.let("valid");
+  function y(n = t.async ? M_codegen_maybe._`await ` : M_codegen_maybe.nil) {
     const s = f.opts.passContext
-        ? M_json_schema_default_names_NOTSURE.default.this
-        : M_json_schema_default_names_NOTSURE.default.self,
-      a = !(("compile" in t && !h) || !1 === t.schema);
+      ? M_json_schema_default_names_maybe.default.this
+      : M_json_schema_default_names_maybe.default.self;
+    const a = !(("compile" in t && !h) || !1 === t.schema);
     l.assign(
       _,
-      M_codegen_NOTSURE._`${n}${M_validate_properties_NOTSURE.callValidateCode(
+      M_codegen_maybe._`${n}${M_validate_properties_maybe.callValidateCode(
         e,
         g,
         s,
@@ -80,7 +78,7 @@ exports.funcKeywordCode = function (e, t) {
   function v(e) {
     var n;
     l.if(
-      M_codegen_NOTSURE.not(null !== (n = t.valid) && undefined !== n ? n : _),
+      M_codegen_maybe.not(null !== (n = t.valid) && undefined !== n ? n : _),
       e
     );
   }
@@ -96,20 +94,20 @@ exports.funcKeywordCode = function (e, t) {
         ? (function () {
             const e = l.let("ruleErrs", null);
             l.try(
-              () => y(M_codegen_NOTSURE._`await `),
+              () => y(M_codegen_maybe._`await `),
               (t) =>
                 l.assign(_, !1).if(
-                  M_codegen_NOTSURE._`${t} instanceof ${f.ValidationError}`,
-                  () => l.assign(e, M_codegen_NOTSURE._`${t}.errors`),
+                  M_codegen_maybe._`${t} instanceof ${f.ValidationError}`,
+                  () => l.assign(e, M_codegen_maybe._`${t}.errors`),
                   () => l.throw(t)
                 )
             );
             return e;
           })()
         : (function () {
-            const e = M_codegen_NOTSURE._`${g}.errors`;
+            const e = M_codegen_maybe._`${g}.errors`;
             l.assign(e, null);
-            y(M_codegen_NOTSURE.nil);
+            y(M_codegen_maybe.nil);
             return e;
           })();
       if (t.modifying) {
@@ -119,16 +117,16 @@ exports.funcKeywordCode = function (e, t) {
         (function (e, t) {
           const { gen: n } = e;
           n.if(
-            M_codegen_NOTSURE._`Array.isArray(${t})`,
+            M_codegen_maybe._`Array.isArray(${t})`,
             () => {
               n.assign(
-                M_json_schema_default_names_NOTSURE.default.vErrors,
-                M_codegen_NOTSURE._`${M_json_schema_default_names_NOTSURE.default.vErrors} === null ? ${t} : ${M_json_schema_default_names_NOTSURE.default.vErrors}.concat(${t})`
+                M_json_schema_default_names_maybe.default.vErrors,
+                M_codegen_maybe._`${M_json_schema_default_names_maybe.default.vErrors} === null ? ${t} : ${M_json_schema_default_names_maybe.default.vErrors}.concat(${t})`
               ).assign(
-                M_json_schema_default_names_NOTSURE.default.errors,
-                M_codegen_NOTSURE._`${M_json_schema_default_names_NOTSURE.default.vErrors}.length`
+                M_json_schema_default_names_maybe.default.errors,
+                M_codegen_maybe._`${M_json_schema_default_names_maybe.default.vErrors}.length`
               );
-              M_ajv_error_stuff_NOTSURE.extendErrors(e);
+              M_ajv_error_stuff_maybe.extendErrors(e);
             },
             () => e.error()
           );

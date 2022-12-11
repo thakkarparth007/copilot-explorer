@@ -1,49 +1,49 @@
-var r,
-  o =
-    (this && this.__extends) ||
-    ((r =
-      Object.setPrototypeOf ||
-      ({
-        __proto__: [],
-      } instanceof Array &&
-        function (e, t) {
-          e.__proto__ = t;
-        }) ||
+var r;
+var o =
+  (this && this.__extends) ||
+  ((r =
+    Object.setPrototypeOf ||
+    ({
+      __proto__: [],
+    } instanceof Array &&
       function (e, t) {
-        for (var n in t)
-          if (t.hasOwnProperty(n)) {
-            e[n] = t[n];
-          }
-      }),
+        e.__proto__ = t;
+      }) ||
     function (e, t) {
-      function n() {
-        this.constructor = e;
-      }
-      r(e, t);
-      e.prototype =
-        null === t ? Object.create(t) : ((n.prototype = t.prototype), new n());
-    }),
-  i =
-    (this && this.__rest) ||
-    function (e, t) {
-      var n = {};
-      for (var r in e)
-        if (Object.prototype.hasOwnProperty.call(e, r) && t.indexOf(r) < 0) {
-          n[r] = e[r];
+      for (var n in t)
+        if (t.hasOwnProperty(n)) {
+          e[n] = t[n];
         }
-      if (null != e && "function" == typeof Object.getOwnPropertySymbols) {
-        var o = 0;
-        for (r = Object.getOwnPropertySymbols(e); o < r.length; o++)
-          if (t.indexOf(r[o]) < 0) {
-            n[r[o]] = e[r[o]];
-          }
+    }),
+  function (e, t) {
+    function n() {
+      this.constructor = e;
+    }
+    r(e, t);
+    e.prototype =
+      null === t ? Object.create(t) : ((n.prototype = t.prototype), new n());
+  });
+var i =
+  (this && this.__rest) ||
+  function (e, t) {
+    var n = {};
+    for (var r in e)
+      if (Object.prototype.hasOwnProperty.call(e, r) && t.indexOf(r) < 0) {
+        n[r] = e[r];
       }
-      return n;
-    };
+    if (null != e && "function" == typeof Object.getOwnPropertySymbols) {
+      var o = 0;
+      for (r = Object.getOwnPropertySymbols(e); o < r.length; o++)
+        if (t.indexOf(r[o]) < 0) {
+          n[r[o]] = e[r[o]];
+        }
+    }
+    return n;
+  };
 Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
-var M_channel_NOTSURE = require("channel");
+var M_channel_maybe = require("channel");
 exports.winston3 = {
   versionSpecifier: "3.x",
   patch: function (e) {
@@ -55,10 +55,10 @@ exports.winston3 = {
       }
       o(t, e);
       t.prototype.log = function (e, t) {
-        var n = e.message,
-          r = e.level,
-          o = e.meta,
-          a = i(e, ["message", "level", "meta"]);
+        var n = e.message;
+        var r = e.level;
+        var o = e.meta;
+        var a = i(e, ["message", "level", "meta"]);
         r = "function" == typeof Symbol.for ? e[Symbol.for("level")] : r;
         n = e instanceof Error ? e : n;
         var c = (function (e, t) {
@@ -72,7 +72,7 @@ exports.winston3 = {
           if (a.hasOwnProperty(l)) {
             o[l] = a[l];
           }
-        M_channel_NOTSURE.channel.publish("winston", {
+        M_channel_maybe.channel.publish("winston", {
           message: n,
           level: r,
           levelKind: c,
@@ -83,8 +83,8 @@ exports.winston3 = {
       return t;
     })(e.Transport);
     function n() {
-      var n,
-        r = arguments[0].levels || e.config.npm.levels;
+      var n;
+      var r = arguments[0].levels || e.config.npm.levels;
       for (var o in r)
         if (r.hasOwnProperty(o)) {
           n = undefined === n || r[o] > r[n] ? o : n;
@@ -97,8 +97,8 @@ exports.winston3 = {
     }
     var r = e.createLogger;
     e.createLogger = function () {
-      var o,
-        i = arguments[0].levels || e.config.npm.levels;
+      var o;
+      var i = arguments[0].levels || e.config.npm.levels;
       for (var s in i)
         if (i.hasOwnProperty(s)) {
           o = undefined === o || i[s] > i[o] ? s : o;
@@ -128,24 +128,24 @@ exports.winston3 = {
 exports.winston2 = {
   versionSpecifier: "2.x",
   patch: function (e) {
-    var t,
-      n = e.Logger.prototype.log,
-      r = function (n, r, o) {
-        var i;
-        i =
-          t === e.config.npm.levels
-            ? "npm"
-            : t === e.config.syslog.levels
-            ? "syslog"
-            : "unknown";
-        M_channel_NOTSURE.channel.publish("winston", {
-          level: n,
-          message: r,
-          meta: o,
-          levelKind: i,
-        });
-        return r;
-      };
+    var t;
+    var n = e.Logger.prototype.log;
+    var r = function (n, r, o) {
+      var i;
+      i =
+        t === e.config.npm.levels
+          ? "npm"
+          : t === e.config.syslog.levels
+          ? "syslog"
+          : "unknown";
+      M_channel_maybe.channel.publish("winston", {
+        level: n,
+        message: r,
+        meta: o,
+        levelKind: i,
+      });
+      return r;
+    };
     e.Logger.prototype.log = function () {
       t = this.levels;
       if (this.filters && 0 !== this.filters.length) {
@@ -164,6 +164,6 @@ exports.winston2 = {
   },
 };
 exports.enable = function () {
-  M_channel_NOTSURE.channel.registerMonkeyPatch("winston", exports.winston2);
-  M_channel_NOTSURE.channel.registerMonkeyPatch("winston", exports.winston3);
+  M_channel_maybe.channel.registerMonkeyPatch("winston", exports.winston2);
+  M_channel_maybe.channel.registerMonkeyPatch("winston", exports.winston3);
 };

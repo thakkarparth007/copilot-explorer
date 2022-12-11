@@ -1,5 +1,5 @@
-var r = require(4953),
-  o = [];
+var r = require(4953);
+var o = [];
 exports.qP = function (e) {
   e.data.event.commandName;
   o.forEach(function (t) {

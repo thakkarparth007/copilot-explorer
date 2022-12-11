@@ -4,9 +4,9 @@ function o(e) {
   if (/^([a-z\d-]{1,39})\/([-\.\w]{1,100})$/i.test(e)) {
     e = "https://github.com/" + e;
   }
-  var t = r(e),
-    n = t.resource.split("."),
-    i = null;
+  var t = r(e);
+  var n = t.resource.split(".");
+  var i = null;
   switch (
     ((t.toString = function (e) {
       return o.stringify(this, e);
@@ -105,13 +105,13 @@ function o(e) {
     default:
       var s = (i = t.name.split("/")).length - 1;
       if (i.length >= 2) {
-        var a = i.indexOf("-", 2),
-          c = i.indexOf("blob", 2),
-          l = i.indexOf("tree", 2),
-          u = i.indexOf("commit", 2),
-          d = i.indexOf("src", 2),
-          p = i.indexOf("raw", 2),
-          h = i.indexOf("edit", 2);
+        var a = i.indexOf("-", 2);
+        var c = i.indexOf("blob", 2);
+        var l = i.indexOf("tree", 2);
+        var u = i.indexOf("commit", 2);
+        var d = i.indexOf("src", 2);
+        var p = i.indexOf("raw", 2);
+        var h = i.indexOf("edit", 2);
         s =
           a > 0
             ? a - 1
@@ -200,9 +200,9 @@ o.stringify = function (e, t) {
   t =
     t ||
     (e.protocols && e.protocols.length ? e.protocols.join("+") : e.protocol);
-  var n = e.port ? ":" + e.port : "",
-    r = e.user || "git",
-    o = e.git_suffix ? ".git" : "";
+  var n = e.port ? ":" + e.port : "";
+  var r = e.user || "git";
+  var o = e.git_suffix ? ".git" : "";
   switch (t) {
     case "ssh":
       return n

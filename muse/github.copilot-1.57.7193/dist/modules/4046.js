@@ -1,9 +1,9 @@
-const r = require("util"),
-  o = require("assert"),
-  i = require(9867),
-  s = require(3223),
-  a = "error@context",
-  c = [];
+const r = require("util");
+const o = require("assert");
+const i = require(9867);
+const s = require(3223);
+const a = "error@context";
+const c = [];
 for (let e in s.providers) c[s.providers[e]] = e;
 const l = process.env.DEBUG_CLS_HOOKED;
 let u = -1;
@@ -409,8 +409,8 @@ d.prototype.exit = function (e) {
 };
 d.prototype.bindEmitter = function (e) {
   o.ok(e.on && e.addListener && e.emit, "can only bind real EEs");
-  let t = this,
-    n = "context@" + this.name;
+  let t = this;
+  let n = "context@" + this.name;
   i(
     e,
     function (e) {
@@ -426,8 +426,8 @@ d.prototype.bindEmitter = function (e) {
     },
     function (e) {
       if (!e || !e["cls@contexts"]) return e;
-      let t = e,
-        n = e["cls@contexts"];
+      let t = e;
+      let n = e["cls@contexts"];
       Object.keys(n).forEach(function (e) {
         let r = n[e];
         t = r.namespace.bind(t, r.context);

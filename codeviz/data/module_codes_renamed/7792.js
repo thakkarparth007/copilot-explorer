@@ -1,7 +1,12 @@
-var r, o, i, s, a, M_random_stuff_NOTSURE;
-M_random_stuff_NOTSURE = require("random-stuff");
+var r;
+var o;
+var i;
+var s;
+var a;
+var M_random_stuff_maybe;
+M_random_stuff_maybe = require("random-stuff");
 require("sha256");
-o = (r = M_random_stuff_NOTSURE).lib.WordArray;
+o = (r = M_random_stuff_maybe).lib.WordArray;
 i = r.algo;
 s = i.SHA256;
 a = i.SHA224 = s.extend({
@@ -19,4 +24,4 @@ a = i.SHA224 = s.extend({
 });
 r.SHA224 = s._createHelper(a);
 r.HmacSHA224 = s._createHmacHelper(a);
-module.exports = M_random_stuff_NOTSURE.SHA224;
+module.exports = M_random_stuff_maybe.SHA224;

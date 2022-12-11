@@ -14,8 +14,8 @@ module.exports = function (e, t) {
     })(e)
   );
   for (var r = 0; r < t.length; r++) {
-    var o,
-      i = t[r];
+    var o;
+    var i = t[r];
     try {
       o = i.toString();
     } catch (e) {

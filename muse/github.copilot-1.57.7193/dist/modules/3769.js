@@ -1,7 +1,7 @@
 const { EventEmitter: r } = require("events");
 module.exports = () => {
-  const e = {},
-    t = new r();
+  const e = {};
+  const t = new r();
   t.setMaxListeners(0);
   return {
     acquire: (n) =>

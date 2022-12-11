@@ -100,13 +100,13 @@ exports.terminate = function () {
   }
 };
 const a = [
-    "getFunctionPositions",
-    "isEmptyBlockStart",
-    "isBlockBodyFinished",
-    "getNodeStart",
-    "parsesWithoutError",
-  ],
-  c = ["isSupportedLanguageId", "getBlockCloseToken"];
+  "getFunctionPositions",
+  "isEmptyBlockStart",
+  "isBlockBodyFinished",
+  "getNodeStart",
+  "parsesWithoutError",
+];
+const c = ["isSupportedLanguageId", "getBlockCloseToken"];
 function l(e, t, n) {
   return function (...r) {
     const a = s++;

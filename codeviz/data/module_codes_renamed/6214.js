@@ -1,25 +1,25 @@
-const t = new Set([200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501]),
-  n = new Set([
-    200, 203, 204, 300, 301, 302, 303, 307, 308, 404, 405, 410, 414, 501,
-  ]),
-  r = new Set([500, 502, 503, 504]),
-  o = {
-    date: !0,
-    connection: !0,
-    "keep-alive": !0,
-    "proxy-authenticate": !0,
-    "proxy-authorization": !0,
-    te: !0,
-    trailer: !0,
-    "transfer-encoding": !0,
-    upgrade: !0,
-  },
-  i = {
-    "content-length": !0,
-    "content-encoding": !0,
-    "transfer-encoding": !0,
-    "content-range": !0,
-  };
+const t = new Set([200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501]);
+const n = new Set([
+  200, 203, 204, 300, 301, 302, 303, 307, 308, 404, 405, 410, 414, 501,
+]);
+const r = new Set([500, 502, 503, 504]);
+const o = {
+  date: !0,
+  connection: !0,
+  "keep-alive": !0,
+  "proxy-authenticate": !0,
+  "proxy-authorization": !0,
+  te: !0,
+  trailer: !0,
+  "transfer-encoding": !0,
+  upgrade: !0,
+};
+const i = {
+  "content-length": !0,
+  "content-encoding": !0,
+  "transfer-encoding": !0,
+  "content-range": !0,
+};
 function s(e) {
   const t = parseInt(e, 10);
   return isFinite(t) ? t : 0;
@@ -192,8 +192,8 @@ module.exports = class {
     return t;
   }
   responseHeaders() {
-    const e = this._copyWithoutHopByHopHeaders(this._resHeaders),
-      t = this.age();
+    const e = this._copyWithoutHopByHopHeaders(this._resHeaders);
+    const t = this.age();
     if (t > 86400 && !this._hasExplicitExpiration() && this.maxAge() > 86400) {
       e.warning = (e.warning ? `${e.warning}, ` : "") + '113 - "rfc7234 5.5.4"';
     }
@@ -226,8 +226,8 @@ module.exports = class {
       if (this._rescc["s-maxage"]) return s(this._rescc["s-maxage"]);
     }
     if (this._rescc["max-age"]) return s(this._rescc["max-age"]);
-    const e = this._rescc.immutable ? this._immutableMinTtl : 0,
-      t = this.date();
+    const e = this._rescc.immutable ? this._immutableMinTtl : 0;
+    const t = this.date();
     if (this._resHeaders.expires) {
       const n = Date.parse(this._resHeaders.expires);
       return Number.isNaN(n) || n < t ? 0 : Math.max(e, (n - t) / 1e3);
@@ -240,9 +240,9 @@ module.exports = class {
     return e;
   }
   timeToLive() {
-    const e = this.maxAge() - this.age(),
-      t = e + s(this._rescc["stale-if-error"]),
-      n = e + s(this._rescc["stale-while-revalidate"]);
+    const e = this.maxAge() - this.age();
+    const t = e + s(this._rescc["stale-if-error"]);
+    const n = e + s(this._rescc["stale-while-revalidate"]);
     return 1e3 * Math.max(0, e, t, n);
   }
   stale() {

@@ -20,18 +20,28 @@ exports.getPrompt =
   exports.MAX_EDIT_DISTANCE_LENGTH =
   exports.MAX_PROMPT_LENGTH =
     undefined;
-const r = require(1788),
-  o = require(3507),
-  i = require(9931),
-  s = require(820),
-  a = require(9852),
-  c = require(7408),
-  l = require(4431);
+const r = require(1788);
+const o = require(3507);
+const i = require(9931);
+const s = require(820);
+const a = require(9852);
+const c = require(7408);
+const l = require(4431);
 let u = {
   text: "",
   tokens: [],
 };
-var d, p, h, f, m, g, _, y, v, b, w;
+var d;
+var p;
+var h;
+var f;
+var m;
+var g;
+var _;
+var y;
+var v;
+var b;
+var w;
 exports.MAX_PROMPT_LENGTH = 1500;
 exports.MAX_EDIT_DISTANCE_LENGTH = 50;
 exports.TOKENS_RESERVED_FOR_SUFFIX_ENCODING = 5;
@@ -176,22 +186,23 @@ exports.getPrompt = async function (e, n, g = {}, y = []) {
   const { source: k, offset: I } = n;
   if (I < 0 || I > k.length) throw new Error(`Offset ${I} is out of range.`);
   n.languageId = normalizeLanguageId(n.languageId);
-  const P = new c.Priorities(),
-    A = P.justBelow(c.Priorities.TOP),
-    O =
-      E.languageMarker == d.Always
-        ? P.justBelow(c.Priorities.TOP)
-        : P.justBelow(A),
-    N =
-      E.pathMarker == p.Always ? P.justBelow(c.Priorities.TOP) : P.justBelow(A),
-    R =
-      E.includeSiblingFunctions == h.ContextOverSiblings
-        ? P.justBelow(A)
-        : P.justAbove(A),
-    M = P.justBelow(A, R),
-    L = P.justBelow(M),
-    $ = new c.PromptWishlist(E.lineEnding);
-  let D, F;
+  const P = new c.Priorities();
+  const A = P.justBelow(c.Priorities.TOP);
+  const O =
+    E.languageMarker == d.Always
+      ? P.justBelow(c.Priorities.TOP)
+      : P.justBelow(A);
+  const N =
+    E.pathMarker == p.Always ? P.justBelow(c.Priorities.TOP) : P.justBelow(A);
+  const R =
+    E.includeSiblingFunctions == h.ContextOverSiblings
+      ? P.justBelow(A)
+      : P.justAbove(A);
+  const M = P.justBelow(A, R);
+  const L = P.justBelow(M);
+  const $ = new c.PromptWishlist(E.lineEnding);
+  let D;
+  let F;
   if (E.languageMarker != d.NoMarker) {
     const e = newLineEnded(r.getLanguageMarker(n));
     D = $.append(e, c.PromptElementKind.LanguageMarker, O);
@@ -254,9 +265,9 @@ exports.getPrompt = async function (e, n, g = {}, y = []) {
     U = r;
   }
   if (E.neighboringTabsPosition == m.DirectlyAboveCursor) {
-    const e = U.lastIndexOf("\n") + 1,
-      t = U.substring(0, e),
-      n = U.substring(e);
+    const e = U.lastIndexOf("\n") + 1;
+    const t = U.substring(0, e);
+    const n = U.substring(e);
     $.appendLineForLine(t, c.PromptElementKind.BeforeCursor, A).forEach((e) =>
       B.push(e)
     );
@@ -296,8 +307,8 @@ exports.getPrompt = async function (e, n, g = {}, y = []) {
       e = await s.getSiblingFunctionStart(n);
     }
     const r = E.maxPromptLength - exports.TOKENS_RESERVED_FOR_SUFFIX_ENCODING;
-    let o = Math.floor((r * (100 - E.suffixPercent)) / 100),
-      i = $.fulfill(o);
+    let o = Math.floor((r * (100 - E.suffixPercent)) / 100);
+    let i = $.fulfill(o);
     const c = r - i.prefixLength;
     let d = k.slice(e);
     if (

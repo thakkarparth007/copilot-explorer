@@ -1,4 +1,9 @@
-var r, o, i, s, a, c;
+var r;
+var o;
+var i;
+var s;
+var a;
+var c;
 r = require(8249);
 i = (o = r).lib;
 s = i.Base;
@@ -15,7 +20,11 @@ c.WordArray = s.extend({
     this.sigBytes = null != t ? t : 8 * e.length;
   },
   toX32: function () {
-    for (var e = this.words, t = e.length, n = [], r = 0; r < t; r++) {
+    for (e = this.words, t = e.length, n = [], r = 0, undefined; r < t; r++) {
+      var e;
+      var t;
+      var n;
+      var r;
       var o = e[r];
       n.push(o.high);
       n.push(o.low);
@@ -24,14 +33,20 @@ c.WordArray = s.extend({
   },
   clone: function () {
     for (
-      var e = s.clone.call(this),
-        t = (e.words = this.words.slice(0)),
+      e = s.clone.call(this),
+        t = e.words = this.words.slice(0),
         n = t.length,
-        r = 0;
+        r = 0,
+        undefined;
       r < n;
       r++
-    )
+    ) {
+      var e;
+      var t;
+      var n;
+      var r;
       t[r] = t[r].clone();
+    }
     return e;
   },
 });

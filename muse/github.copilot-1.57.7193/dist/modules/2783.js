@@ -1,4 +1,11 @@
-var r, o, i, s, a, c, l, u;
+var r;
+var o;
+var i;
+var s;
+var a;
+var c;
+var l;
+var u;
 o = (r = u = require(8249)).lib;
 i = o.WordArray;
 s = o.Hasher;
@@ -12,16 +19,24 @@ l = a.SHA1 = s.extend({
   },
   _doProcessBlock: function (e, t) {
     for (
-      var n = this._hash.words,
+      n = this._hash.words,
         r = n[0],
         o = n[1],
         i = n[2],
         s = n[3],
         a = n[4],
-        l = 0;
+        l = 0,
+        undefined;
       l < 80;
       l++
     ) {
+      var n;
+      var r;
+      var o;
+      var i;
+      var s;
+      var a;
+      var l;
       if (l < 16) c[l] = 0 | e[t + l];
       else {
         var u = c[l - 3] ^ c[l - 8] ^ c[l - 14] ^ c[l - 16];
@@ -49,10 +64,10 @@ l = a.SHA1 = s.extend({
     n[4] = (n[4] + a) | 0;
   },
   _doFinalize: function () {
-    var e = this._data,
-      t = e.words,
-      n = 8 * this._nDataBytes,
-      r = 8 * e.sigBytes;
+    var e = this._data;
+    var t = e.words;
+    var n = 8 * this._nDataBytes;
+    var r = 8 * e.sigBytes;
     t[r >>> 5] |= 128 << (24 - (r % 32));
     t[14 + (((r + 64) >>> 9) << 4)] = Math.floor(n / 4294967296);
     t[15 + (((r + 64) >>> 9) << 4)] = n;

@@ -7,23 +7,23 @@ exports.VSCodeEditorInfo =
   exports.setExtension =
   exports.VSCodeConfigProvider =
     undefined;
-const r = require("vscode"),
-  M_config_stuff = require("config-stuff"),
-  M_copilot_scheme = require("copilot-scheme"),
-  M_runtime_mode_NOTSURE = require("runtime-mode"),
-  M_package_json_NOTSURE = require("package-json");
+const M_vscode = require("vscode");
+const M_config_stuff = require("config-stuff");
+const M_copilot_scheme = require("copilot-scheme");
+const M_runtime_mode_maybe = require("runtime-mode");
+const M_package_json_maybe = require("package-json");
 function c(e) {
   return "string" == typeof e ? e : JSON.stringify(e);
 }
 class VSCodeConfigProvider extends M_config_stuff.ConfigProvider {
   constructor() {
     super();
-    this.config = r.workspace.getConfiguration(
+    this.config = M_vscode.workspace.getConfiguration(
       M_copilot_scheme.CopilotConfigPrefix
     );
-    r.workspace.onDidChangeConfiguration((e) => {
+    M_vscode.workspace.onDidChangeConfiguration((e) => {
       if (e.affectsConfiguration(M_copilot_scheme.CopilotConfigPrefix)) {
-        this.config = r.workspace.getConfiguration(
+        this.config = M_vscode.workspace.getConfiguration(
           M_copilot_scheme.CopilotConfigPrefix
         );
       }
@@ -63,7 +63,7 @@ class VSCodeConfigProvider extends M_config_stuff.ConfigProvider {
   dumpConfig() {
     const e = {};
     try {
-      const t = M_package_json_NOTSURE.contributes.configuration[0].properties;
+      const t = M_package_json_maybe.contributes.configuration[0].properties;
       for (const n in t) {
         const t = n
           .replace(`${M_copilot_scheme.CopilotConfigPrefix}.`, "")
@@ -85,7 +85,7 @@ class VSCodeConfigProvider extends M_config_stuff.ConfigProvider {
   getLanguageConfig(e, t) {
     const n = this.getConfig(e);
     if (undefined === t) {
-      const e = r.window.activeTextEditor;
+      const e = M_vscode.window.activeTextEditor;
       t = e && e.document.languageId;
     }
     return t && t in n ? n[t] : n["*"];
@@ -104,24 +104,24 @@ exports.setExtension = function (e) {
   u = e;
 };
 exports.getExtension = function (e) {
-  if (!u && M_runtime_mode_NOTSURE.isRunningInTest(e)) {
-    u = r.extensions.all.find((e) => e.id.startsWith("GitHub.copilot"));
+  if (!u && M_runtime_mode_maybe.isRunningInTest(e)) {
+    u = M_vscode.extensions.all.find((e) => e.id.startsWith("GitHub.copilot"));
   }
   if (!u) throw new Error("No GitHub.copilot extension found");
   return u;
 };
 exports.makeVscInfo = function () {
   return new M_config_stuff.VscInfo(
-    r.env.sessionId,
-    r.env.machineId,
-    r.version
+    M_vscode.env.sessionId,
+    M_vscode.env.machineId,
+    M_vscode.version
   );
 };
 class VSCodeEditorInfo extends M_config_stuff.EditorAndPluginInfo {
   getEditorInfo(e) {
     return {
       name: "vscode",
-      version: r.version,
+      version: M_vscode.version,
     };
   }
   getEditorPluginInfo(e) {

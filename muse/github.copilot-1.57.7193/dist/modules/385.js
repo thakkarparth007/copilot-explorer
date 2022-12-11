@@ -2,9 +2,9 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.ExtensionTextDocumentManager = undefined;
-const r = require("path"),
-  o = require("vscode"),
-  i = require(3136);
+const r = require("path");
+const o = require("vscode");
+const i = require(3136);
 class ExtensionTextDocumentManager extends i.TextDocumentManager {
   constructor() {
     super(...arguments);
@@ -18,7 +18,9 @@ class ExtensionTextDocumentManager extends i.TextDocumentManager {
     return o.workspace.openTextDocument(e);
   }
   async getRelativePath(e) {
-    var t, n, s;
+    var t;
+    var n;
+    var s;
     const a = e;
     if (a) {
       if (a.isUntitled) return;

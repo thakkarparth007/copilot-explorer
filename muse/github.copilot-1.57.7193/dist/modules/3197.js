@@ -8,24 +8,25 @@ exports.registerGhostText =
   exports.ghostTextLogger =
   exports.getInsertionTextFromCompletion =
     undefined;
-const r = require("vscode"),
-  o = require(1133),
-  i = require(2218),
-  s = require(9334),
-  a = require(750),
-  c = require(9899),
-  l = require(7017),
-  u = require(6333),
-  d = require(4540),
-  p = "_ghostTextPostInsert";
+const r = require("vscode");
+const o = require(1133);
+const i = require(2218);
+const s = require(9334);
+const a = require(750);
+const c = require(9899);
+const l = require(7017);
+const u = require(6333);
+const d = require(4540);
+const p = "_ghostTextPostInsert";
 function getInsertionTextFromCompletion(e) {
   return e.insertText;
 }
-let f, m;
+let f;
+let m;
 exports.getInsertionTextFromCompletion = getInsertionTextFromCompletion;
 exports.ghostTextLogger = new c.Logger(c.LogLevel.INFO, "ghostText");
-let g,
-  _ = [];
+let g;
+let _ = [];
 async function provideInlineCompletions(e, n, c, h, y) {
   const v = await (async function (e, n, a, c, h) {
     const y = u.TelemetryData.createAndMarkAsIssued();
@@ -129,12 +130,12 @@ async function provideInlineCompletions(e, n, c, h, y) {
     );
     exports.ghostTextLogger.debug(e, "Completions", x);
     const E = x.map((e) => {
-      const { text: t, range: o } = e,
-        i = new r.Range(
-          new r.Position(o.start.line, o.start.character),
-          new r.Position(o.end.line, o.end.character)
-        ),
-        s = new r.InlineCompletionItem(t, i);
+      const { text: t, range: o } = e;
+      const i = new r.Range(
+        new r.Position(o.start.line, o.start.character),
+        new r.Position(o.end.line, o.end.character)
+      );
+      const s = new r.InlineCompletionItem(t, i);
       s.index = e.index;
       s.telemetry = e.telemetry;
       s.displayText = e.displayText;

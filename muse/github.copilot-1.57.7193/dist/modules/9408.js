@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.registerDefaultHandlers = undefined;
-const r = require(2279),
-  o = require(6333);
+const r = require(2279);
+const o = require(6333);
 exports.registerDefaultHandlers = function (e, t) {
   process.addListener("uncaughtException", (t) => {
     console.error("uncaughtException", t);

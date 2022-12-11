@@ -19,33 +19,33 @@ exports.or =
   exports.str =
   exports._ =
     undefined;
-const M_codegen_NOTSURE = require("codegen"),
-  M_scope_NOTSURE = require("scope");
-var M_codegen_NOTSURE = require("codegen");
-exports._ = M_codegen_NOTSURE._;
-exports.str = M_codegen_NOTSURE.str;
-exports.strConcat = M_codegen_NOTSURE.strConcat;
-exports.nil = M_codegen_NOTSURE.nil;
-exports.getProperty = M_codegen_NOTSURE.getProperty;
-exports.stringify = M_codegen_NOTSURE.stringify;
-exports.regexpCode = M_codegen_NOTSURE.regexpCode;
-exports.Name = M_codegen_NOTSURE.Name;
-var M_scope_NOTSURE = require("scope");
-exports.Scope = M_scope_NOTSURE.Scope;
-exports.ValueScope = M_scope_NOTSURE.ValueScope;
-exports.ValueScopeName = M_scope_NOTSURE.ValueScopeName;
-exports.varKinds = M_scope_NOTSURE.varKinds;
+const M_codegen_maybe = require("codegen");
+const M_scope_maybe = require("scope");
+var M_codegen_maybe = require("codegen");
+exports._ = M_codegen_maybe._;
+exports.str = M_codegen_maybe.str;
+exports.strConcat = M_codegen_maybe.strConcat;
+exports.nil = M_codegen_maybe.nil;
+exports.getProperty = M_codegen_maybe.getProperty;
+exports.stringify = M_codegen_maybe.stringify;
+exports.regexpCode = M_codegen_maybe.regexpCode;
+exports.Name = M_codegen_maybe.Name;
+var M_scope_maybe = require("scope");
+exports.Scope = M_scope_maybe.Scope;
+exports.ValueScope = M_scope_maybe.ValueScope;
+exports.ValueScopeName = M_scope_maybe.ValueScopeName;
+exports.varKinds = M_scope_maybe.varKinds;
 exports.operators = {
-  GT: new M_codegen_NOTSURE._Code(">"),
-  GTE: new M_codegen_NOTSURE._Code(">="),
-  LT: new M_codegen_NOTSURE._Code("<"),
-  LTE: new M_codegen_NOTSURE._Code("<="),
-  EQ: new M_codegen_NOTSURE._Code("==="),
-  NEQ: new M_codegen_NOTSURE._Code("!=="),
-  NOT: new M_codegen_NOTSURE._Code("!"),
-  OR: new M_codegen_NOTSURE._Code("||"),
-  AND: new M_codegen_NOTSURE._Code("&&"),
-  ADD: new M_codegen_NOTSURE._Code("+"),
+  GT: new M_codegen_maybe._Code(">"),
+  GTE: new M_codegen_maybe._Code(">="),
+  LT: new M_codegen_maybe._Code("<"),
+  LTE: new M_codegen_maybe._Code("<="),
+  EQ: new M_codegen_maybe._Code("==="),
+  NEQ: new M_codegen_maybe._Code("!=="),
+  NOT: new M_codegen_maybe._Code("!"),
+  OR: new M_codegen_maybe._Code("||"),
+  AND: new M_codegen_maybe._Code("&&"),
+  ADD: new M_codegen_maybe._Code("+"),
 };
 class a {
   optimizeNodes() {
@@ -63,8 +63,8 @@ class c extends a {
     this.rhs = n;
   }
   render({ es5: e, _n: t }) {
-    const n = e ? M_scope_NOTSURE.varKinds.var : this.varKind,
-      r = undefined === this.rhs ? "" : ` = ${this.rhs}`;
+    const n = e ? M_scope_maybe.varKinds.var : this.varKind;
+    const r = undefined === this.rhs ? "" : ` = ${this.rhs}`;
     return `${n} ${this.name}${r};` + t;
   }
   optimizeNames(e, t) {
@@ -76,7 +76,7 @@ class c extends a {
     }
   }
   get names() {
-    return this.rhs instanceof M_codegen_NOTSURE._CodeOrName
+    return this.rhs instanceof M_codegen_maybe._CodeOrName
       ? this.rhs.names
       : {};
   }
@@ -93,7 +93,7 @@ class l extends a {
   }
   optimizeNames(e, t) {
     if (
-      !(this.lhs instanceof M_codegen_NOTSURE.Name) ||
+      !(this.lhs instanceof M_codegen_maybe.Name) ||
       e[this.lhs.str] ||
       this.sideEffects
     ) {
@@ -103,7 +103,7 @@ class l extends a {
   }
   get names() {
     return A(
-      this.lhs instanceof M_codegen_NOTSURE.Name
+      this.lhs instanceof M_codegen_maybe.Name
         ? {}
         : {
             ...this.lhs.names,
@@ -169,7 +169,7 @@ class f extends a {
     return this;
   }
   get names() {
-    return this.code instanceof M_codegen_NOTSURE._CodeOrName
+    return this.code instanceof M_codegen_maybe._CodeOrName
       ? this.code.names
       : {};
   }
@@ -304,8 +304,8 @@ class x extends b {
     this.to = r;
   }
   render(e) {
-    const t = e.es5 ? M_scope_NOTSURE.varKinds.var : this.varKind,
-      { name: n, from: r, to: i } = this;
+    const t = e.es5 ? M_scope_maybe.varKinds.var : this.varKind;
+    const { name: n, from: r, to: i } = this;
     return `for(${t} ${n}=${r}; ${n}<${i}; ${n}++)` + super.render(e);
   }
   get names() {
@@ -370,7 +370,8 @@ class T extends g {
     return t;
   }
   optimizeNodes() {
-    var e, t;
+    var e;
+    var t;
     super.optimizeNodes();
     if (null === (e = this.catch) || undefined === e) {
       e.optimizeNodes();
@@ -381,7 +382,8 @@ class T extends g {
     return this;
   }
   optimizeNames(e, t) {
-    var n, r;
+    var n;
+    var r;
     super.optimizeNames(e, t);
     if (null === (n = this.catch) || undefined === n) {
       n.optimizeNames(e, t);
@@ -422,23 +424,23 @@ function P(e, t) {
   return e;
 }
 function A(e, t) {
-  return t instanceof M_codegen_NOTSURE._CodeOrName ? P(e, t.names) : e;
+  return t instanceof M_codegen_maybe._CodeOrName ? P(e, t.names) : e;
 }
 function O(e, t, n) {
-  return e instanceof M_codegen_NOTSURE.Name
+  return e instanceof M_codegen_maybe.Name
     ? i(e)
-    : (o = e) instanceof M_codegen_NOTSURE._Code &&
+    : (o = e) instanceof M_codegen_maybe._Code &&
       o._items.some(
         (e) =>
-          e instanceof M_codegen_NOTSURE.Name &&
+          e instanceof M_codegen_maybe.Name &&
           1 === t[e.str] &&
           undefined !== n[e.str]
       )
-    ? new M_codegen_NOTSURE._Code(
+    ? new M_codegen_maybe._Code(
         e._items.reduce(
           (e, t) => (
-            t instanceof M_codegen_NOTSURE.Name && (t = i(t)),
-            t instanceof M_codegen_NOTSURE._Code
+            t instanceof M_codegen_maybe.Name && (t = i(t)),
+            t instanceof M_codegen_maybe._Code
               ? e.push(...t._items)
               : e.push(t),
             e
@@ -459,7 +461,7 @@ function N(e, t) {
 function not(e) {
   return "boolean" == typeof e || "number" == typeof e || null === e
     ? !e
-    : M_codegen_NOTSURE._`!${D(e)}`;
+    : M_codegen_maybe._`!${D(e)}`;
 }
 I.kind = "finally";
 exports.CodeGen = class {
@@ -472,7 +474,7 @@ exports.CodeGen = class {
       _n: t.lines ? "\n" : "",
     };
     this._extScope = e;
-    this._scope = new M_scope_NOTSURE.Scope({
+    this._scope = new M_scope_maybe.Scope({
       parent: e,
     });
     this._nodes = [new _()];
@@ -509,13 +511,13 @@ exports.CodeGen = class {
     return o;
   }
   const(e, t, n) {
-    return this._def(M_scope_NOTSURE.varKinds.const, e, t, n);
+    return this._def(M_scope_maybe.varKinds.const, e, t, n);
   }
   let(e, t, n) {
-    return this._def(M_scope_NOTSURE.varKinds.let, e, t, n);
+    return this._def(M_scope_maybe.varKinds.let, e, t, n);
   }
   var(e, t, n) {
-    return this._def(M_scope_NOTSURE.varKinds.var, e, t, n);
+    return this._def(M_scope_maybe.varKinds.var, e, t, n);
   }
   assign(e, t, n) {
     return this._leafNode(new l(e, t, n));
@@ -527,7 +529,7 @@ exports.CodeGen = class {
     if ("function" == typeof e) {
       e();
     } else {
-      if (e !== M_codegen_NOTSURE.nil) {
+      if (e !== M_codegen_maybe.nil) {
         this._leafNode(new f(e));
       }
     }
@@ -542,11 +544,11 @@ exports.CodeGen = class {
       t.push(n);
       if (n !== o || this.opts.es5) {
         t.push(":");
-        M_codegen_NOTSURE.addCodeArg(t, o);
+        M_codegen_maybe.addCodeArg(t, o);
       }
     }
     t.push("}");
-    return new M_codegen_NOTSURE._Code(t);
+    return new M_codegen_maybe._Code(t);
   }
   if(e, t, n) {
     this._blockNode(new v(e));
@@ -579,19 +581,17 @@ exports.CodeGen = class {
     t,
     n,
     r,
-    i = this.opts.es5
-      ? M_scope_NOTSURE.varKinds.var
-      : M_scope_NOTSURE.varKinds.let
+    i = this.opts.es5 ? M_scope_maybe.varKinds.var : M_scope_maybe.varKinds.let
   ) {
     const s = this._scope.toName(e);
     return this._for(new x(i, s, t, n), () => r(s));
   }
-  forOf(e, t, n, i = M_scope_NOTSURE.varKinds.const) {
+  forOf(e, t, n, i = M_scope_maybe.varKinds.const) {
     const s = this._scope.toName(e);
     if (this.opts.es5) {
-      const e = t instanceof M_codegen_NOTSURE.Name ? t : this.var("_arr", t);
-      return this.forRange("_i", 0, M_codegen_NOTSURE._`${e}.length`, (t) => {
-        this.var(s, M_codegen_NOTSURE._`${e}[${t}]`);
+      const e = t instanceof M_codegen_maybe.Name ? t : this.var("_arr", t);
+      return this.forRange("_i", 0, M_codegen_maybe._`${e}.length`, (t) => {
+        this.var(s, M_codegen_maybe._`${e}[${t}]`);
         n(s);
       });
     }
@@ -602,11 +602,11 @@ exports.CodeGen = class {
     t,
     n,
     i = this.opts.es5
-      ? M_scope_NOTSURE.varKinds.var
-      : M_scope_NOTSURE.varKinds.const
+      ? M_scope_maybe.varKinds.var
+      : M_scope_maybe.varKinds.const
   ) {
     if (this.opts.ownProperties)
-      return this.forOf(e, M_codegen_NOTSURE._`Object.keys(${t})`, n);
+      return this.forOf(e, M_codegen_maybe._`Object.keys(${t})`, n);
     const s = this._scope.toName(e);
     return this._for(new E("in", i, s, t), () => n(s));
   }
@@ -663,7 +663,7 @@ exports.CodeGen = class {
     this._nodes.length = t;
     return this;
   }
-  func(e, t = M_codegen_NOTSURE.nil, n, o) {
+  func(e, t = M_codegen_maybe.nil, n, o) {
     this._blockNode(new C(e, t, n));
     if (o) {
       this.code(o).endFunc();
@@ -723,14 +723,14 @@ exports.and = function (...e) {
 const L = $(exports.operators.OR);
 function $(e) {
   return (t, n) =>
-    t === M_codegen_NOTSURE.nil
+    t === M_codegen_maybe.nil
       ? n
-      : n === M_codegen_NOTSURE.nil
+      : n === M_codegen_maybe.nil
       ? t
-      : M_codegen_NOTSURE._`${D(t)} ${e} ${D(n)}`;
+      : M_codegen_maybe._`${D(t)} ${e} ${D(n)}`;
 }
 function D(e) {
-  return e instanceof M_codegen_NOTSURE.Name ? e : M_codegen_NOTSURE._`(${e})`;
+  return e instanceof M_codegen_maybe.Name ? e : M_codegen_maybe._`(${e})`;
 }
 exports.or = function (...e) {
   return e.reduce(L);

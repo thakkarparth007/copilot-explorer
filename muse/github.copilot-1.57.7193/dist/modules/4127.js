@@ -1,8 +1,8 @@
 Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
-var r = require(4350),
-  o = require(5290);
+var r = require(4350);
+var o = require(5290);
 exports.performanceMetricsTelemetryProcessor = function (e, t) {
   switch ((t && t.addDocument(e), e.data.baseType)) {
     case o.TelemetryTypeString.Exception:

@@ -1,7 +1,7 @@
-var r = require(6372),
-  o = r.wrap,
-  i = r.unwrap,
-  s = "wrap@before";
+var r = require(6372);
+var o = r.wrap;
+var i = r.unwrap;
+var s = "wrap@before";
 function a(e, t, n) {
   var r = !!e[t] && e.propertyIsEnumerable(t);
   Object.defineProperty(e, t, {
@@ -46,12 +46,18 @@ module.exports = function (e, t, n) {
           });
           if (r.length > 0) {
             (function (e, t) {
-              for (var n = t.length, r = 0; r < n; r++) {
-                var o = t[r],
-                  i = e[s];
+              for (n = t.length, r = 0, undefined; r < n; r++) {
+                var n;
+                var r;
+                var o = t[r];
+                var i = e[s];
                 if ("function" == typeof i) i(o);
                 else if (Array.isArray(i))
-                  for (var a = i.length, c = 0; c < a; c++) i[c](o);
+                  for (a = i.length, c = 0, undefined; c < a; c++) {
+                    var a;
+                    var c;
+                    i[c](o);
+                  }
               }
             })(e, r);
           }

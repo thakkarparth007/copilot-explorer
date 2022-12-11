@@ -1,14 +1,14 @@
-const r = require(8104)("helix-fetch:core"),
-  {
-    request: o,
-    setupContext: i,
-    resetContext: s,
-    RequestAbortedError: a,
-    ALPN_HTTP2: c,
-    ALPN_HTTP2C: l,
-    ALPN_HTTP1_1: u,
-    ALPN_HTTP1_0: d,
-  } = require(9575);
+const r = require(8104)("helix-fetch:core");
+const {
+  request: o,
+  setupContext: i,
+  resetContext: s,
+  RequestAbortedError: a,
+  ALPN_HTTP2: c,
+  ALPN_HTTP2C: l,
+  ALPN_HTTP1_1: u,
+  ALPN_HTTP1_0: d,
+} = require(9575);
 class p {
   constructor(e) {
     this.options = {

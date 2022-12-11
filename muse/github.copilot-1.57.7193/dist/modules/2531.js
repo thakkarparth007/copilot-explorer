@@ -8,28 +8,28 @@ exports.getSchemaRefs =
   exports.getFullPath =
   exports.inlineRef =
     undefined;
-const r = require(6776),
-  o = require(4063),
-  i = require(9461),
-  s = require(540),
-  a = new Set([
-    "type",
-    "format",
-    "pattern",
-    "maxLength",
-    "minLength",
-    "maxProperties",
-    "minProperties",
-    "maxItems",
-    "minItems",
-    "maximum",
-    "minimum",
-    "uniqueItems",
-    "multipleOf",
-    "required",
-    "enum",
-    "const",
-  ]);
+const r = require(6776);
+const o = require(4063);
+const i = require(9461);
+const s = require(540);
+const a = new Set([
+  "type",
+  "format",
+  "pattern",
+  "maxLength",
+  "minLength",
+  "maxProperties",
+  "minProperties",
+  "maxItems",
+  "minItems",
+  "maximum",
+  "minimum",
+  "uniqueItems",
+  "multipleOf",
+  "required",
+  "enum",
+  "const",
+]);
 exports.inlineRef = function (e, t = !0) {
   return "boolean" == typeof e || (!0 === t ? !l(e) : !!t && u(e) <= t);
 };
@@ -86,14 +86,14 @@ exports.resolveUrl = function (e, t) {
 const m = /^[a-z_][-a-z0-9._]*$/i;
 exports.getSchemaRefs = function (e, t) {
   if ("boolean" == typeof e) return {};
-  const { schemaId: n } = this.opts,
-    r = normalizeId(e[n] || t),
-    a = {
-      "": r,
-    },
-    c = getFullPath(r, !1),
-    l = {},
-    u = new Set();
+  const { schemaId: n } = this.opts;
+  const r = normalizeId(e[n] || t);
+  const a = {
+    "": r,
+  };
+  const c = getFullPath(r, !1);
+  const l = {};
+  const u = new Set();
   i(
     e,
     {

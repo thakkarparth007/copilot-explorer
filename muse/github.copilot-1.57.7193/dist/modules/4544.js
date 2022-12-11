@@ -1,55 +1,55 @@
 const {
-    constants: { MAX_LENGTH: r },
-  } = require("buffer"),
-  { pipeline: o, PassThrough: i } = require("stream"),
-  { promisify: s } = require("util"),
-  {
-    createGunzip: a,
-    createInflate: c,
-    createBrotliDecompress: l,
-    constants: { Z_SYNC_FLUSH: u },
-  } = require("zlib"),
-  d = require(8104)("helix-fetch:utils"),
-  p = s(o),
-  h = (e, t) => {
-    if (Buffer.isBuffer(e)) return e.length;
-    switch (typeof e) {
-      case "string":
-        return 2 * e.length;
-      case "boolean":
-        return 4;
-      case "number":
-        return 8;
-      case "symbol":
-        return Symbol.keyFor(e)
-          ? 2 * Symbol.keyFor(e).length
-          : 2 * (e.toString().length - 8);
-      case "object":
-        return Array.isArray(e) ? f(e, t) : m(e, t);
-      default:
-        return 0;
+  constants: { MAX_LENGTH: r },
+} = require("buffer");
+const { pipeline: o, PassThrough: i } = require("stream");
+const { promisify: s } = require("util");
+const {
+  createGunzip: a,
+  createInflate: c,
+  createBrotliDecompress: l,
+  constants: { Z_SYNC_FLUSH: u },
+} = require("zlib");
+const d = require(8104)("helix-fetch:utils");
+const p = s(o);
+const h = (e, t) => {
+  if (Buffer.isBuffer(e)) return e.length;
+  switch (typeof e) {
+    case "string":
+      return 2 * e.length;
+    case "boolean":
+      return 4;
+    case "number":
+      return 8;
+    case "symbol":
+      return Symbol.keyFor(e)
+        ? 2 * Symbol.keyFor(e).length
+        : 2 * (e.toString().length - 8);
+    case "object":
+      return Array.isArray(e) ? f(e, t) : m(e, t);
+    default:
+      return 0;
+  }
+};
+const f = (e, t) => (
+  t.add(e), e.map((e) => (t.has(e) ? 0 : h(e, t))).reduce((e, t) => e + t, 0)
+);
+const m = (e, t) => {
+  if (null == e) return 0;
+  t.add(e);
+  let n = 0;
+  const r = [];
+  for (const t in e) r.push(t);
+  r.push(...Object.getOwnPropertySymbols(e));
+  r.forEach((r) => {
+    n += h(r, t);
+    if ("object" == typeof e[r] && null !== e[r]) {
+      if (t.has(e[r])) return;
+      t.add(e[r]);
     }
-  },
-  f = (e, t) => (
-    t.add(e), e.map((e) => (t.has(e) ? 0 : h(e, t))).reduce((e, t) => e + t, 0)
-  ),
-  m = (e, t) => {
-    if (null == e) return 0;
-    t.add(e);
-    let n = 0;
-    const r = [];
-    for (const t in e) r.push(t);
-    r.push(...Object.getOwnPropertySymbols(e));
-    r.forEach((r) => {
-      n += h(r, t);
-      if ("object" == typeof e[r] && null !== e[r]) {
-        if (t.has(e[r])) return;
-        t.add(e[r]);
-      }
-      n += h(e[r], t);
-    });
-    return n;
-  };
+    n += h(e[r], t);
+  });
+  return n;
+};
 module.exports = {
   decodeStream: (e, t, n, r) => {
     if (

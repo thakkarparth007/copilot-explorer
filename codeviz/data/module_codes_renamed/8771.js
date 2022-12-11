@@ -6,7 +6,7 @@ exports.TestNotificationSender =
   exports.rangeToString =
   exports.positionToString =
     undefined;
-const M_notification_sender_NOTSURE = require("notification-sender");
+const M_notification_sender_maybe = require("notification-sender");
 function positionToString(e) {
   return `${e.line}:${e.character}`;
 }
@@ -22,7 +22,7 @@ exports.TestUrlOpener = class {
     this.openedUrls.push(e);
   }
 };
-class TestNotificationSender extends M_notification_sender_NOTSURE.NotificationSender {
+class TestNotificationSender extends M_notification_sender_maybe.NotificationSender {
   constructor() {
     super();
     this.sentMessages = [];

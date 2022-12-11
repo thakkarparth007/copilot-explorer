@@ -2,18 +2,18 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.getData = exports.KeywordCxt = exports.validateFunctionCode = undefined;
-const r = require(5667),
-  o = require(453),
-  i = require(8876),
-  s = require(453),
-  a = require(313),
-  c = require(5005),
-  l = require(3099),
-  u = require(3487),
-  d = require(2141),
-  p = require(2531),
-  h = require(6776),
-  f = require(4181);
+const r = require(5667);
+const o = require(453);
+const i = require(8876);
+const s = require(453);
+const a = require(313);
+const c = require(5005);
+const l = require(3099);
+const u = require(3487);
+const d = require(2141);
+const p = require(2531);
+const h = require(6776);
+const f = require(4181);
 function m({ gen: e, validateName: t, schema: n, schemaEnv: r, opts: o }, i) {
   if (o.code.es5) {
     e.func(t, u._`${d.default.data}, ${d.default.valCxt}`, r.$async, () => {
@@ -109,16 +109,16 @@ function w({ gen: e, schemaEnv: t, schema: n, errSchemaPath: r, opts: o }) {
   const i = n.$comment;
   if (!0 === o.$comment) e.code(u._`${d.default.self}.logger.log(${i})`);
   else if ("function" == typeof o.$comment) {
-    const n = u.str`${r}/$comment`,
-      o = e.scopeValue("root", {
-        ref: t.root,
-      });
+    const n = u.str`${r}/$comment`;
+    const o = e.scopeValue("root", {
+      ref: t.root,
+    });
     e.code(u._`${d.default.self}.opts.$comment(${i}, ${n}, ${o}.schema)`);
   }
 }
 function x(e, t, n, r) {
-  const { gen: o, schema: a, data: c, allErrors: l, opts: p, self: f } = e,
-    { RULES: m } = f;
+  const { gen: o, schema: a, data: c, allErrors: l, opts: p, self: f } = e;
+  const { RULES: m } = f;
   function g(h) {
     if (i.shouldUseGroup(a, h)) {
       if (h.type) {
@@ -181,7 +181,8 @@ function x(e, t, n, r) {
                       (n = t).includes(r) ||
                       ("number" === r && n.includes("integer"))
                     );
-                    var n, r;
+                    var n;
+                    var r;
                   })
                 ) {
                   S(e, `missing type "${n.join(",")}" for keyword "${r}"`);
@@ -514,10 +515,11 @@ function k(e, t, n, r) {
   }
 }
 exports.KeywordCxt = KeywordCxt;
-const I = /^\/(?:[^~]|~0|~1)*$/,
-  P = /^([0-9]+)(#|\/(?:[^~]|~0|~1)*)?$/;
+const I = /^\/(?:[^~]|~0|~1)*$/;
+const P = /^([0-9]+)(#|\/(?:[^~]|~0|~1)*)?$/;
 function getData(e, { dataLevel: t, dataNames: n, dataPathArr: r }) {
-  let o, i;
+  let o;
+  let i;
   if ("" === e) return d.default.rootData;
   if ("/" === e[0]) {
     if (!I.test(e)) throw new Error(`Invalid JSON-pointer: ${e}`);

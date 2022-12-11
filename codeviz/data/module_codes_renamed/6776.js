@@ -20,8 +20,8 @@ exports.checkStrictMode =
   exports.alwaysValidSchema =
   exports.toHash =
     undefined;
-const M_codegen_NOTSURE = require("codegen"),
-  M_codegen_NOTSURE = require("codegen");
+const M_codegen_maybe = require("codegen");
+const M_codegen_maybe = require("codegen");
 function checkUnknownRules(e, t = e.schema) {
   const { opts: n, self: r } = e;
   if (!n.strictSchema) return;
@@ -50,19 +50,19 @@ function l({ mergeNames: e, mergeToName: t, mergeValues: n, resultToName: o }) {
     const l =
       undefined === a
         ? s
-        : a instanceof M_codegen_NOTSURE.Name
-        ? (s instanceof M_codegen_NOTSURE.Name ? e(i, s, a) : t(i, s, a), a)
-        : s instanceof M_codegen_NOTSURE.Name
+        : a instanceof M_codegen_maybe.Name
+        ? (s instanceof M_codegen_maybe.Name ? e(i, s, a) : t(i, s, a), a)
+        : s instanceof M_codegen_maybe.Name
         ? (t(i, a, s), s)
         : n(s, a);
-    return c !== M_codegen_NOTSURE.Name || l instanceof M_codegen_NOTSURE.Name
+    return c !== M_codegen_maybe.Name || l instanceof M_codegen_maybe.Name
       ? l
       : o(i, l);
   };
 }
 function evaluatedPropsToName(e, t) {
   if (!0 === t) return e.var("props", !0);
-  const n = e.var("props", M_codegen_NOTSURE._`{}`);
+  const n = e.var("props", M_codegen_maybe._`{}`);
   if (undefined !== t) {
     setEvaluated(e, n, t);
   }
@@ -70,7 +70,7 @@ function evaluatedPropsToName(e, t) {
 }
 function setEvaluated(e, t, n) {
   Object.keys(n).forEach((n) =>
-    e.assign(M_codegen_NOTSURE._`${t}${M_codegen_NOTSURE.getProperty(n)}`, !0)
+    e.assign(M_codegen_maybe._`${t}${M_codegen_maybe.getProperty(n)}`, !0)
   );
 }
 exports.toHash = function (e) {
@@ -99,9 +99,9 @@ exports.schemaRefOrVal = function (
 ) {
   if (!i) {
     if ("number" == typeof n || "boolean" == typeof n) return n;
-    if ("string" == typeof n) return M_codegen_NOTSURE._`${n}`;
+    if ("string" == typeof n) return M_codegen_maybe._`${n}`;
   }
-  return M_codegen_NOTSURE._`${e}${t}${M_codegen_NOTSURE.getProperty(o)}`;
+  return M_codegen_maybe._`${e}${t}${M_codegen_maybe.getProperty(o)}`;
 };
 exports.unescapeFragment = function (e) {
   return unescapeJsonPointer(decodeURIComponent(e));
@@ -118,22 +118,22 @@ exports.eachItem = function (e, t) {
 exports.mergeEvaluated = {
   props: l({
     mergeNames: (e, t, n) =>
-      e.if(M_codegen_NOTSURE._`${n} !== true && ${t} !== undefined`, () => {
+      e.if(M_codegen_maybe._`${n} !== true && ${t} !== undefined`, () => {
         e.if(
-          M_codegen_NOTSURE._`${t} === true`,
+          M_codegen_maybe._`${t} === true`,
           () => e.assign(n, !0),
           () =>
             e
-              .assign(n, M_codegen_NOTSURE._`${n} || {}`)
-              .code(M_codegen_NOTSURE._`Object.assign(${n}, ${t})`)
+              .assign(n, M_codegen_maybe._`${n} || {}`)
+              .code(M_codegen_maybe._`Object.assign(${n}, ${t})`)
         );
       }),
     mergeToName: (e, t, n) =>
-      e.if(M_codegen_NOTSURE._`${n} !== true`, () => {
+      e.if(M_codegen_maybe._`${n} !== true`, () => {
         if (!0 === t) {
           e.assign(n, !0);
         } else {
-          e.assign(n, M_codegen_NOTSURE._`${n} || {}`);
+          e.assign(n, M_codegen_maybe._`${n} || {}`);
           setEvaluated(e, n, t);
         }
       }),
@@ -146,15 +146,15 @@ exports.mergeEvaluated = {
   }),
   items: l({
     mergeNames: (e, t, n) =>
-      e.if(M_codegen_NOTSURE._`${n} !== true && ${t} !== undefined`, () =>
+      e.if(M_codegen_maybe._`${n} !== true && ${t} !== undefined`, () =>
         e.assign(
           n,
-          M_codegen_NOTSURE._`${t} === true ? true : ${n} > ${t} ? ${n} : ${t}`
+          M_codegen_maybe._`${t} === true ? true : ${n} > ${t} ? ${n} : ${t}`
         )
       ),
     mergeToName: (e, t, n) =>
-      e.if(M_codegen_NOTSURE._`${n} !== true`, () =>
-        e.assign(n, !0 === t || M_codegen_NOTSURE._`${n} > ${t} ? ${n} : ${t}`)
+      e.if(M_codegen_maybe._`${n} !== true`, () =>
+        e.assign(n, !0 === t || M_codegen_maybe._`${n} > ${t} ? ${n} : ${t}`)
       ),
     mergeValues: (e, t) => !0 === e || Math.max(e, t),
     resultToName: (e, t) => e.var("items", t),
@@ -174,7 +174,7 @@ function checkStrictMode(e, t, n = e.opts.strictSchema) {
 exports.useFunc = function (e, t) {
   return e.scopeValue("func", {
     ref: t,
-    code: p[t.code] || (p[t.code] = new M_codegen_NOTSURE._Code(t.code)),
+    code: p[t.code] || (p[t.code] = new M_codegen_maybe._Code(t.code)),
   });
 };
 (function (e) {
@@ -182,18 +182,18 @@ exports.useFunc = function (e, t) {
   e[(e.Str = 1)] = "Str";
 })((h = exports.Type || (exports.Type = {})));
 exports.getErrorPath = function (e, t, n) {
-  if (e instanceof M_codegen_NOTSURE.Name) {
+  if (e instanceof M_codegen_maybe.Name) {
     const o = t === h.Num;
     return n
       ? o
-        ? M_codegen_NOTSURE._`"[" + ${e} + "]"`
-        : M_codegen_NOTSURE._`"['" + ${e} + "']"`
+        ? M_codegen_maybe._`"[" + ${e} + "]"`
+        : M_codegen_maybe._`"['" + ${e} + "']"`
       : o
-      ? M_codegen_NOTSURE._`"/" + ${e}`
-      : M_codegen_NOTSURE._`"/" + ${e}.replace(/~/g, "~0").replace(/\\//g, "~1")`;
+      ? M_codegen_maybe._`"/" + ${e}`
+      : M_codegen_maybe._`"/" + ${e}.replace(/~/g, "~0").replace(/\\//g, "~1")`;
   }
   return n
-    ? M_codegen_NOTSURE.getProperty(e).toString()
+    ? M_codegen_maybe.getProperty(e).toString()
     : "/" + escapeJsonPointer(e);
 };
 exports.checkStrictMode = checkStrictMode;

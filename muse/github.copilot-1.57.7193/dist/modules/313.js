@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.assignDefaults = undefined;
-const r = require(3487),
-  o = require(6776);
+const r = require(3487);
+const o = require(6776);
 function i(e, t, n) {
   const { gen: i, compositeRule: s, data: a, opts: c } = e;
   if (undefined === n) return;

@@ -8,14 +8,14 @@ exports.postRequest =
   exports.Fetcher =
   exports.init =
     undefined;
-const r = require(6143),
-  o = require(5468),
-  i = require("util"),
-  s = require(1133),
-  a = require(5413),
-  c = require(6333);
-let l,
-  u = !1;
+const r = require(6143);
+const o = require(5468);
+const i = require("util");
+const s = require(1133);
+const a = require(5413);
+const c = require(6333);
+let l;
+let u = !1;
 exports.init = function (e) {
   if (u) {
     if (e !== l)
@@ -76,11 +76,11 @@ exports.HelixFetcher = class extends Fetcher {
   }
   async fetch(e, t) {
     const n = {
-        ...t,
-        body: t.body ? t.body : t.json,
-        signal: t.signal,
-      },
-      r = await this.fetchApi.fetch(e, n);
+      ...t,
+      body: t.body ? t.body : t.json,
+      signal: t.signal,
+    };
+    const r = await this.fetchApi.fetch(e, n);
     return new Response(
       r.status,
       r.statusText,
@@ -136,12 +136,12 @@ exports.postRequest = function (e, t, n, r, o, l, p) {
     h["X-Copilot-Force-Delay"] = f.toString();
   }
   const m = {
-      method: "POST",
-      headers: h,
-      json: l,
-      timeout: 3e4,
-    },
-    g = e.get(Fetcher);
+    method: "POST",
+    headers: h,
+    json: l,
+    timeout: 3e4,
+  };
+  const g = e.get(Fetcher);
   if (p) {
     const t = g.makeAbortController();
     p.onCancellationRequested(() => {

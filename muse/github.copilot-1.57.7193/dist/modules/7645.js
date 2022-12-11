@@ -1,16 +1,16 @@
 if (process.addAsyncListener)
   throw new Error("Don't require polyfill unless needed");
-var r = require(6372),
-  o = require(2249),
-  i = r.wrap,
-  s = r.massWrap,
-  a = require(9090),
-  c = require("util"),
-  l = o.gte(process.version, "6.0.0"),
-  u = o.gte(process.version, "7.0.0"),
-  d = o.gte(process.version, "8.0.0"),
-  p = o.gte(process.version, "11.0.0"),
-  h = require("net");
+var r = require(6372);
+var o = require(2249);
+var i = r.wrap;
+var s = r.massWrap;
+var a = require(9090);
+var c = require("util");
+var l = o.gte(process.version, "6.0.0");
+var u = o.gte(process.version, "7.0.0");
+var d = o.gte(process.version, "8.0.0");
+var p = o.gte(process.version, "11.0.0");
+var h = require("net");
 function f(e) {
   return function () {
     this.on("connection", function (e) {
@@ -39,10 +39,10 @@ function m(e) {
 if (u && !h._normalizeArgs) {
   h._normalizeArgs = function (e) {
     if (0 === e.length) return [{}, null];
-    var t,
-      n,
-      r = e[0],
-      o = {};
+    var t;
+    var n;
+    var r = e[0];
+    var o = {};
     if ("object" == typeof r && null !== r) {
       o = r;
     } else {
@@ -64,8 +64,8 @@ if (u && !h._normalizeArgs) {
 } else {
   if (u || h._normalizeConnectArgs) {
     h._normalizeConnectArgs = function (e) {
-      var t,
-        n = {};
+      var t;
+      var n = {};
       if ("object" == typeof e[0] && null !== e[0]) {
         n = e[0];
       } else {
@@ -169,8 +169,8 @@ var b = ["setTimeout", "setInterval"];
 if (global.setImmediate) {
   b.push("setImmediate");
 }
-var w = require("timers"),
-  x = global.setTimeout === w.setTimeout;
+var w = require("timers");
+var x = global.setTimeout === w.setTimeout;
 s(w, b, N);
 if (x) {
   s(global, b, N);
@@ -195,9 +195,9 @@ s(
 if (E.resolveNaptr) {
   i(E, "resolveNaptr", O);
 }
-var C,
-  S,
-  T = require("fs");
+var C;
+var S;
+var T = require("fs");
 s(
   T,
   [
@@ -284,8 +284,8 @@ if (P) {
 }
 function O(e) {
   var t = function () {
-    var t,
-      n = arguments.length - 1;
+    var t;
+    var n = arguments.length - 1;
     if ("function" == typeof arguments[n]) {
       t = Array(arguments.length);
       for (var r = 0; r < arguments.length - 1; r++) t[r] = arguments[r];
@@ -392,21 +392,21 @@ if (P) {
     function t(n) {
       if (!(this instanceof t)) return e(n);
       if ("function" != typeof n) return new e(n);
-      var o,
-        i,
-        s = new e(function (e, t) {
-          o = this;
-          i = [
-            function (t) {
-              r(s, !1);
-              return e(t);
-            },
-            function (e) {
-              r(s, !1);
-              return t(e);
-            },
-          ];
-        });
+      var o;
+      var i;
+      var s = new e(function (e, t) {
+        o = this;
+        i = [
+          function (t) {
+            r(s, !1);
+            return e(t);
+          },
+          function (e) {
+            r(s, !1);
+            return t(e);
+          },
+        ];
+      });
       s.__proto__ = t.prototype;
       try {
         n.apply(o, i);
@@ -444,8 +444,8 @@ if (P) {
     }
     function s(e) {
       return function () {
-        var t = this,
-          n = e.apply(t, Array.prototype.map.call(arguments, r));
+        var t = this;
+        var n = e.apply(t, Array.prototype.map.call(arguments, r));
         n.__asl_wrapper = function (e, r, i, s) {
           return t.__asl_wrapper
             ? (t.__asl_wrapper(e, function () {}, null, n),

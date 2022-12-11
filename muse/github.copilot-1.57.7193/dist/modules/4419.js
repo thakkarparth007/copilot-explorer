@@ -9,21 +9,21 @@ exports.LiveOpenAIFetcher =
   exports.getRequestId =
   exports.CopilotUiKind =
     undefined;
-const r = require("util"),
-  o = require(362),
-  i = require(6932),
-  s = require(1133),
-  a = require(9189),
-  c = require(5413),
-  l = require(9899),
-  u = require(2279),
-  d = require(6722),
-  p = require(766),
-  h = require(9657),
-  f = require(6333),
-  m = require(937),
-  g = require(2901),
-  _ = new l.Logger(l.LogLevel.INFO, "fetch");
+const r = require("util");
+const o = require(362);
+const i = require(6932);
+const s = require(1133);
+const a = require(9189);
+const c = require(5413);
+const l = require(9899);
+const u = require(2279);
+const d = require(6722);
+const p = require(766);
+const h = require(9657);
+const f = require(6333);
+const m = require(937);
+const g = require(2901);
+const _ = new l.Logger(l.LogLevel.INFO, "fetch");
 var y;
 function getRequestId(e, t) {
   return {
@@ -58,9 +58,9 @@ exports.OpenAIFetcher = OpenAIFetcher;
 exports.postProcessChoices = postProcessChoices;
 exports.LiveOpenAIFetcher = class extends OpenAIFetcher {
   async fetchAndStreamCompletions(e, t, n, r, o) {
-    const s = e.get(d.StatusReporter),
-      a = "completions",
-      c = await this.fetchWithParameters(e, a, t, o);
+    const s = e.get(d.StatusReporter);
+    const a = "completions";
+    const c = await this.fetchWithParameters(e, a, t, o);
     if ("not-sent" === c)
       return {
         type: "canceled",
@@ -113,17 +113,17 @@ exports.LiveOpenAIFetcher = class extends OpenAIFetcher {
   }
   async fetchWithParameters(e, t, n, i) {
     var g;
-    const _ = s.getLanguageConfig(e, s.ConfigKey.Stops),
-      b = await e.get(a.Features).disableLogProb(),
-      x = {
-        prompt: n.prompt.prefix,
-        suffix: n.prompt.suffix,
-        max_tokens: s.getConfig(e, s.ConfigKey.SolutionLength),
-        temperature: m.getTemperatureForSamples(e, n.count),
-        top_p: s.getConfig(e, s.ConfigKey.TopP),
-        n: n.count,
-        stop: _,
-      };
+    const _ = s.getLanguageConfig(e, s.ConfigKey.Stops);
+    const b = await e.get(a.Features).disableLogProb();
+    const x = {
+      prompt: n.prompt.prefix,
+      suffix: n.prompt.suffix,
+      max_tokens: s.getConfig(e, s.ConfigKey.SolutionLength),
+      temperature: m.getTemperatureForSamples(e, n.count),
+      top_p: s.getConfig(e, s.ConfigKey.TopP),
+      n: n.count,
+      stop: _,
+    };
     if (!n.requestLogProbs && b) {
       x.logprobs = 2;
     }
@@ -149,8 +149,8 @@ exports.LiveOpenAIFetcher = class extends OpenAIFetcher {
       : (l.logger.info(e, `[fetchCompletions] engine ${n.engineUrl}`),
         await (function (e, t, n, o, i, s, a, p, h) {
           var m;
-          const g = e.get(d.StatusReporter),
-            _ = r.format("%s/%s", n, o);
+          const g = e.get(d.StatusReporter);
+          const _ = r.format("%s/%s", n, o);
           if (!a)
             return void l.logger.error(
               e,
@@ -173,15 +173,15 @@ exports.LiveOpenAIFetcher = class extends OpenAIFetcher {
             }
           b.properties.headerRequestId = i;
           f.telemetry(e, "request.sent", b);
-          const x = f.now(),
-            E = (function (e) {
-              switch (e) {
-                case y.GhostText:
-                  return "copilot-ghost";
-                case y.Panel:
-                  return "copilot-panel";
-              }
-            })(p);
+          const x = f.now();
+          const E = (function (e) {
+            switch (e) {
+              case y.GhostText:
+                return "copilot-ghost";
+              case y.Panel:
+                return "copilot-panel";
+            }
+          })(p);
           return u
             .postRequest(e, _, a, E, i, s, h)
             .then((n) => {
@@ -198,13 +198,16 @@ exports.LiveOpenAIFetcher = class extends OpenAIFetcher {
               );
               l.logger.debug(e, `prompt: ${JSON.stringify(t)}`);
               f.telemetry(e, "request.response", b);
-              const i = n.headers.get("x-copilot-delay"),
-                s = i ? parseInt(i, 10) : 0;
+              const i = n.headers.get("x-copilot-delay");
+              const s = i ? parseInt(i, 10) : 0;
               e.get(c.GhostTextDebounceManager).extraDebounceMs = s;
               return n;
             })
             .catch((t) => {
-              var n, r, o, i;
+              var n;
+              var r;
+              var o;
+              var i;
               if (u.isAbortError(t)) throw t;
               g.setWarning();
               const s = b.extendedBy({

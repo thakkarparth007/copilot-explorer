@@ -2,22 +2,22 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.launchSolutions = exports.normalizeCompletionText = undefined;
-const r = require(2277),
-  o = require(6932),
-  i = require(1133),
-  s = require(256),
-  a = require(9899),
-  c = require(3),
-  l = require(937),
-  u = require(6722),
-  d = require(7727),
-  p = require(4969),
-  h = require(2533),
-  f = require(766),
-  m = require(1124),
-  g = require(6333),
-  _ = require(6403),
-  y = new a.Logger(a.LogLevel.INFO, "solutions");
+const r = require(2277);
+const o = require(6932);
+const i = require(1133);
+const s = require(256);
+const a = require(9899);
+const c = require(3);
+const l = require(937);
+const u = require(6722);
+const d = require(7727);
+const p = require(4969);
+const h = require(2533);
+const f = require(766);
+const m = require(1124);
+const g = require(6333);
+const _ = require(6403);
+const y = new a.Logger(a.LogLevel.INFO, "solutions");
 function v(e, t, n, r) {
   return async (o) => {
     if (r instanceof Array) {
@@ -51,13 +51,15 @@ exports.normalizeCompletionText = function (e) {
   return e.replace(/\s+/g, "");
 };
 exports.launchSolutions = async function (e, t) {
-  var n, a, w;
-  const x = t.completionContext.insertPosition,
-    E = t.completionContext.prependToCompletion,
-    C = t.completionContext.indentation,
-    S = e.get(_.LocationFactory),
-    T = await t.getDocument(),
-    k = await p.extractPrompt(e, T, x);
+  var n;
+  var a;
+  var w;
+  const x = t.completionContext.insertPosition;
+  const E = t.completionContext.prependToCompletion;
+  const C = t.completionContext.indentation;
+  const S = e.get(_.LocationFactory);
+  const T = await t.getDocument();
+  const k = await p.extractPrompt(e, T, x);
   if ("contextTooShort" === k.type) {
     t.reportCancelled();
     return {
@@ -65,16 +67,16 @@ exports.launchSolutions = async function (e, t) {
       error: "Context too short",
     };
   }
-  const I = k.prompt,
-    P = k.trailingWs;
+  const I = k.prompt;
+  const P = k.trailingWs;
   if (P.length > 0) {
     t.startPosition = S.position(
       t.startPosition.line,
       t.startPosition.character - P.length
     );
   }
-  const A = t.getCancellationToken(),
-    O = r.v4();
+  const A = t.getCancellationToken();
+  const O = r.v4();
   t.savedTelemetryData = g.TelemetryData.createAndMarkAsIssued(
     {
       headerRequestId: O,
@@ -109,38 +111,38 @@ exports.launchSolutions = async function (e, t) {
   y.info(e, `prompt: ${JSON.stringify(I)}`);
   y.debug(e, `prependToCompletion: ${E}`);
   g.telemetry(e, "solution.requested", t.savedTelemetryData);
-  const N = await e.get(i.BlockModeConfig).forLanguage(e, T.languageId),
-    R = h.isSupportedLanguageId(T.languageId),
-    M = d.contextIndentation(T, x),
-    L = {
-      stream: !0,
-      extra: {
-        language: T.languageId,
-        next_indent: null !== (n = M.next) && undefined !== n ? n : 0,
-      },
-    };
+  const N = await e.get(i.BlockModeConfig).forLanguage(e, T.languageId);
+  const R = h.isSupportedLanguageId(T.languageId);
+  const M = d.contextIndentation(T, x);
+  const L = {
+    stream: !0,
+    extra: {
+      language: T.languageId,
+      next_indent: null !== (n = M.next) && undefined !== n ? n : 0,
+    },
+  };
   if ("parsing" !== N || R) {
     L.stop = ["\n\n", "\r\n\r\n"];
   }
-  const $ = f.extractRepoInfoInBackground(e, T.fileName),
-    D = {
-      prompt: I,
-      languageId: T.languageId,
-      repoInfo: $,
-      ourRequestId: O,
-      engineUrl: await c.getEngineURL(
-        e,
-        f.tryGetGitHubNWO($),
-        T.languageId,
-        f.getDogFood($),
-        await f.getUserKind(e),
-        t.savedTelemetryData
-      ),
-      count: t.solutionCountTarget,
-      uiKind: l.CopilotUiKind.Panel,
-      postOptions: L,
-      requestLogProbs: !0,
-    };
+  const $ = f.extractRepoInfoInBackground(e, T.fileName);
+  const D = {
+    prompt: I,
+    languageId: T.languageId,
+    repoInfo: $,
+    ourRequestId: O,
+    engineUrl: await c.getEngineURL(
+      e,
+      f.tryGetGitHubNWO($),
+      T.languageId,
+      f.getDogFood($),
+      await f.getUserKind(e),
+      t.savedTelemetryData
+    ),
+    count: t.solutionCountTarget,
+    uiKind: l.CopilotUiKind.Panel,
+    postOptions: L,
+    requestLogProbs: !0,
+  };
   let F;
   const j =
     t.completionContext.completionType ===

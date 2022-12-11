@@ -1,12 +1,12 @@
-var M_random_stuff_NOTSURE;
-M_random_stuff_NOTSURE = require("random-stuff");
+var M_random_stuff_maybe;
+M_random_stuff_maybe = require("random-stuff");
 require("cipher-core");
-M_random_stuff_NOTSURE.pad.AnsiX923 = {
+M_random_stuff_maybe.pad.AnsiX923 = {
   pad: function (e, t) {
-    var n = e.sigBytes,
-      r = 4 * t,
-      o = r - (n % r),
-      i = n + o - 1;
+    var n = e.sigBytes;
+    var r = 4 * t;
+    var o = r - (n % r);
+    var i = n + o - 1;
     e.clamp();
     e.words[i >>> 2] |= o << (24 - (i % 4) * 8);
     e.sigBytes += o;
@@ -16,4 +16,4 @@ M_random_stuff_NOTSURE.pad.AnsiX923 = {
     e.sigBytes -= t;
   },
 };
-module.exports = M_random_stuff_NOTSURE.pad.Ansix923;
+module.exports = M_random_stuff_maybe.pad.Ansix923;

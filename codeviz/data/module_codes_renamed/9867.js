@@ -1,7 +1,7 @@
-var M_wrap_logger_NOTSURE = require("wrap-logger"),
-  o = M_wrap_logger_NOTSURE.wrap,
-  i = M_wrap_logger_NOTSURE.unwrap,
-  s = "wrap@before";
+var M_wrap_logger_maybe = require("wrap-logger");
+var o = M_wrap_logger_maybe.wrap;
+var i = M_wrap_logger_maybe.unwrap;
+var s = "wrap@before";
 function a(e, t, n) {
   var r = !!e[t] && e.propertyIsEnumerable(t);
   Object.defineProperty(e, t, {
@@ -46,12 +46,18 @@ module.exports = function (e, t, n) {
           });
           if (r.length > 0) {
             (function (e, t) {
-              for (var n = t.length, r = 0; r < n; r++) {
-                var o = t[r],
-                  i = e[s];
+              for (n = t.length, r = 0, undefined; r < n; r++) {
+                var n;
+                var r;
+                var o = t[r];
+                var i = e[s];
                 if ("function" == typeof i) i(o);
                 else if (Array.isArray(i))
-                  for (var a = i.length, c = 0; c < a; c++) i[c](o);
+                  for (a = i.length, c = 0, undefined; c < a; c++) {
+                    var a;
+                    var c;
+                    i[c](o);
+                  }
               }
             })(e, r);
           }

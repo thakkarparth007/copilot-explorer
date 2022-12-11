@@ -7,8 +7,8 @@ exports.mongoCore = {
   patch: function (e) {
     var t = e.Server.prototype.connect;
     e.Server.prototype.connect = function () {
-      var e = t.apply(this, arguments),
-        n = this.s.pool.write;
+      var e = t.apply(this, arguments);
+      var n = this.s.pool.write;
       this.s.pool.write = function () {
         var e = "function" == typeof arguments[1] ? 1 : 2;
         if ("function" == typeof arguments[e]) {

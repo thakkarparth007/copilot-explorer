@@ -9,71 +9,91 @@ exports.CodeGen =
   exports._ =
   exports.KeywordCxt =
     undefined;
-var M_compiler_utils_NOTSURE = require("compiler-utils");
-exports.KeywordCxt = M_compiler_utils_NOTSURE.KeywordCxt;
-var M_codegen_NOTSURE = require("codegen");
-exports._ = M_codegen_NOTSURE._;
-exports.str = M_codegen_NOTSURE.str;
-exports.stringify = M_codegen_NOTSURE.stringify;
-exports.nil = M_codegen_NOTSURE.nil;
-exports.Name = M_codegen_NOTSURE.Name;
-exports.CodeGen = M_codegen_NOTSURE.CodeGen;
-const M_ajv_validation_error_NOTSURE = require("ajv-validation-error"),
-  M_missing_reference_error_NOTSURE = require("missing-reference-error"),
-  M_json_schema_rules_NOTSURE = require("json-schema-rules"),
-  M_schema_compiler_NOTSURE = require("schema-compiler"),
-  M_codegen_NOTSURE = require("codegen"),
-  M_schema_ref_utils_NOTSURE = require("schema-ref-utils"),
-  M_data_type_checker_NOTSURE = require("data-type-checker"),
-  M_ajv_utils_NOTSURE = require("ajv-utils"),
-  M_ajv_refs_data_NOTSURE = require("ajv-refs-data"),
-  f = ["removeAdditional", "useDefaults", "coerceTypes"],
-  m = new Set([
-    "validate",
-    "serialize",
-    "parse",
-    "wrapper",
-    "root",
-    "schema",
-    "keyword",
-    "pattern",
-    "formats",
-    "validate$data",
-    "func",
-    "obj",
-    "Error",
-  ]),
-  g = {
-    errorDataPath: "",
-    format: "`validateFormats: false` can be used instead.",
-    nullable: '"nullable" keyword is supported by default.',
-    jsonPointers: "Deprecated jsPropertySyntax can be used instead.",
-    extendRefs: "Deprecated ignoreKeywordsWithRef can be used instead.",
-    missingRefs:
-      "Pass empty schema with $id that should be ignored to ajv.addSchema.",
-    processCode:
-      "Use option `code: {process: (code, schemaEnv: object) => string}`",
-    sourceCode: "Use option `code: {source: true}`",
-    strictDefaults: "It is default now, see option `strict`.",
-    strictKeywords: "It is default now, see option `strict`.",
-    uniqueItems: '"uniqueItems" keyword is always validated.',
-    unknownFormats:
-      "Disable strict mode or pass `true` to `ajv.addFormat` (or `formats` option).",
-    cache: "Map is used as cache, schema object as key.",
-    serialize: "Map is used as cache, schema object as key.",
-    ajvErrors: "It is default now.",
-  },
-  _ = {
-    ignoreKeywordsWithRef: "",
-    jsPropertySyntax: "",
-    unicode:
-      '"minLength"/"maxLength" account for unicode characters by default.',
-  };
+var M_compiler_utils_maybe = require("compiler-utils");
+exports.KeywordCxt = M_compiler_utils_maybe.KeywordCxt;
+var M_codegen_maybe = require("codegen");
+exports._ = M_codegen_maybe._;
+exports.str = M_codegen_maybe.str;
+exports.stringify = M_codegen_maybe.stringify;
+exports.nil = M_codegen_maybe.nil;
+exports.Name = M_codegen_maybe.Name;
+exports.CodeGen = M_codegen_maybe.CodeGen;
+const M_ajv_validation_error_maybe = require("ajv-validation-error");
+const M_missing_reference_error_maybe = require("missing-reference-error");
+const M_json_schema_rules_maybe = require("json-schema-rules");
+const M_schema_compiler_maybe = require("schema-compiler");
+const M_codegen_maybe = require("codegen");
+const M_schema_ref_utils_maybe = require("schema-ref-utils");
+const M_data_type_checker_maybe = require("data-type-checker");
+const M_ajv_utils_maybe = require("ajv-utils");
+const M_ajv_refs_data_maybe = require("ajv-refs-data");
+const f = ["removeAdditional", "useDefaults", "coerceTypes"];
+const m = new Set([
+  "validate",
+  "serialize",
+  "parse",
+  "wrapper",
+  "root",
+  "schema",
+  "keyword",
+  "pattern",
+  "formats",
+  "validate$data",
+  "func",
+  "obj",
+  "Error",
+]);
+const g = {
+  errorDataPath: "",
+  format: "`validateFormats: false` can be used instead.",
+  nullable: '"nullable" keyword is supported by default.',
+  jsonPointers: "Deprecated jsPropertySyntax can be used instead.",
+  extendRefs: "Deprecated ignoreKeywordsWithRef can be used instead.",
+  missingRefs:
+    "Pass empty schema with $id that should be ignored to ajv.addSchema.",
+  processCode:
+    "Use option `code: {process: (code, schemaEnv: object) => string}`",
+  sourceCode: "Use option `code: {source: true}`",
+  strictDefaults: "It is default now, see option `strict`.",
+  strictKeywords: "It is default now, see option `strict`.",
+  uniqueItems: '"uniqueItems" keyword is always validated.',
+  unknownFormats:
+    "Disable strict mode or pass `true` to `ajv.addFormat` (or `formats` option).",
+  cache: "Map is used as cache, schema object as key.",
+  serialize: "Map is used as cache, schema object as key.",
+  ajvErrors: "It is default now.",
+};
+const _ = {
+  ignoreKeywordsWithRef: "",
+  jsPropertySyntax: "",
+  unicode: '"minLength"/"maxLength" account for unicode characters by default.',
+};
 function y(e) {
-  var t, n, r, o, i, s, a, c, l, u, d, p, h, f, m, g, _, y, v, b, w, x;
-  const E = e.strict,
-    C = null === (t = e.code) || undefined === t ? undefined : t.optimize,
-    S = !0 === C || undefined === C ? 1 : C || 0;
+  var t;
+  var n;
+  var r;
+  var o;
+  var i;
+  var s;
+  var a;
+  var c;
+  var l;
+  var u;
+  var d;
+  var p;
+  var h;
+  var f;
+  var m;
+  var g;
+  var _;
+  var y;
+  var v;
+  var b;
+  var w;
+  var x;
+  const E = e.strict;
+  const C = null === (t = e.code) || undefined === t ? undefined : t.optimize;
+  const S = !0 === C || undefined === C ? 1 : C || 0;
   return {
     strictSchema:
       null === (r = null !== (n = e.strictSchema) && undefined !== n ? n : E) ||
@@ -133,7 +153,7 @@ class v {
       ...y(e),
     };
     const { es5: t, lines: n } = this.opts.code;
-    this.scope = new M_codegen_NOTSURE.ValueScope({
+    this.scope = new M_codegen_maybe.ValueScope({
       scope: {},
       prefixes: m,
       es5: t,
@@ -147,7 +167,7 @@ class v {
     })(e.logger);
     const r = e.validateFormats;
     e.validateFormats = !1;
-    this.RULES = M_json_schema_rules_NOTSURE.getRules();
+    this.RULES = M_json_schema_rules_maybe.getRules();
     b.call(this, g, e, "NOT SUPPORTED");
     b.call(this, _, e, "DEPRECATED", "warn");
     this._metaOpts = S.call(this);
@@ -170,10 +190,10 @@ class v {
   }
   _addDefaultMetaSchema() {
     const { $data: e, meta: t, schemaId: n } = this.opts;
-    let r = M_ajv_refs_data_NOTSURE;
+    let r = M_ajv_refs_data_maybe;
     if ("id" === n) {
       r = {
-        ...M_ajv_refs_data_NOTSURE,
+        ...M_ajv_refs_data_maybe,
       };
       r.id = r.$id;
       delete r.$id;
@@ -228,7 +248,7 @@ class v {
       try {
         return this._compileSchemaEnv(e);
       } catch (t) {
-        if (!(t instanceof M_missing_reference_error_NOTSURE.default)) throw t;
+        if (!(t instanceof M_missing_reference_error_maybe.default)) throw t;
         a.call(this, t);
         await c.call(this, t.missingSchema);
         return i.call(this, e);
@@ -269,7 +289,7 @@ class v {
       if (void 0 !== o && "string" != typeof o)
         throw new Error(`schema ${t} must be string`);
     }
-    t = M_schema_ref_utils_NOTSURE.normalizeId(t || o);
+    t = M_schema_ref_utils_maybe.normalizeId(t || o);
     this._checkUnique(t);
     this.schemas[t] = this._addSchema(e, n, t, r, !0);
     return this;
@@ -301,12 +321,12 @@ class v {
     let t;
     for (; "string" == typeof (t = w.call(this, e)); ) e = t;
     if (undefined === t) {
-      const { schemaId: n } = this.opts,
-        r = new M_schema_compiler_NOTSURE.SchemaEnv({
-          schema: {},
-          schemaId: n,
-        });
-      t = M_schema_compiler_NOTSURE.resolveSchema.call(this, r, e);
+      const { schemaId: n } = this.opts;
+      const r = new M_schema_compiler_maybe.SchemaEnv({
+        schema: {},
+        schemaId: n,
+      });
+      t = M_schema_compiler_maybe.resolveSchema.call(this, r, e);
       if (!t) return;
       this.refs[e] = t;
     }
@@ -338,7 +358,7 @@ class v {
         this._cache.delete(t);
         let n = e[this.opts.schemaId];
         if (n) {
-          n = M_schema_ref_utils_NOTSURE.normalizeId(n);
+          n = M_schema_ref_utils_maybe.normalizeId(n);
           delete this.schemas[n];
           delete this.refs[n];
         }
@@ -373,14 +393,14 @@ class v {
     }
     I.call(this, n, t);
     if (!t)
-      return (0, M_ajv_utils_NOTSURE.eachItem)(n, (e) => P.call(this, e)), this;
+      return (0, M_ajv_utils_maybe.eachItem)(n, (e) => P.call(this, e)), this;
     O.call(this, t);
     const r = {
       ...t,
-      type: M_data_type_checker_NOTSURE.getJSONTypes(t.type),
-      schemaType: M_data_type_checker_NOTSURE.getJSONTypes(t.schemaType),
+      type: M_data_type_checker_maybe.getJSONTypes(t.type),
+      schemaType: M_data_type_checker_maybe.getJSONTypes(t.schemaType),
     };
-    M_ajv_utils_NOTSURE.eachItem(
+    M_ajv_utils_maybe.eachItem(
       n,
       0 === r.type.length
         ? (e) => P.call(this, e, r)
@@ -431,8 +451,8 @@ class v {
       for (const e in n) {
         const t = n[e];
         if ("object" != typeof t) continue;
-        const { $data: r } = t.definition,
-          i = o[e];
+        const { $data: r } = t.definition;
+        const i = o[e];
         if (r && i) {
           o[e] = R(i);
         }
@@ -472,9 +492,9 @@ class v {
     }
     let a = this._cache.get(e);
     if (undefined !== a) return a;
-    n = M_schema_ref_utils_NOTSURE.normalizeId(i || n);
-    const l = M_schema_ref_utils_NOTSURE.getSchemaRefs.call(this, e, n);
-    a = new M_schema_compiler_NOTSURE.SchemaEnv({
+    n = M_schema_ref_utils_maybe.normalizeId(i || n);
+    const l = M_schema_ref_utils_maybe.getSchemaRefs.call(this, e, n);
+    a = new M_schema_compiler_maybe.SchemaEnv({
       schema: e,
       schemaId: s,
       meta: t,
@@ -501,7 +521,7 @@ class v {
     if (e.meta) {
       this._compileMetaSchema(e);
     } else {
-      M_schema_compiler_NOTSURE.compileSchema.call(this, e);
+      M_schema_compiler_maybe.compileSchema.call(this, e);
     }
     if (!e.validate) throw new Error("ajv implementation error");
     return e.validate;
@@ -510,7 +530,7 @@ class v {
     const t = this.opts;
     this.opts = this._metaOpts;
     try {
-      M_schema_compiler_NOTSURE.compileSchema.call(this, e);
+      M_schema_compiler_maybe.compileSchema.call(this, e);
     } finally {
       this.opts = t;
     }
@@ -525,7 +545,7 @@ function b(e, t, n, r = "error") {
   }
 }
 function w(e) {
-  e = M_schema_ref_utils_NOTSURE.normalizeId(e);
+  e = M_schema_ref_utils_maybe.normalizeId(e);
   return this.schemas[e] || this.refs[e];
 }
 function x() {
@@ -563,17 +583,17 @@ function S() {
   return e;
 }
 exports.default = v;
-v.ValidationError = M_ajv_validation_error_NOTSURE.default;
-v.MissingRefError = M_missing_reference_error_NOTSURE.default;
+v.ValidationError = M_ajv_validation_error_maybe.default;
+v.MissingRefError = M_missing_reference_error_maybe.default;
 const T = {
-    log() {},
-    warn() {},
-    error() {},
-  },
-  k = /^[a-z_$][a-z0-9_$:-]*$/i;
+  log() {},
+  warn() {},
+  error() {},
+};
+const k = /^[a-z_$][a-z0-9_$:-]*$/i;
 function I(e, t) {
   const { RULES: n } = this;
-  M_ajv_utils_NOTSURE.eachItem(e, (e) => {
+  M_ajv_utils_maybe.eachItem(e, (e) => {
     if (n.keywords[e]) throw new Error(`Keyword ${e} is already defined`);
     if (!k.test(e)) throw new Error(`Keyword ${e} has invalid name`);
   });
@@ -599,8 +619,8 @@ function P(e, t, n) {
     keyword: e,
     definition: {
       ...t,
-      type: M_data_type_checker_NOTSURE.getJSONTypes(t.type),
-      schemaType: M_data_type_checker_NOTSURE.getJSONTypes(t.schemaType),
+      type: M_data_type_checker_maybe.getJSONTypes(t.type),
+      schemaType: M_data_type_checker_maybe.getJSONTypes(t.schemaType),
     },
   };
   if (t.before) {

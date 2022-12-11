@@ -1,16 +1,16 @@
-var t = 1e3,
-  n = 60 * t,
-  r = 60 * n,
-  o = 24 * r;
+var t = 1e3;
+var n = 60 * t;
+var r = 60 * n;
+var o = 24 * r;
 function i(e, t, n, r) {
   var o = t >= 1.5 * n;
   return Math.round(e / n) + " " + r + (o ? "s" : "");
 }
 module.exports = function (e, s) {
   s = s || {};
-  var a,
-    c,
-    l = typeof e;
+  var a;
+  var c;
+  var l = typeof e;
   if ("string" === l && e.length > 0)
     return (function (e) {
       if (!((e = String(e)).length > 100)) {

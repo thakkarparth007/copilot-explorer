@@ -8,14 +8,14 @@ exports.postRequest =
   exports.Fetcher =
   exports.init =
     undefined;
-const M_helix_fetch_NOTSURE = require("helix-fetch"),
-  M_http_over_https_proxy_agent_NOTSURE = require("http-over-https-proxy-agent"),
-  i = require("util"),
-  M_config_stuff = require("config-stuff"),
-  M_ghost_text_debouncer_NOTSURE = require("ghost-text-debouncer"),
-  M_telemetry_stuff = require("telemetry-stuff");
-let l,
-  u = !1;
+const M_helix_fetch_maybe = require("helix-fetch");
+const M_http_over_https_proxy_agent_maybe = require("http-over-https-proxy-agent");
+const M_util = require("util");
+const M_config_stuff = require("config-stuff");
+const M_ghost_text_debouncer_maybe = require("ghost-text-debouncer");
+const M_telemetry_stuff = require("telemetry-stuff");
+let l;
+let u = !1;
 exports.init = function (e) {
   if (u) {
     if (e !== l)
@@ -30,14 +30,14 @@ exports.init = function (e) {
 class Fetcher {}
 exports.Fetcher = Fetcher;
 exports.isAbortError = function (e) {
-  return e instanceof M_helix_fetch_NOTSURE.AbortError;
+  return e instanceof M_helix_fetch_maybe.AbortError;
 };
 exports.HelixFetcher = class extends Fetcher {
   constructor(e) {
     super();
     this.ctx = e;
     this.createSocketFactory = (e) => {
-      const t = M_http_over_https_proxy_agent_NOTSURE.httpOverHttp({
+      const t = M_http_over_https_proxy_agent_maybe.httpOverHttp({
         proxy: e,
       });
       return (e) =>
@@ -67,7 +67,7 @@ exports.HelixFetcher = class extends Fetcher {
     ) {
       process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     }
-    return M_helix_fetch_NOTSURE.context({
+    return M_helix_fetch_maybe.context({
       userAgent: `GithubCopilot/${n.getVersion()}`,
       socketFactory: this._proxySettings
         ? this.createSocketFactory(this._proxySettings)
@@ -76,11 +76,11 @@ exports.HelixFetcher = class extends Fetcher {
   }
   async fetch(e, t) {
     const n = {
-        ...t,
-        body: t.body ? t.body : t.json,
-        signal: t.signal,
-      },
-      r = await this.fetchApi.fetch(e, n);
+      ...t,
+      body: t.body ? t.body : t.json,
+      signal: t.signal,
+    };
+    const r = await this.fetchApi.fetch(e, n);
     return new Response(
       r.status,
       r.statusText,
@@ -94,7 +94,7 @@ exports.HelixFetcher = class extends Fetcher {
     return this.fetchApi.reset();
   }
   makeAbortController() {
-    return new M_helix_fetch_NOTSURE.AbortController();
+    return new M_helix_fetch_maybe.AbortController();
   }
 };
 class Response {
@@ -121,7 +121,7 @@ exports.Response = Response;
 exports.postRequest = function (e, t, n, r, o, l, p) {
   if (!u) throw new Error("Networking must be initialized before being used");
   const h = {
-    Authorization: i.format("Bearer %s", n),
+    Authorization: M_util.format("Bearer %s", n),
     "X-Request-Id": o,
     "Openai-Organization": "github-copilot",
     "VScode-SessionId": e.get(M_config_stuff.VscInfo).sessionId,
@@ -132,18 +132,18 @@ exports.postRequest = function (e, t, n, r, o, l, p) {
     h["OpenAI-Intent"] = r;
   }
   const f = e.get(
-    M_ghost_text_debouncer_NOTSURE.GhostTextDebounceManager
+    M_ghost_text_debouncer_maybe.GhostTextDebounceManager
   ).forceDelayMs;
   if (f) {
     h["X-Copilot-Force-Delay"] = f.toString();
   }
   const m = {
-      method: "POST",
-      headers: h,
-      json: l,
-      timeout: 3e4,
-    },
-    g = e.get(Fetcher);
+    method: "POST",
+    headers: h,
+    json: l,
+    timeout: 3e4,
+  };
+  const g = e.get(Fetcher);
   if (p) {
     const t = g.makeAbortController();
     p.onCancellationRequested(() => {

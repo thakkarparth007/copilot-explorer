@@ -2,11 +2,15 @@ var r =
   (this && this.__assign) ||
   Object.assign ||
   function (e) {
-    for (var t, n = 1, r = arguments.length; n < r; n++)
+    for (n = 1, r = arguments.length, undefined; n < r; n++) {
+      var t;
+      var n;
+      var r;
       for (var o in (t = arguments[n]))
         if (Object.prototype.hasOwnProperty.call(t, o)) {
           e[o] = t[o];
         }
+    }
     return e;
   };
 Object.defineProperty(exports, "__esModule", {
@@ -19,17 +23,17 @@ exports.tedious = {
     var t = e.Connection.prototype.makeRequest;
     e.Connection.prototype.makeRequest = function () {
       function e(e) {
-        var t = process.hrtime(),
-          n = {
-            query: {},
-            database: {
-              host: null,
-              port: null,
-            },
-            result: null,
-            error: null,
-            duration: 0,
-          };
+        var t = process.hrtime();
+        var n = {
+          query: {},
+          database: {
+            host: null,
+            port: null,
+          },
+          result: null,
+          error: null,
+          duration: 0,
+        };
         return o.channel.bindToContext(function (i, s, a) {
           var c = process.hrtime(t);
           n = r({}, n, {

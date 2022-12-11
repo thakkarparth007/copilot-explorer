@@ -2,9 +2,9 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.LRUCache = exports.keyForPrompt = undefined;
-const M_react_dom_NOTSURE = require("react-dom");
+const M_react_dom_maybe = require("react-dom");
 exports.keyForPrompt = function (e) {
-  return M_react_dom_NOTSURE.SHA256(e.prefix + e.suffix).toString();
+  return M_react_dom_maybe.SHA256(e.prefix + e.suffix).toString();
 };
 exports.LRUCache = class {
   constructor(e = 10) {

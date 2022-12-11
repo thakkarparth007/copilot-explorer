@@ -2,7 +2,9 @@ module.exports = function e(t, n) {
   if (t === n) return !0;
   if (t && n && "object" == typeof t && "object" == typeof n) {
     if (t.constructor !== n.constructor) return !1;
-    var r, o, i;
+    var r;
+    var o;
+    var i;
     if (Array.isArray(t)) {
       if ((r = t.length) != n.length) return !1;
       for (o = r; 0 != o--; ) if (!e(t[o], n[o])) return !1;

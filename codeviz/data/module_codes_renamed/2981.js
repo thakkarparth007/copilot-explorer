@@ -1,8 +1,8 @@
-const { Body: r, cloneStream: o, guessContentType: i } = require("body"),
-  { Headers: s } = require("headers"),
-  { isPlainObject: a } = require("fetch-utils"),
-  { isFormData: c, FormDataSerializer: l } = require("form-data-utils"),
-  u = Symbol("Response internals");
+const { Body: r, cloneStream: o, guessContentType: i } = require("body");
+const { Headers: s } = require("headers");
+const { isPlainObject: a } = require("fetch-utils");
+const { isFormData: c, FormDataSerializer: l } = require("form-data-utils");
+const u = Symbol("Response internals");
 class d extends r {
   constructor(e = null, t = {}) {
     const n = new s(t.headers);

@@ -1,11 +1,11 @@
-const r = require("fs");
+const M_fs = require("fs");
 let o;
 module.exports = () => (
   undefined === o &&
     (o =
       (function () {
         try {
-          r.statSync("/.dockerenv");
+          M_fs.statSync("/.dockerenv");
           return !0;
         } catch (e) {
           return !1;
@@ -13,7 +13,9 @@ module.exports = () => (
       })() ||
       (function () {
         try {
-          return r.readFileSync("/proc/self/cgroup", "utf8").includes("docker");
+          return M_fs.readFileSync("/proc/self/cgroup", "utf8").includes(
+            "docker"
+          );
         } catch (e) {
           return !1;
         }

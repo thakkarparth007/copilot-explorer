@@ -5,21 +5,29 @@ exports.prepareSolutionForReturn =
   exports.processSSE =
   exports.splitChunk =
     undefined;
-const M_logging_utils = require("logging-utils"),
-  M_telemetry_stuff = require("telemetry-stuff"),
-  M_openai_choices_utils = require("openai-choices-utils"),
-  s = new M_logging_utils.Logger(
-    M_logging_utils.LogLevel.INFO,
-    "streamChoices"
-  );
+const M_logging_utils = require("logging-utils");
+const M_telemetry_stuff = require("telemetry-stuff");
+const M_openai_choices_utils = require("openai-choices-utils");
+const s = new M_logging_utils.Logger(
+  M_logging_utils.LogLevel.INFO,
+  "streamChoices"
+);
 function splitChunk(e) {
-  const t = e.split("\n"),
-    n = t.pop();
+  const t = e.split("\n");
+  const n = t.pop();
   return [t.filter((e) => "" != e), n];
 }
 exports.splitChunk = splitChunk;
 exports.processSSE = async function* (e, t, n, r, c) {
-  var l, u, d, p, h, f, m, g, _;
+  var l;
+  var u;
+  var d;
+  var p;
+  var h;
+  var f;
+  var m;
+  var g;
+  var _;
   const y = await t.body();
   y.setEncoding("utf8");
   let v = M_openai_choices_utils.getRequestId(t);
@@ -193,8 +201,8 @@ exports.processSSE = async function* (e, t, n, r, c) {
     }
 };
 exports.prepareSolutionForReturn = function (e, t, n) {
-  let r = t.solution.text.join(""),
-    o = !1;
+  let r = t.solution.text.join("");
+  let o = !1;
   if (undefined !== t.finishOffset) {
     s.debug(e, `solution ${t.index}: early finish at offset ${t.finishOffset}`);
     r = r.substring(0, t.finishOffset);
@@ -210,10 +218,10 @@ exports.prepareSolutionForReturn = function (e, t, n) {
       tokens: t.text,
     };
     if (0 === t.logprobs.length) return n;
-    const r = t.logprobs.reduce((e, t) => e.concat(t), []),
-      o = t.top_logprobs.reduce((e, t) => e.concat(t), []),
-      i = t.text_offset.reduce((e, t) => e.concat(t), []),
-      s = t.tokens.reduce((e, t) => e.concat(t), []);
+    const r = t.logprobs.reduce((e, t) => e.concat(t), []);
+    const o = t.top_logprobs.reduce((e, t) => e.concat(t), []);
+    const i = t.text_offset.reduce((e, t) => e.concat(t), []);
+    const s = t.tokens.reduce((e, t) => e.concat(t), []);
     return {
       ...n,
       logprobs: {

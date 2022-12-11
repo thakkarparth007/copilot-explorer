@@ -1,17 +1,17 @@
 Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
-var r,
-  M_correlation_context_manager = require("correlation-context-manager"),
-  M_console_logging_adapter_tracking_NOTSURE = require("console-logging-adapter-tracking"),
-  M_exception_tracking_NOTSURE = require("exception-tracking"),
-  M_performance_monitor_NOTSURE = require("performance-monitor"),
-  M_request_tracker_NOTSURE = require("request-tracker"),
-  M_server_request_tracker_NOTSURE = require("server-request-tracker"),
-  M_app_id_lookup_NOTSURE = require("app-id-lookup"),
-  M_logging_NOTSURE = require("logging"),
-  M_quickpulse_NOTSURE = require("quickpulse"),
-  M_native_perf_collector_NOTSURE = require("native-perf-collector");
+var r;
+var M_correlation_context_manager = require("correlation-context-manager");
+var M_console_logging_adapter_tracking_maybe = require("console-logging-adapter-tracking");
+var M_exception_tracking_maybe = require("exception-tracking");
+var M_performance_monitor_maybe = require("performance-monitor");
+var M_request_tracker_maybe = require("request-tracker");
+var M_server_request_tracker_maybe = require("server-request-tracker");
+var M_app_id_lookup_maybe = require("app-id-lookup");
+var M_logging_maybe = require("logging");
+var M_quickpulse_maybe = require("quickpulse");
+var M_native_perf_collector_maybe = require("native-perf-collector");
 exports.TelemetryClient = require("telemetry-client");
 exports.Contracts = require("copilot-utils");
 (function (e) {
@@ -21,28 +21,28 @@ exports.Contracts = require("copilot-utils");
   (r =
     exports.DistributedTracingModes || (exports.DistributedTracingModes = {}))
 );
-var f,
-  m,
-  g,
-  _,
-  y,
-  v,
-  b,
-  w,
-  x,
-  E = !0,
-  C = !1,
-  S = !0,
-  T = !0,
-  k = !0,
-  I = !0,
-  P = !0,
-  A = !0,
-  O = !1,
-  N = !0,
-  R = undefined,
-  M = undefined,
-  L = !1;
+var f;
+var m;
+var g;
+var _;
+var y;
+var v;
+var b;
+var w;
+var x;
+var E = !0;
+var C = !1;
+var S = !0;
+var T = !0;
+var k = !0;
+var I = !0;
+var P = !0;
+var A = !0;
+var O = !1;
+var N = !0;
+var R = undefined;
+var M = undefined;
+var L = !1;
 function start() {
   if (exports.defaultClient) {
     L = !0;
@@ -57,22 +57,22 @@ function start() {
       exports.liveMetricsClient.enable(O);
     }
   } else {
-    M_logging_NOTSURE.warn("Start cannot be called before setup");
+    M_logging_maybe.warn("Start cannot be called before setup");
   }
   return Configuration;
 }
 exports.setup = function (e) {
   if (exports.defaultClient) {
-    M_logging_NOTSURE.info("The default client is already setup");
+    M_logging_maybe.info("The default client is already setup");
   } else {
     exports.defaultClient = new exports.TelemetryClient(e);
-    g = new M_console_logging_adapter_tracking_NOTSURE(exports.defaultClient);
-    _ = new M_exception_tracking_NOTSURE(exports.defaultClient);
-    y = new M_performance_monitor_NOTSURE(exports.defaultClient);
-    b = new M_server_request_tracker_NOTSURE(exports.defaultClient);
-    w = new M_request_tracker_NOTSURE(exports.defaultClient);
+    g = new M_console_logging_adapter_tracking_maybe(exports.defaultClient);
+    _ = new M_exception_tracking_maybe(exports.defaultClient);
+    y = new M_performance_monitor_maybe(exports.defaultClient);
+    b = new M_server_request_tracker_maybe(exports.defaultClient);
+    w = new M_request_tracker_maybe(exports.defaultClient);
     if (v) {
-      v = new M_native_perf_collector_NOTSURE.AutoCollectNativePerformance(
+      v = new M_native_perf_collector_maybe.AutoCollectNativePerformance(
         exports.defaultClient
       );
     }
@@ -96,7 +96,7 @@ exports.wrapWithCorrelationContext = function (e) {
 var Configuration = (function () {
   function e() {}
   e.setDistributedTracingMode = function (t) {
-    M_app_id_lookup_NOTSURE.w3cEnabled = t === r.AI_AND_W3C;
+    M_app_id_lookup_maybe.w3cEnabled = t === r.AI_AND_W3C;
     return e;
   };
   e.setAutoCollectConsole = function (t, n) {
@@ -123,7 +123,7 @@ var Configuration = (function () {
     }
     T = t;
     var r =
-      M_native_perf_collector_NOTSURE.AutoCollectNativePerformance.parseEnabled(
+      M_native_perf_collector_maybe.AutoCollectNativePerformance.parseEnabled(
         n
       );
     N = r.isEnabled;
@@ -172,8 +172,8 @@ var Configuration = (function () {
     if (undefined === n) {
       n = !0;
     }
-    M_logging_NOTSURE.enableDebug = t;
-    M_logging_NOTSURE.disableWarnings = !n;
+    M_logging_maybe.enableDebug = t;
+    M_logging_maybe.disableWarnings = !n;
     return e;
   };
   e.setSendLiveMetrics = function (n) {
@@ -182,10 +182,10 @@ var Configuration = (function () {
     }
     return exports.defaultClient
       ? (!exports.liveMetricsClient && n
-          ? ((exports.liveMetricsClient = new M_quickpulse_NOTSURE(
+          ? ((exports.liveMetricsClient = new M_quickpulse_maybe(
               exports.defaultClient.config.instrumentationKey
             )),
-            (x = new M_performance_monitor_NOTSURE(
+            (x = new M_performance_monitor_maybe(
               exports.liveMetricsClient,
               1e3,
               !0
@@ -196,7 +196,7 @@ var Configuration = (function () {
           : exports.liveMetricsClient && exports.liveMetricsClient.enable(n),
         (O = n),
         e)
-      : (M_logging_NOTSURE.warn(
+      : (M_logging_maybe.warn(
           "Live metrics client cannot be setup without the default client"
         ),
         e);

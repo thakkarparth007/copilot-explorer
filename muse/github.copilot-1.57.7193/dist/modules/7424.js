@@ -1,11 +1,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
-var r = require("path"),
-  o = require(4014),
-  i = require("module"),
-  s = Object.keys(process.binding("natives")),
-  a = i.prototype.require;
+var r = require("path");
+var o = require(4014);
+var i = require("module");
+var s = Object.keys(process.binding("natives"));
+var a = i.prototype.require;
 exports.makePatchingRequire = function (e) {
   var t = {};
   return function (n) {
@@ -25,7 +25,10 @@ exports.makePatchingRequire = function (e) {
       if (d >= 0) {
         u = u.substring(0, d);
       }
-      for (var p = c, h = 0, f = e[n]; h < f.length; h++) {
+      for (p = c, h = 0, f = e[n], undefined; h < f.length; h++) {
+        var p;
+        var h;
+        var f;
         var m = f[h];
         if (o.satisfies(u, m.versionSpecifier)) {
           p = m.patch(p, l);

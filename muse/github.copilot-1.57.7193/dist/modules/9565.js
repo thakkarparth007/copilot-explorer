@@ -1,9 +1,9 @@
 function t() {}
 module.exports = function () {
-  const e = this._hooks,
-    n = this._state,
-    r = global.Promise,
-    o = r.prototype.then;
+  const e = this._hooks;
+  const n = this._state;
+  const r = global.Promise;
+  const o = r.prototype.then;
   function i(t, n, r, o) {
     return "function" != typeof t
       ? o
@@ -30,8 +30,8 @@ module.exports = function () {
   }
   r.prototype.then = function (r, s) {
     if (!n.enabled) return o.call(this, r, s);
-    const a = new t(),
-      c = --n.counter;
+    const a = new t();
+    const c = --n.counter;
     e.init.call(a, c, 0, null, null);
     return o.call(this, i(r, a, c, !0), i(s, a, c, !1));
   };

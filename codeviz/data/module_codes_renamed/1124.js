@@ -2,16 +2,16 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.checkSuffix = exports.postProcessChoice = undefined;
-const M_task_NOTSURE = require("task"),
-  M_get_prompt_parsing_utils_NOTSURE = require("get-prompt-parsing-utils"),
-  M_telemetry_stuff = require("telemetry-stuff"),
-  M_runtime_mode_NOTSURE = require("runtime-mode"),
-  M_repetition_filter_NOTSURE = require("repetition-filter");
+const M_task_maybe = require("task");
+const M_get_prompt_parsing_utils_maybe = require("get-prompt-parsing-utils");
+const M_telemetry_stuff = require("telemetry-stuff");
+const M_runtime_mode_maybe = require("runtime-mode");
+const M_repetition_filter_maybe = require("repetition-filter");
 exports.postProcessChoice = async function (e, t, n, c, l, u, d) {
   if (
-    M_repetition_filter_NOTSURE.isRepetitive(
+    M_repetition_filter_maybe.isRepetitive(
       l.tokens,
-      await e.get(M_task_NOTSURE.Features).repetitionFilterMode()
+      await e.get(M_task_maybe.Features).repetitionFilterMode()
     )
   ) {
     const t = M_telemetry_stuff.TelemetryData.createAndMarkAsIssued();
@@ -24,8 +24,8 @@ exports.postProcessChoice = async function (e, t, n, c, l, u, d) {
   };
   if (
     (function (e, t, n) {
-      let r = "",
-        o = t.line + 1;
+      let r = "";
+      let o = t.line + 1;
       for (; "" === r && o < e.lineCount; ) {
         r = e.lineAt(o).text.trim();
         if (r === n.trim()) return !0;
@@ -54,7 +54,7 @@ exports.postProcessChoice = async function (e, t, n, c, l, u, d) {
     try {
       c =
         null !==
-          (a = M_get_prompt_parsing_utils_NOTSURE.getBlockCloseToken(
+          (a = M_get_prompt_parsing_utils_maybe.getBlockCloseToken(
             t.languageId
           )) && undefined !== a
           ? a
@@ -62,8 +62,8 @@ exports.postProcessChoice = async function (e, t, n, c, l, u, d) {
     } catch (e) {}
     let l = r.length;
     do {
-      const o = r.lastIndexOf("\n", l - 2) + 1,
-        a = r.substring(o, l);
+      const o = r.lastIndexOf("\n", l - 2) + 1;
+      const a = r.substring(o, l);
       if (a.trim() === c) {
         for (let e = n.line; e < t.lineCount; e++) {
           let s = t.lineAt(e).text;
@@ -77,7 +77,7 @@ exports.postProcessChoice = async function (e, t, n, c, l, u, d) {
         break;
       }
       if (l === o) {
-        if (M_runtime_mode_NOTSURE.shouldFailForDebugPurposes(e))
+        if (M_runtime_mode_maybe.shouldFailForDebugPurposes(e))
           throw Error(
             `Aborting: maybeSnipCompletion would have looped on completion: ${r}`
           );

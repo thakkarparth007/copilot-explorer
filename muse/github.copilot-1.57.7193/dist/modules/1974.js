@@ -12,20 +12,22 @@ var t = (function () {
   e.validateKeyChars = function (e) {
     var t = e.split("@");
     if (2 == t.length) {
-      var n = t[0].trim(),
-        r = t[1].trim(),
-        o = Boolean(n.match(/^[\ ]?[a-z0-9\*\-\_/]{1,241}$/)),
-        i = Boolean(r.match(/^[\ ]?[a-z0-9\*\-\_/]{1,14}$/));
+      var n = t[0].trim();
+      var r = t[1].trim();
+      var o = Boolean(n.match(/^[\ ]?[a-z0-9\*\-\_/]{1,241}$/));
+      var i = Boolean(r.match(/^[\ ]?[a-z0-9\*\-\_/]{1,14}$/));
       return o && i;
     }
     return 1 == t.length && Boolean(e.match(/^[\ ]?[a-z0-9\*\-\_/]{1,256}$/));
   };
   e.prototype.parseHeader = function (t) {
-    var n = [],
-      r = {},
-      o = t.split(",");
+    var n = [];
+    var r = {};
+    var o = t.split(",");
     if (o.length > 32) return null;
-    for (var i = 0, s = o; i < s.length; i++) {
+    for (i = 0, s = o, undefined; i < s.length; i++) {
+      var i;
+      var s;
       var a = s[i].trim();
       if (0 !== a.length) {
         var c = a.split("=");

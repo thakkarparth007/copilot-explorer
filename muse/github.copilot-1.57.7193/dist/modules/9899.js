@@ -12,9 +12,9 @@ exports.logger =
   exports.LogVerbose =
   exports.LogLevel =
     undefined;
-const r = require(299),
-  o = require(1133),
-  i = require(6333);
+const r = require(299);
+const o = require(1133);
+const i = require(6333);
 var s;
 !(function (e) {
   e[(e.DEBUG = 0)] = "DEBUG";
@@ -94,16 +94,17 @@ class Logger {
         n
       );
     }
-    const c = e.get(LogTarget),
-      u = c.shouldLog(e, t);
+    const c = e.get(LogTarget);
+    const u = c.shouldLog(e, t);
     if (!1 === u) return;
     if (undefined === u && !this.shouldLog(e, t, this.context)) return;
-    const d = e.get(r.Clock).now().toISOString(),
-      p = `[${a}] [${this.context}] [${d}]`;
+    const d = e.get(r.Clock).now().toISOString();
+    const p = `[${a}] [${this.context}] [${d}]`;
     c.logIt(e, t, p, ...o);
   }
   shouldLog(e, t, n) {
-    var r, i;
+    var r;
+    var i;
     if (verboseLogging(e)) return !0;
     const s = o.getConfig(e, o.ConfigKey.DebugFilterLogCategories);
     if (s.length > 0 && !s.includes(n)) return !1;

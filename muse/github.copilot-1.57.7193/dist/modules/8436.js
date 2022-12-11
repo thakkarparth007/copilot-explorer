@@ -2,11 +2,15 @@ var r =
   (this && this.__assign) ||
   Object.assign ||
   function (e) {
-    for (var t, n = 1, r = arguments.length; n < r; n++)
+    for (n = 1, r = arguments.length, undefined; n < r; n++) {
+      var t;
+      var n;
+      var r;
       for (var o in (t = arguments[n]))
         if (Object.prototype.hasOwnProperty.call(t, o)) {
           e[o] = t[o];
         }
+    }
     return e;
   };
 Object.defineProperty(exports, "__esModule", {
@@ -17,15 +21,15 @@ exports.mongo2 = {
   versionSpecifier: ">= 2.0.0 <= 3.0.5",
   patch: function (e) {
     var t = e.instrument({
-        operationIdGenerator: {
-          next: function () {
-            return o.channel.bindToContext(function (e) {
-              return e();
-            });
-          },
+      operationIdGenerator: {
+        next: function () {
+          return o.channel.bindToContext(function (e) {
+            return e();
+          });
         },
-      }),
-      n = {};
+      },
+    });
+    var n = {};
     t.on("started", function (e) {
       if (n[e.requestId]) {
         n[e.requestId] = r({}, e, {
@@ -81,9 +85,9 @@ exports.mongo2 = {
 exports.mongo3 = {
   versionSpecifier: "> 3.0.5 < 3.3.0",
   patch: function (e) {
-    var t = e.instrument(),
-      n = {},
-      i = {};
+    var t = e.instrument();
+    var n = {};
+    var i = {};
     t.on("started", function (e) {
       if (n[e.requestId]) {
         i[e.requestId] = o.channel.bindToContext(function (e) {
@@ -135,8 +139,8 @@ exports.mongo330 = {
     !(function (e) {
       var t = e.Server.prototype.connect;
       e.Server.prototype.connect = function () {
-        var e = t.apply(this, arguments),
-          n = this.s.coreTopology.s.pool.write;
+        var e = t.apply(this, arguments);
+        var n = this.s.coreTopology.s.pool.write;
         this.s.coreTopology.s.pool.write = function () {
           var e = "function" == typeof arguments[1] ? 1 : 2;
           if ("function" == typeof arguments[e]) {
@@ -154,9 +158,9 @@ exports.mongo330 = {
         return e;
       };
     })(e);
-    var t = e.instrument(),
-      n = {},
-      r = {};
+    var t = e.instrument();
+    var n = {};
+    var r = {};
     t.on("started", function (e) {
       if (n[e.requestId]) {
         r[e.requestId] = o.channel.bindToContext(function (e) {

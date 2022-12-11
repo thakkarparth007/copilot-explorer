@@ -281,14 +281,14 @@ exports.languageCommentMarkers = {
     end: "",
   },
 };
-const n = ["php", "plaintext"],
-  r = {
-    html: "<!DOCTYPE html>",
-    python: "#!/usr/bin/env python3",
-    ruby: "#!/usr/bin/env ruby",
-    shellscript: "#!/bin/sh",
-    yaml: "# YAML data",
-  };
+const n = ["php", "plaintext"];
+const r = {
+  html: "<!DOCTYPE html>",
+  python: "#!/usr/bin/env python3",
+  ruby: "#!/usr/bin/env ruby",
+  shellscript: "#!/bin/sh",
+  yaml: "# YAML data",
+};
 function hasLanguageMarker({ source: e }) {
   return e.startsWith("#!") || e.startsWith("<!DOCTYPE");
 }

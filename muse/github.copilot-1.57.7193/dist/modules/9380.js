@@ -2,11 +2,11 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.setupExperimentationService = exports.logger = undefined;
-const r = require("vscode"),
-  o = require(1133),
-  i = require(9189),
-  s = require(8142),
-  a = require(9899);
+const r = require("vscode");
+const o = require(1133);
+const i = require(9189);
+const s = require(8142);
+const a = require(9899);
 function c(e) {
   return e.split("-")[0];
 }

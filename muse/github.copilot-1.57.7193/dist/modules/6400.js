@@ -1,10 +1,10 @@
 var r = require(7923);
 exports.encode = function (e) {
-  var t,
-    n = "",
-    o = (function (e) {
-      return e < 0 ? 1 + (-e << 1) : 0 + (e << 1);
-    })(e);
+  var t;
+  var n = "";
+  var o = (function (e) {
+    return e < 0 ? 1 + (-e << 1) : 0 + (e << 1);
+  })(e);
   do {
     t = 31 & o;
     if ((o >>>= 5) > 0) {
@@ -15,13 +15,13 @@ exports.encode = function (e) {
   return n;
 };
 exports.decode = function (e, t, n) {
-  var o,
-    i,
-    s,
-    a,
-    c = e.length,
-    l = 0,
-    u = 0;
+  var o;
+  var i;
+  var s;
+  var a;
+  var c = e.length;
+  var l = 0;
+  var u = 0;
   do {
     if (t >= c) throw new Error("Expected more digits in base 64 VLQ value.");
     if (-1 === (i = r.decode(e.charCodeAt(t++))))

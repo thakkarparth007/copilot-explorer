@@ -50,6 +50,19 @@
             display: inline-block;
             /* margin: 5px 5px -5px 0; */
         }
+        #show-modules-with-category-fieldset {
+            background-color: white;
+            opacity: 0.8;
+        }
+
+        /* description decorations */
+        .description-glyph {
+            background: darkcyan;
+        }
+        .description {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
     </style>
 
     <!-- Select2 -->
@@ -342,7 +355,7 @@
                 stabilization: {
                     iterations: 50,
                 },
-                // enabled: false,
+                enabled: false,
             },
             nodes: { font: { size: 14 }},
         };
@@ -470,12 +483,12 @@
                 $("#selected-module-category-dropdown").val(nodes.get(moduleId).category || "$unk$").trigger('change');
             }
 
-            // fetch(`/data/module_code/${moduleId}`)
-            //     .then(response => response.text())
-            //     .then(text => {
-            //         editor.setValue(text);
-            //     });
             editor.setValue(module_codes_data[moduleId]);
+            displayDescriptions(moduleId);
+            // // check if we have any existing monaco model showing this module
+            // // else, we need to load the model
+            // ensureRequiredModelsExist(moduleId);
+            // editor.setModel(models[moduleId]);
             
             // update module info using module_deps_data
             // show module's exports, imports and modules that import this module
@@ -599,6 +612,7 @@
                 enabled: false
             },
             wordWrap: 'on',
+            glyphMargin: true,
         });
 
         /****** Load initial module ******/
@@ -607,6 +621,89 @@
             initialModule = "main";
         }
         displayModule(initialModule, false);
+
+        /****** Snippet description ******/
+        async function describeSnippet(snippet) {
+            // get selected text
+            if (snippet == "") {
+                return;
+            }
+            let payload = {
+                module_id: moduleDropdown.val(),
+                module_name: $("#module-name").val(),
+                snippet: snippet,
+            }
+
+            let response = await fetch("/api/describe_snippet", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            let data = await response.json();
+            return data.description;
+        }
+
+        function displayDescriptions(moduleId) {
+            let descriptions = getAnnotation(moduleId, "descriptions");
+            if (!descriptions) {
+                return;
+            }
+            
+            let decorations = [];
+            for (const [selectionJSON, descriptionObj] of Object.entries(descriptions)) {
+                let selection = JSON.parse(selectionJSON);
+                let { snippet, description } = descriptionObj;
+                // check if the snippet is still the same
+                let snippetInEditor = editor.getModel().getValueInRange(selection);
+                if (!snippetInEditor || snippetInEditor.trim() != snippet.trim()) {
+                    continue;
+                }
+                let decoration = {
+                    range: selection,
+                    options: {
+                        isWholeLine: true,
+                        className: 'description',
+                        glyphMarginClassName: 'description-glyph',
+                        glyphMarginHoverMessage: { value: "```\n" + description + "\n```" },
+                        hoverMessage: { value: "```\n" + description + "\n```" },
+                    }
+                };
+                decorations.push(decoration);
+            }
+            
+            editor.deltaDecorations([], decorations);
+        }
+
+        // register action with the editor
+        editor.addAction({
+            id: 'describe-snippet',
+            label: 'Describe snippet',
+            keybindings: [
+                // 
+            ],
+            contextMenuGroupId: 'navigation',
+            contextMenuOrder: 1.5,
+            run: async function () {
+                let selection = editor.getSelection();
+                let snippet = editor.getModel().getValueInRange(selection);
+                let description = await describeSnippet(snippet);
+                
+                let storedDescriptions = getAnnotation(moduleDropdown.val(), "descriptions");
+                if (!storedDescriptions) {
+                    storedDescriptions = {};
+                }
+                storedDescriptions[JSON.stringify(selection)] = {
+                    snippet: snippet, // to check if the description is still valid
+                    description: description,
+                };
+                setAnnotation(moduleDropdown.val(), "descriptions", storedDescriptions);
+
+                displayDescriptions(moduleDropdown.val());
+            }
+        });
     </script>
 </body>
 

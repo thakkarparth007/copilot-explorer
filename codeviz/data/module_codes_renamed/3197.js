@@ -8,27 +8,28 @@ exports.registerGhostText =
   exports.ghostTextLogger =
   exports.getInsertionTextFromCompletion =
     undefined;
-const r = require("vscode"),
-  M_config_stuff = require("config-stuff"),
-  M_completion_from_ghost_text = require("completion-from-ghost-text"),
-  M_ghost_text_provider = require("ghost-text-provider"),
-  M_ghost_text_telemetry = require("ghost-text-telemetry"),
-  M_logging_utils = require("logging-utils"),
-  M_post_accept_or_reject_tasks = require("post-accept-or-reject-tasks"),
-  M_telemetry_stuff = require("telemetry-stuff"),
-  M_ignore_document_or_not = require("ignore-document-or-not"),
-  p = "_ghostTextPostInsert";
+const M_vscode = require("vscode");
+const M_config_stuff = require("config-stuff");
+const M_completion_from_ghost_text = require("completion-from-ghost-text");
+const M_ghost_text_provider = require("ghost-text-provider");
+const M_ghost_text_telemetry = require("ghost-text-telemetry");
+const M_logging_utils = require("logging-utils");
+const M_post_accept_or_reject_tasks = require("post-accept-or-reject-tasks");
+const M_telemetry_stuff = require("telemetry-stuff");
+const M_ignore_document_or_not = require("ignore-document-or-not");
+const p = "_ghostTextPostInsert";
 function getInsertionTextFromCompletion(e) {
   return e.insertText;
 }
-let f, m;
+let f;
+let m;
 exports.getInsertionTextFromCompletion = getInsertionTextFromCompletion;
 exports.ghostTextLogger = new M_logging_utils.Logger(
   M_logging_utils.LogLevel.INFO,
   "ghostText"
 );
-let g,
-  _ = [];
+let g;
+let _ = [];
 async function provideInlineCompletions(e, n, c, h, y) {
   const v = await (async function (e, n, a, c, h) {
     const y = M_telemetry_stuff.TelemetryData.createAndMarkAsIssued();
@@ -75,7 +76,7 @@ async function provideInlineCompletions(e, n, c, h, y) {
       e,
       n,
       a,
-      c.triggerKind === r.InlineCompletionTriggerKind.Invoke,
+      c.triggerKind === M_vscode.InlineCompletionTriggerKind.Invoke,
       y,
       h
     );
@@ -134,26 +135,28 @@ async function provideInlineCompletions(e, n, c, h, y) {
       n,
       a,
       (function (e) {
-        const t = r.window.visibleTextEditors.find((t) => t.document === e);
+        const t = M_vscode.window.visibleTextEditors.find(
+          (t) => t.document === e
+        );
         return null == t ? undefined : t.options;
       })(n),
       g
     );
     exports.ghostTextLogger.debug(e, "Completions", x);
     const E = x.map((e) => {
-      const { text: t, range: o } = e,
-        i = new r.Range(
-          new r.Position(o.start.line, o.start.character),
-          new r.Position(o.end.line, o.end.character)
-        ),
-        s = new r.InlineCompletionItem(t, i);
+      const { text: t, range: o } = e;
+      const i = new M_vscode.Range(
+        new M_vscode.Position(o.start.line, o.start.character),
+        new M_vscode.Position(o.end.line, o.end.character)
+      );
+      const s = new M_vscode.InlineCompletionItem(t, i);
       s.index = e.index;
       s.telemetry = e.telemetry;
       s.displayText = e.displayText;
       s.resultType = e.resultType;
       s.uri = n.uri;
       s.insertOffset = n.offsetAt(
-        new r.Position(e.position.line, e.position.character)
+        new M_vscode.Position(e.position.line, e.position.character)
       );
       s.command = {
         title: "PostInsertTask",
@@ -232,12 +235,14 @@ exports.handleGhostTextPostInsert = handleGhostTextPostInsert;
 exports.registerGhostText = function (e) {
   const t = new v(e);
   return [
-    r.languages.registerInlineCompletionItemProvider(
+    M_vscode.languages.registerInlineCompletionItemProvider(
       {
         pattern: "**",
       },
       t
     ),
-    r.commands.registerCommand(p, async (t) => handleGhostTextPostInsert(e, t)),
+    M_vscode.commands.registerCommand(p, async (t) =>
+      handleGhostTextPostInsert(e, t)
+    ),
   ];
 };

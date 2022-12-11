@@ -13,10 +13,10 @@ exports.getTemperatureForSamples =
   exports.getRequestId =
   exports.CopilotUiKind =
     undefined;
-const M_config_stuff = require("config-stuff"),
-  M_logging_utils = require("logging-utils"),
-  M_telemetry_stuff = require("telemetry-stuff"),
-  M_runtime_mode_NOTSURE = require("runtime-mode");
+const M_config_stuff = require("config-stuff");
+const M_logging_utils = require("logging-utils");
+const M_telemetry_stuff = require("telemetry-stuff");
+const M_runtime_mode_maybe = require("runtime-mode");
 var M_live_openai_fetcher = require("live-openai-fetcher");
 function calculateMeanLogProb(e, t) {
   var n;
@@ -26,9 +26,9 @@ function calculateMeanLogProb(e, t) {
       : n.token_logprobs
   )
     try {
-      let e = 0,
-        n = 0,
-        r = 50;
+      let e = 0;
+      let n = 0;
+      let r = 50;
       for (
         let o = 0;
         o < t.logprobs.token_logprobs.length - 1 && r > 0;
@@ -50,9 +50,9 @@ function calculateMeanAlternativeLogProb(e, t) {
       : n.top_logprobs
   )
     try {
-      let e = 0,
-        n = 0,
-        r = 50;
+      let e = 0;
+      let n = 0;
+      let r = 50;
       for (
         let o = 0;
         o < t.logprobs.token_logprobs.length - 1 && r > 0;
@@ -94,9 +94,9 @@ exports.convertToAPIChoice = function (e, t, n, r, o, s, a, u) {
 exports.cleanupIndentChoices = async function* (e, t) {
   for await (const n of e) {
     const e = {
-        ...n,
-      },
-      r = e.completionText.split("\n");
+      ...n,
+    };
+    const r = e.completionText.split("\n");
     for (let e = 0; e < r.length; ++e) {
       const n = r[e].trimLeft();
       r[e] = "" === n ? n : t + n;
@@ -108,7 +108,7 @@ exports.cleanupIndentChoices = async function* (e, t) {
 exports.calculateMeanLogProb = calculateMeanLogProb;
 exports.calculateMeanAlternativeLogProb = calculateMeanAlternativeLogProb;
 exports.getTemperatureForSamples = function (e, t) {
-  if (M_runtime_mode_NOTSURE.isRunningInTest(e)) return 0;
+  if (M_runtime_mode_maybe.isRunningInTest(e)) return 0;
   const n = parseFloat(
     M_config_stuff.getConfig(e, M_config_stuff.ConfigKey.Temperature)
   );

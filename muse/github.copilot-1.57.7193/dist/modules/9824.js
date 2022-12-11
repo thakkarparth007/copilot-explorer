@@ -1,4 +1,6 @@
-var r, o, i;
+var r;
+var o;
+var i;
 o = (r = require(8249)).lib.Base;
 i = r.enc.Utf8;
 module.exports = void (r.algo.HMAC = o.extend({

@@ -5,9 +5,9 @@ r.mode.CTRGladman = (function () {
   var e = r.lib.BlockCipherMode.extend();
   function t(e) {
     if (255 == ((e >> 24) & 255)) {
-      var t = (e >> 16) & 255,
-        n = (e >> 8) & 255,
-        r = 255 & e;
+      var t = (e >> 16) & 255;
+      var n = (e >> 8) & 255;
+      var r = 255 & e;
       if (255 === t) {
         t = 0;
         if (255 === n) {
@@ -32,10 +32,10 @@ r.mode.CTRGladman = (function () {
   }
   var n = (e.Encryptor = e.extend({
     processBlock: function (e, n) {
-      var r = this._cipher,
-        o = r.blockSize,
-        i = this._iv,
-        s = this._counter;
+      var r = this._cipher;
+      var o = r.blockSize;
+      var i = this._iv;
+      var s = this._counter;
       if (i) {
         s = this._counter = i.slice(0);
         this._iv = undefined;

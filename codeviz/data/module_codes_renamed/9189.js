@@ -2,16 +2,16 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.Features = exports.Task = undefined;
-const M_getPrompt_main_stuff = require("getPrompt-main-stuff"),
-  M_clock = require("clock"),
-  M_prompt_cache = require("prompt-cache"),
-  M_config_stuff = require("config-stuff"),
-  M_contextual_filter_constants = require("contextual-filter-constants"),
-  M_repetition_filter_NOTSURE = require("repetition-filter"),
-  M_exp_config_NOTSURE = require("exp-config"),
-  M_exp_config_maker_NOTSURE = require("exp-config-maker"),
-  M_filter_NOTSURE = require("filter"),
-  M_granularity_directory_NOTSURE = require("granularity-directory");
+const M_getPrompt_main_stuff = require("getPrompt-main-stuff");
+const M_clock = require("clock");
+const M_prompt_cache = require("prompt-cache");
+const M_config_stuff = require("config-stuff");
+const M_contextual_filter_constants = require("contextual-filter-constants");
+const M_repetition_filter_maybe = require("repetition-filter");
+const M_exp_config_maybe = require("exp-config");
+const M_exp_config_maker_maybe = require("exp-config-maker");
+const M_filter_maybe = require("filter");
+const M_granularity_directory_maybe = require("granularity-directory");
 class h {
   constructor(e) {
     this.ctx = e;
@@ -23,7 +23,7 @@ class h {
       t = new Task(
         () =>
           this.ctx
-            .get(M_exp_config_maker_NOTSURE.ExpConfigMaker)
+            .get(M_exp_config_maker_maybe.ExpConfigMaker)
             .fetchExperiments(this.ctx, e.toHeaders()),
         36e5
       );
@@ -74,14 +74,14 @@ class Features {
     this.upcomingDynamicFilters = {};
     this.assignments = new h(this.ctx);
     this.granularityDirectory =
-      new M_granularity_directory_NOTSURE.GranularityDirectory(
+      new M_granularity_directory_maybe.GranularityDirectory(
         "unspecified",
         e.get(M_clock.Clock)
       );
   }
   setPrefix(e) {
     this.granularityDirectory =
-      new M_granularity_directory_NOTSURE.GranularityDirectory(
+      new M_granularity_directory_maybe.GranularityDirectory(
         e,
         this.ctx.get(M_clock.Clock)
       );
@@ -101,31 +101,32 @@ class Features {
     this.upcomingDynamicFilters[e] = t;
   }
   async getAssignment(e, t = {}, n) {
-    var r, o;
-    const i = this.makeFilterSettings(t),
-      s = this.granularityDirectory.extendFilters(i),
-      a = await this.getExpConfig(s.newFilterSettings);
+    var r;
+    var o;
+    const i = this.makeFilterSettings(t);
+    const s = this.granularityDirectory.extendFilters(i);
+    const a = await this.getExpConfig(s.newFilterSettings);
     this.granularityDirectory.update(
       i,
       +(null !==
         (r =
           a.variables[
-            M_exp_config_NOTSURE.ExpTreatmentVariables.GranularityByCallBuckets
+            M_exp_config_maybe.ExpTreatmentVariables.GranularityByCallBuckets
           ]) && undefined !== r
         ? r
         : NaN),
       +(null !==
         (o =
           a.variables[
-            M_exp_config_NOTSURE.ExpTreatmentVariables
+            M_exp_config_maybe.ExpTreatmentVariables
               .GranularityTimePeriodSizeInH
           ]) && undefined !== o
         ? o
         : NaN)
     );
-    const c = this.granularityDirectory.extendFilters(i),
-      u = c.newFilterSettings,
-      d = await this.getExpConfig(u);
+    const c = this.granularityDirectory.extendFilters(i);
+    const u = c.newFilterSettings;
+    const d = await this.getExpConfig(u);
     let p = new Promise((e) =>
       setTimeout(e, Features.upcomingDynamicFilterCheckDelayMs)
     );
@@ -146,7 +147,7 @@ class Features {
     return d.variables[e];
   }
   makeFilterSettings(e) {
-    return new M_filter_NOTSURE.FilterSettings({
+    return new M_filter_maybe.FilterSettings({
       ...this.staticFilters,
       ...this.getDynamicFilterValues(),
       ...e,
@@ -156,7 +157,7 @@ class Features {
     try {
       return this.assignments.fetchExpConfig(e);
     } catch (e) {
-      return M_exp_config_NOTSURE.ExpConfig.createFallbackConfig(
+      return M_exp_config_maybe.ExpConfig.createFallbackConfig(
         this.ctx,
         `Error fetching ExP config: ${e}`
       );
@@ -174,7 +175,7 @@ class Features {
   stringify() {
     var e;
     const t = this.assignments.getCachedExpConfig(
-      new M_filter_NOTSURE.FilterSettings({})
+      new M_filter_maybe.FilterSettings({})
     );
     return JSON.stringify(
       null !== (e = null == t ? undefined : t.variables) && undefined !== e
@@ -185,14 +186,14 @@ class Features {
   async customEngine(e, t, n, r, o) {
     var i;
     const s = {
-      [M_filter_NOTSURE.Filter.CopilotRepository]: e,
-      [M_filter_NOTSURE.Filter.CopilotFileType]: t,
-      [M_filter_NOTSURE.Filter.CopilotDogfood]: n,
-      [M_filter_NOTSURE.Filter.CopilotUserKind]: r,
+      [M_filter_maybe.Filter.CopilotRepository]: e,
+      [M_filter_maybe.Filter.CopilotFileType]: t,
+      [M_filter_maybe.Filter.CopilotDogfood]: n,
+      [M_filter_maybe.Filter.CopilotUserKind]: r,
     };
     return null !==
       (i = await this.getAssignment(
-        M_exp_config_NOTSURE.ExpTreatmentVariables.CustomEngine,
+        M_exp_config_maybe.ExpTreatmentVariables.CustomEngine,
         s,
         o
       )) && undefined !== i
@@ -202,12 +203,12 @@ class Features {
   async beforeRequestWaitMs(e, t, n) {
     var r;
     const o = {
-      [M_filter_NOTSURE.Filter.CopilotRepository]: e,
-      [M_filter_NOTSURE.Filter.CopilotFileType]: t,
+      [M_filter_maybe.Filter.CopilotRepository]: e,
+      [M_filter_maybe.Filter.CopilotFileType]: t,
     };
     return null !==
       (r = await this.getAssignment(
-        M_exp_config_NOTSURE.ExpTreatmentVariables.BeforeRequestWaitMs,
+        M_exp_config_maybe.ExpTreatmentVariables.BeforeRequestWaitMs,
         o,
         n
       )) && undefined !== r
@@ -217,13 +218,13 @@ class Features {
   async multiLogitBias(e, t, n) {
     var r;
     const o = {
-      [M_filter_NOTSURE.Filter.CopilotRepository]: e,
-      [M_filter_NOTSURE.Filter.CopilotFileType]: t,
+      [M_filter_maybe.Filter.CopilotRepository]: e,
+      [M_filter_maybe.Filter.CopilotFileType]: t,
     };
     return (
       null !==
         (r = await this.getAssignment(
-          M_exp_config_NOTSURE.ExpTreatmentVariables.MultiLogitBias,
+          M_exp_config_maybe.ExpTreatmentVariables.MultiLogitBias,
           o,
           n
         )) &&
@@ -235,7 +236,7 @@ class Features {
     var e;
     return null !==
       (e = await this.getAssignment(
-        M_exp_config_NOTSURE.ExpTreatmentVariables.DebounceMs
+        M_exp_config_maybe.ExpTreatmentVariables.DebounceMs
       )) && undefined !== e
       ? e
       : 0;
@@ -245,7 +246,7 @@ class Features {
     return (
       null !==
         (e = await this.getAssignment(
-          M_exp_config_NOTSURE.ExpTreatmentVariables.DebouncePredict
+          M_exp_config_maybe.ExpTreatmentVariables.DebouncePredict
         )) &&
       undefined !== e &&
       e
@@ -256,7 +257,7 @@ class Features {
     return (
       null ===
         (e = await this.getAssignment(
-          M_exp_config_NOTSURE.ExpTreatmentVariables.ContextualFilterEnable
+          M_exp_config_maybe.ExpTreatmentVariables.ContextualFilterEnable
         )) ||
       undefined === e ||
       e
@@ -266,8 +267,7 @@ class Features {
     var e;
     return null !==
       (e = await this.getAssignment(
-        M_exp_config_NOTSURE.ExpTreatmentVariables
-          .ContextualFilterAcceptThreshold
+        M_exp_config_maybe.ExpTreatmentVariables.ContextualFilterAcceptThreshold
       )) && undefined !== e
       ? e
       : M_contextual_filter_constants.contextualFilterAcceptThreshold;
@@ -277,7 +277,7 @@ class Features {
     return (
       null !==
         (e = await this.getAssignment(
-          M_exp_config_NOTSURE.ExpTreatmentVariables.disableLogProb
+          M_exp_config_maybe.ExpTreatmentVariables.disableLogProb
         )) &&
       undefined !== e &&
       e
@@ -285,19 +285,19 @@ class Features {
   }
   async overrideBlockMode() {
     return await this.getAssignment(
-      M_exp_config_NOTSURE.ExpTreatmentVariables.OverrideBlockMode
+      M_exp_config_maybe.ExpTreatmentVariables.OverrideBlockMode
     );
   }
   async overrideNumGhostCompletions() {
     return await this.getAssignment(
-      M_exp_config_NOTSURE.ExpTreatmentVariables.OverrideNumGhostCompletions
+      M_exp_config_maybe.ExpTreatmentVariables.OverrideNumGhostCompletions
     );
   }
   async suffixPercent(e, t) {
     var n;
     const r = {
-      [M_filter_NOTSURE.Filter.CopilotRepository]: e,
-      [M_filter_NOTSURE.Filter.CopilotFileType]: t,
+      [M_filter_maybe.Filter.CopilotRepository]: e,
+      [M_filter_maybe.Filter.CopilotFileType]: t,
     };
     return M_config_stuff.getConfig(
       this.ctx,
@@ -306,7 +306,7 @@ class Features {
       ? 0
       : null !==
           (n = await this.getAssignment(
-            M_exp_config_NOTSURE.ExpTreatmentVariables.SuffixPercent,
+            M_exp_config_maybe.ExpTreatmentVariables.SuffixPercent,
             r
           )) && undefined !== n
       ? n
@@ -315,12 +315,12 @@ class Features {
   async suffixMatchThreshold(e, t) {
     var n;
     const r = {
-      [M_filter_NOTSURE.Filter.CopilotRepository]: e,
-      [M_filter_NOTSURE.Filter.CopilotFileType]: t,
+      [M_filter_maybe.Filter.CopilotRepository]: e,
+      [M_filter_maybe.Filter.CopilotFileType]: t,
     };
     return null !==
       (n = await this.getAssignment(
-        M_exp_config_NOTSURE.ExpTreatmentVariables.SuffixMatchThreshold,
+        M_exp_config_maybe.ExpTreatmentVariables.SuffixMatchThreshold,
         r
       )) && undefined !== n
       ? n
@@ -329,12 +329,12 @@ class Features {
   async fimSuffixLengthThreshold(e, t) {
     var n;
     const r = {
-      [M_filter_NOTSURE.Filter.CopilotRepository]: e,
-      [M_filter_NOTSURE.Filter.CopilotFileType]: t,
+      [M_filter_maybe.Filter.CopilotRepository]: e,
+      [M_filter_maybe.Filter.CopilotFileType]: t,
     };
     return null !==
       (n = await this.getAssignment(
-        M_exp_config_NOTSURE.ExpTreatmentVariables.FimSuffixLengthThreshold,
+        M_exp_config_maybe.ExpTreatmentVariables.FimSuffixLengthThreshold,
         r
       )) && undefined !== n
       ? n
@@ -342,12 +342,12 @@ class Features {
   }
   async suffixStartMode(e, t) {
     const n = {
-      [M_filter_NOTSURE.Filter.CopilotRepository]: e,
-      [M_filter_NOTSURE.Filter.CopilotFileType]: t,
+      [M_filter_maybe.Filter.CopilotRepository]: e,
+      [M_filter_maybe.Filter.CopilotFileType]: t,
     };
     switch (
       await this.getAssignment(
-        M_exp_config_NOTSURE.ExpTreatmentVariables.SuffixStartMode,
+        M_exp_config_maybe.ExpTreatmentVariables.SuffixStartMode,
         n
       )
     ) {
@@ -363,12 +363,12 @@ class Features {
   }
   async neighboringTabsOption(e, t) {
     const n = {
-      [M_filter_NOTSURE.Filter.CopilotRepository]: e,
-      [M_filter_NOTSURE.Filter.CopilotFileType]: t,
+      [M_filter_maybe.Filter.CopilotRepository]: e,
+      [M_filter_maybe.Filter.CopilotFileType]: t,
     };
     switch (
       await this.getAssignment(
-        M_exp_config_NOTSURE.ExpTreatmentVariables.NeighboringTabsOption,
+        M_exp_config_maybe.ExpTreatmentVariables.NeighboringTabsOption,
         n
       )
     ) {
@@ -387,15 +387,15 @@ class Features {
   async repetitionFilterMode() {
     switch (
       await this.getAssignment(
-        M_exp_config_NOTSURE.ExpTreatmentVariables.RepetitionFilterMode
+        M_exp_config_maybe.ExpTreatmentVariables.RepetitionFilterMode
       )
     ) {
       case "proxy":
-        return M_repetition_filter_NOTSURE.RepetitionFilterMode.PROXY;
+        return M_repetition_filter_maybe.RepetitionFilterMode.PROXY;
       case "both":
-        return M_repetition_filter_NOTSURE.RepetitionFilterMode.BOTH;
+        return M_repetition_filter_maybe.RepetitionFilterMode.BOTH;
       default:
-        return M_repetition_filter_NOTSURE.RepetitionFilterMode.CLIENT;
+        return M_repetition_filter_maybe.RepetitionFilterMode.CLIENT;
     }
   }
   async addExpAndFilterToTelemetry(e) {

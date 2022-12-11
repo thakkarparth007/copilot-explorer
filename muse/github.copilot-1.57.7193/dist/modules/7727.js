@@ -10,47 +10,47 @@ exports.indentationBlockFinished =
   exports.isBlockBodyFinished =
   exports.isEmptyBlockStart =
     undefined;
-const r = require(6403),
-  o = require(2533);
+const r = require(6403);
+const o = require(2533);
 exports.isEmptyBlockStart = function (e, t) {
   return o.isEmptyBlockStart(e.languageId, e.getText(), e.offsetAt(t));
 };
 exports.isBlockBodyFinished = function (e, t, n, i) {
-  const s = e.get(r.LocationFactory),
-    a = t.getText(s.range(s.position(0, 0), n)),
-    c = t.offsetAt(n);
+  const s = e.get(r.LocationFactory);
+  const a = t.getText(s.range(s.position(0, 0), n));
+  const c = t.offsetAt(n);
   return o.isBlockBodyFinished(t.languageId, a, i, c);
 };
 exports.isBlockBodyFinishedWithPrefix = function (e, t, n, i, s) {
-  const a = e.get(r.LocationFactory),
-    c = t.getText(a.range(a.position(0, 0), n)),
-    l = t.offsetAt(n);
+  const a = e.get(r.LocationFactory);
+  const c = t.getText(a.range(a.position(0, 0), n));
+  const l = t.offsetAt(n);
   return o.isBlockBodyFinished(t.languageId, c + s, i, l + s.length);
 };
 exports.getNodeStart = async function (e, t, n, i) {
-  const s = e.get(r.LocationFactory),
-    a = t.getText(s.range(s.position(0, 0), n)) + i,
-    c = await o.getNodeStart(t.languageId, a, t.offsetAt(n));
+  const s = e.get(r.LocationFactory);
+  const a = t.getText(s.range(s.position(0, 0), n)) + i;
+  const c = await o.getNodeStart(t.languageId, a, t.offsetAt(n));
   if (c) return t.positionAt(c);
 };
 const i = ["\\{", "\\}", "\\[", "\\]", "\\(", "\\)"].concat(
-    [
-      "then",
-      "else",
-      "elseif",
-      "elif",
-      "catch",
-      "finally",
-      "fi",
-      "done",
-      "end",
-      "loop",
-      "until",
-      "where",
-      "when",
-    ].map((e) => e + "\\b")
-  ),
-  s = new RegExp(`^(${i.join("|")})`);
+  [
+    "then",
+    "else",
+    "elseif",
+    "elif",
+    "catch",
+    "finally",
+    "fi",
+    "done",
+    "end",
+    "loop",
+    "until",
+    "where",
+    "when",
+  ].map((e) => e + "\\b")
+);
+const s = new RegExp(`^(${i.join("|")})`);
 function a(e) {
   return s.test(e.trimLeft().toLowerCase());
 }
@@ -59,12 +59,12 @@ function c(e) {
   return t && t[2] && t[2].length > 0 ? t[1].length : undefined;
 }
 function contextIndentationFromText(e, t, n) {
-  const r = e.slice(0, t).split("\n"),
-    o = e.slice(t).split("\n");
+  const r = e.slice(0, t).split("\n");
+  const o = e.slice(t).split("\n");
   function i(e, t, r) {
-    let o,
-      i,
-      s = t;
+    let o;
+    let i;
+    let s = t;
     for (; undefined === o && s >= 0 && s < e.length; ) {
       o = c(e[s]);
       i = s;
@@ -86,15 +86,15 @@ function contextIndentationFromText(e, t, n) {
     }
     return [o, i];
   }
-  const [s, a] = i(r, r.length - 1, -1),
-    l = (() => {
-      if (undefined !== s && undefined !== a)
-        for (let e = a - 1; e >= 0; e--) {
-          const t = c(r[e]);
-          if (undefined !== t && t < s) return t;
-        }
-    })(),
-    [u] = i(o, 1, 1);
+  const [s, a] = i(r, r.length - 1, -1);
+  const l = (() => {
+    if (undefined !== s && undefined !== a)
+      for (let e = a - 1; e >= 0; e--) {
+        const t = c(r[e]);
+        if (undefined !== t && t < s) return t;
+      }
+  })();
+  const [u] = i(o, 1, 1);
   return {
     prev: l,
     current: null != s ? s : 0,
@@ -103,9 +103,9 @@ function contextIndentationFromText(e, t, n) {
 }
 function completionCutOrContinue(e, t, n) {
   var r;
-  const o = e.split("\n"),
-    i = undefined !== n,
-    s = null == n ? undefined : n.split("\n").pop();
+  const o = e.split("\n");
+  const i = undefined !== n;
+  const s = null == n ? undefined : n.split("\n").pop();
   let l = 0;
   if (i && "" != (null == s ? undefined : s.trim()) && "" !== o[0].trim()) {
     l++;

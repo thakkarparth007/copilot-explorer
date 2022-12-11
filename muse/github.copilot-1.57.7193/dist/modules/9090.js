@@ -1,14 +1,14 @@
-var r,
-  o,
-  i = require(6372).wrap,
-  s = [],
-  a = 0,
-  c = !1,
-  l = [];
+var r;
+var o;
+var i = require(6372).wrap;
+var s = [];
+var a = 0;
+var c = !1;
+var l = [];
 function u(e, t) {
-  var n = e.length,
-    r = t.length,
-    o = [];
+  var n = e.length;
+  var r = t.length;
+  var o = [];
   if (0 === n && 0 === r) return o;
   for (var i = 0; i < n; i++) o[i] = e[i];
   if (0 === r) return o;
@@ -26,8 +26,8 @@ function u(e, t) {
   return o;
 }
 if (process._fatalException) {
-  var d,
-    p = !1;
+  var d;
+  var p = !1;
   r = function (e) {
     var t = s.length;
     if (p || 0 === t) return !1;
@@ -89,7 +89,10 @@ if (process._fatalException) {
   var h = !1;
   r = function (e) {
     if (h) throw e;
-    for (var t = !1, n = s.length, r = 0; r < n; ++r) {
+    for (t = !1, n = s.length, r = 0, undefined; r < n; ++r) {
+      var t;
+      var n;
+      var r;
       var o = s[r];
       if (0 != (8 & o.flags)) {
         t = o.error(null, e) || t;
@@ -110,9 +113,9 @@ if (process._fatalException) {
     }
     c = !1;
     return function () {
-      var i,
-        a = !1,
-        d = !1;
+      var i;
+      var a = !1;
+      var d = !1;
       l.push(s);
       s = u(t, s);
       c = !0;
@@ -190,11 +193,14 @@ process.createAsyncListener = m;
 process.addAsyncListener = function (e, t) {
   var n;
   n = e instanceof f ? e : m(e, t);
-  for (var r = !1, o = 0; o < s.length; o++)
+  for (r = !1, o = 0, undefined; o < s.length; o++) {
+    var r;
+    var o;
     if (n === s[o]) {
       r = !0;
       break;
     }
+  }
   if (r) {
     s.push(n);
   }
@@ -210,8 +216,11 @@ process.removeAsyncListener = function (e) {
 module.exports = function (e) {
   var t = s.length;
   if (0 === t) return e;
-  for (var n = s.slice(), r = 0; r < t; ++r)
+  for (n = s.slice(), r = 0, undefined; r < t; ++r) {
+    var n;
+    var r;
     if (n[r].flags > 0) return o(e, n, t);
+  }
   return (function (e, t, n) {
     c = !0;
     for (var r = 0; r < n; ++r) {

@@ -1,13 +1,15 @@
-var r, o, M_random_stuff_NOTSURE;
-M_random_stuff_NOTSURE = require("random-stuff");
+var r;
+var o;
+var M_random_stuff_maybe;
+M_random_stuff_maybe = require("random-stuff");
 require("cipher-core");
-o = (r = M_random_stuff_NOTSURE.lib.BlockCipherMode.extend()).Encryptor =
+o = (r = M_random_stuff_maybe.lib.BlockCipherMode.extend()).Encryptor =
   r.extend({
     processBlock: function (e, t) {
-      var n = this._cipher,
-        r = n.blockSize,
-        o = this._iv,
-        i = this._counter;
+      var n = this._cipher;
+      var r = n.blockSize;
+      var o = this._iv;
+      var i = this._counter;
       if (o) {
         i = this._counter = o.slice(0);
         this._iv = undefined;
@@ -19,5 +21,5 @@ o = (r = M_random_stuff_NOTSURE.lib.BlockCipherMode.extend()).Encryptor =
     },
   });
 r.Decryptor = o;
-M_random_stuff_NOTSURE.mode.CTR = r;
-module.exports = M_random_stuff_NOTSURE.mode.CTR;
+M_random_stuff_maybe.mode.CTR = r;
+module.exports = M_random_stuff_maybe.mode.CTR;

@@ -20,8 +20,8 @@ function getLastLineLength(e) {
 exports.ContextualFilterManager = ContextualFilterManager;
 exports.getLastLineLength = getLastLineLength;
 exports.contextualFilterScore = function (e, t, n) {
-  const s = e.get(ContextualFilterManager),
-    a = s.previousLabel;
+  const s = e.get(ContextualFilterManager);
+  const a = s.previousLabel;
   let c = 0;
   if (
     "afterCursorWhitespace" in t.properties &&
@@ -29,10 +29,10 @@ exports.contextualFilterScore = function (e, t, n) {
   ) {
     c = 1;
   }
-  const l = (Date.now() - s.previousLabelTimestamp) / 1e3,
-    u = Math.log(1 + l);
-  let d = 0,
-    p = 0;
+  const l = (Date.now() - s.previousLabelTimestamp) / 1e3;
+  const u = Math.log(1 + l);
+  let d = 0;
+  let p = 0;
   const h = n.prefix;
   if (h) {
     d = Math.log(1 + getLastLineLength(h));
@@ -44,8 +44,8 @@ exports.contextualFilterScore = function (e, t, n) {
       p = M_contextual_filter_constants.contextualFilterCharacterMap[e];
     }
   }
-  let f = 0,
-    m = 0;
+  let f = 0;
+  let m = 0;
   const g = h.trimEnd();
   if (g) {
     f = Math.log(1 + getLastLineLength(g));

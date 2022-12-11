@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.extractLocalImportContext = exports.getDocComment = undefined;
-const r = require("path"),
-  M_get_prompt_parsing_utils = require("get-prompt-parsing-utils");
+const M_path = require("path");
+const M_get_prompt_parsing_utils = require("get-prompt-parsing-utils");
 function i(e, t) {
   var n;
   let o =
@@ -11,12 +11,16 @@ function i(e, t) {
       ? undefined
       : n.text.slice(1, -1);
   if (!o || !o.startsWith(".")) return null;
-  if ("" === r.extname(o)) o += ".ts";
-  else if (".ts" !== r.extname(o)) return null;
-  return r.join(r.dirname(e), o);
+  if ("" === M_path.extname(o)) o += ".ts";
+  else if (".ts" !== M_path.extname(o)) return null;
+  return M_path.join(M_path.dirname(e), o);
 }
 function s(e) {
-  var t, n, r, o, i;
+  var t;
+  var n;
+  var r;
+  var o;
+  var i;
   let s = [];
   if (
     "import_clause" ===
@@ -56,7 +60,8 @@ function s(e) {
 }
 const a = new Map();
 function c(e, t) {
-  var n, r;
+  var n;
+  var r;
   let o =
     null !==
       (r =
@@ -84,10 +89,10 @@ function c(e, t) {
       };
     case "class_declaration": {
       let n = (function (e, t) {
-          let n = t.childForFieldName("body");
-          if (n) return n.namedChildren.map((t) => d(e, t)).filter((e) => e);
-        })(e, t),
-        r = "";
+        let n = t.childForFieldName("body");
+        if (n) return n.namedChildren.map((t) => d(e, t)).filter((e) => e);
+      })(e, t);
+      let r = "";
       if (n) {
         let o = t.childForFieldName("body");
         r = `declare ${e.substring(t.startIndex, o.startIndex + 1)}`;
@@ -106,7 +111,9 @@ function c(e, t) {
   };
 }
 function l(e, t) {
-  var n, r, o;
+  var n;
+  var r;
+  var o;
   const i =
     null !==
       (r =
@@ -130,7 +137,11 @@ function getDocComment(e, t) {
   return n ? e.substring(n.startIndex, t.startIndex) : "";
 }
 function d(e, t) {
-  var n, r, i, s, a;
+  var n;
+  var r;
+  var i;
+  var s;
+  var a;
   if (
     "accessibility_modifier" ===
       (null === (n = null == t ? undefined : t.firstChild) || undefined === n
@@ -139,17 +150,17 @@ function d(e, t) {
     "private" === t.firstChild.text
   )
     return "";
-  const c = M_get_prompt_parsing_utils.getFirstPrecedingComment(t),
-    p =
-      null !==
-        (r = (function (e, t) {
-          let n = t.startIndex - 1;
-          for (; n >= 0 && (" " === e[n] || "\t" === e[n]); ) n--;
-          if (n < 0 || "\n" === e[n]) return e.substring(n + 1, t.startIndex);
-        })(e, null != c ? c : t)) && undefined !== r
-        ? r
-        : "  ",
-    h = getDocComment(e, t);
+  const c = M_get_prompt_parsing_utils.getFirstPrecedingComment(t);
+  const p =
+    null !==
+      (r = (function (e, t) {
+        let n = t.startIndex - 1;
+        for (; n >= 0 && (" " === e[n] || "\t" === e[n]); ) n--;
+        if (n < 0 || "\n" === e[n]) return e.substring(n + 1, t.startIndex);
+      })(e, null != c ? c : t)) && undefined !== r
+      ? r
+      : "  ";
+  const h = getDocComment(e, t);
   switch (t.type) {
     case "ambient_declaration":
       const n = t.namedChild(0);
@@ -174,8 +185,8 @@ function d(e, t) {
   return "";
 }
 async function p(e, t, n) {
-  let r = new Map(),
-    i = -1;
+  let r = new Map();
+  let i = -1;
   try {
     i = await n.mtime(e);
   } catch {
@@ -230,11 +241,11 @@ exports.extractLocalImportContext = async function (e, t) {
   let { source: n, uri: r, languageId: a } = e;
   return t && "typescript" === a
     ? (async function (e, t, n) {
-        let r = "typescript",
-          a = [];
+        let r = "typescript";
+        let a = [];
         const c = (function (e) {
-          let t,
-            n = -1;
+          let t;
+          let n = -1;
           h.lastIndex = -1;
           do {
             t = h.exec(e);

@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.registerDefaultHandlers = undefined;
-const M_helix_fetcher_and_network_stuff = require("helix-fetcher-and-network-stuff"),
-  M_telemetry_stuff = require("telemetry-stuff");
+const M_helix_fetcher_and_network_stuff = require("helix-fetcher-and-network-stuff");
+const M_telemetry_stuff = require("telemetry-stuff");
 exports.registerDefaultHandlers = function (e, t) {
   process.addListener("uncaughtException", (t) => {
     console.error("uncaughtException", t);

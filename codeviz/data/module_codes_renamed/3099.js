@@ -5,8 +5,8 @@ exports.extendSubschemaMode =
   exports.extendSubschemaData =
   exports.getSubschema =
     undefined;
-const M_codegen_NOTSURE = require("codegen"),
-  M_ajv_utils_NOTSURE = require("ajv-utils");
+const M_codegen_maybe = require("codegen");
+const M_ajv_utils_maybe = require("ajv-utils");
 exports.getSubschema = function (
   e,
   {
@@ -25,21 +25,19 @@ exports.getSubschema = function (
     return undefined === n
       ? {
           schema: i,
-          schemaPath: M_codegen_NOTSURE._`${
+          schemaPath: M_codegen_maybe._`${
             e.schemaPath
-          }${M_codegen_NOTSURE.getProperty(t)}`,
+          }${M_codegen_maybe.getProperty(t)}`,
           errSchemaPath: `${e.errSchemaPath}/${t}`,
         }
       : {
           schema: i[n],
-          schemaPath: M_codegen_NOTSURE._`${
+          schemaPath: M_codegen_maybe._`${
             e.schemaPath
-          }${M_codegen_NOTSURE.getProperty(t)}${M_codegen_NOTSURE.getProperty(
-            n
-          )}`,
+          }${M_codegen_maybe.getProperty(t)}${M_codegen_maybe.getProperty(n)}`,
           errSchemaPath: `${
             e.errSchemaPath
-          }/${t}/${M_ajv_utils_NOTSURE.escapeFragment(n)}`,
+          }/${t}/${M_ajv_utils_maybe.escapeFragment(n)}`,
         };
   }
   if (undefined !== i) {
@@ -69,16 +67,16 @@ exports.extendSubschemaData = function (
     u(
       l.let(
         "data",
-        M_codegen_NOTSURE._`${t.data}${M_codegen_NOTSURE.getProperty(n)}`,
+        M_codegen_maybe._`${t.data}${M_codegen_maybe.getProperty(n)}`,
         !0
       )
     );
-    e.errorPath = M_codegen_NOTSURE.str`${s}${M_ajv_utils_NOTSURE.getErrorPath(
+    e.errorPath = M_codegen_maybe.str`${s}${M_ajv_utils_maybe.getErrorPath(
       n,
       i,
       c.jsPropertySyntax
     )}`;
-    e.parentDataProperty = M_codegen_NOTSURE._`${n}`;
+    e.parentDataProperty = M_codegen_maybe._`${n}`;
     e.dataPathArr = [...a, e.parentDataProperty];
   }
   function u(n) {
@@ -90,7 +88,7 @@ exports.extendSubschemaData = function (
     e.dataNames = [...t.dataNames, n];
   }
   if (undefined !== s) {
-    u(s instanceof M_codegen_NOTSURE.Name ? s : l.let("data", s, !0));
+    u(s instanceof M_codegen_maybe.Name ? s : l.let("data", s, !0));
     if (undefined !== c) {
       e.propertyName = c;
     }

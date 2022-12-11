@@ -5,8 +5,8 @@ exports.extendSubschemaMode =
   exports.extendSubschemaData =
   exports.getSubschema =
     undefined;
-const r = require(3487),
-  o = require(6776);
+const r = require(3487);
+const o = require(6776);
 exports.getSubschema = function (
   e,
   {

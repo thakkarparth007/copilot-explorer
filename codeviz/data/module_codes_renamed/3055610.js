@@ -21,8 +21,8 @@ class o {
         const t = this.nodeMatch[e.type];
         if (t) {
           if (!this.nodeTypesWithBlockOrStmtChild.has(e.type)) break;
-          const n = this.nodeTypesWithBlockOrStmtChild.get(e.type),
-            r = "" == n ? e.namedChildren[0] : e.childForFieldName(n);
+          const n = this.nodeTypesWithBlockOrStmtChild.get(e.type);
+          const r = "" == n ? e.namedChildren[0] : e.childForFieldName(n);
           if ((null == r ? undefined : r.type) == t) break;
         }
         e = e.parent;
@@ -44,11 +44,11 @@ class o {
           let n = null == e ? undefined : e.nextSibling;
           for (; n && "comment" == n.type; ) {
             const r =
-                n.startPosition.row == t.endPosition.row &&
-                n.startPosition.column >= t.endPosition.column,
-              o =
-                n.startPosition.row > e.endPosition.row &&
-                n.startPosition.column > e.startPosition.column;
+              n.startPosition.row == t.endPosition.row &&
+              n.startPosition.column >= t.endPosition.column;
+            const o =
+              n.startPosition.row > e.endPosition.row &&
+              n.startPosition.column > e.startPosition.column;
             if (!r && !o) break;
             t = n;
             n = n.nextSibling;
@@ -65,8 +65,8 @@ class o {
     });
   }
   async isBlockBodyFinished(e, t, n) {
-    const r = (e + t).trimEnd(),
-      o = await this.getNextBlockAtPosition(r, n, (e) => e.endIndex);
+    const r = (e + t).trimEnd();
+    const o = await this.getNextBlockAtPosition(r, n, (e) => e.endIndex);
     if (undefined !== o && o < r.length) {
       const t = o - e.length;
       return t > 0 ? t : undefined;
@@ -118,15 +118,15 @@ function s(e, t) {
   return n;
 }
 function a(e, t) {
-  const n = e.startIndex,
-    r = e.startIndex - e.startPosition.column,
-    o = t.substring(r, n);
+  const n = e.startIndex;
+  const r = e.startIndex - e.startPosition.column;
+  const o = t.substring(r, n);
   if (/^\s*$/.test(o)) return o;
 }
 function c(e, t, n) {
   if (t.startPosition.row <= e.startPosition.row) return !1;
-  const r = a(e, n),
-    o = a(t, n);
+  const r = a(e, n);
+  const o = a(t, n);
   return undefined !== r && undefined !== o && r.startsWith(o);
 }
 class l extends o {
@@ -138,7 +138,8 @@ class l extends o {
     this.curlyBraceLanguage = s;
   }
   isBlockEmpty(e, t) {
-    var n, o;
+    var n;
+    var o;
     let i = e.text.trim();
     if (this.curlyBraceLanguage) {
       if (i.startsWith("{")) {
@@ -165,7 +166,9 @@ class l extends o {
     );
   }
   async isEmptyBlockStart(e, t) {
-    var n, o, i;
+    var n;
+    var o;
+    var i;
     if (t > e.length) throw new RangeError("Invalid offset");
     for (let n = t; n < e.length && "\n" != e.charAt(n); n++)
       if (/\S/.test(e.charAt(n))) return !1;
@@ -195,10 +198,10 @@ class l extends o {
           n = n.parent;
         }
       }
-      let s = null,
-        l = null,
-        u = null,
-        d = r;
+      let s = null;
+      let l = null;
+      let u = null;
+      let d = r;
       for (; null != d; ) {
         if (d.type == this.blockNodeType) {
           l = d;
@@ -239,8 +242,8 @@ class l extends o {
               : o.type)
         )
           return !0;
-        const e = [...s.children].reverse(),
-          a = e.find((e) => this.startKeywords.includes(e.type));
+        const e = [...s.children].reverse();
+        const a = e.find((e) => this.startKeywords.includes(e.type));
         let c = e.find((e) => e.type == this.blockNodeType);
         if (a) {
           switch (this.languageId) {
@@ -292,15 +295,15 @@ class l extends o {
         }
       }
       if (null != u) {
-        const e = this.nodeMatch[u.type],
-          n = u.children
-            .slice()
-            .reverse()
-            .find((t) => t.type == e);
+        const e = this.nodeMatch[u.type];
+        const n = u.children
+          .slice()
+          .reverse()
+          .find((t) => t.type == e);
         if (n) return this.isBlockEmpty(n, t);
         if (this.nodeTypesWithBlockOrStmtChild.has(u.type)) {
-          const e = this.nodeTypesWithBlockOrStmtChild.get(u.type),
-            t = "" == e ? u.children[0] : u.childForFieldName(e);
+          const e = this.nodeTypesWithBlockOrStmtChild.get(u.type);
+          const t = "" == e ? u.children[0] : u.childForFieldName(e);
           if (
             t &&
             t.type != this.blockNodeType &&

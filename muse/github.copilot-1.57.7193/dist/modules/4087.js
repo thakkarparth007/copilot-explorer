@@ -1,23 +1,23 @@
-var r,
-  o = undefined !== o ? o : {};
+var r;
+var o = undefined !== o ? o : {};
 if (
   undefined ===
   (r = function () {
-    var t,
-      r = {};
+    var t;
+    var r = {};
     for (t in o)
       if (o.hasOwnProperty(t)) {
         r[t] = o[t];
       }
-    var i,
-      s,
-      a = [],
-      c = "./this.program",
-      l = function (e, t) {
-        throw t;
-      },
-      u = !1,
-      d = !1;
+    var i;
+    var s;
+    var a = [];
+    var c = "./this.program";
+    var l = function (e, t) {
+      throw t;
+    };
+    var u = !1;
+    var d = !1;
     u = "object" == typeof window;
     d = "function" == typeof importScripts;
     i =
@@ -25,12 +25,12 @@ if (
       "object" == typeof process.versions &&
       "string" == typeof process.versions.node;
     s = !u && !i && !d;
-    var p,
-      h,
-      f,
-      m,
-      g,
-      _ = "";
+    var p;
+    var h;
+    var f;
+    var m;
+    var g;
+    var _ = "";
     if (i) {
       _ = d ? require("path").dirname(_) + "/" : __dirname + "/";
       p = function (e, t) {
@@ -156,9 +156,9 @@ if (
     if (o.quit) {
       l = o.quit;
     }
-    var v,
-      b = 16,
-      w = [];
+    var v;
+    var b = 16;
+    var w = [];
     function x(e, t) {
       if (!v) {
         v = new WeakMap();
@@ -187,32 +187,37 @@ if (
         var i = (function (e, t) {
           if ("function" == typeof WebAssembly.Function) {
             for (
-              var n = {
-                  i: "i32",
-                  j: "i64",
-                  f: "f32",
-                  d: "f64",
-                },
+              n = {
+                i: "i32",
+                j: "i64",
+                f: "f32",
+                d: "f64",
+              },
                 r = {
                   parameters: [],
                   results: "v" == t[0] ? [] : [n[t[0]]],
                 },
-                o = 1;
+                o = 1,
+                undefined;
               o < t.length;
               ++o
-            )
+            ) {
+              var n;
+              var r;
+              var o;
               r.parameters.push(n[t[o]]);
+            }
             return new WebAssembly.Function(r, e);
           }
-          var i = [1, 0, 1, 96],
-            s = t.slice(0, 1),
-            a = t.slice(1),
-            c = {
-              i: 127,
-              j: 126,
-              f: 125,
-              d: 124,
-            };
+          var i = [1, 0, 1, 96];
+          var s = t.slice(0, 1);
+          var a = t.slice(1);
+          var c = {
+            i: 127,
+            j: 126,
+            f: 125,
+            d: 124,
+          };
           for (i.push(a.length), o = 0; o < a.length; ++o) i.push(c[a[o]]);
           if ("v" == s) {
             i.push(0);
@@ -221,12 +226,12 @@ if (
           }
           i[1] = i.length - 2;
           var l = new Uint8Array(
-              [0, 97, 115, 109, 1, 0, 0, 0].concat(
-                i,
-                [2, 7, 1, 1, 101, 1, 102, 0, 0, 7, 5, 1, 1, 102, 0, 0]
-              )
-            ),
-            u = new WebAssembly.Module(l);
+            [0, 97, 115, 109, 1, 0, 0, 0].concat(
+              i,
+              [2, 7, 1, 1, 101, 1, 102, 0, 0, 7, 5, 1, 1, 102, 0, 0]
+            )
+          );
+          var u = new WebAssembly.Module(l);
           return new WebAssembly.Instance(u, {
             e: {
               f: e,
@@ -238,14 +243,14 @@ if (
       v.set(e, o);
       return o;
     }
-    var E,
-      C = function (e) {},
-      S = o.dynamicLibraries || [];
+    var E;
+    var C = function (e) {};
+    var S = o.dynamicLibraries || [];
     if (o.wasmBinary) {
       E = o.wasmBinary;
     }
-    var T,
-      k = o.noExitRuntime || !0;
+    var T;
+    var k = o.noExitRuntime || !0;
     function I(e, t, n, r) {
       switch (
         ("*" === (n = n || "i8").charAt(n.length - 1) && (n = "i32"), n)
@@ -313,18 +318,22 @@ if (
         se("Assertion failed: " + t);
       }
     }
-    var N,
-      R,
-      M,
-      L,
-      $,
-      D,
-      F,
-      j = 1,
-      q =
-        "undefined" != typeof TextDecoder ? new TextDecoder("utf8") : undefined;
+    var N;
+    var R;
+    var M;
+    var L;
+    var $;
+    var D;
+    var F;
+    var j = 1;
+    var q =
+      "undefined" != typeof TextDecoder ? new TextDecoder("utf8") : undefined;
     function B(e, t, n) {
-      for (var r = t + n, o = t; e[o] && !(o >= r); ) ++o;
+      for (r = t + n, o = t, undefined; e[o] && !(o >= r); ) {
+        var r;
+        var o;
+        ++o;
+      }
       if (o - t > 16 && e.subarray && q) return q.decode(e.subarray(t, o));
       for (var i = ""; t < o; ) {
         var s = e[t++];
@@ -354,7 +363,10 @@ if (
     }
     function H(e, t, n, r) {
       if (!(r > 0)) return 0;
-      for (var o = n, i = n + r - 1, s = 0; s < e.length; ++s) {
+      for (o = n, i = n + r - 1, s = 0, undefined; s < e.length; ++s) {
+        var o;
+        var i;
+        var s;
         var a = e.charCodeAt(s);
         if (a >= 55296 && a <= 57343) {
           a = (65536 + ((1023 & a) << 10)) | (1023 & e.charCodeAt(++s));
@@ -385,7 +397,9 @@ if (
       return H(e, M, t, n);
     }
     function G(e) {
-      for (var t = 0, n = 0; n < e.length; ++n) {
+      for (t = 0, n = 0, undefined; n < e.length; ++n) {
+        var t;
+        var n;
         var r = e.charCodeAt(n);
         if (r >= 55296 && r <= 57343) {
           r = (65536 + ((1023 & r) << 10)) | (1023 & e.charCodeAt(++n));
@@ -399,8 +413,8 @@ if (
       return t;
     }
     function V(e) {
-      var t = G(e) + 1,
-        n = Ve(t);
+      var t = G(e) + 1;
+      var n = Ve(t);
       H(e, R, n, t);
       return n;
     }
@@ -429,17 +443,17 @@ if (
     K = N.byteLength;
     W(N);
     var J = new WebAssembly.Table({
-        initial: 13,
-        element: "anyfunc",
-      }),
-      X = [],
-      Q = [],
-      Y = [],
-      Z = [],
-      ee = !1,
-      te = 0,
-      ne = null,
-      re = null;
+      initial: 13,
+      element: "anyfunc",
+    });
+    var X = [];
+    var Q = [];
+    var Y = [];
+    var Z = [];
+    var ee = !1;
+    var te = 0;
+    var ne = null;
+    var re = null;
     function oe(e) {
       te++;
       if (o.monitorRunDependencies) {
@@ -475,10 +489,10 @@ if (
     function le(e) {
       return e.startsWith("file://");
     }
-    var ue,
-      de,
-      pe,
-      he = "tree-sitter.wasm";
+    var ue;
+    var de;
+    var pe;
+    var he = "tree-sitter.wasm";
     function fe(e) {
       try {
         if (e == he && E) return new Uint8Array(E);
@@ -492,18 +506,18 @@ if (
       ue = he;
       he = o.locateFile ? o.locateFile(ue, _) : _ + ue;
     }
-    var me = {},
-      ge = {
-        get: function (e, t) {
-          if (me[t]) {
-            me[t] = new WebAssembly.Global({
-              value: "i32",
-              mutable: !0,
-            });
-          }
-          return me[t];
-        },
-      };
+    var me = {};
+    var ge = {
+      get: function (e, t) {
+        if (me[t]) {
+          me[t] = new WebAssembly.Global({
+            value: "i32",
+            mutable: !0,
+          });
+        }
+        return me[t];
+      },
+    };
     function _e(e) {
       for (; e.length > 0; ) {
         var t = e.shift();
@@ -524,7 +538,9 @@ if (
     function ye(e) {
       var t = 0;
       function n() {
-        for (var n = 0, r = 1; ; ) {
+        for (n = 0, r = 1, undefined; ; ) {
+          var n;
+          var r;
           var o = e[t++];
           n += (127 & o) * r;
           r *= 128;
@@ -562,8 +578,8 @@ if (
       var i = n();
       o.neededDynlibs = [];
       for (var s = 0; s < i; ++s) {
-        var a = n(),
-          c = e.subarray(t, t + a);
+        var a = n();
+        var c = e.subarray(t, t + a);
         t += a;
         var l = B(c, 0);
         o.neededDynlibs.push(l);
@@ -631,8 +647,8 @@ if (
       (function (e) {
         for (var t in e)
           if (!Te(t)) {
-            var n = !1,
-              r = e[t];
+            var n = !1;
+            var r = e[t];
             if (t.startsWith("orig$")) {
               t = t.split("$")[1];
               n = !0;
@@ -659,7 +675,8 @@ if (
       return n;
     }
     function Ie(e, t) {
-      var n, r;
+      var n;
+      var r;
       if (t) {
         n = Be["orig$" + e];
       }
@@ -693,60 +710,60 @@ if (
       function r() {
         var r = Math.pow(2, n.memoryAlign);
         r = Math.max(r, b);
-        var o,
-          i,
-          s,
-          a =
-            ((o = (function (e) {
-              if (ee) return Ue(e);
-              var t = Se,
-                n = (t + e + 15) & -16;
-              Se = n;
-              me.__heap_base.value = n;
-              return t;
-            })(n.memorySize + r)),
-            (i = r) || (i = b),
-            Math.ceil(o / i) * i),
-          c = J.length;
+        var o;
+        var i;
+        var s;
+        var a =
+          ((o = (function (e) {
+            if (ee) return Ue(e);
+            var t = Se;
+            var n = (t + e + 15) & -16;
+            Se = n;
+            me.__heap_base.value = n;
+            return t;
+          })(n.memorySize + r)),
+          (i = r) || (i = b),
+          Math.ceil(o / i) * i);
+        var c = J.length;
         J.grow(n.tableSize);
         for (var l = a; l < a + n.memorySize; l++) R[l] = 0;
         for (l = c; l < c + n.tableSize; l++) J.set(l, null);
         var u = new Proxy(
-            {},
-            {
-              get: function (e, t) {
-                switch (t) {
-                  case "__memory_base":
-                    return a;
-                  case "__table_base":
-                    return c;
-                }
-                return t in Be
-                  ? Be[t]
-                  : (t in e ||
-                      (e[t] = function () {
-                        if (n) {
-                          n = (function (e) {
-                            var t = Ie(e, !1);
-                            if (t) {
-                              t = s[e];
-                            }
-                            return t;
-                          })(t);
-                        }
-                        return n.apply(null, arguments);
-                      }),
-                    e[t]);
-                var n;
-              },
-            }
-          ),
-          d = {
-            "GOT.mem": new Proxy({}, ge),
-            "GOT.func": new Proxy({}, ge),
-            env: u,
-            wasi_snapshot_preview1: u,
-          };
+          {},
+          {
+            get: function (e, t) {
+              switch (t) {
+                case "__memory_base":
+                  return a;
+                case "__table_base":
+                  return c;
+              }
+              return t in Be
+                ? Be[t]
+                : (t in e ||
+                    (e[t] = function () {
+                      if (n) {
+                        n = (function (e) {
+                          var t = Ie(e, !1);
+                          if (t) {
+                            t = s[e];
+                          }
+                          return t;
+                        })(t);
+                      }
+                      return n.apply(null, arguments);
+                    }),
+                  e[t]);
+              var n;
+            },
+          }
+        );
+        var d = {
+          "GOT.mem": new Proxy({}, ge),
+          "GOT.func": new Proxy({}, ge),
+          env: u,
+          wasi_snapshot_preview1: u,
+        };
         function p(e) {
           for (var r = 0; r < n.tableSize; r++) {
             var o = J.get(c + r);
@@ -812,8 +829,8 @@ if (
         global: !0,
         nodelete: !0,
       };
-      var n,
-        r = Ee.loadedLibNames[e];
+      var n;
+      var r = Ee.loadedLibNames[e];
       if (r) {
         n = Ee.loadedLibs[r];
         if (t.global && !n.global) {
@@ -902,14 +919,14 @@ if (
         }
     }
     o.___heap_base = Se;
-    var Ne,
-      Re = new WebAssembly.Global(
-        {
-          value: "i32",
-          mutable: !0,
-        },
-        5250816
-      );
+    var Ne;
+    var Re = new WebAssembly.Global(
+      {
+        value: "i32",
+        mutable: !0,
+      },
+      5250816
+    );
     function Me() {
       se();
     }
@@ -957,585 +974,595 @@ if (
     $e.sig = "iii";
     Fe.sig = "vi";
     je.sig = "vi";
-    var qe,
-      Be = {
-        __heap_base: Se,
-        __indirect_function_table: J,
-        __memory_base: 1024,
-        __stack_pointer: Re,
-        __table_base: 1,
-        abort: Me,
-        clock_gettime: $e,
-        emscripten_memcpy_big: function (e, t, n) {
-          M.copyWithin(e, t, t + n);
-        },
-        emscripten_resize_heap: function (e) {
-          var t,
-            n = M.length;
-          if ((e >>>= 0) > 2147483648) return !1;
-          for (var r = 1; r <= 4; r *= 2) {
-            var o = n * (1 + 0.2 / r);
-            o = Math.min(o, e + 100663296);
-            if (
-              De(
-                Math.min(
-                  2147483648,
-                  ((t = Math.max(e, o)) % 65536 > 0 &&
-                    (t += 65536 - (t % 65536)),
-                  t)
-                )
+    var qe;
+    var Be = {
+      __heap_base: Se,
+      __indirect_function_table: J,
+      __memory_base: 1024,
+      __stack_pointer: Re,
+      __table_base: 1,
+      abort: Me,
+      clock_gettime: $e,
+      emscripten_memcpy_big: function (e, t, n) {
+        M.copyWithin(e, t, t + n);
+      },
+      emscripten_resize_heap: function (e) {
+        var t;
+        var n = M.length;
+        if ((e >>>= 0) > 2147483648) return !1;
+        for (var r = 1; r <= 4; r *= 2) {
+          var o = n * (1 + 0.2 / r);
+          o = Math.min(o, e + 100663296);
+          if (
+            De(
+              Math.min(
+                2147483648,
+                ((t = Math.max(e, o)) % 65536 > 0 && (t += 65536 - (t % 65536)),
+                t)
               )
             )
-              return !0;
-          }
-          return !1;
-        },
-        exit: Fe,
-        memory: T,
-        setTempRet0: je,
-        tree_sitter_log_callback: function (e, t) {
-          if (ft) {
-            const n = U(t);
-            ft(n, 0 !== e);
-          }
-        },
-        tree_sitter_parse_callback: function (e, t, n, r, o) {
-          var i = ht(t, {
-            row: n,
-            column: r,
-          });
-          if ("string" == typeof i) {
-            I(o, i.length, "i32");
-            (function (e, t, n) {
-              if (undefined === n) {
-                n = 2147483647;
-              }
-              if (n < 2) return 0;
-              for (
-                var r = (n -= 2) < 2 * e.length ? n / 2 : e.length, o = 0;
-                o < r;
-                ++o
-              ) {
-                var i = e.charCodeAt(o);
-                L[t >> 1] = i;
-                t += 2;
-              }
-              L[t >> 1] = 0;
-            })(i, e, 10240);
-          } else {
-            I(o, 0, "i32");
-          }
-        },
+          )
+            return !0;
+        }
+        return !1;
       },
-      Ue =
-        ((function () {
-          var e = {
-            env: Be,
-            wasi_snapshot_preview1: Be,
-            "GOT.mem": new Proxy(Be, ge),
-            "GOT.func": new Proxy(Be, ge),
-          };
-          function t(e, t) {
-            var n = e.exports;
-            n = ke(n, 1024);
-            o.asm = n;
-            var r,
-              i = ye(t);
-            if (i.neededDynlibs) {
-              S = i.neededDynlibs.concat(S);
+      exit: Fe,
+      memory: T,
+      setTempRet0: je,
+      tree_sitter_log_callback: function (e, t) {
+        if (ft) {
+          const n = U(t);
+          ft(n, 0 !== e);
+        }
+      },
+      tree_sitter_parse_callback: function (e, t, n, r, o) {
+        var i = ht(t, {
+          row: n,
+          column: r,
+        });
+        if ("string" == typeof i) {
+          I(o, i.length, "i32");
+          (function (e, t, n) {
+            if (undefined === n) {
+              n = 2147483647;
             }
-            xe(n);
-            r = o.asm.__wasm_call_ctors;
-            Q.unshift(r);
-            ie();
+            if (n < 2) return 0;
+            for (
+              r = (n -= 2) < 2 * e.length ? n / 2 : e.length, o = 0, undefined;
+              o < r;
+              ++o
+            ) {
+              var r;
+              var o;
+              var i = e.charCodeAt(o);
+              L[t >> 1] = i;
+              t += 2;
+            }
+            L[t >> 1] = 0;
+          })(i, e, 10240);
+        } else {
+          I(o, 0, "i32");
+        }
+      },
+    };
+    var Ue =
+      ((function () {
+        var e = {
+          env: Be,
+          wasi_snapshot_preview1: Be,
+          "GOT.mem": new Proxy(Be, ge),
+          "GOT.func": new Proxy(Be, ge),
+        };
+        function t(e, t) {
+          var n = e.exports;
+          n = ke(n, 1024);
+          o.asm = n;
+          var r;
+          var i = ye(t);
+          if (i.neededDynlibs) {
+            S = i.neededDynlibs.concat(S);
           }
-          function n(e) {
-            t(e.instance, e.module);
-          }
-          function r(t) {
-            return (function () {
-              if (!E && (u || d)) {
-                if ("function" == typeof fetch && !le(he))
-                  return fetch(he, {
-                    credentials: "same-origin",
+          xe(n);
+          r = o.asm.__wasm_call_ctors;
+          Q.unshift(r);
+          ie();
+        }
+        function n(e) {
+          t(e.instance, e.module);
+        }
+        function r(t) {
+          return (function () {
+            if (!E && (u || d)) {
+              if ("function" == typeof fetch && !le(he))
+                return fetch(he, {
+                  credentials: "same-origin",
+                })
+                  .then(function (e) {
+                    if (!e.ok)
+                      throw "failed to load wasm binary file at '" + he + "'";
+                    return e.arrayBuffer();
                   })
-                    .then(function (e) {
-                      if (!e.ok)
-                        throw "failed to load wasm binary file at '" + he + "'";
-                      return e.arrayBuffer();
-                    })
-                    .catch(function () {
-                      return fe(he);
-                    });
-                if (h)
-                  return new Promise(function (e, t) {
-                    h(
-                      he,
-                      function (t) {
-                        e(new Uint8Array(t));
-                      },
-                      t
-                    );
+                  .catch(function () {
+                    return fe(he);
                   });
-              }
-              return Promise.resolve().then(function () {
-                return fe(he);
-              });
-            })()
-              .then(function (t) {
-                return WebAssembly.instantiate(t, e);
-              })
-              .then(t, function (e) {
-                y("failed to asynchronously prepare wasm: " + e);
-                se(e);
-              });
-          }
-          oe();
-          if (o.instantiateWasm)
-            try {
-              return o.instantiateWasm(e, t);
-            } catch (e) {
-              return (
-                y("Module.instantiateWasm callback failed with error: " + e), !1
-              );
+              if (h)
+                return new Promise(function (e, t) {
+                  h(
+                    he,
+                    function (t) {
+                      e(new Uint8Array(t));
+                    },
+                    t
+                  );
+                });
             }
-          if (
-            E ||
-            "function" != typeof WebAssembly.instantiateStreaming ||
-            ce(he) ||
-            le(he) ||
-            "function" != typeof fetch
-          ) {
-            r(n);
-          } else {
-            fetch(he, {
-              credentials: "same-origin",
-            }).then(function (t) {
-              return WebAssembly.instantiateStreaming(t, e).then(
-                n,
-                function (e) {
-                  y("wasm streaming compile failed: " + e);
-                  y("falling back to ArrayBuffer instantiation");
-                  return r(n);
-                }
-              );
+            return Promise.resolve().then(function () {
+              return fe(he);
             });
+          })()
+            .then(function (t) {
+              return WebAssembly.instantiate(t, e);
+            })
+            .then(t, function (e) {
+              y("failed to asynchronously prepare wasm: " + e);
+              se(e);
+            });
+        }
+        oe();
+        if (o.instantiateWasm)
+          try {
+            return o.instantiateWasm(e, t);
+          } catch (e) {
+            return (
+              y("Module.instantiateWasm callback failed with error: " + e), !1
+            );
           }
-        })(),
-        (o.___wasm_call_ctors = function () {
-          return (o.___wasm_call_ctors = o.asm.__wasm_call_ctors).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._malloc = function () {
-          return (Ue = o._malloc = o.asm.malloc).apply(null, arguments);
-        })),
-      He =
-        ((o._ts_language_symbol_count = function () {
-          return (o._ts_language_symbol_count =
-            o.asm.ts_language_symbol_count).apply(null, arguments);
-        }),
-        (o._ts_language_version = function () {
-          return (o._ts_language_version = o.asm.ts_language_version).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_language_field_count = function () {
-          return (o._ts_language_field_count =
-            o.asm.ts_language_field_count).apply(null, arguments);
-        }),
-        (o._ts_language_symbol_name = function () {
-          return (o._ts_language_symbol_name =
-            o.asm.ts_language_symbol_name).apply(null, arguments);
-        }),
-        (o._ts_language_symbol_for_name = function () {
-          return (o._ts_language_symbol_for_name =
-            o.asm.ts_language_symbol_for_name).apply(null, arguments);
-        }),
-        (o._ts_language_symbol_type = function () {
-          return (o._ts_language_symbol_type =
-            o.asm.ts_language_symbol_type).apply(null, arguments);
-        }),
-        (o._ts_language_field_name_for_id = function () {
-          return (o._ts_language_field_name_for_id =
-            o.asm.ts_language_field_name_for_id).apply(null, arguments);
-        }),
-        (o._memcpy = function () {
-          return (o._memcpy = o.asm.memcpy).apply(null, arguments);
-        }),
-        (o._free = function () {
-          return (o._free = o.asm.free).apply(null, arguments);
-        }),
-        (o._calloc = function () {
-          return (o._calloc = o.asm.calloc).apply(null, arguments);
-        }),
-        (o._ts_parser_delete = function () {
-          return (o._ts_parser_delete = o.asm.ts_parser_delete).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_parser_reset = function () {
-          return (o._ts_parser_reset = o.asm.ts_parser_reset).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_parser_set_language = function () {
-          return (o._ts_parser_set_language =
-            o.asm.ts_parser_set_language).apply(null, arguments);
-        }),
-        (o._ts_parser_timeout_micros = function () {
-          return (o._ts_parser_timeout_micros =
-            o.asm.ts_parser_timeout_micros).apply(null, arguments);
-        }),
-        (o._ts_parser_set_timeout_micros = function () {
-          return (o._ts_parser_set_timeout_micros =
-            o.asm.ts_parser_set_timeout_micros).apply(null, arguments);
-        }),
-        (o._memcmp = function () {
-          return (o._memcmp = o.asm.memcmp).apply(null, arguments);
-        }),
-        (o._ts_query_new = function () {
-          return (o._ts_query_new = o.asm.ts_query_new).apply(null, arguments);
-        }),
-        (o._ts_query_delete = function () {
-          return (o._ts_query_delete = o.asm.ts_query_delete).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._iswspace = function () {
-          return (o._iswspace = o.asm.iswspace).apply(null, arguments);
-        }),
-        (o._iswalnum = function () {
-          return (o._iswalnum = o.asm.iswalnum).apply(null, arguments);
-        }),
-        (o._ts_query_pattern_count = function () {
-          return (o._ts_query_pattern_count =
-            o.asm.ts_query_pattern_count).apply(null, arguments);
-        }),
-        (o._ts_query_capture_count = function () {
-          return (o._ts_query_capture_count =
-            o.asm.ts_query_capture_count).apply(null, arguments);
-        }),
-        (o._ts_query_string_count = function () {
-          return (o._ts_query_string_count = o.asm.ts_query_string_count).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_query_capture_name_for_id = function () {
-          return (o._ts_query_capture_name_for_id =
-            o.asm.ts_query_capture_name_for_id).apply(null, arguments);
-        }),
-        (o._ts_query_string_value_for_id = function () {
-          return (o._ts_query_string_value_for_id =
-            o.asm.ts_query_string_value_for_id).apply(null, arguments);
-        }),
-        (o._ts_query_predicates_for_pattern = function () {
-          return (o._ts_query_predicates_for_pattern =
-            o.asm.ts_query_predicates_for_pattern).apply(null, arguments);
-        }),
-        (o._ts_tree_copy = function () {
-          return (o._ts_tree_copy = o.asm.ts_tree_copy).apply(null, arguments);
-        }),
-        (o._ts_tree_delete = function () {
-          return (o._ts_tree_delete = o.asm.ts_tree_delete).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_init = function () {
-          return (o._ts_init = o.asm.ts_init).apply(null, arguments);
-        }),
-        (o._ts_parser_new_wasm = function () {
-          return (o._ts_parser_new_wasm = o.asm.ts_parser_new_wasm).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_parser_enable_logger_wasm = function () {
-          return (o._ts_parser_enable_logger_wasm =
-            o.asm.ts_parser_enable_logger_wasm).apply(null, arguments);
-        }),
-        (o._ts_parser_parse_wasm = function () {
-          return (o._ts_parser_parse_wasm = o.asm.ts_parser_parse_wasm).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_language_type_is_named_wasm = function () {
-          return (o._ts_language_type_is_named_wasm =
-            o.asm.ts_language_type_is_named_wasm).apply(null, arguments);
-        }),
-        (o._ts_language_type_is_visible_wasm = function () {
-          return (o._ts_language_type_is_visible_wasm =
-            o.asm.ts_language_type_is_visible_wasm).apply(null, arguments);
-        }),
-        (o._ts_tree_root_node_wasm = function () {
-          return (o._ts_tree_root_node_wasm =
-            o.asm.ts_tree_root_node_wasm).apply(null, arguments);
-        }),
-        (o._ts_tree_edit_wasm = function () {
-          return (o._ts_tree_edit_wasm = o.asm.ts_tree_edit_wasm).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_tree_get_changed_ranges_wasm = function () {
-          return (o._ts_tree_get_changed_ranges_wasm =
-            o.asm.ts_tree_get_changed_ranges_wasm).apply(null, arguments);
-        }),
-        (o._ts_tree_cursor_new_wasm = function () {
-          return (o._ts_tree_cursor_new_wasm =
-            o.asm.ts_tree_cursor_new_wasm).apply(null, arguments);
-        }),
-        (o._ts_tree_cursor_delete_wasm = function () {
-          return (o._ts_tree_cursor_delete_wasm =
-            o.asm.ts_tree_cursor_delete_wasm).apply(null, arguments);
-        }),
-        (o._ts_tree_cursor_reset_wasm = function () {
-          return (o._ts_tree_cursor_reset_wasm =
-            o.asm.ts_tree_cursor_reset_wasm).apply(null, arguments);
-        }),
-        (o._ts_tree_cursor_goto_first_child_wasm = function () {
-          return (o._ts_tree_cursor_goto_first_child_wasm =
-            o.asm.ts_tree_cursor_goto_first_child_wasm).apply(null, arguments);
-        }),
-        (o._ts_tree_cursor_goto_next_sibling_wasm = function () {
-          return (o._ts_tree_cursor_goto_next_sibling_wasm =
-            o.asm.ts_tree_cursor_goto_next_sibling_wasm).apply(null, arguments);
-        }),
-        (o._ts_tree_cursor_goto_parent_wasm = function () {
-          return (o._ts_tree_cursor_goto_parent_wasm =
-            o.asm.ts_tree_cursor_goto_parent_wasm).apply(null, arguments);
-        }),
-        (o._ts_tree_cursor_current_node_type_id_wasm = function () {
-          return (o._ts_tree_cursor_current_node_type_id_wasm =
-            o.asm.ts_tree_cursor_current_node_type_id_wasm).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_tree_cursor_current_node_is_named_wasm = function () {
-          return (o._ts_tree_cursor_current_node_is_named_wasm =
-            o.asm.ts_tree_cursor_current_node_is_named_wasm).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_tree_cursor_current_node_is_missing_wasm = function () {
-          return (o._ts_tree_cursor_current_node_is_missing_wasm =
-            o.asm.ts_tree_cursor_current_node_is_missing_wasm).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_tree_cursor_current_node_id_wasm = function () {
-          return (o._ts_tree_cursor_current_node_id_wasm =
-            o.asm.ts_tree_cursor_current_node_id_wasm).apply(null, arguments);
-        }),
-        (o._ts_tree_cursor_start_position_wasm = function () {
-          return (o._ts_tree_cursor_start_position_wasm =
-            o.asm.ts_tree_cursor_start_position_wasm).apply(null, arguments);
-        }),
-        (o._ts_tree_cursor_end_position_wasm = function () {
-          return (o._ts_tree_cursor_end_position_wasm =
-            o.asm.ts_tree_cursor_end_position_wasm).apply(null, arguments);
-        }),
-        (o._ts_tree_cursor_start_index_wasm = function () {
-          return (o._ts_tree_cursor_start_index_wasm =
-            o.asm.ts_tree_cursor_start_index_wasm).apply(null, arguments);
-        }),
-        (o._ts_tree_cursor_end_index_wasm = function () {
-          return (o._ts_tree_cursor_end_index_wasm =
-            o.asm.ts_tree_cursor_end_index_wasm).apply(null, arguments);
-        }),
-        (o._ts_tree_cursor_current_field_id_wasm = function () {
-          return (o._ts_tree_cursor_current_field_id_wasm =
-            o.asm.ts_tree_cursor_current_field_id_wasm).apply(null, arguments);
-        }),
-        (o._ts_tree_cursor_current_node_wasm = function () {
-          return (o._ts_tree_cursor_current_node_wasm =
-            o.asm.ts_tree_cursor_current_node_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_symbol_wasm = function () {
-          return (o._ts_node_symbol_wasm = o.asm.ts_node_symbol_wasm).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_node_child_count_wasm = function () {
-          return (o._ts_node_child_count_wasm =
-            o.asm.ts_node_child_count_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_named_child_count_wasm = function () {
-          return (o._ts_node_named_child_count_wasm =
-            o.asm.ts_node_named_child_count_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_child_wasm = function () {
-          return (o._ts_node_child_wasm = o.asm.ts_node_child_wasm).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_node_named_child_wasm = function () {
-          return (o._ts_node_named_child_wasm =
-            o.asm.ts_node_named_child_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_child_by_field_id_wasm = function () {
-          return (o._ts_node_child_by_field_id_wasm =
-            o.asm.ts_node_child_by_field_id_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_next_sibling_wasm = function () {
-          return (o._ts_node_next_sibling_wasm =
-            o.asm.ts_node_next_sibling_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_prev_sibling_wasm = function () {
-          return (o._ts_node_prev_sibling_wasm =
-            o.asm.ts_node_prev_sibling_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_next_named_sibling_wasm = function () {
-          return (o._ts_node_next_named_sibling_wasm =
-            o.asm.ts_node_next_named_sibling_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_prev_named_sibling_wasm = function () {
-          return (o._ts_node_prev_named_sibling_wasm =
-            o.asm.ts_node_prev_named_sibling_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_parent_wasm = function () {
-          return (o._ts_node_parent_wasm = o.asm.ts_node_parent_wasm).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_node_descendant_for_index_wasm = function () {
-          return (o._ts_node_descendant_for_index_wasm =
-            o.asm.ts_node_descendant_for_index_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_named_descendant_for_index_wasm = function () {
-          return (o._ts_node_named_descendant_for_index_wasm =
-            o.asm.ts_node_named_descendant_for_index_wasm).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_node_descendant_for_position_wasm = function () {
-          return (o._ts_node_descendant_for_position_wasm =
-            o.asm.ts_node_descendant_for_position_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_named_descendant_for_position_wasm = function () {
-          return (o._ts_node_named_descendant_for_position_wasm =
-            o.asm.ts_node_named_descendant_for_position_wasm).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_node_start_point_wasm = function () {
-          return (o._ts_node_start_point_wasm =
-            o.asm.ts_node_start_point_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_end_point_wasm = function () {
-          return (o._ts_node_end_point_wasm =
-            o.asm.ts_node_end_point_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_start_index_wasm = function () {
-          return (o._ts_node_start_index_wasm =
-            o.asm.ts_node_start_index_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_end_index_wasm = function () {
-          return (o._ts_node_end_index_wasm =
-            o.asm.ts_node_end_index_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_to_string_wasm = function () {
-          return (o._ts_node_to_string_wasm =
-            o.asm.ts_node_to_string_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_children_wasm = function () {
-          return (o._ts_node_children_wasm = o.asm.ts_node_children_wasm).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_node_named_children_wasm = function () {
-          return (o._ts_node_named_children_wasm =
-            o.asm.ts_node_named_children_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_descendants_of_type_wasm = function () {
-          return (o._ts_node_descendants_of_type_wasm =
-            o.asm.ts_node_descendants_of_type_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_is_named_wasm = function () {
-          return (o._ts_node_is_named_wasm = o.asm.ts_node_is_named_wasm).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_node_has_changes_wasm = function () {
-          return (o._ts_node_has_changes_wasm =
-            o.asm.ts_node_has_changes_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_has_error_wasm = function () {
-          return (o._ts_node_has_error_wasm =
-            o.asm.ts_node_has_error_wasm).apply(null, arguments);
-        }),
-        (o._ts_node_is_missing_wasm = function () {
-          return (o._ts_node_is_missing_wasm =
-            o.asm.ts_node_is_missing_wasm).apply(null, arguments);
-        }),
-        (o._ts_query_matches_wasm = function () {
-          return (o._ts_query_matches_wasm = o.asm.ts_query_matches_wasm).apply(
-            null,
-            arguments
-          );
-        }),
-        (o._ts_query_captures_wasm = function () {
-          return (o._ts_query_captures_wasm =
-            o.asm.ts_query_captures_wasm).apply(null, arguments);
-        }),
-        (o._iswdigit = function () {
-          return (o._iswdigit = o.asm.iswdigit).apply(null, arguments);
-        }),
-        (o._iswalpha = function () {
-          return (o._iswalpha = o.asm.iswalpha).apply(null, arguments);
-        }),
-        (o._iswlower = function () {
-          return (o._iswlower = o.asm.iswlower).apply(null, arguments);
-        }),
-        (o._towupper = function () {
-          return (o._towupper = o.asm.towupper).apply(null, arguments);
-        }),
-        (o.___errno_location = function () {
-          return (He = o.___errno_location = o.asm.__errno_location).apply(
-            null,
-            arguments
-          );
-        })),
-      ze =
-        ((o._memchr = function () {
-          return (o._memchr = o.asm.memchr).apply(null, arguments);
-        }),
-        (o._strlen = function () {
-          return (o._strlen = o.asm.strlen).apply(null, arguments);
-        }),
-        (o.stackSave = function () {
-          return (ze = o.stackSave = o.asm.stackSave).apply(null, arguments);
-        })),
-      Ge = (o.stackRestore = function () {
-        return (Ge = o.stackRestore = o.asm.stackRestore).apply(
+        if (
+          E ||
+          "function" != typeof WebAssembly.instantiateStreaming ||
+          ce(he) ||
+          le(he) ||
+          "function" != typeof fetch
+        ) {
+          r(n);
+        } else {
+          fetch(he, {
+            credentials: "same-origin",
+          }).then(function (t) {
+            return WebAssembly.instantiateStreaming(t, e).then(n, function (e) {
+              y("wasm streaming compile failed: " + e);
+              y("falling back to ArrayBuffer instantiation");
+              return r(n);
+            });
+          });
+        }
+      })(),
+      (o.___wasm_call_ctors = function () {
+        return (o.___wasm_call_ctors = o.asm.__wasm_call_ctors).apply(
           null,
           arguments
         );
       }),
-      Ve = (o.stackAlloc = function () {
-        return (Ve = o.stackAlloc = o.asm.stackAlloc).apply(null, arguments);
+      (o._malloc = function () {
+        return (Ue = o._malloc = o.asm.malloc).apply(null, arguments);
+      }));
+    var He =
+      ((o._ts_language_symbol_count = function () {
+        return (o._ts_language_symbol_count =
+          o.asm.ts_language_symbol_count).apply(null, arguments);
       }),
-      We = (o._setThrew = function () {
-        return (We = o._setThrew = o.asm.setThrew).apply(null, arguments);
-      });
+      (o._ts_language_version = function () {
+        return (o._ts_language_version = o.asm.ts_language_version).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_language_field_count = function () {
+        return (o._ts_language_field_count =
+          o.asm.ts_language_field_count).apply(null, arguments);
+      }),
+      (o._ts_language_symbol_name = function () {
+        return (o._ts_language_symbol_name =
+          o.asm.ts_language_symbol_name).apply(null, arguments);
+      }),
+      (o._ts_language_symbol_for_name = function () {
+        return (o._ts_language_symbol_for_name =
+          o.asm.ts_language_symbol_for_name).apply(null, arguments);
+      }),
+      (o._ts_language_symbol_type = function () {
+        return (o._ts_language_symbol_type =
+          o.asm.ts_language_symbol_type).apply(null, arguments);
+      }),
+      (o._ts_language_field_name_for_id = function () {
+        return (o._ts_language_field_name_for_id =
+          o.asm.ts_language_field_name_for_id).apply(null, arguments);
+      }),
+      (o._memcpy = function () {
+        return (o._memcpy = o.asm.memcpy).apply(null, arguments);
+      }),
+      (o._free = function () {
+        return (o._free = o.asm.free).apply(null, arguments);
+      }),
+      (o._calloc = function () {
+        return (o._calloc = o.asm.calloc).apply(null, arguments);
+      }),
+      (o._ts_parser_delete = function () {
+        return (o._ts_parser_delete = o.asm.ts_parser_delete).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_parser_reset = function () {
+        return (o._ts_parser_reset = o.asm.ts_parser_reset).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_parser_set_language = function () {
+        return (o._ts_parser_set_language = o.asm.ts_parser_set_language).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_parser_timeout_micros = function () {
+        return (o._ts_parser_timeout_micros =
+          o.asm.ts_parser_timeout_micros).apply(null, arguments);
+      }),
+      (o._ts_parser_set_timeout_micros = function () {
+        return (o._ts_parser_set_timeout_micros =
+          o.asm.ts_parser_set_timeout_micros).apply(null, arguments);
+      }),
+      (o._memcmp = function () {
+        return (o._memcmp = o.asm.memcmp).apply(null, arguments);
+      }),
+      (o._ts_query_new = function () {
+        return (o._ts_query_new = o.asm.ts_query_new).apply(null, arguments);
+      }),
+      (o._ts_query_delete = function () {
+        return (o._ts_query_delete = o.asm.ts_query_delete).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._iswspace = function () {
+        return (o._iswspace = o.asm.iswspace).apply(null, arguments);
+      }),
+      (o._iswalnum = function () {
+        return (o._iswalnum = o.asm.iswalnum).apply(null, arguments);
+      }),
+      (o._ts_query_pattern_count = function () {
+        return (o._ts_query_pattern_count = o.asm.ts_query_pattern_count).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_query_capture_count = function () {
+        return (o._ts_query_capture_count = o.asm.ts_query_capture_count).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_query_string_count = function () {
+        return (o._ts_query_string_count = o.asm.ts_query_string_count).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_query_capture_name_for_id = function () {
+        return (o._ts_query_capture_name_for_id =
+          o.asm.ts_query_capture_name_for_id).apply(null, arguments);
+      }),
+      (o._ts_query_string_value_for_id = function () {
+        return (o._ts_query_string_value_for_id =
+          o.asm.ts_query_string_value_for_id).apply(null, arguments);
+      }),
+      (o._ts_query_predicates_for_pattern = function () {
+        return (o._ts_query_predicates_for_pattern =
+          o.asm.ts_query_predicates_for_pattern).apply(null, arguments);
+      }),
+      (o._ts_tree_copy = function () {
+        return (o._ts_tree_copy = o.asm.ts_tree_copy).apply(null, arguments);
+      }),
+      (o._ts_tree_delete = function () {
+        return (o._ts_tree_delete = o.asm.ts_tree_delete).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_init = function () {
+        return (o._ts_init = o.asm.ts_init).apply(null, arguments);
+      }),
+      (o._ts_parser_new_wasm = function () {
+        return (o._ts_parser_new_wasm = o.asm.ts_parser_new_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_parser_enable_logger_wasm = function () {
+        return (o._ts_parser_enable_logger_wasm =
+          o.asm.ts_parser_enable_logger_wasm).apply(null, arguments);
+      }),
+      (o._ts_parser_parse_wasm = function () {
+        return (o._ts_parser_parse_wasm = o.asm.ts_parser_parse_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_language_type_is_named_wasm = function () {
+        return (o._ts_language_type_is_named_wasm =
+          o.asm.ts_language_type_is_named_wasm).apply(null, arguments);
+      }),
+      (o._ts_language_type_is_visible_wasm = function () {
+        return (o._ts_language_type_is_visible_wasm =
+          o.asm.ts_language_type_is_visible_wasm).apply(null, arguments);
+      }),
+      (o._ts_tree_root_node_wasm = function () {
+        return (o._ts_tree_root_node_wasm = o.asm.ts_tree_root_node_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_tree_edit_wasm = function () {
+        return (o._ts_tree_edit_wasm = o.asm.ts_tree_edit_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_tree_get_changed_ranges_wasm = function () {
+        return (o._ts_tree_get_changed_ranges_wasm =
+          o.asm.ts_tree_get_changed_ranges_wasm).apply(null, arguments);
+      }),
+      (o._ts_tree_cursor_new_wasm = function () {
+        return (o._ts_tree_cursor_new_wasm =
+          o.asm.ts_tree_cursor_new_wasm).apply(null, arguments);
+      }),
+      (o._ts_tree_cursor_delete_wasm = function () {
+        return (o._ts_tree_cursor_delete_wasm =
+          o.asm.ts_tree_cursor_delete_wasm).apply(null, arguments);
+      }),
+      (o._ts_tree_cursor_reset_wasm = function () {
+        return (o._ts_tree_cursor_reset_wasm =
+          o.asm.ts_tree_cursor_reset_wasm).apply(null, arguments);
+      }),
+      (o._ts_tree_cursor_goto_first_child_wasm = function () {
+        return (o._ts_tree_cursor_goto_first_child_wasm =
+          o.asm.ts_tree_cursor_goto_first_child_wasm).apply(null, arguments);
+      }),
+      (o._ts_tree_cursor_goto_next_sibling_wasm = function () {
+        return (o._ts_tree_cursor_goto_next_sibling_wasm =
+          o.asm.ts_tree_cursor_goto_next_sibling_wasm).apply(null, arguments);
+      }),
+      (o._ts_tree_cursor_goto_parent_wasm = function () {
+        return (o._ts_tree_cursor_goto_parent_wasm =
+          o.asm.ts_tree_cursor_goto_parent_wasm).apply(null, arguments);
+      }),
+      (o._ts_tree_cursor_current_node_type_id_wasm = function () {
+        return (o._ts_tree_cursor_current_node_type_id_wasm =
+          o.asm.ts_tree_cursor_current_node_type_id_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_tree_cursor_current_node_is_named_wasm = function () {
+        return (o._ts_tree_cursor_current_node_is_named_wasm =
+          o.asm.ts_tree_cursor_current_node_is_named_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_tree_cursor_current_node_is_missing_wasm = function () {
+        return (o._ts_tree_cursor_current_node_is_missing_wasm =
+          o.asm.ts_tree_cursor_current_node_is_missing_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_tree_cursor_current_node_id_wasm = function () {
+        return (o._ts_tree_cursor_current_node_id_wasm =
+          o.asm.ts_tree_cursor_current_node_id_wasm).apply(null, arguments);
+      }),
+      (o._ts_tree_cursor_start_position_wasm = function () {
+        return (o._ts_tree_cursor_start_position_wasm =
+          o.asm.ts_tree_cursor_start_position_wasm).apply(null, arguments);
+      }),
+      (o._ts_tree_cursor_end_position_wasm = function () {
+        return (o._ts_tree_cursor_end_position_wasm =
+          o.asm.ts_tree_cursor_end_position_wasm).apply(null, arguments);
+      }),
+      (o._ts_tree_cursor_start_index_wasm = function () {
+        return (o._ts_tree_cursor_start_index_wasm =
+          o.asm.ts_tree_cursor_start_index_wasm).apply(null, arguments);
+      }),
+      (o._ts_tree_cursor_end_index_wasm = function () {
+        return (o._ts_tree_cursor_end_index_wasm =
+          o.asm.ts_tree_cursor_end_index_wasm).apply(null, arguments);
+      }),
+      (o._ts_tree_cursor_current_field_id_wasm = function () {
+        return (o._ts_tree_cursor_current_field_id_wasm =
+          o.asm.ts_tree_cursor_current_field_id_wasm).apply(null, arguments);
+      }),
+      (o._ts_tree_cursor_current_node_wasm = function () {
+        return (o._ts_tree_cursor_current_node_wasm =
+          o.asm.ts_tree_cursor_current_node_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_symbol_wasm = function () {
+        return (o._ts_node_symbol_wasm = o.asm.ts_node_symbol_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_node_child_count_wasm = function () {
+        return (o._ts_node_child_count_wasm =
+          o.asm.ts_node_child_count_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_named_child_count_wasm = function () {
+        return (o._ts_node_named_child_count_wasm =
+          o.asm.ts_node_named_child_count_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_child_wasm = function () {
+        return (o._ts_node_child_wasm = o.asm.ts_node_child_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_node_named_child_wasm = function () {
+        return (o._ts_node_named_child_wasm =
+          o.asm.ts_node_named_child_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_child_by_field_id_wasm = function () {
+        return (o._ts_node_child_by_field_id_wasm =
+          o.asm.ts_node_child_by_field_id_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_next_sibling_wasm = function () {
+        return (o._ts_node_next_sibling_wasm =
+          o.asm.ts_node_next_sibling_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_prev_sibling_wasm = function () {
+        return (o._ts_node_prev_sibling_wasm =
+          o.asm.ts_node_prev_sibling_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_next_named_sibling_wasm = function () {
+        return (o._ts_node_next_named_sibling_wasm =
+          o.asm.ts_node_next_named_sibling_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_prev_named_sibling_wasm = function () {
+        return (o._ts_node_prev_named_sibling_wasm =
+          o.asm.ts_node_prev_named_sibling_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_parent_wasm = function () {
+        return (o._ts_node_parent_wasm = o.asm.ts_node_parent_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_node_descendant_for_index_wasm = function () {
+        return (o._ts_node_descendant_for_index_wasm =
+          o.asm.ts_node_descendant_for_index_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_named_descendant_for_index_wasm = function () {
+        return (o._ts_node_named_descendant_for_index_wasm =
+          o.asm.ts_node_named_descendant_for_index_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_descendant_for_position_wasm = function () {
+        return (o._ts_node_descendant_for_position_wasm =
+          o.asm.ts_node_descendant_for_position_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_named_descendant_for_position_wasm = function () {
+        return (o._ts_node_named_descendant_for_position_wasm =
+          o.asm.ts_node_named_descendant_for_position_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_node_start_point_wasm = function () {
+        return (o._ts_node_start_point_wasm =
+          o.asm.ts_node_start_point_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_end_point_wasm = function () {
+        return (o._ts_node_end_point_wasm = o.asm.ts_node_end_point_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_node_start_index_wasm = function () {
+        return (o._ts_node_start_index_wasm =
+          o.asm.ts_node_start_index_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_end_index_wasm = function () {
+        return (o._ts_node_end_index_wasm = o.asm.ts_node_end_index_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_node_to_string_wasm = function () {
+        return (o._ts_node_to_string_wasm = o.asm.ts_node_to_string_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_node_children_wasm = function () {
+        return (o._ts_node_children_wasm = o.asm.ts_node_children_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_node_named_children_wasm = function () {
+        return (o._ts_node_named_children_wasm =
+          o.asm.ts_node_named_children_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_descendants_of_type_wasm = function () {
+        return (o._ts_node_descendants_of_type_wasm =
+          o.asm.ts_node_descendants_of_type_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_is_named_wasm = function () {
+        return (o._ts_node_is_named_wasm = o.asm.ts_node_is_named_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_node_has_changes_wasm = function () {
+        return (o._ts_node_has_changes_wasm =
+          o.asm.ts_node_has_changes_wasm).apply(null, arguments);
+      }),
+      (o._ts_node_has_error_wasm = function () {
+        return (o._ts_node_has_error_wasm = o.asm.ts_node_has_error_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_node_is_missing_wasm = function () {
+        return (o._ts_node_is_missing_wasm =
+          o.asm.ts_node_is_missing_wasm).apply(null, arguments);
+      }),
+      (o._ts_query_matches_wasm = function () {
+        return (o._ts_query_matches_wasm = o.asm.ts_query_matches_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._ts_query_captures_wasm = function () {
+        return (o._ts_query_captures_wasm = o.asm.ts_query_captures_wasm).apply(
+          null,
+          arguments
+        );
+      }),
+      (o._iswdigit = function () {
+        return (o._iswdigit = o.asm.iswdigit).apply(null, arguments);
+      }),
+      (o._iswalpha = function () {
+        return (o._iswalpha = o.asm.iswalpha).apply(null, arguments);
+      }),
+      (o._iswlower = function () {
+        return (o._iswlower = o.asm.iswlower).apply(null, arguments);
+      }),
+      (o._towupper = function () {
+        return (o._towupper = o.asm.towupper).apply(null, arguments);
+      }),
+      (o.___errno_location = function () {
+        return (He = o.___errno_location = o.asm.__errno_location).apply(
+          null,
+          arguments
+        );
+      }));
+    var ze =
+      ((o._memchr = function () {
+        return (o._memchr = o.asm.memchr).apply(null, arguments);
+      }),
+      (o._strlen = function () {
+        return (o._strlen = o.asm.strlen).apply(null, arguments);
+      }),
+      (o.stackSave = function () {
+        return (ze = o.stackSave = o.asm.stackSave).apply(null, arguments);
+      }));
+    var Ge = (o.stackRestore = function () {
+      return (Ge = o.stackRestore = o.asm.stackRestore).apply(null, arguments);
+    });
+    var Ve = (o.stackAlloc = function () {
+      return (Ve = o.stackAlloc = o.asm.stackAlloc).apply(null, arguments);
+    });
+    var We = (o._setThrew = function () {
+      return (We = o._setThrew = o.asm.setThrew).apply(null, arguments);
+    });
     function Ke(e) {
       this.name = "ExitStatus";
       this.message = "Program terminated with exit(" + e + ")";
@@ -1670,8 +1697,8 @@ if (
               (function (e) {
                 var t = o._main;
                 if (t) {
-                  var n = (e = e || []).length + 1,
-                    r = Ve(4 * (n + 1));
+                  var n = (e = e || []).length + 1;
+                  var r = Ve(4 * (n + 1));
                   $[r >> 2] = V(c);
                   for (var i = 1; i < n; i++) $[(r >> 2) + i] = V(e[i - 1]);
                   $[(r >> 2) + n] = 0;
@@ -1793,32 +1820,32 @@ if (
       Ye = !1;
     }
     Xe();
-    const Ze = o,
-      et = {},
-      tt = 4,
-      nt = 5 * tt,
-      rt = 2 * tt,
-      ot = 2 * tt + 2 * rt,
-      it = {
-        row: 0,
-        column: 0,
-      },
-      st = /[\w-.]*/g,
-      at = 1,
-      ct = 2,
-      lt = /^_?tree_sitter_\w+/;
-    var ut,
-      dt,
-      pt,
-      ht,
-      ft,
-      mt = new Promise((e) => {
-        o.onRuntimeInitialized = e;
-      }).then(() => {
-        pt = Ze._ts_init();
-        ut = P(pt, "i32");
-        dt = P(pt + tt, "i32");
-      });
+    const Ze = o;
+    const et = {};
+    const tt = 4;
+    const nt = 5 * tt;
+    const rt = 2 * tt;
+    const ot = 2 * tt + 2 * rt;
+    const it = {
+      row: 0,
+      column: 0,
+    };
+    const st = /[\w-.]*/g;
+    const at = 1;
+    const ct = 2;
+    const lt = /^_?tree_sitter_\w+/;
+    var ut;
+    var dt;
+    var pt;
+    var ht;
+    var ft;
+    var mt = new Promise((e) => {
+      o.onRuntimeInitialized = e;
+    }).then(() => {
+      pt = Ze._ts_init();
+      ut = P(pt, "i32");
+      dt = P(pt + tt, "i32");
+    });
     class gt {
       static init() {
         return mt;
@@ -1876,8 +1903,8 @@ if (
           ft = null;
           Ze._ts_parser_enable_logger_wasm(this[0], 0);
         }
-        let r = 0,
-          o = 0;
+        let r = 0;
+        let o = 0;
         if (n && n.includedRanges) {
           r = n.includedRanges.length;
           let e = (o = Ze._calloc(r, ot));
@@ -1962,9 +1989,9 @@ if (
         if (e.constructor !== _t)
           throw new TypeError("Argument must be a Tree");
         Ze._ts_tree_get_changed_ranges_wasm(this[0], e[0]);
-        const t = P(pt, "i32"),
-          n = P(pt + tt, "i32"),
-          r = new Array(t);
+        const t = P(pt, "i32");
+        const n = P(pt + tt, "i32");
+        const r = new Array(t);
         if (t > 0) {
           let e = n;
           for (let n = 0; n < t; n++) {
@@ -2062,8 +2089,8 @@ if (
         if (!this._children) {
           Tt(this);
           Ze._ts_node_children_wasm(this.tree[0]);
-          const e = P(pt, "i32"),
-            t = P(pt + tt, "i32");
+          const e = P(pt, "i32");
+          const t = P(pt + tt, "i32");
           this._children = new Array(e);
           if (e > 0) {
             let n = t;
@@ -2078,8 +2105,8 @@ if (
         if (!this._namedChildren) {
           Tt(this);
           Ze._ts_node_named_children_wasm(this.tree[0]);
-          const e = P(pt, "i32"),
-            t = P(pt + tt, "i32");
+          const e = P(pt, "i32");
+          const t = P(pt + tt, "i32");
           this._namedChildren = new Array(e);
           if (e > 0) {
             let n = t;
@@ -2100,14 +2127,29 @@ if (
         if (n) {
           n = it;
         }
-        const r = [],
-          o = this.tree.language.types;
-        for (let t = 0, n = o.length; t < n; t++)
+        const r = [];
+        const o = this.tree.language.types;
+        for (
+          (function () {
+            let t = 0;
+            let n = o.length;
+          })();
+          t < n;
+          t++
+        )
           if (e.includes(o[t])) {
             r.push(t);
           }
         const i = Ze._malloc(tt * r.length);
-        for (let e = 0, t = r.length; e < t; e++) I(i + e * tt, r[e], "i32");
+        for (
+          (function () {
+            let e = 0;
+            let t = r.length;
+          })();
+          e < t;
+          e++
+        )
+          I(i + e * tt, r[e], "i32");
         Tt(this);
         Ze._ts_node_descendants_of_type_wasm(
           this.tree[0],
@@ -2118,9 +2160,9 @@ if (
           n.row,
           n.column
         );
-        const s = P(pt, "i32"),
-          a = P(pt + tt, "i32"),
-          c = new Array(s);
+        const s = P(pt, "i32");
+        const a = P(pt + tt, "i32");
+        const c = new Array(s);
         if (s > 0) {
           let e = a;
           for (let t = 0; t < s; t++) {
@@ -2204,14 +2246,14 @@ if (
       }
       toString() {
         Tt(this);
-        const e = Ze._ts_node_to_string_wasm(this.tree[0]),
-          t = (function (e) {
-            for (var t = ""; ; ) {
-              var n = M[e++ >> 0];
-              if (!n) return t;
-              t += String.fromCharCode(n);
-            }
-          })(e);
+        const e = Ze._ts_node_to_string_wasm(this.tree[0]);
+        const t = (function (e) {
+          for (var t = ""; ; ) {
+            var n = M[e++ >> 0];
+            if (!n) return t;
+            t += String.fromCharCode(n);
+          }
+        })(e);
         Ze._free(e);
         return t;
       }
@@ -2258,8 +2300,8 @@ if (
       }
       get nodeText() {
         It(this);
-        const e = Ze._ts_tree_cursor_start_index_wasm(this.tree[0]),
-          t = Ze._ts_tree_cursor_end_index_wasm(this.tree[0]);
+        const e = Ze._ts_tree_cursor_start_index_wasm(this.tree[0]);
+        const t = Ze._ts_tree_cursor_end_index_wasm(this.tree[0]);
         return xt(this.tree, e, t);
       }
       get startPosition() {
@@ -2313,15 +2355,30 @@ if (
     }
     class bt {
       constructor(e, t) {
+        var _this = this;
         Ct(e);
         this[0] = t;
         this.types = new Array(Ze._ts_language_symbol_count(this[0]));
-        for (let e = 0, t = this.types.length; e < t; e++)
+        for (
+          (function () {
+            let e = 0;
+            let t = _this.types.length;
+          })();
+          e < t;
+          e++
+        )
           if (Ze._ts_language_symbol_type(this[0], e) < 2) {
             this.types[e] = U(Ze._ts_language_symbol_name(this[0], e));
           }
         this.fields = new Array(Ze._ts_language_field_count(this[0]) + 1);
-        for (let e = 0, t = this.fields.length; e < t; e++) {
+        for (
+          (function () {
+            let e = 0;
+            let t = _this.fields.length;
+          })();
+          e < t;
+          e++
+        ) {
           const t = Ze._ts_language_field_name_for_id(this[0], e);
           this.fields[e] = 0 !== t ? U(t) : null;
         }
@@ -2340,8 +2397,8 @@ if (
         return this.fields[e] || null;
       }
       idForNodeType(e, t) {
-        const n = G(e),
-          r = Ze._malloc(n + 1);
+        const n = G(e);
+        const r = Ze._malloc(n + 1);
         z(e, r, n + 1);
         const o = Ze._ts_language_symbol_for_name(this[0], r, n, t);
         Ze._free(r);
@@ -2361,16 +2418,16 @@ if (
         return !!Ze._ts_language_type_is_visible_wasm(this[0], e);
       }
       query(e) {
-        const t = G(e),
-          n = Ze._malloc(t + 1);
+        const t = G(e);
+        const n = Ze._malloc(t + 1);
         z(e, n, t + 1);
         const r = Ze._ts_query_new(this[0], n, t, pt, pt + tt);
         if (!r) {
-          const t = P(pt + tt, "i32"),
-            r = U(n, P(pt, "i32")).length,
-            o = e.substr(r, 100).split("\n")[0];
-          let i,
-            s = o.match(st)[0];
+          const t = P(pt + tt, "i32");
+          const r = U(n, P(pt, "i32")).length;
+          const o = e.substr(r, 100).split("\n")[0];
+          let i;
+          let s = o.match(st)[0];
           switch (t) {
             case 2:
               i = new RangeError(`Bad node name '${s}'`);
@@ -2393,36 +2450,36 @@ if (
           }
           throw ((i.index = r), (i.length = s.length), Ze._free(n), i);
         }
-        const o = Ze._ts_query_string_count(r),
-          i = Ze._ts_query_capture_count(r),
-          s = Ze._ts_query_pattern_count(r),
-          a = new Array(i),
-          c = new Array(o);
+        const o = Ze._ts_query_string_count(r);
+        const i = Ze._ts_query_capture_count(r);
+        const s = Ze._ts_query_pattern_count(r);
+        const a = new Array(i);
+        const c = new Array(o);
         for (let e = 0; e < i; e++) {
-          const t = Ze._ts_query_capture_name_for_id(r, e, pt),
-            n = P(pt, "i32");
+          const t = Ze._ts_query_capture_name_for_id(r, e, pt);
+          const n = P(pt, "i32");
           a[e] = U(t, n);
         }
         for (let e = 0; e < o; e++) {
-          const t = Ze._ts_query_string_value_for_id(r, e, pt),
-            n = P(pt, "i32");
+          const t = Ze._ts_query_string_value_for_id(r, e, pt);
+          const n = P(pt, "i32");
           c[e] = U(t, n);
         }
-        const l = new Array(s),
-          u = new Array(s),
-          d = new Array(s),
-          p = new Array(s),
-          h = new Array(s);
+        const l = new Array(s);
+        const u = new Array(s);
+        const d = new Array(s);
+        const p = new Array(s);
+        const h = new Array(s);
         for (let e = 0; e < s; e++) {
-          const t = Ze._ts_query_predicates_for_pattern(r, e, pt),
-            n = P(pt, "i32");
+          const t = Ze._ts_query_predicates_for_pattern(r, e, pt);
+          const n = P(pt, "i32");
           p[e] = [];
           h[e] = [];
           const o = [];
           let i = t;
           for (let t = 0; t < n; t++) {
-            const t = P(i, "i32"),
-              n = P((i += tt), "i32");
+            const t = P(i, "i32");
+            const n = P((i += tt), "i32");
             i += tt;
             if (t === at)
               o.push({
@@ -2585,8 +2642,10 @@ if (
             })
           )
           .then((e) => {
-            const t = Object.keys(e),
-              n = t.find((e) => lt.test(e) && !e.includes("external_scanner_"));
+            const t = Object.keys(e);
+            const n = t.find(
+              (e) => lt.test(e) && !e.includes("external_scanner_")
+            );
             if (n) {
               console.log(
                 `Couldn't find language function in WASM file. Symbols:\n${JSON.stringify(
@@ -2633,16 +2692,16 @@ if (
           n.row,
           n.column
         );
-        const r = P(pt, "i32"),
-          o = P(pt + tt, "i32"),
-          i = P(pt + 2 * tt, "i32"),
-          s = new Array(r);
+        const r = P(pt, "i32");
+        const o = P(pt + tt, "i32");
+        const i = P(pt + 2 * tt, "i32");
+        const s = new Array(r);
         this.exceededMatchLimit = !!i;
-        let a = 0,
-          c = o;
+        let a = 0;
+        let c = o;
         for (let t = 0; t < r; t++) {
-          const n = P(c, "i32"),
-            r = P((c += tt), "i32");
+          const n = P(c, "i32");
+          const r = P((c += tt), "i32");
           c += tt;
           const o = new Array(r);
           c = Et(this, e.tree, c, o);
@@ -2679,17 +2738,17 @@ if (
           n.row,
           n.column
         );
-        const r = P(pt, "i32"),
-          o = P(pt + tt, "i32"),
-          i = P(pt + 2 * tt, "i32"),
-          s = [];
+        const r = P(pt, "i32");
+        const o = P(pt + tt, "i32");
+        const i = P(pt + 2 * tt, "i32");
+        const s = [];
         this.exceededMatchLimit = !!i;
         const a = [];
         let c = o;
         for (let t = 0; t < r; t++) {
-          const t = P(c, "i32"),
-            n = P((c += tt), "i32"),
-            r = P((c += tt), "i32");
+          const t = P(c, "i32");
+          const n = P((c += tt), "i32");
+          const r = P((c += tt), "i32");
           c += tt;
           a.length = n;
           c = Et(this, e.tree, c, a);
@@ -2728,9 +2787,16 @@ if (
       return o;
     }
     function Et(e, t, n, r) {
-      for (let o = 0, i = r.length; o < i; o++) {
-        const i = P(n, "i32"),
-          s = kt(t, (n += tt));
+      for (
+        (function () {
+          let o = 0;
+          let i = r.length;
+        })();
+        o < i;
+        o++
+      ) {
+        const i = P(n, "i32");
+        const s = kt(t, (n += tt));
         n += nt;
         r[o] = {
           name: e.captureNames[i],
@@ -2756,11 +2822,11 @@ if (
     function kt(e, t = pt) {
       const n = P(t, "i32");
       if (0 === n) return null;
-      const r = P((t += tt), "i32"),
-        o = P((t += tt), "i32"),
-        i = P((t += tt), "i32"),
-        s = P((t += tt), "i32"),
-        a = new yt(et, e);
+      const r = P((t += tt), "i32");
+      const o = P((t += tt), "i32");
+      const i = P((t += tt), "i32");
+      const s = P((t += tt), "i32");
+      const a = new yt(et, e);
       a.id = n;
       a.startIndex = r;
       a.startPosition = {

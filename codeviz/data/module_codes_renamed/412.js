@@ -15,24 +15,24 @@ exports.validateUnion =
   exports.checkMissingProp =
   exports.checkReportMissingProp =
     undefined;
-const M_codegen_NOTSURE = require("codegen"),
-  M_ajv_utils_NOTSURE = require("ajv-utils"),
-  M_json_schema_default_names_NOTSURE = require("json-schema-default-names");
+const M_codegen_maybe = require("codegen");
+const M_ajv_utils_maybe = require("ajv-utils");
+const M_json_schema_default_names_maybe = require("json-schema-default-names");
 function hasPropFunc(e) {
   return e.scopeValue("func", {
     ref: Object.prototype.hasOwnProperty,
-    code: M_codegen_NOTSURE._`Object.prototype.hasOwnProperty`,
+    code: M_codegen_maybe._`Object.prototype.hasOwnProperty`,
   });
 }
 function isOwnProperty(e, t, n) {
-  return M_codegen_NOTSURE._`${hasPropFunc(e)}.call(${t}, ${n})`;
+  return M_codegen_maybe._`${hasPropFunc(e)}.call(${t}, ${n})`;
 }
 function noPropertyInData(e, t, n, o) {
-  const i = M_codegen_NOTSURE._`${t}${M_codegen_NOTSURE.getProperty(
+  const i = M_codegen_maybe._`${t}${M_codegen_maybe.getProperty(
     n
   )} === undefined`;
   return o
-    ? M_codegen_NOTSURE.or(i, M_codegen_NOTSURE.not(isOwnProperty(e, t, n)))
+    ? M_codegen_maybe.or(i, M_codegen_maybe.not(isOwnProperty(e, t, n)))
     : i;
 }
 function allSchemaProperties(e) {
@@ -43,7 +43,7 @@ exports.checkReportMissingProp = function (e, t) {
   n.if(noPropertyInData(n, o, t, i.opts.ownProperties), () => {
     e.setParams(
       {
-        missingProperty: M_codegen_NOTSURE._`${t}`,
+        missingProperty: M_codegen_maybe._`${t}`,
       },
       !0
     );
@@ -55,11 +55,11 @@ exports.checkMissingProp = function (
   o,
   i
 ) {
-  return M_codegen_NOTSURE.or(
+  return M_codegen_maybe.or(
     ...o.map((o) =>
-      M_codegen_NOTSURE.and(
+      M_codegen_maybe.and(
         noPropertyInData(e, t, o, n.ownProperties),
-        M_codegen_NOTSURE._`${i} = ${o}`
+        M_codegen_maybe._`${i} = ${o}`
       )
     )
   );
@@ -76,16 +76,16 @@ exports.reportMissingProp = function (e, t) {
 exports.hasPropFunc = hasPropFunc;
 exports.isOwnProperty = isOwnProperty;
 exports.propertyInData = function (e, t, n, o) {
-  const i = M_codegen_NOTSURE._`${t}${M_codegen_NOTSURE.getProperty(
+  const i = M_codegen_maybe._`${t}${M_codegen_maybe.getProperty(
     n
   )} !== undefined`;
-  return o ? M_codegen_NOTSURE._`${i} && ${isOwnProperty(e, t, n)}` : i;
+  return o ? M_codegen_maybe._`${i} && ${isOwnProperty(e, t, n)}` : i;
 };
 exports.noPropertyInData = noPropertyInData;
 exports.allSchemaProperties = allSchemaProperties;
 exports.schemaProperties = function (e, t) {
   return allSchemaProperties(t).filter(
-    (n) => !M_ajv_utils_NOTSURE.alwaysValidSchema(e, t[n])
+    (n) => !M_ajv_utils_maybe.alwaysValidSchema(e, t[n])
   );
 };
 exports.callValidateCode = function (
@@ -99,47 +99,47 @@ exports.callValidateCode = function (
   u,
   d
 ) {
-  const p = d ? M_codegen_NOTSURE._`${e}, ${t}, ${o}${s}` : t,
-    h = [
-      [
-        M_json_schema_default_names_NOTSURE.default.instancePath,
-        M_codegen_NOTSURE.strConcat(
-          M_json_schema_default_names_NOTSURE.default.instancePath,
-          a
-        ),
-      ],
-      [M_json_schema_default_names_NOTSURE.default.parentData, c.parentData],
-      [
-        M_json_schema_default_names_NOTSURE.default.parentDataProperty,
-        c.parentDataProperty,
-      ],
-      [
-        M_json_schema_default_names_NOTSURE.default.rootData,
-        M_json_schema_default_names_NOTSURE.default.rootData,
-      ],
-    ];
+  const p = d ? M_codegen_maybe._`${e}, ${t}, ${o}${s}` : t;
+  const h = [
+    [
+      M_json_schema_default_names_maybe.default.instancePath,
+      M_codegen_maybe.strConcat(
+        M_json_schema_default_names_maybe.default.instancePath,
+        a
+      ),
+    ],
+    [M_json_schema_default_names_maybe.default.parentData, c.parentData],
+    [
+      M_json_schema_default_names_maybe.default.parentDataProperty,
+      c.parentDataProperty,
+    ],
+    [
+      M_json_schema_default_names_maybe.default.rootData,
+      M_json_schema_default_names_maybe.default.rootData,
+    ],
+  ];
   if (c.opts.dynamicRef) {
     h.push([
-      M_json_schema_default_names_NOTSURE.default.dynamicAnchors,
-      M_json_schema_default_names_NOTSURE.default.dynamicAnchors,
+      M_json_schema_default_names_maybe.default.dynamicAnchors,
+      M_json_schema_default_names_maybe.default.dynamicAnchors,
     ]);
   }
-  const f = M_codegen_NOTSURE._`${p}, ${n.object(...h)}`;
-  return u !== M_codegen_NOTSURE.nil
-    ? M_codegen_NOTSURE._`${l}.call(${u}, ${f})`
-    : M_codegen_NOTSURE._`${l}(${f})`;
+  const f = M_codegen_maybe._`${p}, ${n.object(...h)}`;
+  return u !== M_codegen_maybe.nil
+    ? M_codegen_maybe._`${l}.call(${u}, ${f})`
+    : M_codegen_maybe._`${l}(${f})`;
 };
 exports.usePattern = function ({ gen: e, it: { opts: t } }, n) {
   const o = t.unicodeRegExp ? "u" : "";
   return e.scopeValue("pattern", {
     key: n,
     ref: new RegExp(n, o),
-    code: M_codegen_NOTSURE._`new RegExp(${n}, ${o})`,
+    code: M_codegen_maybe._`new RegExp(${n}, ${o})`,
   });
 };
 exports.validateArray = function (e) {
-  const { gen: t, data: n, keyword: i, it: s } = e,
-    a = t.name("valid");
+  const { gen: t, data: n, keyword: i, it: s } = e;
+  const a = t.name("valid");
   if (s.allErrors) {
     const e = t.let("valid", !0);
     c(() => t.assign(e, !1));
@@ -149,17 +149,17 @@ exports.validateArray = function (e) {
   c(() => t.break());
   return a;
   function c(s) {
-    const c = t.const("len", M_codegen_NOTSURE._`${n}.length`);
+    const c = t.const("len", M_codegen_maybe._`${n}.length`);
     t.forRange("i", 0, c, (n) => {
       e.subschema(
         {
           keyword: i,
           dataProp: n,
-          dataPropType: M_ajv_utils_NOTSURE.Type.Num,
+          dataPropType: M_ajv_utils_maybe.Type.Num,
         },
         a
       );
-      t.if(M_codegen_NOTSURE.not(a), s);
+      t.if(M_codegen_maybe.not(a), s);
     });
   }
 };
@@ -167,12 +167,12 @@ exports.validateUnion = function (e) {
   const { gen: t, schema: n, keyword: i, it: s } = e;
   if (!Array.isArray(n)) throw new Error("ajv implementation error");
   if (
-    n.some((e) => M_ajv_utils_NOTSURE.alwaysValidSchema(s, e)) &&
+    n.some((e) => M_ajv_utils_maybe.alwaysValidSchema(s, e)) &&
     !s.opts.unevaluated
   )
     return;
-  const a = t.let("valid", !1),
-    c = t.name("_valid");
+  const a = t.let("valid", !1);
+  const c = t.name("_valid");
   t.block(() =>
     n.forEach((n, o) => {
       const s = e.subschema(
@@ -183,9 +183,9 @@ exports.validateUnion = function (e) {
         },
         c
       );
-      t.assign(a, M_codegen_NOTSURE._`${a} || ${c}`);
+      t.assign(a, M_codegen_maybe._`${a} || ${c}`);
       if (e.mergeValidEvaluated(s, c)) {
-        t.if(M_codegen_NOTSURE.not(a));
+        t.if(M_codegen_maybe.not(a));
       }
     })
   );

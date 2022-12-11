@@ -2,22 +2,25 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.launchSolutions = exports.normalizeCompletionText = undefined;
-const M_uuid_utils = require("uuid-utils"),
-  M_async_iterable_utils_NOTSURE = require("async-iterable-utils"),
-  M_config_stuff = require("config-stuff"),
-  M_completion_context = require("completion-context"),
-  M_logging_utils = require("logging-utils"),
-  M_openai_conn_utils = require("openai_conn_utils"),
-  M_openai_choices_utils = require("openai-choices-utils"),
-  M_status_reporter_NOTSURE = require("status-reporter"),
-  M_context_extractor_from_identation_maybe = require("context-extractor-from-identation-maybe"),
-  M_prompt_extractor = require("prompt-extractor"),
-  M_get_prompt_parsing_utils_NOTSURE = require("get-prompt-parsing-utils"),
-  M_background_context_provider = require("background-context-provider"),
-  M_postprocess_choice = require("postprocess-choice"),
-  M_telemetry_stuff = require("telemetry-stuff"),
-  M_location_factory = require("location-factory"),
-  y = new M_logging_utils.Logger(M_logging_utils.LogLevel.INFO, "solutions");
+const M_uuid_utils = require("uuid-utils");
+const M_async_iterable_utils_maybe = require("async-iterable-utils");
+const M_config_stuff = require("config-stuff");
+const M_completion_context = require("completion-context");
+const M_logging_utils = require("logging-utils");
+const M_openai_conn_utils = require("openai_conn_utils");
+const M_openai_choices_utils = require("openai-choices-utils");
+const M_status_reporter_maybe = require("status-reporter");
+const M_context_extractor_from_identation_maybe = require("context-extractor-from-identation-maybe");
+const M_prompt_extractor = require("prompt-extractor");
+const M_get_prompt_parsing_utils_maybe = require("get-prompt-parsing-utils");
+const M_background_context_provider = require("background-context-provider");
+const M_postprocess_choice = require("postprocess-choice");
+const M_telemetry_stuff = require("telemetry-stuff");
+const M_location_factory = require("location-factory");
+const y = new M_logging_utils.Logger(
+  M_logging_utils.LogLevel.INFO,
+  "solutions"
+);
 function v(e, t, n, r) {
   return async (o) => {
     if (r instanceof Array) {
@@ -62,13 +65,15 @@ exports.normalizeCompletionText = function (e) {
   return e.replace(/\s+/g, "");
 };
 exports.launchSolutions = async function (e, t) {
-  var n, a, w;
-  const x = t.completionContext.insertPosition,
-    E = t.completionContext.prependToCompletion,
-    C = t.completionContext.indentation,
-    S = e.get(M_location_factory.LocationFactory),
-    T = await t.getDocument(),
-    k = await M_prompt_extractor.extractPrompt(e, T, x);
+  var n;
+  var a;
+  var w;
+  const x = t.completionContext.insertPosition;
+  const E = t.completionContext.prependToCompletion;
+  const C = t.completionContext.indentation;
+  const S = e.get(M_location_factory.LocationFactory);
+  const T = await t.getDocument();
+  const k = await M_prompt_extractor.extractPrompt(e, T, x);
   if ("contextTooShort" === k.type) {
     t.reportCancelled();
     return {
@@ -76,16 +81,16 @@ exports.launchSolutions = async function (e, t) {
       error: "Context too short",
     };
   }
-  const I = k.prompt,
-    P = k.trailingWs;
+  const I = k.prompt;
+  const P = k.trailingWs;
   if (P.length > 0) {
     t.startPosition = S.position(
       t.startPosition.line,
       t.startPosition.character - P.length
     );
   }
-  const A = t.getCancellationToken(),
-    O = M_uuid_utils.v4();
+  const A = t.getCancellationToken();
+  const O = M_uuid_utils.v4();
   t.savedTelemetryData = M_telemetry_stuff.TelemetryData.createAndMarkAsIssued(
     {
       headerRequestId: O,
@@ -126,42 +131,44 @@ exports.launchSolutions = async function (e, t) {
   y.debug(e, `prependToCompletion: ${E}`);
   M_telemetry_stuff.telemetry(e, "solution.requested", t.savedTelemetryData);
   const N = await e
-      .get(M_config_stuff.BlockModeConfig)
-      .forLanguage(e, T.languageId),
-    R = M_get_prompt_parsing_utils_NOTSURE.isSupportedLanguageId(T.languageId),
-    M = M_context_extractor_from_identation_maybe.contextIndentation(T, x),
-    L = {
-      stream: !0,
-      extra: {
-        language: T.languageId,
-        next_indent: null !== (n = M.next) && undefined !== n ? n : 0,
-      },
-    };
+    .get(M_config_stuff.BlockModeConfig)
+    .forLanguage(e, T.languageId);
+  const R = M_get_prompt_parsing_utils_maybe.isSupportedLanguageId(
+    T.languageId
+  );
+  const M = M_context_extractor_from_identation_maybe.contextIndentation(T, x);
+  const L = {
+    stream: !0,
+    extra: {
+      language: T.languageId,
+      next_indent: null !== (n = M.next) && undefined !== n ? n : 0,
+    },
+  };
   if ("parsing" !== N || R) {
     L.stop = ["\n\n", "\r\n\r\n"];
   }
   const $ = M_background_context_provider.extractRepoInfoInBackground(
+    e,
+    T.fileName
+  );
+  const D = {
+    prompt: I,
+    languageId: T.languageId,
+    repoInfo: $,
+    ourRequestId: O,
+    engineUrl: await M_openai_conn_utils.getEngineURL(
       e,
-      T.fileName
+      M_background_context_provider.tryGetGitHubNWO($),
+      T.languageId,
+      M_background_context_provider.getDogFood($),
+      await M_background_context_provider.getUserKind(e),
+      t.savedTelemetryData
     ),
-    D = {
-      prompt: I,
-      languageId: T.languageId,
-      repoInfo: $,
-      ourRequestId: O,
-      engineUrl: await M_openai_conn_utils.getEngineURL(
-        e,
-        M_background_context_provider.tryGetGitHubNWO($),
-        T.languageId,
-        M_background_context_provider.getDogFood($),
-        await M_background_context_provider.getUserKind(e),
-        t.savedTelemetryData
-      ),
-      count: t.solutionCountTarget,
-      uiKind: M_openai_choices_utils.CopilotUiKind.Panel,
-      postOptions: L,
-      requestLogProbs: !0,
-    };
+    count: t.solutionCountTarget,
+    uiKind: M_openai_choices_utils.CopilotUiKind.Panel,
+    postOptions: L,
+    requestLogProbs: !0,
+  };
   let F;
   const j =
     t.completionContext.completionType ===
@@ -186,7 +193,7 @@ exports.launchSolutions = async function (e, t) {
     default:
       F = R ? v(e, T, t.startPosition, j) : async (e) => {};
   }
-  e.get(M_status_reporter_NOTSURE.StatusReporter).setProgress();
+  e.get(M_status_reporter_maybe.StatusReporter).setProgress();
   const q = await e
     .get(M_openai_choices_utils.OpenAIFetcher)
     .fetchAndStreamCompletions(
@@ -198,7 +205,7 @@ exports.launchSolutions = async function (e, t) {
     );
   if ("failed" === q.type || "canceled" === q.type) {
     t.reportCancelled();
-    e.get(M_status_reporter_NOTSURE.StatusReporter).removeProgress();
+    e.get(M_status_reporter_maybe.StatusReporter).removeProgress();
     return {
       status: "FinishedWithError",
       error: `${q.type}: ${q.reason}`,
@@ -217,10 +224,10 @@ exports.launchSolutions = async function (e, t) {
   if (null !== C) {
     B = M_openai_choices_utils.cleanupIndentChoices(B, C);
   }
-  B = M_async_iterable_utils_NOTSURE.asyncIterableMapFilter(B, async (t) =>
+  B = M_async_iterable_utils_maybe.asyncIterableMapFilter(B, async (t) =>
     M_postprocess_choice.postProcessChoice(e, "solution", T, x, t, !1, y)
   );
-  const U = M_async_iterable_utils_NOTSURE.asyncIterableMapFilter(
+  const U = M_async_iterable_utils_maybe.asyncIterableMapFilter(
     B,
     async (n) => {
       let r = n.completionText;
@@ -274,7 +281,7 @@ exports.launchSolutions = async function (e, t) {
     }
   );
   return b(
-    e.get(M_status_reporter_NOTSURE.StatusReporter),
+    e.get(M_status_reporter_maybe.StatusReporter),
     A,
     U[Symbol.asyncIterator]()
   );

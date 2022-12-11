@@ -5,9 +5,9 @@ exports.computeScore =
   exports.IndentationBasedJaccardMatcher =
   exports.FixedWindowSizeJaccardMatcher =
     undefined;
-const M_get_windows_delineations_NOTSURE = require("get-windows-delineations"),
-  M_windowed_matcher_NOTSURE = require("windowed-matcher");
-class FixedWindowSizeJaccardMatcher extends M_windowed_matcher_NOTSURE.WindowedMatcher {
+const M_get_windows_delineations_maybe = require("get-windows-delineations");
+const M_windowed_matcher_maybe = require("windowed-matcher");
+class FixedWindowSizeJaccardMatcher extends M_windowed_matcher_maybe.WindowedMatcher {
   constructor(e, t) {
     super(e);
     this.windowLength = t;
@@ -16,8 +16,8 @@ class FixedWindowSizeJaccardMatcher extends M_windowed_matcher_NOTSURE.WindowedM
     return "fixed:" + this.windowLength;
   }
   getWindowsDelineations(e) {
-    const t = [],
-      n = e.length;
+    const t = [];
+    const n = e.length;
     for (let e = 0; 0 == e || e < n - this.windowLength; e++) {
       const r = Math.min(e + this.windowLength, n);
       t.push([e, r]);
@@ -39,7 +39,7 @@ exports.FixedWindowSizeJaccardMatcher = FixedWindowSizeJaccardMatcher;
 FixedWindowSizeJaccardMatcher.FACTORY = (e) => ({
   to: (t) => new FixedWindowSizeJaccardMatcher(t, e),
 });
-class IndentationBasedJaccardMatcher extends M_windowed_matcher_NOTSURE.WindowedMatcher {
+class IndentationBasedJaccardMatcher extends M_windowed_matcher_maybe.WindowedMatcher {
   constructor(e, t, n) {
     super(e);
     this.indentationMinLength = t;
@@ -50,7 +50,7 @@ class IndentationBasedJaccardMatcher extends M_windowed_matcher_NOTSURE.Windowed
     return `indent:${this.indentationMinLength}:${this.indentationMaxLength}:${this.languageId}`;
   }
   getWindowsDelineations(e) {
-    return M_get_windows_delineations_NOTSURE.getWindowsDelineations(
+    return M_get_windows_delineations_maybe.getWindowsDelineations(
       e,
       this.languageId,
       this.indentationMinLength,

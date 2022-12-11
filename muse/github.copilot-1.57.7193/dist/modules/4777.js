@@ -1,12 +1,14 @@
-var r = require(4953),
-  o = [];
+var r = require(4953);
+var o = [];
 exports.qP = function (e) {
   o.forEach(function (t) {
-    var n = e.data.query || {},
-      r = n.sql || "Unknown query",
-      o = !e.data.err,
-      i = (n._connection || {}).config || {},
-      s = i.socketPath ? i.socketPath : (i.host || "localhost") + ":" + i.port;
+    var n = e.data.query || {};
+    var r = n.sql || "Unknown query";
+    var o = !e.data.err;
+    var i = (n._connection || {}).config || {};
+    var s = i.socketPath
+      ? i.socketPath
+      : (i.host || "localhost") + ":" + i.port;
     t.trackDependency({
       target: s,
       data: r,

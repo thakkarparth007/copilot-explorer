@@ -1,8 +1,8 @@
 function n(e) {
   const t = e.length;
-  let n,
-    r = 0,
-    o = 0;
+  let n;
+  let r = 0;
+  let o = 0;
   for (; o < t; ) {
     r++;
     n = e.charCodeAt(o++);

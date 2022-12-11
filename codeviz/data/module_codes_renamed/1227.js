@@ -1,15 +1,15 @@
-var M_channel_NOTSURE = require("channel"),
-  o = [];
+var M_channel_maybe = require("channel");
+var o = [];
 exports.qP = function (e) {
   o.forEach(function (t) {
-    var n = e.data.query,
-      r =
-        (n.preparable && n.preparable.text) ||
-        n.plan ||
-        n.text ||
-        "unknown query",
-      o = !e.data.error,
-      i = e.data.database.host + ":" + e.data.database.port;
+    var n = e.data.query;
+    var r =
+      (n.preparable && n.preparable.text) ||
+      n.plan ||
+      n.text ||
+      "unknown query";
+    var o = !e.data.error;
+    var i = e.data.database.host + ":" + e.data.database.port;
     t.trackDependency({
       target: i,
       data: r,
@@ -24,7 +24,7 @@ exports.qP = function (e) {
 exports.wp = function (e, n) {
   if (e) {
     if (0 === o.length) {
-      M_channel_NOTSURE.channel.subscribe("postgres", exports.qP);
+      M_channel_maybe.channel.subscribe("postgres", exports.qP);
     }
     o.push(n);
   } else {
@@ -34,7 +34,7 @@ exports.wp = function (e, n) {
         return e != n;
       })).length
     ) {
-      M_channel_NOTSURE.channel.unsubscribe("postgres", exports.qP);
+      M_channel_maybe.channel.unsubscribe("postgres", exports.qP);
     }
   }
 };

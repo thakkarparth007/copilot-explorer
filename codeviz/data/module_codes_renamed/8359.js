@@ -1,13 +1,13 @@
-const { AbortSignal: r } = require("abort-controller"),
-  { Body: o, cloneStream: i, guessContentType: s } = require("body"),
-  { Headers: a } = require("headers"),
-  { isPlainObject: c } = require("fetch-utils"),
-  { isFormData: l, FormDataSerializer: u } = require("form-data-utils"),
-  d = Symbol("Request internals");
+const { AbortSignal: r } = require("abort-controller");
+const { Body: o, cloneStream: i, guessContentType: s } = require("body");
+const { Headers: a } = require("headers");
+const { isPlainObject: c } = require("fetch-utils");
+const { isFormData: l, FormDataSerializer: u } = require("form-data-utils");
+const d = Symbol("Request internals");
 class p extends o {
   constructor(e, t = {}) {
-    const n = e instanceof p ? e : null,
-      o = n ? new URL(n.url) : new URL(e);
+    const n = e instanceof p ? e : null;
+    const o = n ? new URL(n.url) : new URL(e);
     let h = t.method || (n && n.method) || "GET";
     h = h.toUpperCase();
     if (

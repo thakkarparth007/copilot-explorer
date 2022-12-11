@@ -3,8 +3,8 @@ exports.getArg = function (e, t, n) {
   if (3 === arguments.length) return n;
   throw new Error('"' + t + '" is a required argument.');
 };
-var n = /^(?:([\w+\-.]+):)?\/\/(?:(\w+:\w+)@)?([\w.-]*)(?::(\d+))?(.*)$/,
-  r = /^data:.+\,.+$/;
+var n = /^(?:([\w+\-.]+):)?\/\/(?:(\w+:\w+)@)?([\w.-]*)(?::(\d+))?(.*)$/;
+var r = /^data:.+\,.+$/;
 function urlParse(e) {
   var t = e.match(n);
   return t
@@ -38,21 +38,26 @@ function urlGenerate(e) {
   return t;
 }
 function normalize(e) {
-  var n = e,
-    r = urlParse(e);
+  var n = e;
+  var r = urlParse(e);
   if (r) {
     if (!r.path) return e;
     n = r.path;
   }
   for (
-    var s,
-      a = exports.isAbsolute(n),
+    a = exports.isAbsolute(n),
       c = n.split(/\/+/),
       l = 0,
-      u = c.length - 1;
+      u = c.length - 1,
+      undefined;
     u >= 0;
     u--
-  )
+  ) {
+    var s;
+    var a;
+    var c;
+    var l;
+    var u;
     if ("." === (s = c[u])) {
       c.splice(u, 1);
     } else {
@@ -70,6 +75,7 @@ function normalize(e) {
         }
       }
     }
+  }
   if ("" === (n = c.join("/"))) {
     n = a ? "/" : ".";
   }
@@ -82,8 +88,8 @@ function join(e, t) {
   if ("" === t) {
     t = ".";
   }
-  var n = urlParse(t),
-    a = urlParse(e);
+  var n = urlParse(t);
+  var a = urlParse(e);
   if (a) {
     e = a.path || "/";
   }

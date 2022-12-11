@@ -1,5 +1,5 @@
-const { EventEmitter: r } = require("events"),
-  o = Symbol("AbortSignal internals");
+const { EventEmitter: r } = require("events");
+const o = Symbol("AbortSignal internals");
 class i {
   constructor() {
     this[o] = {
@@ -28,10 +28,10 @@ class i {
   }
   dispatchEvent(e) {
     const t = {
-        type: e,
-        target: this,
-      },
-      n = `on${e}`;
+      type: e,
+      target: this,
+    };
+    const n = `on${e}`;
     if ("function" == typeof this[o][n]) {
       this[n](t);
     }

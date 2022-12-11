@@ -1,8 +1,8 @@
-var M_random_stuff_NOTSURE;
-M_random_stuff_NOTSURE = require("random-stuff");
+var M_random_stuff_maybe;
+M_random_stuff_maybe = require("random-stuff");
 require("cipher-core");
-M_random_stuff_NOTSURE.pad.NoPadding = {
+M_random_stuff_maybe.pad.NoPadding = {
   pad: function () {},
   unpad: function () {},
 };
-module.exports = M_random_stuff_NOTSURE.pad.NoPadding;
+module.exports = M_random_stuff_maybe.pad.NoPadding;

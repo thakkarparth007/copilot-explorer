@@ -2,14 +2,14 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.ghostTextScoreQuantile = exports.ghostTextScoreConfidence = undefined;
-const r = require(9899),
-  o = require(7481),
-  i =
-    (new r.Logger(r.LogLevel.INFO, "restraint"),
-    {
-      link: (e) => Math.exp(e) / (1 + Math.exp(e)),
-      unlink: (e) => Math.log(e / (1 - e)),
-    });
+const r = require(9899);
+const o = require(7481);
+const i =
+  (new r.Logger(r.LogLevel.INFO, "restraint"),
+  {
+    link: (e) => Math.exp(e) / (1 + Math.exp(e)),
+    unlink: (e) => Math.log(e / (1 - e)),
+  });
 class s {
   constructor(e, t, n) {
     this.name = e;
@@ -41,10 +41,10 @@ const a = new (class {
   }
   quantile(e, t) {
     return (function (e, t) {
-      const n = Math.min(...Array.from(t.keys()).filter((t) => t >= e)),
-        r = Math.max(...Array.from(t.keys()).filter((t) => t < e)),
-        o = t.get(n),
-        i = t.get(r);
+      const n = Math.min(...Array.from(t.keys()).filter((t) => t >= e));
+      const r = Math.max(...Array.from(t.keys()).filter((t) => t < e));
+      const o = t.get(n);
+      const i = t.get(r);
       return i + ((o - i) * (e - r)) / (n - r);
     })(this.predict(e, t), this.logitsToQuantiles);
   }

@@ -2,12 +2,12 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.getWindowsDelineations = undefined;
-const r = require(3055469),
-  o = require(3055617);
+const r = require(3055469);
+const o = require(3055617);
 exports.getWindowsDelineations = function (e, t, n, i) {
   if (e.length < n || 0 == i) return [];
-  const s = [],
-    a = o.clearLabels(r.parseTree(e.join("\n"), t));
+  const s = [];
+  const a = o.clearLabels(r.parseTree(e.join("\n"), t));
   o.visitTree(
     a,
     (e) => {
@@ -16,8 +16,8 @@ exports.getWindowsDelineations = function (e, t, n, i) {
           totalLength: 1,
           firstLineAfter: e.lineNumber + 1,
         });
-      let t = "line" === e.type ? 1 : 0,
-        r = "line" === e.type ? e.lineNumber + 1 : NaN;
+      let t = "line" === e.type ? 1 : 0;
+      let r = "line" === e.type ? e.lineNumber + 1 : NaN;
       function o(n) {
         return -1 == n
           ? r - t
@@ -26,9 +26,9 @@ exports.getWindowsDelineations = function (e, t, n, i) {
       function a(t, n) {
         return 0 == t ? n + 1 : e.subs[t - 1].label.firstLineAfter;
       }
-      let c = "line" === e.type ? -1 : 0,
-        l = "line" === e.type ? 1 : 0,
-        u = 0;
+      let c = "line" === e.type ? -1 : 0;
+      let l = "line" === e.type ? 1 : 0;
+      let u = 0;
       for (let d = 0; d < e.subs.length; d++) {
         for (; c >= 0 && c < e.subs.length && "blank" === e.subs[c].type; ) {
           l -= e.subs[c].label.totalLength;
@@ -55,9 +55,9 @@ exports.getWindowsDelineations = function (e, t, n, i) {
         }
       }
       if (c < e.subs.length) {
-        const t = o(c),
-          i = r,
-          a = -1 == c ? i : e.subs[u].label.firstLineAfter;
+        const t = o(c);
+        const i = r;
+        const a = -1 == c ? i : e.subs[u].label.firstLineAfter;
         if (n <= i - t) {
           s.push([t, a]);
         }

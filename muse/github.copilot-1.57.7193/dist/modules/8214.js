@@ -1,12 +1,12 @@
 var r;
 r = require(8249);
 (function (e) {
-  var t = r,
-    n = t.lib,
-    o = n.WordArray,
-    i = n.Hasher,
-    s = t.algo,
-    a = [];
+  var t = r;
+  var n = t.lib;
+  var o = n.WordArray;
+  var i = n.Hasher;
+  var s = t.algo;
+  var a = [];
   !(function () {
     for (var t = 0; t < 64; t++) a[t] = (4294967296 * e.abs(e.sin(t + 1))) | 0;
   })();
@@ -16,33 +16,33 @@ r = require(8249);
     },
     _doProcessBlock: function (e, t) {
       for (var n = 0; n < 16; n++) {
-        var r = t + n,
-          o = e[r];
+        var r = t + n;
+        var o = e[r];
         e[r] =
           (16711935 & ((o << 8) | (o >>> 24))) |
           (4278255360 & ((o << 24) | (o >>> 8)));
       }
-      var i = this._hash.words,
-        s = e[t + 0],
-        c = e[t + 1],
-        h = e[t + 2],
-        f = e[t + 3],
-        m = e[t + 4],
-        g = e[t + 5],
-        _ = e[t + 6],
-        y = e[t + 7],
-        v = e[t + 8],
-        b = e[t + 9],
-        w = e[t + 10],
-        x = e[t + 11],
-        E = e[t + 12],
-        C = e[t + 13],
-        S = e[t + 14],
-        T = e[t + 15],
-        k = i[0],
-        I = i[1],
-        P = i[2],
-        A = i[3];
+      var i = this._hash.words;
+      var s = e[t + 0];
+      var c = e[t + 1];
+      var h = e[t + 2];
+      var f = e[t + 3];
+      var m = e[t + 4];
+      var g = e[t + 5];
+      var _ = e[t + 6];
+      var y = e[t + 7];
+      var v = e[t + 8];
+      var b = e[t + 9];
+      var w = e[t + 10];
+      var x = e[t + 11];
+      var E = e[t + 12];
+      var C = e[t + 13];
+      var S = e[t + 14];
+      var T = e[t + 15];
+      var k = i[0];
+      var I = i[1];
+      var P = i[2];
+      var A = i[3];
       k = l(k, I, P, A, s, 7, a[0]);
       A = l(A, k, I, P, c, 12, a[1]);
       P = l(P, A, k, I, h, 17, a[2]);
@@ -110,13 +110,13 @@ r = require(8249);
       i[3] = (i[3] + A) | 0;
     },
     _doFinalize: function () {
-      var t = this._data,
-        n = t.words,
-        r = 8 * this._nDataBytes,
-        o = 8 * t.sigBytes;
+      var t = this._data;
+      var n = t.words;
+      var r = 8 * this._nDataBytes;
+      var o = 8 * t.sigBytes;
       n[o >>> 5] |= 128 << (24 - (o % 32));
-      var i = e.floor(r / 4294967296),
-        s = r;
+      var i = e.floor(r / 4294967296);
+      var s = r;
       n[15 + (((o + 64) >>> 9) << 4)] =
         (16711935 & ((i << 8) | (i >>> 24))) |
         (4278255360 & ((i << 24) | (i >>> 8)));
@@ -125,7 +125,10 @@ r = require(8249);
         (4278255360 & ((s << 24) | (s >>> 8)));
       t.sigBytes = 4 * (n.length + 1);
       this._process();
-      for (var a = this._hash, c = a.words, l = 0; l < 4; l++) {
+      for (a = this._hash, c = a.words, l = 0, undefined; l < 4; l++) {
+        var a;
+        var c;
+        var l;
         var u = c[l];
         c[l] =
           (16711935 & ((u << 8) | (u >>> 24))) |

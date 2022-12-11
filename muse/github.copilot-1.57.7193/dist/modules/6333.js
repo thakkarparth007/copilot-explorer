@@ -22,13 +22,13 @@ exports.forceSendingTelemetry =
   exports.APP_INSIGHTS_KEY_SECURE =
   exports.APP_INSIGHTS_KEY =
     undefined;
-const r = require(1581),
-  o = require(4398),
-  i = require(1133),
-  s = require(9189),
-  a = require(6500),
-  c = require(70),
-  l = require(2499);
+const r = require(1581);
+const o = require(4398);
+const i = require(1133);
+const s = require(9189);
+const a = require(6500);
+const c = require(70);
+const l = require(2499);
 exports.APP_INSIGHTS_KEY = "7d7048df-6dd0-4048-bb23-b716c1461f8f";
 exports.APP_INSIGHTS_KEY_SECURE = "3fdd7f28-937a-48c8-9a21-ba337db23bd1";
 class TelemetryReporters {
@@ -94,10 +94,10 @@ function p(e, t, n, r) {
 }
 exports.TelemetryReporters = TelemetryReporters;
 exports.setupStandardReporters = function (e, n) {
-  const r = i.getVersion(e),
-    o = p(e, n, r, exports.APP_INSIGHTS_KEY),
-    s = p(e, n, r, exports.APP_INSIGHTS_KEY_SECURE),
-    a = e.get(TelemetryReporters);
+  const r = i.getVersion(e);
+  const o = p(e, n, r, exports.APP_INSIGHTS_KEY);
+  const s = p(e, n, r, exports.APP_INSIGHTS_KEY_SECURE);
+  const a = e.get(TelemetryReporters);
   a.setReporter(o);
   a.setSecureReporter(s);
   return a;
@@ -116,14 +116,14 @@ class TelemetryData {
   }
   extendedBy(e, t) {
     const n = {
-        ...this.properties,
-        ...e,
-      },
-      r = {
-        ...this.measurements,
-        ...t,
-      },
-      o = new TelemetryData(n, r, this.issuedTime);
+      ...this.properties,
+      ...e,
+    };
+    const r = {
+      ...this.measurements,
+      ...t,
+    };
+    const o = new TelemetryData(n, r, this.issuedTime);
     o.displayedTime = this.displayedTime;
     o.filtersAndExp = this.filtersAndExp;
     return o;
@@ -367,8 +367,8 @@ class TelemetryEndpointUrl {
 function configureReporter(e, t) {
   const n = t;
   if (n.appInsightsClient) {
-    const t = n.appInsightsClient.commonProperties,
-      r = TelemetryData.sanitizeKeys(t);
+    const t = n.appInsightsClient.commonProperties;
+    const r = TelemetryData.sanitizeKeys(t);
     n.appInsightsClient.commonProperties = r;
     n.appInsightsClient.context.tags[
       n.appInsightsClient.context.keys.cloudRoleInstance
@@ -421,15 +421,15 @@ exports.telemetryRaw = async function (e, t, n, r) {
   });
 };
 exports.telemetryException = async function (e, t, n, r) {
-  const o = t instanceof Error ? t : new Error("Non-error thrown: " + t),
-    i = y(),
-    s = TelemetryData.createAndMarkAsIssued({
-      origin: l.redactPaths(n),
-      reason: i
-        ? "Exception logged to restricted telemetry"
-        : "Exception, not logged due to opt-out",
-      ...r,
-    });
+  const o = t instanceof Error ? t : new Error("Non-error thrown: " + t);
+  const i = y();
+  const s = TelemetryData.createAndMarkAsIssued({
+    origin: l.redactPaths(n),
+    reason: i
+      ? "Exception logged to restricted telemetry"
+      : "Exception, not logged due to opt-out",
+    ...r,
+  });
   await s.makeReadyForSending(e, !1, "IncludeExp");
   f(e, !1, "exception", s);
   if (!i) return;

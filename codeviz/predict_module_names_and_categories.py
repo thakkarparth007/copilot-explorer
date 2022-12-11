@@ -2,7 +2,7 @@ import json
 from tqdm import tqdm
 import sys
 sys.path.append(__file__ + "/..")
-from app import data_dir, module_deps
+from common import data_dir, module_deps
 from predictions import predict_module_name, predict_module_category
 
 def do_prediction(module_id, known_name=None, known_category=None):

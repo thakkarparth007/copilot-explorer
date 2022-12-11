@@ -2,16 +2,16 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.completionsFromGhostTextResults = undefined;
-const r = require(2277),
-  o = require(6403),
-  i = require(9334),
-  s = require(3286);
+const r = require(2277);
+const o = require(6403);
+const i = require(9334);
+const s = require(3286);
 exports.completionsFromGhostTextResults = function (e, t, n, a, c, l, u) {
-  const d = e.get(o.LocationFactory),
-    p = a.lineAt(c);
+  const d = e.get(o.LocationFactory);
+  const p = a.lineAt(c);
   let h = t.map((e) => {
-    let t,
-      o = "";
+    let t;
+    let o = "";
     if (l) {
       e.completion = s.normalizeIndentCharacter(
         l,

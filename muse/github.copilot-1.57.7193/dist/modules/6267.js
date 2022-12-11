@@ -2,8 +2,8 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.commandOpenPanel = exports.completionContextForEditor = undefined;
-const r = require("vscode"),
-  o = require(256);
+const r = require("vscode");
+const o = require(256);
 function completionContextForEditor(e, t, n) {
   return n || o.completionContextForDocument(e, t.document, t.selection.active);
 }
@@ -26,8 +26,8 @@ exports.commandOpenPanel = function (e, t) {
         }
       });
   t = completionContextForEditor(e, n, t);
-  const s = o.encodeLocation(n.document.uri, t),
-    a = n.document.languageId;
+  const s = o.encodeLocation(n.document.uri, t);
+  const a = n.document.languageId;
   r.workspace.openTextDocument(s).then((e) => {
     r.languages.setTextDocumentLanguage(e, a);
     r.window.showTextDocument(e, r.ViewColumn.Beside);

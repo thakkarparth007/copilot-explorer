@@ -1,25 +1,25 @@
-const { randomBytes: r } = require("crypto"),
-  { Readable: o } = require("stream"),
-  i = (e) =>
-    "object" == typeof e &&
-    0 ===
-      ["arrayBuffer", "stream", "text", "slice", "constructor"]
-        .map((t) => typeof e[t])
-        .filter((e) => "function" !== e).length &&
-    "string" == typeof e.type &&
-    "number" == typeof e.size &&
-    /^(Blob|File)$/.test(e[Symbol.toStringTag]),
-  s = (e) => `--${e}--\r\n\r\n`,
-  a = (e, t, n) => {
-    let r = "";
-    r += `--${e}\r\n`;
-    r += `Content-Disposition: form-data; name="${t}"`;
-    if (i(n)) {
-      r += `; filename="${n.name}"\r\n`;
-      r += `Content-Type: ${n.type || "application/octet-stream"}`;
-    }
-    return `${r}\r\n\r\n`;
-  };
+const { randomBytes: r } = require("crypto");
+const { Readable: o } = require("stream");
+const i = (e) =>
+  "object" == typeof e &&
+  0 ===
+    ["arrayBuffer", "stream", "text", "slice", "constructor"]
+      .map((t) => typeof e[t])
+      .filter((e) => "function" !== e).length &&
+  "string" == typeof e.type &&
+  "number" == typeof e.size &&
+  /^(Blob|File)$/.test(e[Symbol.toStringTag]);
+const s = (e) => `--${e}--\r\n\r\n`;
+const a = (e, t, n) => {
+  let r = "";
+  r += `--${e}\r\n`;
+  r += `Content-Disposition: form-data; name="${t}"`;
+  if (i(n)) {
+    r += `; filename="${n.name}"\r\n`;
+    r += `Content-Type: ${n.type || "application/octet-stream"}`;
+  }
+  return `${r}\r\n\r\n`;
+};
 module.exports = {
   isFormData: (e) =>
     null != e &&

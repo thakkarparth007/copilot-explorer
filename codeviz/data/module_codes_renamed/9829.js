@@ -10,7 +10,7 @@ exports.rebuildTree =
   exports.clearLabelsIf =
   exports.clearLabels =
     undefined;
-const M_tree_NOTSURE = require("tree");
+const M_tree_maybe = require("tree");
 function visitTree(e, t, n) {
   !(function e(r) {
     if ("topDown" === n) {
@@ -72,7 +72,7 @@ exports.resetLineNumbers = function (e) {
   visitTree(
     e,
     function (e) {
-      if (M_tree_NOTSURE.isVirtual(e) || M_tree_NOTSURE.isTop(e)) {
+      if (M_tree_maybe.isVirtual(e) || M_tree_maybe.isTop(e)) {
         e.lineNumber = t;
         t++;
       }
@@ -107,13 +107,13 @@ exports.foldTree = function (e, t, n, r) {
 };
 exports.rebuildTree = function (e, t, n) {
   const o = (e) => {
-      if (undefined !== n && n(e)) return e;
-      {
-        const n = e.subs.map(o).filter((e) => undefined !== e);
-        e.subs = n;
-        return t(e);
-      }
-    },
-    i = o(e);
-  return undefined !== i ? i : M_tree_NOTSURE.topNode();
+    if (undefined !== n && n(e)) return e;
+    {
+      const n = e.subs.map(o).filter((e) => undefined !== e);
+      e.subs = n;
+      return t(e);
+    }
+  };
+  const i = o(e);
+  return undefined !== i ? i : M_tree_maybe.topNode();
 };

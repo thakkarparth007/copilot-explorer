@@ -1,9 +1,9 @@
-const r = require("fs"),
-  o = require("path"),
-  i = (e, t) => Array.from(Array(t).keys()).slice(e),
-  s = (e) => e.charCodeAt(0),
-  a = new TextDecoder("utf-8"),
-  c = (e) => a.decode(new Uint8Array(e));
+const M_fs = require("fs");
+const M_path = require("path");
+const i = (e, t) => Array.from(Array(t).keys()).slice(e);
+const s = (e) => e.charCodeAt(0);
+const a = new TextDecoder("utf-8");
+const c = (e) => a.decode(new Uint8Array(e));
 function l(e) {
   const t = new Set();
   let n = e[0];
@@ -14,32 +14,33 @@ function l(e) {
   }
   return t;
 }
-const u = new TextEncoder("utf-8"),
-  d =
-    /'s|'t|'re|'ve|'m|'ll|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+/gu;
+const u = new TextEncoder("utf-8");
+const d =
+  /'s|'t|'re|'ve|'m|'ll|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+/gu;
 let p = !1;
 const h = {};
-let f,
-  m = {},
-  g = new Map(),
-  _ = new Map();
+let f;
+let m = {};
+let g = new Map();
+let _ = new Map();
 const y = new Map();
 function v() {
   if (p) return;
   m = JSON.parse(
-    r.readFileSync(o.resolve(__dirname, "..", "dist", "tokenizer.json"))
+    M_fs.readFileSync(M_path.resolve(__dirname, "..", "dist", "tokenizer.json"))
   );
   Object.keys(m).map((e) => {
     h[m[e]] = e;
   });
-  const e = r
-      .readFileSync(o.resolve(__dirname, "..", "dist", "vocab.bpe"), "utf-8")
-      .split("\n"),
-    t = e.slice(1, e.length - 1).map((e) =>
-      e.split(/(\s+)/).filter(function (e) {
-        return e.trim().length > 0;
-      })
-    );
+  const e = M_fs.readFileSync(
+    M_path.resolve(__dirname, "..", "dist", "vocab.bpe"),
+    "utf-8"
+  ).split("\n");
+  const t = e.slice(1, e.length - 1).map((e) =>
+    e.split(/(\s+)/).filter(function (e) {
+      return e.trim().length > 0;
+    })
+  );
   f = ((e, t) => {
     const n = {};
     e.map((r, o) => {
@@ -52,8 +53,8 @@ function v() {
       i(s("¡"), s("¬") + 1),
       i(s("®"), s("ÿ") + 1)
     );
-    let n = t.slice(),
-      r = 0;
+    let n = t.slice();
+    let r = 0;
     for (let e = 0; e < 256; e++)
       if (t.includes(e)) {
         t.push(e);
@@ -70,8 +71,8 @@ function v() {
 }
 function b(e) {
   if (y.has(e)) return y.get(e);
-  let t = ((r = e), Array.from(u.encode(r))).map((e) => g.get(e)),
-    n = l(t);
+  let t = ((r = e), Array.from(u.encode(r))).map((e) => g.get(e));
+  let n = l(t);
   var r;
   if (!n) return t.map((e) => m[e]);
   for (;;) {
@@ -82,10 +83,10 @@ function b(e) {
     });
     const r = e[Math.min(...Object.keys(e).map((e) => parseInt(e)))];
     if (!(r in f)) break;
-    const o = r[0],
-      i = r[1];
-    let s = [],
-      a = 0;
+    const o = r[0];
+    const i = r[1];
+    let s = [];
+    let a = 0;
     for (; a < t.length; ) {
       const e = t.indexOf(o, a);
       if (-1 === e) {
@@ -122,9 +123,9 @@ function w(e) {
 }
 function x(e, t) {
   if (t <= 0) return "";
-  let n = Math.min(e.length, 4 * t),
-    r = e.slice(-n),
-    o = w(r);
+  let n = Math.min(e.length, 4 * t);
+  let r = e.slice(-n);
+  let o = w(r);
   for (; o.length < t + 2 && n < e.length; ) {
     n = Math.min(e.length, n + 1 * t);
     r = e.slice(-n);
@@ -160,9 +161,9 @@ module.exports = {
         text: "",
         tokens: [],
       };
-    let n = Math.min(e.length, 4 * t),
-      r = e.slice(0, n),
-      o = w(r);
+    let n = Math.min(e.length, 4 * t);
+    let r = e.slice(0, n);
+    let o = w(r);
     for (; o.length < t + 2 && n < e.length; ) {
       n = Math.min(e.length, n + 1 * t);
       r = e.slice(0, n);

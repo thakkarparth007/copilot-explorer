@@ -1,45 +1,45 @@
-var M_url_utils_NOTSURE = require("url-utils"),
-  M_search_utils_NOTSURE = require("search-utils"),
-  i = require("ordered-set").I,
-  M_vlq_NOTSURE = require("vlq"),
-  a = require("quicksort").U;
+var M_url_utils_maybe = require("url-utils");
+var M_search_utils_maybe = require("search-utils");
+var i = require("ordered-set").I;
+var M_vlq_maybe = require("vlq");
+var a = require("quicksort").U;
 function SourceMapConsumer(e, t) {
   var n = e;
   if ("string" == typeof e) {
-    n = M_url_utils_NOTSURE.parseSourceMapInput(e);
+    n = M_url_utils_maybe.parseSourceMapInput(e);
   }
   return null != n.sections ? new d(n, t) : new l(n, t);
 }
 function l(e, t) {
   var n = e;
   if ("string" == typeof e) {
-    n = M_url_utils_NOTSURE.parseSourceMapInput(e);
+    n = M_url_utils_maybe.parseSourceMapInput(e);
   }
-  var o = M_url_utils_NOTSURE.getArg(n, "version"),
-    s = M_url_utils_NOTSURE.getArg(n, "sources"),
-    a = M_url_utils_NOTSURE.getArg(n, "names", []),
-    c = M_url_utils_NOTSURE.getArg(n, "sourceRoot", null),
-    l = M_url_utils_NOTSURE.getArg(n, "sourcesContent", null),
-    u = M_url_utils_NOTSURE.getArg(n, "mappings"),
-    d = M_url_utils_NOTSURE.getArg(n, "file", null);
+  var o = M_url_utils_maybe.getArg(n, "version");
+  var s = M_url_utils_maybe.getArg(n, "sources");
+  var a = M_url_utils_maybe.getArg(n, "names", []);
+  var c = M_url_utils_maybe.getArg(n, "sourceRoot", null);
+  var l = M_url_utils_maybe.getArg(n, "sourcesContent", null);
+  var u = M_url_utils_maybe.getArg(n, "mappings");
+  var d = M_url_utils_maybe.getArg(n, "file", null);
   if (o != this._version) throw new Error("Unsupported version: " + o);
   if (c) {
-    c = M_url_utils_NOTSURE.normalize(c);
+    c = M_url_utils_maybe.normalize(c);
   }
   s = s
     .map(String)
-    .map(M_url_utils_NOTSURE.normalize)
+    .map(M_url_utils_maybe.normalize)
     .map(function (e) {
       return c &&
-        M_url_utils_NOTSURE.isAbsolute(c) &&
-        M_url_utils_NOTSURE.isAbsolute(e)
-        ? M_url_utils_NOTSURE.relative(c, e)
+        M_url_utils_maybe.isAbsolute(c) &&
+        M_url_utils_maybe.isAbsolute(e)
+        ? M_url_utils_maybe.relative(c, e)
         : e;
     });
   this._names = i.fromArray(a.map(String), !0);
   this._sources = i.fromArray(s, !0);
   this._absoluteSources = this._sources.toArray().map(function (e) {
-    return M_url_utils_NOTSURE.computeSourceURL(c, e, t);
+    return M_url_utils_maybe.computeSourceURL(c, e, t);
   });
   this.sourceRoot = c;
   this.sourcesContent = l;
@@ -58,10 +58,10 @@ function u() {
 function d(e, t) {
   var n = e;
   if ("string" == typeof e) {
-    n = M_url_utils_NOTSURE.parseSourceMapInput(e);
+    n = M_url_utils_maybe.parseSourceMapInput(e);
   }
-  var o = M_url_utils_NOTSURE.getArg(n, "version"),
-    s = M_url_utils_NOTSURE.getArg(n, "sections");
+  var o = M_url_utils_maybe.getArg(n, "version");
+  var s = M_url_utils_maybe.getArg(n, "sections");
   if (o != this._version) throw new Error("Unsupported version: " + o);
   this._sources = new i();
   this._names = new i();
@@ -72,9 +72,9 @@ function d(e, t) {
   this._sections = s.map(function (e) {
     if (e.url)
       throw new Error("Support for url field in sections not implemented.");
-    var n = M_url_utils_NOTSURE.getArg(e, "offset"),
-      o = M_url_utils_NOTSURE.getArg(n, "line"),
-      i = M_url_utils_NOTSURE.getArg(n, "column");
+    var n = M_url_utils_maybe.getArg(e, "offset");
+    var o = M_url_utils_maybe.getArg(n, "line");
+    var i = M_url_utils_maybe.getArg(n, "column");
     if (o < a.line || (o === a.line && i < a.column))
       throw new Error("Section offsets must be ordered and non-overlapping.");
     a = n;
@@ -83,7 +83,7 @@ function d(e, t) {
         generatedLine: o + 1,
         generatedColumn: i + 1,
       },
-      consumer: new SourceMapConsumer(M_url_utils_NOTSURE.getArg(e, "map"), t),
+      consumer: new SourceMapConsumer(M_url_utils_maybe.getArg(e, "map"), t),
     };
   });
 }
@@ -125,8 +125,8 @@ SourceMapConsumer.ORIGINAL_ORDER = 2;
 SourceMapConsumer.GREATEST_LOWER_BOUND = 1;
 SourceMapConsumer.LEAST_UPPER_BOUND = 2;
 SourceMapConsumer.prototype.eachMapping = function (e, t, n) {
-  var o,
-    i = t || null;
+  var o;
+  var i = t || null;
   switch (n || SourceMapConsumer.GENERATED_ORDER) {
     case SourceMapConsumer.GENERATED_ORDER:
       o = this._generatedMappings;
@@ -141,7 +141,7 @@ SourceMapConsumer.prototype.eachMapping = function (e, t, n) {
   o.map(function (e) {
     var t = null === e.source ? null : this._sources.at(e.source);
     return {
-      source: (t = M_url_utils_NOTSURE.computeSourceURL(
+      source: (t = M_url_utils_maybe.computeSourceURL(
         s,
         t,
         this._sourceMapURL
@@ -155,35 +155,31 @@ SourceMapConsumer.prototype.eachMapping = function (e, t, n) {
   }, this).forEach(e, i);
 };
 SourceMapConsumer.prototype.allGeneratedPositionsFor = function (e) {
-  var t = M_url_utils_NOTSURE.getArg(e, "line"),
-    n = {
-      source: M_url_utils_NOTSURE.getArg(e, "source"),
-      originalLine: t,
-      originalColumn: M_url_utils_NOTSURE.getArg(e, "column", 0),
-    };
+  var t = M_url_utils_maybe.getArg(e, "line");
+  var n = {
+    source: M_url_utils_maybe.getArg(e, "source"),
+    originalLine: t,
+    originalColumn: M_url_utils_maybe.getArg(e, "column", 0),
+  };
   n.source = this._findSourceIndex(n.source);
   if (n.source < 0) return [];
-  var i = [],
-    s = this._findMapping(
-      n,
-      this._originalMappings,
-      "originalLine",
-      "originalColumn",
-      M_url_utils_NOTSURE.compareByOriginalPositions,
-      M_search_utils_NOTSURE.LEAST_UPPER_BOUND
-    );
+  var i = [];
+  var s = this._findMapping(
+    n,
+    this._originalMappings,
+    "originalLine",
+    "originalColumn",
+    M_url_utils_maybe.compareByOriginalPositions,
+    M_search_utils_maybe.LEAST_UPPER_BOUND
+  );
   if (s >= 0) {
     var a = this._originalMappings[s];
     if (undefined === e.column)
       for (var c = a.originalLine; a && a.originalLine === c; ) {
         i.push({
-          line: M_url_utils_NOTSURE.getArg(a, "generatedLine", null),
-          column: M_url_utils_NOTSURE.getArg(a, "generatedColumn", null),
-          lastColumn: M_url_utils_NOTSURE.getArg(
-            a,
-            "lastGeneratedColumn",
-            null
-          ),
+          line: M_url_utils_maybe.getArg(a, "generatedLine", null),
+          column: M_url_utils_maybe.getArg(a, "generatedColumn", null),
+          lastColumn: M_url_utils_maybe.getArg(a, "lastGeneratedColumn", null),
         });
         a = this._originalMappings[++s];
       }
@@ -194,13 +190,9 @@ SourceMapConsumer.prototype.allGeneratedPositionsFor = function (e) {
 
       ) {
         i.push({
-          line: M_url_utils_NOTSURE.getArg(a, "generatedLine", null),
-          column: M_url_utils_NOTSURE.getArg(a, "generatedColumn", null),
-          lastColumn: M_url_utils_NOTSURE.getArg(
-            a,
-            "lastGeneratedColumn",
-            null
-          ),
+          line: M_url_utils_maybe.getArg(a, "generatedLine", null),
+          column: M_url_utils_maybe.getArg(a, "generatedColumn", null),
+          lastColumn: M_url_utils_maybe.getArg(a, "lastGeneratedColumn", null),
         });
         a = this._originalMappings[++s];
       }
@@ -211,10 +203,10 @@ exports.SourceMapConsumer = SourceMapConsumer;
 l.prototype = Object.create(SourceMapConsumer.prototype);
 l.prototype.consumer = SourceMapConsumer;
 l.prototype._findSourceIndex = function (e) {
-  var t,
-    n = e;
+  var t;
+  var n = e;
   if (null != this.sourceRoot) {
-    n = M_url_utils_NOTSURE.relative(this.sourceRoot, n);
+    n = M_url_utils_maybe.relative(this.sourceRoot, n);
   }
   if (this._sources.has(n)) return this._sources.indexOf(n);
   for (t = 0; t < this._absoluteSources.length; ++t)
@@ -222,9 +214,9 @@ l.prototype._findSourceIndex = function (e) {
   return -1;
 };
 l.fromSourceMap = function (e, t) {
-  var n = Object.create(l.prototype),
-    o = (n._names = i.fromArray(e._names.toArray(), !0)),
-    s = (n._sources = i.fromArray(e._sources.toArray(), !0));
+  var n = Object.create(l.prototype);
+  var o = (n._names = i.fromArray(e._names.toArray(), !0));
+  var s = (n._sources = i.fromArray(e._sources.toArray(), !0));
   n.sourceRoot = e._sourceRoot;
   n.sourcesContent = e._generateSourcesContent(
     n._sources.toArray(),
@@ -233,19 +225,25 @@ l.fromSourceMap = function (e, t) {
   n.file = e._file;
   n._sourceMapURL = t;
   n._absoluteSources = n._sources.toArray().map(function (e) {
-    return M_url_utils_NOTSURE.computeSourceURL(n.sourceRoot, e, t);
+    return M_url_utils_maybe.computeSourceURL(n.sourceRoot, e, t);
   });
   for (
-    var c = e._mappings.toArray().slice(),
-      d = (n.__generatedMappings = []),
-      p = (n.__originalMappings = []),
+    c = e._mappings.toArray().slice(),
+      d = n.__generatedMappings = [],
+      p = n.__originalMappings = [],
       h = 0,
-      f = c.length;
+      f = c.length,
+      undefined;
     h < f;
     h++
   ) {
-    var m = c[h],
-      g = new u();
+    var c;
+    var d;
+    var p;
+    var h;
+    var f;
+    var m = c[h];
+    var g = new u();
     g.generatedLine = m.generatedLine;
     g.generatedColumn = m.generatedColumn;
     if (m.source) {
@@ -259,7 +257,7 @@ l.fromSourceMap = function (e, t) {
     }
     d.push(g);
   }
-  a(n.__originalMappings, M_url_utils_NOTSURE.compareByOriginalPositions);
+  a(n.__originalMappings, M_url_utils_maybe.compareByOriginalPositions);
   return n;
 };
 l.prototype._version = 3;
@@ -270,12 +268,7 @@ Object.defineProperty(l.prototype, "sources", {
 });
 l.prototype._parseMappings = function (e, t) {
   for (
-    var n,
-      o,
-      i,
-      c,
-      l,
-      d = 1,
+    d = 1,
       p = 0,
       h = 0,
       f = 0,
@@ -286,10 +279,28 @@ l.prototype._parseMappings = function (e, t) {
       v = {},
       b = {},
       w = [],
-      x = [];
+      x = [],
+      undefined;
     y < _;
 
-  )
+  ) {
+    var n;
+    var o;
+    var i;
+    var c;
+    var l;
+    var d;
+    var p;
+    var h;
+    var f;
+    var m;
+    var g;
+    var _;
+    var y;
+    var v;
+    var b;
+    var w;
+    var x;
     if (";" === e.charAt(y)) {
       d++;
       y++;
@@ -304,7 +315,7 @@ l.prototype._parseMappings = function (e, t) {
       if ((i = v[(o = e.slice(y, c))])) y += o.length;
       else {
         for (i = []; y < c; ) {
-          M_vlq_NOTSURE.decode(e, y, b);
+          M_vlq_maybe.decode(e, y, b);
           l = b.value;
           y = b.rest;
           i.push(l);
@@ -335,9 +346,10 @@ l.prototype._parseMappings = function (e, t) {
         w.push(n);
       }
     }
-  a(x, M_url_utils_NOTSURE.compareByGeneratedPositionsDeflated);
+  }
+  a(x, M_url_utils_maybe.compareByGeneratedPositionsDeflated);
   this.__generatedMappings = x;
-  a(w, M_url_utils_NOTSURE.compareByOriginalPositions);
+  a(w, M_url_utils_maybe.compareByOriginalPositions);
   this.__originalMappings = w;
 };
 l.prototype._findMapping = function (e, t, n, r, i, s) {
@@ -347,7 +359,7 @@ l.prototype._findMapping = function (e, t, n, r, i, s) {
     throw new TypeError(
       "Column must be greater than or equal to 0, got " + e[r]
     );
-  return M_search_utils_NOTSURE.search(e, t, i, s);
+  return M_search_utils_maybe.search(e, t, i, s);
 };
 l.prototype.computeColumnSpans = function () {
   for (var e = 0; e < this._generatedMappings.length; ++e) {
@@ -364,41 +376,37 @@ l.prototype.computeColumnSpans = function () {
 };
 l.prototype.originalPositionFor = function (e) {
   var t = {
-      generatedLine: M_url_utils_NOTSURE.getArg(e, "line"),
-      generatedColumn: M_url_utils_NOTSURE.getArg(e, "column"),
-    },
-    n = this._findMapping(
-      t,
-      this._generatedMappings,
-      "generatedLine",
-      "generatedColumn",
-      M_url_utils_NOTSURE.compareByGeneratedPositionsDeflated,
-      M_url_utils_NOTSURE.getArg(
-        e,
-        "bias",
-        SourceMapConsumer.GREATEST_LOWER_BOUND
-      )
-    );
+    generatedLine: M_url_utils_maybe.getArg(e, "line"),
+    generatedColumn: M_url_utils_maybe.getArg(e, "column"),
+  };
+  var n = this._findMapping(
+    t,
+    this._generatedMappings,
+    "generatedLine",
+    "generatedColumn",
+    M_url_utils_maybe.compareByGeneratedPositionsDeflated,
+    M_url_utils_maybe.getArg(e, "bias", SourceMapConsumer.GREATEST_LOWER_BOUND)
+  );
   if (n >= 0) {
     var o = this._generatedMappings[n];
     if (o.generatedLine === t.generatedLine) {
-      var i = M_url_utils_NOTSURE.getArg(o, "source", null);
+      var i = M_url_utils_maybe.getArg(o, "source", null);
       if (null !== i) {
         i = this._sources.at(i);
-        i = M_url_utils_NOTSURE.computeSourceURL(
+        i = M_url_utils_maybe.computeSourceURL(
           this.sourceRoot,
           i,
           this._sourceMapURL
         );
       }
-      var s = M_url_utils_NOTSURE.getArg(o, "name", null);
+      var s = M_url_utils_maybe.getArg(o, "name", null);
       if (null !== s) {
         s = this._names.at(s);
       }
       return {
         source: i,
-        line: M_url_utils_NOTSURE.getArg(o, "originalLine", null),
-        column: M_url_utils_NOTSURE.getArg(o, "originalColumn", null),
+        line: M_url_utils_maybe.getArg(o, "originalLine", null),
+        column: M_url_utils_maybe.getArg(o, "originalColumn", null),
         name: s,
       };
     }
@@ -423,14 +431,14 @@ l.prototype.sourceContentFor = function (e, t) {
   if (!this.sourcesContent) return null;
   var n = this._findSourceIndex(e);
   if (n >= 0) return this.sourcesContent[n];
-  var o,
-    i = e;
+  var o;
+  var i = e;
   if (null != this.sourceRoot) {
-    i = M_url_utils_NOTSURE.relative(this.sourceRoot, i);
+    i = M_url_utils_maybe.relative(this.sourceRoot, i);
   }
   if (
     null != this.sourceRoot &&
-    (o = M_url_utils_NOTSURE.urlParse(this.sourceRoot))
+    (o = M_url_utils_maybe.urlParse(this.sourceRoot))
   ) {
     var s = i.replace(/^file:\/\//, "");
     if ("file" == o.scheme && this._sources.has(s))
@@ -442,7 +450,7 @@ l.prototype.sourceContentFor = function (e, t) {
   throw new Error('"' + i + '" is not in the SourceMap.');
 };
 l.prototype.generatedPositionFor = function (e) {
-  var t = M_url_utils_NOTSURE.getArg(e, "source");
+  var t = M_url_utils_maybe.getArg(e, "source");
   if ((t = this._findSourceIndex(t)) < 0)
     return {
       line: null,
@@ -450,29 +458,25 @@ l.prototype.generatedPositionFor = function (e) {
       lastColumn: null,
     };
   var n = {
-      source: t,
-      originalLine: M_url_utils_NOTSURE.getArg(e, "line"),
-      originalColumn: M_url_utils_NOTSURE.getArg(e, "column"),
-    },
-    o = this._findMapping(
-      n,
-      this._originalMappings,
-      "originalLine",
-      "originalColumn",
-      M_url_utils_NOTSURE.compareByOriginalPositions,
-      M_url_utils_NOTSURE.getArg(
-        e,
-        "bias",
-        SourceMapConsumer.GREATEST_LOWER_BOUND
-      )
-    );
+    source: t,
+    originalLine: M_url_utils_maybe.getArg(e, "line"),
+    originalColumn: M_url_utils_maybe.getArg(e, "column"),
+  };
+  var o = this._findMapping(
+    n,
+    this._originalMappings,
+    "originalLine",
+    "originalColumn",
+    M_url_utils_maybe.compareByOriginalPositions,
+    M_url_utils_maybe.getArg(e, "bias", SourceMapConsumer.GREATEST_LOWER_BOUND)
+  );
   if (o >= 0) {
     var i = this._originalMappings[o];
     if (i.source === n.source)
       return {
-        line: M_url_utils_NOTSURE.getArg(i, "generatedLine", null),
-        column: M_url_utils_NOTSURE.getArg(i, "generatedColumn", null),
-        lastColumn: M_url_utils_NOTSURE.getArg(i, "lastGeneratedColumn", null),
+        line: M_url_utils_maybe.getArg(i, "generatedLine", null),
+        column: M_url_utils_maybe.getArg(i, "generatedColumn", null),
+        lastColumn: M_url_utils_maybe.getArg(i, "lastGeneratedColumn", null),
       };
   }
   return {
@@ -486,24 +490,27 @@ d.prototype.constructor = SourceMapConsumer;
 d.prototype._version = 3;
 Object.defineProperty(d.prototype, "sources", {
   get: function () {
-    for (var e = [], t = 0; t < this._sections.length; t++)
+    for (e = [], t = 0, undefined; t < this._sections.length; t++) {
+      var e;
+      var t;
       for (var n = 0; n < this._sections[t].consumer.sources.length; n++)
         e.push(this._sections[t].consumer.sources[n]);
+    }
     return e;
   },
 });
 d.prototype.originalPositionFor = function (e) {
   var t = {
-      generatedLine: M_url_utils_NOTSURE.getArg(e, "line"),
-      generatedColumn: M_url_utils_NOTSURE.getArg(e, "column"),
-    },
-    n = M_search_utils_NOTSURE.search(t, this._sections, function (e, t) {
-      return (
-        e.generatedLine - t.generatedOffset.generatedLine ||
-        e.generatedColumn - t.generatedOffset.generatedColumn
-      );
-    }),
-    i = this._sections[n];
+    generatedLine: M_url_utils_maybe.getArg(e, "line"),
+    generatedColumn: M_url_utils_maybe.getArg(e, "column"),
+  };
+  var n = M_search_utils_maybe.search(t, this._sections, function (e, t) {
+    return (
+      e.generatedLine - t.generatedOffset.generatedLine ||
+      e.generatedColumn - t.generatedOffset.generatedColumn
+    );
+  });
+  var i = this._sections[n];
   return i
     ? i.consumer.originalPositionFor({
         line: t.generatedLine - (i.generatedOffset.generatedLine - 1),
@@ -538,8 +545,7 @@ d.prototype.generatedPositionFor = function (e) {
   for (var t = 0; t < this._sections.length; t++) {
     var n = this._sections[t];
     if (
-      -1 !==
-      n.consumer._findSourceIndex(M_url_utils_NOTSURE.getArg(e, "source"))
+      -1 !== n.consumer._findSourceIndex(M_url_utils_maybe.getArg(e, "source"))
     ) {
       var o = n.consumer.generatedPositionFor(e);
       if (o)
@@ -563,13 +569,19 @@ d.prototype._parseMappings = function (e, t) {
   this.__originalMappings = [];
   for (var n = 0; n < this._sections.length; n++)
     for (
-      var o = this._sections[n], i = o.consumer._generatedMappings, s = 0;
+      o = this._sections[n],
+        i = o.consumer._generatedMappings,
+        s = 0,
+        undefined;
       s < i.length;
       s++
     ) {
-      var c = i[s],
-        l = o.consumer._sources.at(c.source);
-      l = M_url_utils_NOTSURE.computeSourceURL(
+      var o;
+      var i;
+      var s;
+      var c = i[s];
+      var l = o.consumer._sources.at(c.source);
+      l = M_url_utils_maybe.computeSourceURL(
         o.consumer.sourceRoot,
         l,
         this._sourceMapURL
@@ -601,7 +613,7 @@ d.prototype._parseMappings = function (e, t) {
     }
   a(
     this.__generatedMappings,
-    M_url_utils_NOTSURE.compareByGeneratedPositionsDeflated
+    M_url_utils_maybe.compareByGeneratedPositionsDeflated
   );
-  a(this.__originalMappings, M_url_utils_NOTSURE.compareByOriginalPositions);
+  a(this.__originalMappings, M_url_utils_maybe.compareByOriginalPositions);
 };

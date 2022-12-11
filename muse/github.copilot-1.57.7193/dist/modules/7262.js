@@ -1,42 +1,46 @@
-const { connect: r, constants: o } = require("http2"),
-  { Readable: i } = require("stream"),
-  s = require(8104)("helix-fetch:h2"),
-  { RequestAbortedError: a } = require(1787),
-  { decodeStream: c } = require(4544),
-  { NGHTTP2_CANCEL: l } = o,
-  u = 3e5,
-  d = 5e3,
-  p = (e, t, n, r = () => {}) => {
-    const o = {
-        ...e,
-      },
-      i = o[":status"];
-    delete o[":status"];
-    const s = n ? c(i, e, t, r) : t;
-    return {
-      statusCode: i,
-      statusText: "",
-      httpVersion: "2.0",
-      httpVersionMajor: 2,
-      httpVersionMinor: 0,
-      headers: o,
-      readable: s,
-      decoded: !(!n || s === t),
-    };
+const { connect: r, constants: o } = require("http2");
+const { Readable: i } = require("stream");
+const s = require(8104)("helix-fetch:h2");
+const { RequestAbortedError: a } = require(1787);
+const { decodeStream: c } = require(4544);
+const { NGHTTP2_CANCEL: l } = o;
+const u = 3e5;
+const d = 5e3;
+const p = (e, t, n, r = () => {}) => {
+  const o = {
+    ...e,
   };
+  const i = o[":status"];
+  delete o[":status"];
+  const s = n ? c(i, e, t, r) : t;
+  return {
+    statusCode: i,
+    statusText: "",
+    httpVersion: "2.0",
+    httpVersionMajor: 2,
+    httpVersionMinor: 0,
+    headers: o,
+    readable: s,
+    decoded: !(!n || s === t),
+  };
+};
 module.exports = {
   request: async (e, t, n) => {
-    const { origin: o, pathname: c, search: h, hash: f } = t,
-      m = `${c}${h}${f}`,
-      {
-        options: { h2: g = {} },
-        h2: { sessionCache: _ },
-      } = e,
-      { idleSessionTimeout: y = u, pushPromiseHandler: v, pushHandler: b } = g,
-      w = {
-        ...n,
-      },
-      { method: x, headers: E, socket: C, body: S, decode: T } = w;
+    const { origin: o, pathname: c, search: h, hash: f } = t;
+    const m = `${c}${h}${f}`;
+    const {
+      options: { h2: g = {} },
+      h2: { sessionCache: _ },
+    } = e;
+    const {
+      idleSessionTimeout: y = u,
+      pushPromiseHandler: v,
+      pushHandler: b,
+    } = g;
+    const w = {
+      ...n,
+    };
+    const { method: x, headers: E, socket: C, body: S, decode: T } = w;
     if (C) {
       delete w.socket;
     }
@@ -45,16 +49,16 @@ module.exports = {
       delete E.host;
     }
     return new Promise((n, c) => {
-      let u,
-        h = _[o];
+      let u;
+      let h = _[o];
       if (!h || h.closed || h.destroyed) {
         const t = !(
-            !1 === e.options.rejectUnauthorized || !1 === g.rejectUnauthorized
-          ),
-          n = {
-            ...g,
-            rejectUnauthorized: t,
-          };
+          !1 === e.options.rejectUnauthorized || !1 === g.rejectUnauthorized
+        );
+        const n = {
+          ...g,
+          rejectUnauthorized: t,
+        };
         if (C && !C.inUse) {
           n.createConnection = () => (
             s(`reusing socket #${C.id} (${C.servername})`), (C.inUse = !0), C
@@ -112,16 +116,16 @@ module.exports = {
         h.on("stream", (t, n, r) => {
           ((e, t, n, r, o, i) => {
             const {
-                options: {
-                  h2: {
-                    pushPromiseHandler: a,
-                    pushHandler: c,
-                    pushedStreamIdleTimeout: u = d,
-                  },
+              options: {
+                h2: {
+                  pushPromiseHandler: a,
+                  pushHandler: c,
+                  pushedStreamIdleTimeout: u = d,
                 },
-              } = e,
-              h = o[":path"],
-              f = `${t}${h}`;
+              },
+            } = e;
+            const h = o[":path"];
+            const f = `${t}${h}`;
             s(
               `received PUSH_PROMISE: ${f}, stream #${
                 r.id
@@ -166,14 +170,14 @@ module.exports = {
         C.destroy();
       }
       s(`${x} ${t.host}${m}`);
-      const { signal: f } = w,
-        k = () => {
-          f.removeEventListener("abort", k);
-          c(new a());
-          if (u) {
-            u.close(l);
-          }
-        };
+      const { signal: f } = w;
+      const k = () => {
+        f.removeEventListener("abort", k);
+        c(new a());
+        if (u) {
+          u.close(l);
+        }
+      };
       if (f) {
         if (f.aborted) return void c(new a());
         f.addEventListener("abort", k);

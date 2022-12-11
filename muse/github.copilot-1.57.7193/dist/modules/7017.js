@@ -5,42 +5,42 @@ exports.postInsertionTasks =
   exports.postRejectionTasks =
   exports.captureCode =
     undefined;
-const r = require(6881),
-  o = require(750),
-  i = require(9899),
-  s = require(7727),
-  a = require(4969),
-  c = require(5120),
-  l = require(6333),
-  u = require(3136),
-  d = new i.Logger(i.LogLevel.INFO, "post-insertion"),
-  p = [
-    {
-      seconds: 15,
-      captureCode: !1,
-      captureRejection: !1,
-    },
-    {
-      seconds: 30,
-      captureCode: !0,
-      captureRejection: !0,
-    },
-    {
-      seconds: 120,
-      captureCode: !1,
-      captureRejection: !1,
-    },
-    {
-      seconds: 300,
-      captureCode: !1,
-      captureRejection: !1,
-    },
-    {
-      seconds: 600,
-      captureCode: !1,
-      captureRejection: !1,
-    },
-  ];
+const r = require(6881);
+const o = require(750);
+const i = require(9899);
+const s = require(7727);
+const a = require(4969);
+const c = require(5120);
+const l = require(6333);
+const u = require(3136);
+const d = new i.Logger(i.LogLevel.INFO, "post-insertion");
+const p = [
+  {
+    seconds: 15,
+    captureCode: !1,
+    captureRejection: !1,
+  },
+  {
+    seconds: 30,
+    captureCode: !0,
+    captureRejection: !0,
+  },
+  {
+    seconds: 120,
+    captureCode: !1,
+    captureRejection: !1,
+  },
+  {
+    seconds: 300,
+    captureCode: !1,
+    captureRejection: !1,
+  },
+  {
+    seconds: 600,
+    captureCode: !1,
+    captureRejection: !1,
+  },
+];
 async function captureCode(e, t, n) {
   const r = await e.get(u.TextDocumentManager).getTextDocument(t);
   if (!r) {
@@ -59,24 +59,24 @@ async function captureCode(e, t, n) {
       terminationOffset: 0,
     };
   }
-  const o = r.getText(),
-    i = o.substring(0, n),
-    c = r.positionAt(n),
-    l = await a.extractPrompt(e, r, c),
-    p =
-      "prompt" === l.type
-        ? l.prompt
-        : {
-            prefix: i,
-            suffix: "",
-            isFimEnabled: !1,
-            promptElementRanges: [],
-          },
-    h = o.substring(n),
-    f = s.contextIndentationFromText(i, n, r.languageId),
-    m = s.indentationBlockFinished(f, undefined),
-    g = await m(h),
-    _ = Math.min(o.length, n + (g ? 2 * g : 500));
+  const o = r.getText();
+  const i = o.substring(0, n);
+  const c = r.positionAt(n);
+  const l = await a.extractPrompt(e, r, c);
+  const p =
+    "prompt" === l.type
+      ? l.prompt
+      : {
+          prefix: i,
+          suffix: "",
+          isFimEnabled: !1,
+          promptElementRanges: [],
+        };
+  const h = o.substring(n);
+  const f = s.contextIndentationFromText(i, n, r.languageId);
+  const m = s.indentationBlockFinished(f, undefined);
+  const g = await m(h);
+  const _ = Math.min(o.length, n + (g ? 2 * g : 500));
   return {
     prompt: p,
     capturedCode: o.substring(n, _),
@@ -85,15 +85,15 @@ async function captureCode(e, t, n) {
 }
 function f(e, t, n, r) {
   const o = e.substring(
-      Math.max(0, r - n),
-      Math.min(e.length, r + t.length + n)
-    ),
-    i = c.lexEditDistance(o, t),
-    s = i.lexDistance / i.needleLexLength,
-    { distance: a } = c.editDistance(
-      o.substring(i.startOffset, i.endOffset),
-      t
-    );
+    Math.max(0, r - n),
+    Math.min(e.length, r + t.length + n)
+  );
+  const i = c.lexEditDistance(o, t);
+  const s = i.lexDistance / i.needleLexLength;
+  const { distance: a } = c.editDistance(
+    o.substring(i.startOffset, i.endOffset),
+    t
+  );
   return {
     relativeLexEditDistance: s,
     charEditDistance: a,
@@ -113,12 +113,12 @@ exports.postRejectionTasks = function (e, t, n, i, s) {
   p.filter((e) => e.captureRejection).map((r) => {
     a.push(async () => {
       d.debug(e, `Original offset: ${n}, Tracked offset: ${a.offset}`);
-      const { completionTelemetryData: o } = s[0],
-        {
-          prompt: c,
-          capturedCode: u,
-          terminationOffset: p,
-        } = await captureCode(e, i, a.offset);
+      const { completionTelemetryData: o } = s[0];
+      const {
+        prompt: c,
+        capturedCode: u,
+        terminationOffset: p,
+      } = await captureCode(e, i, a.offset);
       let f;
       f = c.isFimEnabled
         ? {
@@ -152,8 +152,8 @@ exports.postRejectionTasks = function (e, t, n, i, s) {
 exports.postInsertionTasks = async function (e, t, n, i, s, a) {
   d.debug(e, `${t}.accepted choiceIndex: ${a.properties.choiceIndex}`);
   o.telemetryAccepted(e, t, a);
-  const c = new r.ChangeTracker(e, s, i),
-    m = n.trim();
+  const c = new r.ChangeTracker(e, s, i);
+  const m = n.trim();
   p.map((n) =>
     c.push(
       () =>

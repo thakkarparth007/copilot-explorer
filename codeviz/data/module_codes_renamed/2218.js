@@ -2,18 +2,18 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.completionsFromGhostTextResults = undefined;
-const M_uuid_utils = require("uuid-utils"),
-  M_location_factory = require("location-factory"),
-  M_ghost_text_provider = require("ghost-text-provider"),
-  M_indentation_normalizer_NOTSURE = require("indentation-normalizer");
+const M_uuid_utils = require("uuid-utils");
+const M_location_factory = require("location-factory");
+const M_ghost_text_provider = require("ghost-text-provider");
+const M_indentation_normalizer_maybe = require("indentation-normalizer");
 exports.completionsFromGhostTextResults = function (e, t, n, a, c, l, u) {
-  const d = e.get(M_location_factory.LocationFactory),
-    p = a.lineAt(c);
+  const d = e.get(M_location_factory.LocationFactory);
+  const p = a.lineAt(c);
   let h = t.map((e) => {
-    let t,
-      o = "";
+    let t;
+    let o = "";
     if (l) {
-      e.completion = M_indentation_normalizer_NOTSURE.normalizeIndentCharacter(
+      e.completion = M_indentation_normalizer_maybe.normalizeIndentCharacter(
         l,
         e.completion,
         p.isEmptyOrWhitespace

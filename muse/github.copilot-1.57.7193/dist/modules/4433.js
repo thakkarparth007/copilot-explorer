@@ -1,7 +1,7 @@
-var r = require(6400),
-  o = require(2728),
-  i = require(8213).I,
-  s = require(1188).H;
+var r = require(6400);
+var o = require(2728);
+var i = require(8213).I;
+var s = require(1188).H;
 function h(e) {
   if (e) {
     e = {};
@@ -16,11 +16,11 @@ function h(e) {
 }
 h.prototype._version = 3;
 h.fromSourceMap = function (e) {
-  var t = e.sourceRoot,
-    n = new h({
-      file: e.file,
-      sourceRoot: t,
-    });
+  var t = e.sourceRoot;
+  var n = new h({
+    file: e.file,
+    sourceRoot: t,
+  });
   e.eachMapping(function (e) {
     var r = {
       generated: {
@@ -59,10 +59,10 @@ h.fromSourceMap = function (e) {
   return n;
 };
 h.prototype.addMapping = function (e) {
-  var t = o.getArg(e, "generated"),
-    n = o.getArg(e, "original", null),
-    r = o.getArg(e, "source", null),
-    i = o.getArg(e, "name", null);
+  var t = o.getArg(e, "generated");
+  var n = o.getArg(e, "original", null);
+  var r = o.getArg(e, "source", null);
+  var i = o.getArg(e, "name", null);
   if (this._skipValidation) {
     this._validateMapping(t, n, r, i);
   }
@@ -119,8 +119,8 @@ h.prototype.applySourceMap = function (e, t, n) {
   if (null != s) {
     r = o.relative(s, r);
   }
-  var a = new i(),
-    c = new i();
+  var a = new i();
+  var c = new i();
   this._mappings.unsortedForEach(function (t) {
     if (t.source === r && null != t.originalLine) {
       var i = e.originalPositionFor({
@@ -202,11 +202,7 @@ h.prototype._validateMapping = function (e, t, n, r) {
 };
 h.prototype._serializeMappings = function () {
   for (
-    var e,
-      t,
-      n,
-      i,
-      s = 0,
+    s = 0,
       a = 1,
       c = 0,
       l = 0,
@@ -215,10 +211,25 @@ h.prototype._serializeMappings = function () {
       p = "",
       h = this._mappings.toArray(),
       f = 0,
-      m = h.length;
+      m = h.length,
+      undefined;
     f < m;
     f++
   ) {
+    var e;
+    var t;
+    var n;
+    var i;
+    var s;
+    var a;
+    var c;
+    var l;
+    var u;
+    var d;
+    var p;
+    var h;
+    var f;
+    var m;
     e = "";
     if ((t = h[f]).generatedLine !== a)
       for (s = 0; t.generatedLine !== a; ) (e += ";"), a++;

@@ -1,19 +1,19 @@
-const { PassThrough: r, Readable: o } = require("stream"),
-  {
-    types: { isAnyArrayBuffer: i },
-  } = require("util"),
-  { FetchError: s, FetchBaseError: a } = require("fetch-errors"),
-  { streamToBuffer: c } = require("fetch-utils"),
-  l = Buffer.alloc(0),
-  u = Symbol("Body internals"),
-  d = async (e) => {
-    if (e[u].disturbed) throw new TypeError("Already read");
-    if (e[u].error)
-      throw new TypeError(`Stream had error: ${e[u].error.message}`);
-    e[u].disturbed = !0;
-    const { stream: t } = e[u];
-    return null === t ? l : c(t);
-  };
+const { PassThrough: r, Readable: o } = require("stream");
+const {
+  types: { isAnyArrayBuffer: i },
+} = require("util");
+const { FetchError: s, FetchBaseError: a } = require("fetch-errors");
+const { streamToBuffer: c } = require("fetch-utils");
+const l = Buffer.alloc(0);
+const u = Symbol("Body internals");
+const d = async (e) => {
+  if (e[u].disturbed) throw new TypeError("Already read");
+  if (e[u].error)
+    throw new TypeError(`Stream had error: ${e[u].error.message}`);
+  e[u].disturbed = !0;
+  const { stream: t } = e[u];
+  return null === t ? l : c(t);
+};
 class p {
   constructor(e) {
     let t;

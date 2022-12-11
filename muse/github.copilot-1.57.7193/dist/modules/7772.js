@@ -5,9 +5,9 @@ exports.validateSchemaDeps =
   exports.validatePropertyDeps =
   exports.error =
     undefined;
-const r = require(3487),
-  o = require(6776),
-  i = require(412);
+const r = require(3487);
+const o = require(6776);
+const i = require(412);
 exports.error = {
   message: ({ params: { property: e, depsCount: t, deps: n } }) => {
     const o = 1 === t ? "property" : "properties";
@@ -27,8 +27,8 @@ const s = {
   error: exports.error,
   code(e) {
     const [t, n] = (function ({ schema: e }) {
-      const t = {},
-        n = {};
+      const t = {};
+      const n = {};
       for (const r in e)
         if ("__proto__" !== r) {
           (Array.isArray(e[r]) ? t : n)[r] = e[r];
@@ -64,8 +64,8 @@ function validatePropertyDeps(e, t = e.schema) {
   }
 }
 function validateSchemaDeps(e, t = e.schema) {
-  const { gen: n, data: r, keyword: s, it: a } = e,
-    c = n.name("valid");
+  const { gen: n, data: r, keyword: s, it: a } = e;
+  const c = n.name("valid");
   for (const l in t)
     if (o.alwaysValidSchema(a, t[l])) {
       n.if(

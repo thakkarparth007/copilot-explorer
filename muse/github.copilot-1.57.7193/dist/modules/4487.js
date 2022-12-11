@@ -10,12 +10,12 @@ exports.redis = {
       if (e) {
         var n = e.callback;
         if (!n || !n.pubsubBound) {
-          var o = this.address,
-            i = process.hrtime(),
-            s = new Date();
+          var o = this.address;
+          var i = process.hrtime();
+          var s = new Date();
           e.callback = r.channel.bindToContext(function (t, a) {
-            var c = process.hrtime(i),
-              l = (1e3 * c[0] + c[1] / 1e6) | 0;
+            var c = process.hrtime(i);
+            var l = (1e3 * c[0] + c[1] / 1e6) | 0;
             r.channel.publish("redis", {
               duration: l,
               address: o,

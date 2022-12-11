@@ -7,13 +7,13 @@ exports.resolveSchema =
   exports.compileSchema =
   exports.SchemaEnv =
     undefined;
-const r = require(3487),
-  o = require(7426),
-  i = require(2141),
-  s = require(2531),
-  a = require(6776),
-  c = require(4815),
-  l = require(540);
+const r = require(3487);
+const o = require(7426);
+const i = require(2141);
+const s = require(2531);
+const a = require(6776);
+const c = require(4815);
+const l = require(540);
 class SchemaEnv {
   constructor(e) {
     var t;
@@ -40,14 +40,14 @@ class SchemaEnv {
 function compileSchema(e) {
   const t = getCompilingSchema.call(this, e);
   if (t) return t;
-  const n = s.getFullPath(e.root.baseId),
-    { es5: a, lines: l } = this.opts.code,
-    { ownProperties: u } = this.opts,
-    d = new r.CodeGen(this.scope, {
-      es5: a,
-      lines: l,
-      ownProperties: u,
-    });
+  const n = s.getFullPath(e.root.baseId);
+  const { es5: a, lines: l } = this.opts.code;
+  const { ownProperties: u } = this.opts;
+  const d = new r.CodeGen(this.scope, {
+    es5: a,
+    lines: l,
+    ownProperties: u,
+  });
   let p;
   if (e.$async) {
     p = d.scopeValue("Error", {
@@ -161,7 +161,8 @@ function getCompilingSchema(e) {
     )
       return r;
   }
-  var t, n;
+  var t;
+  var n;
 }
 function f(e, t) {
   let n;
@@ -169,12 +170,12 @@ function f(e, t) {
   return n || this.schemas[t] || resolveSchema.call(this, e, t);
 }
 function resolveSchema(e, t) {
-  const n = l.parse(t),
-    r = s._getFullPath(n);
+  const n = l.parse(t);
+  const r = s._getFullPath(n);
   let o = s.getFullPath(e.baseId);
   if (Object.keys(e.schema).length > 0 && r === o) return _.call(this, n, e);
-  const i = s.normalizeId(r),
-    a = this.refs[i] || this.schemas[i];
+  const i = s.normalizeId(r);
+  const a = this.refs[i] || this.schemas[i];
   if ("string" == typeof a) {
     const t = resolveSchema.call(this, e, a);
     if ("object" != typeof (null == t ? undefined : t.schema)) return;
@@ -210,8 +211,8 @@ exports.resolveRef = function (e, t, n) {
   if (o) return o;
   let i = f.call(this, e, n);
   if (undefined === i) {
-    const o = null === (r = e.localRefs) || undefined === r ? undefined : r[n],
-      { schemaId: s } = this.opts;
+    const o = null === (r = e.localRefs) || undefined === r ? undefined : r[n];
+    const { schemaId: s } = this.opts;
     if (o) {
       i = new SchemaEnv({
         schema: o,

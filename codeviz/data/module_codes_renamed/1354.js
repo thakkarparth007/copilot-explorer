@@ -1,5 +1,5 @@
-var M_random_stuff_NOTSURE;
-M_random_stuff_NOTSURE = require("random-stuff");
+var M_random_stuff_maybe;
+M_random_stuff_maybe = require("random-stuff");
 require("crypto-js-x64-core");
 require("wordarray-browser");
 require("utf16");
@@ -32,4 +32,4 @@ require("aes");
 require("rc4");
 require("crypto-stuff");
 require("rabbit-legacy-cipher");
-module.exports = M_random_stuff_NOTSURE;
+module.exports = M_random_stuff_maybe;

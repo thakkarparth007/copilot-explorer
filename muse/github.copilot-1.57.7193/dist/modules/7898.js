@@ -33,8 +33,11 @@ function c() {
   this._previous = undefined;
 }
 a.prototype._modify = function (e, t) {
-  for (var n = 0, r = this._modifiers.length; n < r; n++)
+  for (n = 0, r = this._modifiers.length, undefined; n < r; n++) {
+    var n;
+    var r;
     t = this._modifiers[n](e, t);
+  }
   return t;
 };
 a.prototype.attach = function (e) {

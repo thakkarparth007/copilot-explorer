@@ -13,11 +13,11 @@ exports.ComputationStatus =
   exports.isNotRepo =
   exports.isRepoInfo =
     undefined;
-const r = require(3055563),
-  o = require(3458),
-  i = require("path"),
-  s = require(362),
-  a = require(3076);
+const r = require(3055563);
+const o = require(3458);
+const i = require("path");
+const s = require(362);
+const a = require(3076);
 var c;
 function tryGetGitHubNWO(e) {
   if (undefined !== e && e !== f.PENDING)
@@ -30,7 +30,8 @@ exports.isNotRepo = function (e) {
   return undefined === e;
 };
 exports.getUserKind = async function (e) {
-  var t, n;
+  var t;
+  var n;
   const r =
     null !==
       (t = (await e.get(s.CopilotTokenManager).getCopilotToken(e, !1))
@@ -70,11 +71,11 @@ exports.extractRepoInfoInBackground = function (e, t) {
   return u(e, n);
 };
 const u = (function (e, t) {
-  const n = new a.LRUCache(1e4),
-    r = new Set();
+  const n = new a.LRUCache(1e4);
+  const r = new Set();
   return (t, ...o) => {
-    const i = JSON.stringify(o),
-      s = n.get(i);
+    const i = JSON.stringify(o);
+    const s = n.get(i);
     if (s) return s.result;
     if (r.has(i)) return f.PENDING;
     const a = e(t, ...o);
@@ -106,15 +107,14 @@ async function d(e, t) {
     }
   })(e, t);
   if (!o) return;
-  const s = e.get(r.FileSystem),
-    a = i.join(o, ".git", "config"),
-    c =
-      null !==
-        (n = getRepoUrlFromConfigText((await s.readFile(a)).toString())) &&
-      undefined !== n
-        ? n
-        : "",
-    l = parseRepoUrl(c);
+  const s = e.get(r.FileSystem);
+  const a = i.join(o, ".git", "config");
+  const c =
+    null !== (n = getRepoUrlFromConfigText((await s.readFile(a)).toString())) &&
+    undefined !== n
+      ? n
+      : "";
+  const l = parseRepoUrl(c);
   return undefined === l
     ? {
         baseFolder: o,
@@ -148,13 +148,13 @@ function parseRepoUrl(e) {
 }
 function getRepoUrlFromConfigText(e) {
   var t;
-  const n = /^\s*\[\s*remote\s+"((\\\\|\\"|[^\\"])+)"/,
-    r = /^\s*\[remote.([^"\s]+)/,
-    o = /^\s*url\s*=\s*([^\s#;]+)/,
-    i = /^\s*\[/;
-  let s,
-    a,
-    c = !1;
+  const n = /^\s*\[\s*remote\s+"((\\\\|\\"|[^\\"])+)"/;
+  const r = /^\s*\[remote.([^"\s]+)/;
+  const o = /^\s*url\s*=\s*([^\s#;]+)/;
+  const i = /^\s*\[/;
+  let s;
+  let a;
+  let c = !1;
   for (const l of e.split("\n"))
     if (c && undefined !== s) {
       s += l;

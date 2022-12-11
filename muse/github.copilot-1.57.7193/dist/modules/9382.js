@@ -1,13 +1,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
-var r = require(9958),
-  RemoteDependencyDataConstants = (function () {
-    function e() {}
-    e.TYPE_HTTP = "Http";
-    e.TYPE_AI = "Http (tracked component)";
-    return e;
-  })();
+var r = require(9958);
+var RemoteDependencyDataConstants = (function () {
+  function e() {}
+  e.TYPE_HTTP = "Http";
+  e.TYPE_AI = "Http (tracked component)";
+  return e;
+})();
 exports.RemoteDependencyDataConstants = RemoteDependencyDataConstants;
 exports.domainSupportsProperties = function (e) {
   return (

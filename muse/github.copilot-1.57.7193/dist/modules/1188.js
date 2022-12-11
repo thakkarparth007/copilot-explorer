@@ -11,7 +11,12 @@ H.prototype.unsortedForEach = function (e, t) {
   this._array.forEach(e, t);
 };
 H.prototype.add = function (e) {
-  var t, n, o, i, s, a;
+  var t;
+  var n;
+  var o;
+  var i;
+  var s;
+  var a;
   n = e;
   o = (t = this._last).generatedLine;
   i = n.generatedLine;

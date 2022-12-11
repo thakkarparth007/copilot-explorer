@@ -1,4 +1,11 @@
-var r, o, i, s, a, c, l, u;
+var r;
+var o;
+var i;
+var s;
+var a;
+var c;
+var l;
+var u;
 u = require(8249);
 require(2783);
 require(9824);
@@ -16,16 +23,23 @@ l = a.EvpKDF = i.extend({
   },
   compute: function (e, t) {
     for (
-      var n,
-        r = this.cfg,
+      r = this.cfg,
         o = r.hasher.create(),
         i = s.create(),
         a = i.words,
         c = r.keySize,
-        l = r.iterations;
+        l = r.iterations,
+        undefined;
       a.length < c;
 
     ) {
+      var n;
+      var r;
+      var o;
+      var i;
+      var a;
+      var c;
+      var l;
       if (n) {
         o.update(n);
       }

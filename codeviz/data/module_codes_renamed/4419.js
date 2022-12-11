@@ -9,21 +9,21 @@ exports.LiveOpenAIFetcher =
   exports.getRequestId =
   exports.CopilotUiKind =
     undefined;
-const r = require("util"),
-  M_copilot_github_auth_stuff = require("copilot-github-auth-stuff"),
-  M_async_iterable_utils_NOTSURE = require("async-iterable-utils"),
-  M_config_stuff = require("config-stuff"),
-  M_task_NOTSURE = require("task"),
-  M_ghost_text_debouncer_NOTSURE = require("ghost-text-debouncer"),
-  M_logging_utils = require("logging-utils"),
-  M_helix_fetcher_and_network_stuff = require("helix-fetcher-and-network-stuff"),
-  M_status_reporter_NOTSURE = require("status-reporter"),
-  M_background_context_provider = require("background-context-provider"),
-  M_repetition_filter_NOTSURE = require("repetition-filter"),
-  M_telemetry_stuff = require("telemetry-stuff"),
-  M_openai_choices_utils = require("openai-choices-utils"),
-  M_sse_utils_NOTSURE = require("sse-utils"),
-  _ = new M_logging_utils.Logger(M_logging_utils.LogLevel.INFO, "fetch");
+const M_util = require("util");
+const M_copilot_github_auth_stuff = require("copilot-github-auth-stuff");
+const M_async_iterable_utils_maybe = require("async-iterable-utils");
+const M_config_stuff = require("config-stuff");
+const M_task_maybe = require("task");
+const M_ghost_text_debouncer_maybe = require("ghost-text-debouncer");
+const M_logging_utils = require("logging-utils");
+const M_helix_fetcher_and_network_stuff = require("helix-fetcher-and-network-stuff");
+const M_status_reporter_maybe = require("status-reporter");
+const M_background_context_provider = require("background-context-provider");
+const M_repetition_filter_maybe = require("repetition-filter");
+const M_telemetry_stuff = require("telemetry-stuff");
+const M_openai_choices_utils = require("openai-choices-utils");
+const M_sse_utils_maybe = require("sse-utils");
+const _ = new M_logging_utils.Logger(M_logging_utils.LogLevel.INFO, "fetch");
 var y;
 function getRequestId(e, t) {
   return {
@@ -52,7 +52,7 @@ class OpenAIFetcher {}
 function postProcessChoices(e, t) {
   return null != t && t
     ? e
-    : M_async_iterable_utils_NOTSURE.asyncIterableFilter(
+    : M_async_iterable_utils_maybe.asyncIterableFilter(
         e,
         async (e) => e.completionText.trim().length > 0
       );
@@ -61,9 +61,9 @@ exports.OpenAIFetcher = OpenAIFetcher;
 exports.postProcessChoices = postProcessChoices;
 exports.LiveOpenAIFetcher = class extends OpenAIFetcher {
   async fetchAndStreamCompletions(e, t, n, r, o) {
-    const s = e.get(M_status_reporter_NOTSURE.StatusReporter),
-      a = "completions",
-      c = await this.fetchWithParameters(e, a, t, o);
+    const s = e.get(M_status_reporter_maybe.StatusReporter);
+    const a = "completions";
+    const c = await this.fetchWithParameters(e, a, t, o);
     if ("not-sent" === c)
       return {
         type: "canceled",
@@ -98,9 +98,9 @@ exports.LiveOpenAIFetcher = class extends OpenAIFetcher {
     return {
       type: "success",
       choices: postProcessChoices(
-        M_async_iterable_utils_NOTSURE.asyncIterableMap(
-          M_sse_utils_NOTSURE.processSSE(e, c, r, n, o),
-          async (t) => M_sse_utils_NOTSURE.prepareSolutionForReturn(e, t, n)
+        M_async_iterable_utils_maybe.asyncIterableMap(
+          M_sse_utils_maybe.processSSE(e, c, r, n, o),
+          async (t) => M_sse_utils_maybe.prepareSolutionForReturn(e, t, n)
         ),
         t.allowEmptyChoices
       ),
@@ -118,25 +118,22 @@ exports.LiveOpenAIFetcher = class extends OpenAIFetcher {
   async fetchWithParameters(e, t, n, i) {
     var g;
     const _ = M_config_stuff.getLanguageConfig(
+      e,
+      M_config_stuff.ConfigKey.Stops
+    );
+    const b = await e.get(M_task_maybe.Features).disableLogProb();
+    const x = {
+      prompt: n.prompt.prefix,
+      suffix: n.prompt.suffix,
+      max_tokens: M_config_stuff.getConfig(
         e,
-        M_config_stuff.ConfigKey.Stops
+        M_config_stuff.ConfigKey.SolutionLength
       ),
-      b = await e.get(M_task_NOTSURE.Features).disableLogProb(),
-      x = {
-        prompt: n.prompt.prefix,
-        suffix: n.prompt.suffix,
-        max_tokens: M_config_stuff.getConfig(
-          e,
-          M_config_stuff.ConfigKey.SolutionLength
-        ),
-        temperature: M_openai_choices_utils.getTemperatureForSamples(
-          e,
-          n.count
-        ),
-        top_p: M_config_stuff.getConfig(e, M_config_stuff.ConfigKey.TopP),
-        n: n.count,
-        stop: _,
-      };
+      temperature: M_openai_choices_utils.getTemperatureForSamples(e, n.count),
+      top_p: M_config_stuff.getConfig(e, M_config_stuff.ConfigKey.TopP),
+      n: n.count,
+      stop: _,
+    };
     if (!n.requestLogProbs && b) {
       x.logprobs = 2;
     }
@@ -146,9 +143,9 @@ exports.LiveOpenAIFetcher = class extends OpenAIFetcher {
     }
     if (
       [
-        M_repetition_filter_NOTSURE.RepetitionFilterMode.PROXY,
-        M_repetition_filter_NOTSURE.RepetitionFilterMode.BOTH,
-      ].includes(await e.get(M_task_NOTSURE.Features).repetitionFilterMode())
+        M_repetition_filter_maybe.RepetitionFilterMode.PROXY,
+        M_repetition_filter_maybe.RepetitionFilterMode.BOTH,
+      ].includes(await e.get(M_task_maybe.Features).repetitionFilterMode())
     ) {
       x.feature_flags = [
         ...(null !== (g = x.feature_flags) && undefined !== g ? g : []),
@@ -166,8 +163,8 @@ exports.LiveOpenAIFetcher = class extends OpenAIFetcher {
         ),
         await (function (e, t, n, o, i, s, a, p, h) {
           var m;
-          const g = e.get(M_status_reporter_NOTSURE.StatusReporter),
-            _ = r.format("%s/%s", n, o);
+          const g = e.get(M_status_reporter_maybe.StatusReporter);
+          const _ = M_util.format("%s/%s", n, o);
           if (!a)
             return void M_logging_utils.logger.error(
               e,
@@ -190,15 +187,15 @@ exports.LiveOpenAIFetcher = class extends OpenAIFetcher {
             }
           b.properties.headerRequestId = i;
           M_telemetry_stuff.telemetry(e, "request.sent", b);
-          const x = M_telemetry_stuff.now(),
-            E = (function (e) {
-              switch (e) {
-                case y.GhostText:
-                  return "copilot-ghost";
-                case y.Panel:
-                  return "copilot-panel";
-              }
-            })(p);
+          const x = M_telemetry_stuff.now();
+          const E = (function (e) {
+            switch (e) {
+              case y.GhostText:
+                return "copilot-ghost";
+              case y.Panel:
+                return "copilot-panel";
+            }
+          })(p);
           return M_helix_fetcher_and_network_stuff.postRequest(
             e,
             _,
@@ -229,15 +226,18 @@ exports.LiveOpenAIFetcher = class extends OpenAIFetcher {
               );
               M_logging_utils.logger.debug(e, `prompt: ${JSON.stringify(t)}`);
               M_telemetry_stuff.telemetry(e, "request.response", b);
-              const i = n.headers.get("x-copilot-delay"),
-                s = i ? parseInt(i, 10) : 0;
+              const i = n.headers.get("x-copilot-delay");
+              const s = i ? parseInt(i, 10) : 0;
               e.get(
-                M_ghost_text_debouncer_NOTSURE.GhostTextDebounceManager
+                M_ghost_text_debouncer_maybe.GhostTextDebounceManager
               ).extraDebounceMs = s;
               return n;
             })
             .catch((t) => {
-              var n, r, o, i;
+              var n;
+              var r;
+              var o;
+              var i;
               if (M_helix_fetcher_and_network_stuff.isAbortError(t)) throw t;
               g.setWarning();
               const s = b.extendedBy({

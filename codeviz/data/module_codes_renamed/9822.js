@@ -1,20 +1,20 @@
-const r = process.binding("async_wrap"),
-  o = r.Providers.TIMERWRAP,
-  i = {
-    nextTick: require("next-tick-hook"),
-    promise: require("bluebird-promise-hooks"),
-    timers: require("timers-hook"),
-  },
-  s = new Set();
+const r = process.binding("async_wrap");
+const o = r.Providers.TIMERWRAP;
+const i = {
+  nextTick: require("next-tick-hook"),
+  promise: require("bluebird-promise-hooks"),
+  timers: require("timers-hook"),
+};
+const s = new Set();
 function a() {
   this.enabled = !1;
   this.counter = 0;
 }
 function c() {
-  const e = (this.initFns = []),
-    t = (this.preFns = []),
-    n = (this.postFns = []),
-    r = (this.destroyFns = []);
+  const e = (this.initFns = []);
+  const t = (this.preFns = []);
+  const n = (this.postFns = []);
+  const r = (this.destroyFns = []);
   this.init = function (t, n, r, i) {
     if (n !== o) for (const o of e) o(t, this, n, r, i);
     else s.add(t);

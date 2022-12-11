@@ -1,32 +1,32 @@
 Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
-var M_channel_NOTSURE = require("channel"),
-  o = require("events");
+var M_channel_maybe = require("channel");
+var M_events = require("events");
 exports.postgres6 = {
   versionSpecifier: "6.*",
   patch: function (e, t) {
-    var n = e.Client.prototype.query,
-      i = "__diagnosticOriginalFunc";
+    var n = e.Client.prototype.query;
+    var i = "__diagnosticOriginalFunc";
     e.Client.prototype.query = function (e, t, s) {
-      var a,
-        c = {
-          query: {},
-          database: {
-            host: this.connectionParameters.host,
-            port: this.connectionParameters.port,
-          },
-          result: null,
-          error: null,
-          duration: 0,
-          time: new Date(),
+      var a;
+      var c = {
+        query: {},
+        database: {
+          host: this.connectionParameters.host,
+          port: this.connectionParameters.port,
         },
-        l = process.hrtime();
+        result: null,
+        error: null,
+        duration: 0,
+        time: new Date(),
+      };
+      var l = process.hrtime();
       function u(e) {
         if (e && e[i]) {
           e = e[i];
         }
-        var t = M_channel_NOTSURE.channel.bindToContext(function (t, n) {
+        var t = M_channel_maybe.channel.bindToContext(function (t, n) {
           var i = process.hrtime(l);
           c.result = n && {
             rowCount: n.rowCount,
@@ -34,10 +34,10 @@ exports.postgres6 = {
           };
           c.error = t;
           c.duration = Math.ceil(1e3 * i[0] + i[1] / 1e6);
-          M_channel_NOTSURE.channel.publish("postgres", c);
+          M_channel_maybe.channel.publish("postgres", c);
           if (t) {
             if (e) return e.apply(this, arguments);
-            a && a instanceof o.EventEmitter && a.emit("error", t);
+            a && a instanceof M_events.EventEmitter && a.emit("error", t);
           } else e && e.apply(this, arguments);
         });
         try {
@@ -103,29 +103,29 @@ exports.postgres6 = {
 exports.postgres7 = {
   versionSpecifier: ">=7.* <=8.*",
   patch: function (e, t) {
-    var n = e.Client.prototype.query,
-      i = "__diagnosticOriginalFunc";
+    var n = e.Client.prototype.query;
+    var i = "__diagnosticOriginalFunc";
     e.Client.prototype.query = function (e, t, s) {
-      var a,
-        c = this,
-        l = !!s,
-        u = {
-          query: {},
-          database: {
-            host: this.connectionParameters.host,
-            port: this.connectionParameters.port,
-          },
-          result: null,
-          error: null,
-          duration: 0,
-          time: new Date(),
+      var a;
+      var c = this;
+      var l = !!s;
+      var u = {
+        query: {},
+        database: {
+          host: this.connectionParameters.host,
+          port: this.connectionParameters.port,
         },
-        d = process.hrtime();
+        result: null,
+        error: null,
+        duration: 0,
+        time: new Date(),
+      };
+      var d = process.hrtime();
       function p(e) {
         if (e && e[i]) {
           e = e[i];
         }
-        var t = M_channel_NOTSURE.channel.bindToContext(function (t, n) {
+        var t = M_channel_maybe.channel.bindToContext(function (t, n) {
           var i = process.hrtime(d);
           u.result = n && {
             rowCount: n.rowCount,
@@ -133,10 +133,10 @@ exports.postgres7 = {
           };
           u.error = t;
           u.duration = Math.ceil(1e3 * i[0] + i[1] / 1e6);
-          M_channel_NOTSURE.channel.publish("postgres", u);
+          M_channel_maybe.channel.publish("postgres", u);
           if (t) {
             if (e) return e.apply(this, arguments);
-            a && a instanceof o.EventEmitter && a.emit("error", t);
+            a && a instanceof M_events.EventEmitter && a.emit("error", t);
           } else e && e.apply(this, arguments);
         });
         try {
@@ -217,6 +217,6 @@ exports.postgres7 = {
   },
 };
 exports.enable = function () {
-  M_channel_NOTSURE.channel.registerMonkeyPatch("pg", exports.postgres6);
-  M_channel_NOTSURE.channel.registerMonkeyPatch("pg", exports.postgres7);
+  M_channel_maybe.channel.registerMonkeyPatch("pg", exports.postgres6);
+  M_channel_maybe.channel.registerMonkeyPatch("pg", exports.postgres7);
 };

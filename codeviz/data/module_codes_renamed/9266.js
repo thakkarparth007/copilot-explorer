@@ -1,7 +1,7 @@
-var M_parse_url_NOTSURE = require("parse-url"),
-  M_is_ssh_NOTSURE = require("is-ssh");
+var M_parse_url_maybe = require("parse-url");
+var M_is_ssh_maybe = require("is-ssh");
 module.exports = function (e) {
-  var t = M_parse_url_NOTSURE(e);
+  var t = M_parse_url_maybe(e);
   t.token = "";
   if ("x-oauth-basic" === t.password) {
     t.token = t.user;
@@ -11,8 +11,8 @@ module.exports = function (e) {
     }
   }
   if (
-    M_is_ssh_NOTSURE(t.protocols) ||
-    (0 === t.protocols.length && M_is_ssh_NOTSURE(e))
+    M_is_ssh_maybe(t.protocols) ||
+    (0 === t.protocols.length && M_is_ssh_maybe(e))
   ) {
     t.protocol = "ssh";
   } else {

@@ -1,5 +1,5 @@
-var r = require(4953),
-  o = [];
+var r = require(4953);
+var o = [];
 exports.qP = function (e) {
   o.forEach(function (t) {
     if ("info" !== e.data.commandObj.command) {

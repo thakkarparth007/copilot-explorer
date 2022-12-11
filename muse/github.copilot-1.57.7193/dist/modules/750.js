@@ -8,23 +8,23 @@ exports.handleGhostTextResultTelemetry =
   exports.telemetryAccepted =
   exports.telemetryShown =
     undefined;
-const r = require(6333),
-  o = require(8965);
+const r = require(6333);
+const o = require(8965);
 exports.telemetryShown = function (e, t, n, o) {
   n.markAsDisplayed();
   const i = o ? `${t}.shownFromCache` : `${t}.shown`;
   r.telemetry(e, i, n);
 };
 exports.telemetryAccepted = function (e, t, n) {
-  const i = t + ".accepted",
-    s = e.get(o.ContextualFilterManager);
+  const i = t + ".accepted";
+  const s = e.get(o.ContextualFilterManager);
   s.previousLabel = 1;
   s.previousLabelTimestamp = Date.now();
   r.telemetry(e, i, n);
 };
 exports.telemetryRejected = function (e, t, n) {
-  const i = t + ".rejected",
-    s = e.get(o.ContextualFilterManager);
+  const i = t + ".rejected";
+  const s = e.get(o.ContextualFilterManager);
   s.previousLabel = 0;
   s.previousLabelTimestamp = Date.now();
   r.telemetry(e, i, n);

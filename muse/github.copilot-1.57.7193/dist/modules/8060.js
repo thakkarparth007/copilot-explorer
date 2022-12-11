@@ -1,27 +1,27 @@
 Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
-var r = require(4953),
-  o = require("events");
+var r = require(4953);
+var o = require("events");
 exports.postgres6 = {
   versionSpecifier: "6.*",
   patch: function (e, t) {
-    var n = e.Client.prototype.query,
-      i = "__diagnosticOriginalFunc";
+    var n = e.Client.prototype.query;
+    var i = "__diagnosticOriginalFunc";
     e.Client.prototype.query = function (e, t, s) {
-      var a,
-        c = {
-          query: {},
-          database: {
-            host: this.connectionParameters.host,
-            port: this.connectionParameters.port,
-          },
-          result: null,
-          error: null,
-          duration: 0,
-          time: new Date(),
+      var a;
+      var c = {
+        query: {},
+        database: {
+          host: this.connectionParameters.host,
+          port: this.connectionParameters.port,
         },
-        l = process.hrtime();
+        result: null,
+        error: null,
+        duration: 0,
+        time: new Date(),
+      };
+      var l = process.hrtime();
       function u(e) {
         if (e && e[i]) {
           e = e[i];
@@ -103,24 +103,24 @@ exports.postgres6 = {
 exports.postgres7 = {
   versionSpecifier: ">=7.* <=8.*",
   patch: function (e, t) {
-    var n = e.Client.prototype.query,
-      i = "__diagnosticOriginalFunc";
+    var n = e.Client.prototype.query;
+    var i = "__diagnosticOriginalFunc";
     e.Client.prototype.query = function (e, t, s) {
-      var a,
-        c = this,
-        l = !!s,
-        u = {
-          query: {},
-          database: {
-            host: this.connectionParameters.host,
-            port: this.connectionParameters.port,
-          },
-          result: null,
-          error: null,
-          duration: 0,
-          time: new Date(),
+      var a;
+      var c = this;
+      var l = !!s;
+      var u = {
+        query: {},
+        database: {
+          host: this.connectionParameters.host,
+          port: this.connectionParameters.port,
         },
-        d = process.hrtime();
+        result: null,
+        error: null,
+        duration: 0,
+        time: new Date(),
+      };
+      var d = process.hrtime();
       function p(e) {
         if (e && e[i]) {
           e = e[i];

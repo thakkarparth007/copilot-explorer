@@ -2,11 +2,11 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.CopilotStatusBar = undefined;
-const r = require("vscode"),
-  o = require(106),
-  i = require(1133),
-  s = require(6333),
-  a = require(3060);
+const r = require("vscode");
+const o = require(106);
+const i = require(1133);
+const s = require(6333);
+const a = require(3060);
 exports.CopilotStatusBar = class {
   constructor(e) {
     this.ctx = e;
@@ -99,13 +99,13 @@ exports.CopilotStatusBar = class {
   }
   toggleStatusBar() {
     var e;
-    const t = this.ctx.get(i.ConfigProvider),
-      n = this.enabled,
-      o =
-        null === (e = r.window.activeTextEditor) || undefined === e
-          ? undefined
-          : e.document.languageId,
-      a = "editor.action.inlineSuggest.hide";
+    const t = this.ctx.get(i.ConfigProvider);
+    const n = this.enabled;
+    const o =
+      null === (e = r.window.activeTextEditor) || undefined === e
+        ? undefined
+        : e.document.languageId;
+    const a = "editor.action.inlineSuggest.hide";
     if (this.showingMessage) return;
     const c = s.TelemetryData.createAndMarkAsIssued({
       languageId: o || "*",
@@ -115,10 +115,10 @@ exports.CopilotStatusBar = class {
       setTimeout(() => {
         this.showingMessage = !1;
       }, 15e3);
-      const e = n ? "Disable" : "Enable",
-        i = `${e} Globally`,
-        l = `${e} for ${o}`,
-        u = o ? [i, l] : [i];
+      const e = n ? "Disable" : "Enable";
+      const i = `${e} Globally`;
+      const l = `${e} for ${o}`;
+      const u = o ? [i, l] : [i];
       r.window
         .showInformationMessage(
           `Would you like to ${n ? "disable" : "enable"} Copilot?`,

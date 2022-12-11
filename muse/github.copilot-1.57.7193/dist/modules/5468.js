@@ -1,10 +1,10 @@
 require("net");
-var debug,
-  o = require("tls"),
-  i = require("http"),
-  s = require("https"),
-  a = require("events"),
-  c = (require("assert"), require("util"));
+var debug;
+var o = require("tls");
+var i = require("http");
+var s = require("https");
+var a = require("events");
+var c = (require("assert"), require("util"));
 function l(e) {
   var t = this;
   t.options = e || {};
@@ -13,7 +13,10 @@ function l(e) {
   t.requests = [];
   t.sockets = [];
   t.on("free", function (e, n, r, o) {
-    for (var i = d(n, r, o), s = 0, a = t.requests.length; s < a; ++s) {
+    for (i = d(n, r, o), s = 0, a = t.requests.length, undefined; s < a; ++s) {
+      var i;
+      var s;
+      var a;
       var c = t.requests[s];
       if (c.host === i.host && c.port === i.port) {
         t.requests.splice(s, 1);
@@ -27,12 +30,12 @@ function l(e) {
 function u(e, t) {
   var n = this;
   l.prototype.createSocket.call(n, e, function (r) {
-    var i = e.request.getHeader("host"),
-      s = p({}, n.options, {
-        socket: r,
-        servername: i ? i.replace(/:.*$/, "") : e.host,
-      }),
-      a = o.connect(0, s);
+    var i = e.request.getHeader("host");
+    var s = p({}, n.options, {
+      socket: r,
+      servername: i ? i.replace(/:.*$/, "") : e.host,
+    });
+    var a = o.connect(0, s);
     n.sockets[n.sockets.indexOf(r)] = a;
     t(a);
   });
@@ -47,10 +50,15 @@ function d(e, t, n) {
     : e;
 }
 function p(e) {
-  for (var t = 1, n = arguments.length; t < n; ++t) {
+  for (t = 1, n = arguments.length, undefined; t < n; ++t) {
+    var t;
+    var n;
     var r = arguments[t];
     if ("object" == typeof r)
-      for (var o = Object.keys(r), i = 0, s = o.length; i < s; ++i) {
+      for (o = Object.keys(r), i = 0, s = o.length, undefined; i < s; ++i) {
+        var o;
+        var i;
+        var s;
         var a = o[i];
         if (undefined !== r[a]) {
           e[a] = r[a];
@@ -85,14 +93,14 @@ exports.httpsOverHttps = function (e) {
 };
 c.inherits(l, a.EventEmitter);
 l.prototype.addRequest = function (e, t, n, r) {
-  var o = this,
-    i = p(
-      {
-        request: e,
-      },
-      o.options,
-      d(t, n, r)
-    );
+  var o = this;
+  var i = p(
+    {
+      request: e,
+    },
+    o.options,
+    d(t, n, r)
+  );
   if (o.sockets.length >= this.maxSockets) {
     o.requests.push(i);
   } else {
@@ -114,8 +122,8 @@ l.prototype.addRequest = function (e, t, n, r) {
   }
 };
 l.prototype.createSocket = function (e, t) {
-  var n = this,
-    o = {};
+  var n = this;
+  var o = {};
   n.sockets.push(o);
   var i = p({}, n.proxyOptions, {
     method: "CONNECT",

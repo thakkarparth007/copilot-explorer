@@ -1,25 +1,25 @@
 module = require.nmd(module);
-var r,
-  o = require("source-map").SourceMapConsumer,
-  i = require("path");
+var M_fs;
+var o = require("source-map").SourceMapConsumer;
+var M_path = require("path");
 try {
-  if ((r = require("fs")).existsSync && r.readFileSync) {
-    r = null;
+  if ((M_fs = require("fs")).existsSync && M_fs.readFileSync) {
+    M_fs = null;
   }
 } catch (e) {}
-var M_buffer_from_NOTSURE = require("buffer-from");
+var M_buffer_from_maybe = require("buffer-from");
 function a(e, t) {
   return e.require(t);
 }
-var c = !1,
-  l = !1,
-  u = !1,
-  d = "auto",
-  p = {},
-  h = {},
-  f = /^data:application\/json[^,]+base64,/,
-  m = [],
-  g = [];
+var c = !1;
+var l = !1;
+var u = !1;
+var d = "auto";
+var p = {};
+var h = {};
+var f = /^data:application\/json[^,]+base64,/;
+var m = [];
+var g = [];
 function _() {
   return (
     "browser" === d ||
@@ -46,13 +46,13 @@ function y(e) {
 var v = y(m);
 function b(e, t) {
   if (!e) return t;
-  var n = i.dirname(e),
-    r = /^\w+:\/\/[^\/]*/.exec(n),
-    o = r ? r[0] : "",
-    s = n.slice(o.length);
+  var n = M_path.dirname(e);
+  var r = /^\w+:\/\/[^\/]*/.exec(n);
+  var o = r ? r[0] : "";
+  var s = n.slice(o.length);
   return o && /^\/\w\:/.test(s)
-    ? (o += "/") + i.resolve(n.slice(o.length), t).replace(/\\/g, "/")
-    : o + i.resolve(n.slice(o.length), t);
+    ? (o += "/") + M_path.resolve(n.slice(o.length), t).replace(/\\/g, "/")
+    : o + M_path.resolve(n.slice(o.length), t);
 }
 m.push(function (e) {
   e = e.trim();
@@ -64,9 +64,9 @@ m.push(function (e) {
   if (e in p) return p[e];
   var t = "";
   try {
-    if (r) {
-      if (r.existsSync(e)) {
-        t = r.readFileSync(e, "utf8");
+    if (M_fs) {
+      if (M_fs.existsSync(e)) {
+        t = M_fs.readFileSync(e, "utf8");
       }
     } else {
       var n = new XMLHttpRequest();
@@ -141,8 +141,8 @@ function E(e) {
     : e;
 }
 function C() {
-  var e,
-    t = "";
+  var e;
+  var t = "";
   if (this.isNative()) t = "native";
   else {
     if (!(e = this.getScriptNameOrSourceURL()) && this.isEval()) {
@@ -159,10 +159,10 @@ function C() {
       }
     }
   }
-  var o = "",
-    i = this.getFunctionName(),
-    s = !0,
-    a = this.isConstructor();
+  var o = "";
+  var i = this.getFunctionName();
+  var s = !0;
+  var a = this.isConstructor();
   if (this.isToplevel() || a) {
     if (a) {
       o += "new " + (i || "<anonymous>");
@@ -219,14 +219,14 @@ function wrapCallSite(e, t) {
   if (e.isNative()) return (t.curPosition = null), e;
   var n = e.getFileName() || e.getScriptNameOrSourceURL();
   if (n) {
-    var r = e.getLineNumber(),
-      o = e.getColumnNumber() - 1,
-      i =
-        /^v(10\.1[6-9]|10\.[2-9][0-9]|10\.[0-9]{3,}|1[2-9]\d*|[2-9]\d|\d{3,}|11\.11)/.test(
-          "object" == typeof process && null !== process ? process.version : ""
-        )
-          ? 0
-          : 62;
+    var r = e.getLineNumber();
+    var o = e.getColumnNumber() - 1;
+    var i =
+      /^v(10\.1[6-9]|10\.[2-9][0-9]|10\.[0-9]{3,}|1[2-9]\d*|[2-9]\d|\d{3,}|11\.11)/.test(
+        "object" == typeof process && null !== process ? process.version : ""
+      )
+        ? 0
+        : 62;
     if (1 === r && o > i && !_() && !e.isEval()) {
       o -= i;
     }
@@ -269,16 +269,21 @@ function k(e, t) {
     h = {};
   }
   for (
-    var n = (e.name || "Error") + ": " + (e.message || ""),
+    n = (e.name || "Error") + ": " + (e.message || ""),
       r = {
         nextPosition: null,
         curPosition: null,
       },
       o = [],
-      i = t.length - 1;
+      i = t.length - 1,
+      undefined;
     i >= 0;
     i--
   ) {
+    var n;
+    var r;
+    var o;
+    var i;
     o.push("\n    at " + wrapCallSite(t[i], r));
     r.nextPosition = r.curPosition;
   }
@@ -288,13 +293,13 @@ function k(e, t) {
 function getErrorSource(e) {
   var t = /\n    at [^(]+ \((.*):(\d+):(\d+)\)/.exec(e.stack);
   if (t) {
-    var n = t[1],
-      o = +t[2],
-      i = +t[3],
-      s = p[n];
-    if (!s && r && r.existsSync(n))
+    var n = t[1];
+    var o = +t[2];
+    var i = +t[3];
+    var s = p[n];
+    if (!s && M_fs && M_fs.existsSync(n))
       try {
-        s = r.readFileSync(n, "utf8");
+        s = M_fs.readFileSync(n, "utf8");
       } catch (e) {
         s = "";
       }
@@ -307,10 +312,10 @@ function getErrorSource(e) {
   return null;
 }
 function P(e) {
-  var t = getErrorSource(e),
-    n = (function () {
-      if ("object" == typeof process && null !== process) return process.stderr;
-    })();
+  var t = getErrorSource(e);
+  var n = (function () {
+    if ("object" == typeof process && null !== process) return process.stderr;
+  })();
   if (n && n._handle && n._handle.setBlocking) {
     n._handle.setBlocking(!0);
   }
@@ -328,36 +333,39 @@ function P(e) {
   }
 }
 g.push(function (e) {
-  var t,
-    n = (function (e) {
-      var t;
-      if (_())
-        try {
-          var n = new XMLHttpRequest();
-          n.open("GET", e, !1);
-          n.send(null);
-          t = 4 === n.readyState ? n.responseText : null;
-          var r =
-            n.getResponseHeader("SourceMap") ||
-            n.getResponseHeader("X-SourceMap");
-          if (r) return r;
-        } catch (e) {}
-      t = v(e);
-      for (
-        var o,
-          i,
-          s =
-            /(?:\/\/[@#][\s]*sourceMappingURL=([^\s'"]+)[\s]*$)|(?:\/\*[@#][\s]*sourceMappingURL=([^\s*'"]+)[\s]*(?:\*\/)[\s]*$)/gm;
-        (i = s.exec(t));
+  var t;
+  var n = (function (e) {
+    var t;
+    if (_())
+      try {
+        var n = new XMLHttpRequest();
+        n.open("GET", e, !1);
+        n.send(null);
+        t = 4 === n.readyState ? n.responseText : null;
+        var r =
+          n.getResponseHeader("SourceMap") ||
+          n.getResponseHeader("X-SourceMap");
+        if (r) return r;
+      } catch (e) {}
+    t = v(e);
+    for (
+      s =
+        /(?:\/\/[@#][\s]*sourceMappingURL=([^\s'"]+)[\s]*$)|(?:\/\*[@#][\s]*sourceMappingURL=([^\s*'"]+)[\s]*(?:\*\/)[\s]*$)/gm,
+        undefined;
+      (i = s.exec(t));
 
-      )
-        o = i;
-      return o ? o[1] : null;
-    })(e);
+    ) {
+      var o;
+      var i;
+      var s;
+      o = i;
+    }
+    return o ? o[1] : null;
+  })(e);
   if (!n) return null;
   if (f.test(n)) {
     var r = n.slice(n.indexOf(",") + 1);
-    t = M_buffer_from_NOTSURE(r, "base64").toString();
+    t = M_buffer_from_maybe(r, "base64").toString();
     n = e;
   } else {
     n = b(e, n);
@@ -370,8 +378,8 @@ g.push(function (e) {
       }
     : null;
 });
-var A = m.slice(0),
-  O = g.slice(0);
+var A = m.slice(0);
+var O = g.slice(0);
 exports.wrapCallSite = wrapCallSite;
 exports.getErrorSource = getErrorSource;
 exports.mapSourcePosition = mapSourcePosition;

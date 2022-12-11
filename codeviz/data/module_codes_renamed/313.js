@@ -2,22 +2,22 @@ Object.defineProperty(exports, "__esModule", {
   value: !0,
 });
 exports.assignDefaults = undefined;
-const M_codegen_NOTSURE = require("codegen"),
-  M_ajv_utils_NOTSURE = require("ajv-utils");
+const M_codegen_maybe = require("codegen");
+const M_ajv_utils_maybe = require("ajv-utils");
 function i(e, t, n) {
   const { gen: i, compositeRule: s, data: a, opts: c } = e;
   if (undefined === n) return;
-  const l = M_codegen_NOTSURE._`${a}${M_codegen_NOTSURE.getProperty(t)}`;
+  const l = M_codegen_maybe._`${a}${M_codegen_maybe.getProperty(t)}`;
   if (s)
-    return void M_ajv_utils_NOTSURE.checkStrictMode(
+    return void M_ajv_utils_maybe.checkStrictMode(
       e,
       `default is ignored for: ${l}`
     );
-  let u = M_codegen_NOTSURE._`${l} === undefined`;
+  let u = M_codegen_maybe._`${l} === undefined`;
   if ("empty" === c.useDefaults) {
-    u = M_codegen_NOTSURE._`${u} || ${l} === null || ${l} === ""`;
+    u = M_codegen_maybe._`${u} || ${l} === null || ${l} === ""`;
   }
-  i.if(u, M_codegen_NOTSURE._`${l} = ${M_codegen_NOTSURE.stringify(n)}`);
+  i.if(u, M_codegen_maybe._`${l} = ${M_codegen_maybe.stringify(n)}`);
 }
 exports.assignDefaults = function (e, t) {
   const { properties: n, items: r } = e.schema;

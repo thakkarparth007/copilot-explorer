@@ -1,4 +1,5 @@
-var n, r;
+var n;
+var r;
 Object.defineProperty(exports, "__esModule", {
   value: !0,
 });

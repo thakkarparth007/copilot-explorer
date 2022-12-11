@@ -27,8 +27,8 @@ function i(e, o, i) {
       return void n(new Error().stack);
     }
     if (t(e[o]) && t(i)) {
-      var s = e[o],
-        a = i(s, o);
+      var s = e[o];
+      var a = i(s, o);
       r(a, "__original", s);
       r(a, "__unwrap", function () {
         if (e[o] === a) {
