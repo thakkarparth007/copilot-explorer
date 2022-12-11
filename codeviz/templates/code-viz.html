@@ -355,7 +355,7 @@
                 stabilization: {
                     iterations: 50,
                 },
-                // enabled: false,
+                enabled: false,
             },
             nodes: { font: { size: 14 }},
         };
@@ -457,17 +457,24 @@
 
         window.onpopstate = function (event) {
             if (event.state !== null) {
-                displayModule(event.state.module_id, true);
+                displayModule(event.state.module_id, true, event.state);
             }
         };
 
         let curSelectedModule = undefined;
-        function displayModule(moduleId, dontUpdateHistory) {
+        function displayModule(moduleId, dontUpdateHistory, displayState) {
             if (moduleId === curSelectedModule) {
                 return;
             }
             if (!dontUpdateHistory) {
                 // update url
+                //
+                if (window.history.state && window.history.state.module_id == curSelectedModule) {
+                    window.history.replaceState({
+                        module_id: curSelectedModule,
+                        position: editor.getPosition()
+                    }, '', `#m${curSelectedModule}`);
+                }
                 window.history.pushState({ module_id: moduleId }, '', `#m${moduleId}`);
             }
             network.selectNodes([moduleId]);
@@ -484,6 +491,9 @@
             }
 
             editor.setValue(module_codes_data[moduleId]);
+            editor.setPosition(displayState ? displayState.position : {lineNumber: 1, column: 1});
+            editor.revealPositionInCenter(displayState ? displayState.position : {lineNumber: 1, column: 1});
+            editor.focus();
             displayDescriptions(moduleId);
             // // check if we have any existing monaco model showing this module
             // // else, we need to load the model
