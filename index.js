@@ -219,10 +219,19 @@ function makeModuleReadable(moduleId, moduleCodeRaw) {
             path.replaceWithMultiple(exprStmts);
         },
         UnaryExpression(path) {
-          if (path.node.operator == "void" && path.node.argument.type == "NumericLiteral" && path.node.argument.value == 0) {
-            path.replaceWithSourceString("undefined");
-            return;
-          }
+        //   if (path.node.operator == "void" && path.node.argument.type == "NumericLiteral" && path.node.argument.value == 0) {
+        //     path.replaceWithSourceString("undefined");
+        //     return;
+        //   }
+            if (/Literal$/.test(path.node.argument.type)) {
+                // evaluate constant expressions
+                // get the source code of the expression and use `eval` to evaluate it
+                // replace the expression with the result of the evaluation
+
+                let source = path.getSource();
+                let result = eval(source);
+                path.replaceWithSourceString(result + "");
+            }
         },
         VariableDeclaration(path) {
             // change `const a = 1, b = 2;` to `const a = 1; const b = 2;`

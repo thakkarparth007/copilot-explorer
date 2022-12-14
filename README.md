@@ -54,6 +54,11 @@ Some interesting modules I've found so far (most interesting at the **bottom**):
 
 - **Telemetry**:
   - [7017 seems to track changes after accept/reject of suggestions](codeviz/templates/code-viz.html#m7017).
+    - The most interesting thing to me here was that they measure the effectiveness of the insertion at 5 points -- 15s/30s/2min/5min/10min after the suggestion was accepted. For rejection, they only capture after 30s (other timestamps are ignored).
+    - At these timestamps, they measure how much of the suggestion was still present in a window around the insertion point.
+      - The above is quantified in terms of edit-distance (at character level and at token-level. A token is most likely just stuff separated by spaces or something like that. Details can be found in [5120](codeviz/templates/code-viz.html#m5120))
+      - Haven't fully understood the details of the measurement. Will need to play around a bit more to understand this.
+    - Also, at the 30s timestamp, the telemetry calls "captureCode" (regardless of whether the suggestion was accepted or rejected). Here they basically look at the insertion point, extract the prompt that'd be used to make a suggestion at this insertion point (idk why they re-extract instead of caching it), and also extract stuff after the insertion point till some length they compute. Haven't yet understood till where they look after the insertion point.
   - [6333 appears to be the main Telemetry code](codeviz/templates/code-viz.html#m6333)
 
 - **Network**:
