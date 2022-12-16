@@ -9,40 +9,40 @@
             padding: 0;
         }
         #main {
-            display: flex;
-            flex-direction: row;
+            /* display: flex; */
+            /* flex-direction: row; */
             margin: 0;
             padding: 0;
             height: 100vh;
             width: 100vw;
         }
+        #left-panel {
+            position: relative;
+        }
         #network-overlay {
             position: absolute;
             top: 0;
             left: 0;
-            width: 35%;
-            height: 35px;
+            /* width: 35%; */
+            /* height: 35px; */
             z-index: 100;
         }
         #mynetwork {
-            width: 35%;
+            /* width: 35%; */
             height: 100vh;
             border-right: 1px solid darkgray;
         }
-        #info-panel {
-            width: 65%;
-            height: 100vh;
-            display: flex;
-        }
         #code-block {
-            width: 75%;
-            height: 100%;
+            /* width: 75%; */
+            height: 100vh;
             overflow: auto;
         }
         #module-info-wrapper {
-            width: 25%;
-            height: 100%;
+            /* width: 25%; */
+            height: 100vh;
             overflow: auto;
+            padding: 5px;
+            box-sizing: border-box;
         }
         .module-category-color-box {
             width: 10px;
@@ -63,6 +63,29 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
+        .split-grid {
+            display: grid;
+            /* grid-template-columns: 1fr 10px 1fr 10px 1fr; */
+            grid-template-columns: 1fr 5px 2fr 5px 0.75fr;
+        }
+
+        .gutter-col {
+            grid-row: 1/-1;
+            cursor: col-resize;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==);
+            background-color: rgb(229, 231, 235);
+            background-repeat: no-repeat;
+            background-position: 50% center;
+            width: 5px;
+        }
+
+        .gutter-col-1 {
+            grid-column: 2;
+        }
+
+        .gutter-col-3 {
+            grid-column: 4;
+        }
     </style>
 
     <!-- Select2 -->
@@ -74,20 +97,24 @@
 </head>
 
 <body>
-    <div id="main">
-        <div id="network-overlay">
-            <!-- <name for="hide-uninteresting-modules">Hide uninteresting modules:</name> -->
-            <!-- <input type="checkbox" id="hide-uninteresting-modules" checked /> -->
-            <fieldset id="show-modules-with-category-fieldset">
-                <legend>Show selected module types:</legend>
-                <!-- <input type="checkbox" name="show-modules-with-category" value="$unk$"> -->
-            </fieldset>
+    <div id="main" class="split-grid">
+        <div id="left-panel">
+            <div id="network-overlay">
+                <!-- <name for="hide-uninteresting-modules">Hide uninteresting modules:</name> -->
+                <!-- <input type="checkbox" id="hide-uninteresting-modules" checked /> -->
+                <fieldset id="show-modules-with-category-fieldset">
+                    <legend>Show selected module types:</legend>
+                    <!-- <input type="checkbox" name="show-modules-with-category" value="$unk$"> -->
+                </fieldset>
+            </div>
+            <div id="mynetwork"></div>
         </div>
-        <div id="mynetwork"></div>
-        <div id="info-panel">
+        <div class="gutter-col gutter-col-1"></div>
+        <!-- <div id="info-panel"> -->
             <div id="code-block">
 
             </div>
+            <div class="gutter-col gutter-col-3"></div>
             <div id="module-info-wrapper">
                 <name for="module-dropdown">Module</name>
                 <select id="module-dropdown">
@@ -107,7 +134,7 @@
                     Module info
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
     </div>
     <script type="text/javascript" src="../data/module_deps.js"></script>
     <script type="text/javascript" src="../data/module_codes_renamed.js"></script>
@@ -118,6 +145,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Select2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <!-- Split-grid.js -->
+    <script src="https://unpkg.com/split-grid/dist/split-grid.js"></script>
+    <script type="text/javascript">
+        Split({
+            columnGutters: [{
+                track: 1,
+                element: document.querySelector('.gutter-col-1'),
+            }, {
+                track: 3,
+                element: document.querySelector('.gutter-col-3'),
+            }],
+        })
+    </script>
     <script type="text/javascript">
         // load and store annotations
         function getAnnotations(module_id) {
