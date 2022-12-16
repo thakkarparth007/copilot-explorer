@@ -42,14 +42,14 @@ Some interesting modules I've found so far (most interesting at the **bottom**):
   There appear to be two main workflows for completion:
   - Inline-Completions (the stuff you most commonly use, where copilot autocompletes as you type).
     - [3197 appears to be the main module for this](codeviz/templates/code-viz.html#m3197). This is imported by the main module and it registers an inline-completion-provider. The `class v` there is actually the InlineCompletionItemProvider.
-      - I've manually added some comments and renamed some variables to make it easier to understand. You can see the modified code [here](codeviz/data/manually_annotated_modules/3197.js).
+      <!-- ~- I've manually added some comments and renamed some variables to make it easier to understand. You can see the modified code [here](codeviz/data/manually_annotated_modules/3197.js).~ -->
     - [9334 appears to be the module that contains the core logic for inline completion. It defines `getGhostText`.](codeviz/templates/code-viz.html#m9334). Depends on lots of other copilot modules. Only two hops away from the main module. The core functionality appears to the following:
       - Use cached suggestions if available
       - If user is typing, provide suggestions that match the typed text
       - Make network call if necessary, while waiting for debouncing period to pass
       - Take care of cases where user is "cycling" through choices specially. Didn't pay much attention here.
       - A lot of recording of telemetry data
-      - You can read my commented version of the code [here](codeviz/data/manually_annotated_modules/9334.js).
+      <!-- - You can read my commented version of the code [here](codeviz/data/manually_annotated_modules/9334.js). -->
     - [2218 is a simple helper module that seems relevant too](codeviz/templates/code-viz.html#m2218)
   
   - Panel Completion (the stuff shown if you press ctrl+enter)

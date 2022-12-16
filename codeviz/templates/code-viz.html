@@ -111,6 +111,7 @@
     </div>
     <script type="text/javascript" src="../data/module_deps.js"></script>
     <script type="text/javascript" src="../data/module_codes_renamed.js"></script>
+    <script type="text/javascript" src="../data/annotated_module_codes.js"></script>
     <script type="text/javascript" src="../data/module_categories.js"></script>
     <script type="text/javascript" src="../data/gold_and_predicted_annotations.js"></script>
     <!-- <script type="text/javascript" src="../data/predicted_annotations.js"></script> -->
@@ -290,7 +291,8 @@
         );
         // update code from local storage
         for (let node of raw_nodes) {
-            module_codes_data[node.id] = getAnnotation(node.id, "code") || module_codes_data[node.id];
+            //module_codes_data[node.id] = getAnnotation(node.id, "code") || module_codes_data[node.id];
+            module_codes_data[node.id] = getAnnotation(node.id, "code") || (annotated_module_codes_data[node.id] || module_codes_data[node.id]);
         }
         var nodes = new vis.DataSet(raw_nodes);
         // add colors
