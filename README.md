@@ -6,7 +6,7 @@ It's work in progress. See the [Journal](./Journal.md) for details on what's bee
 
 ## Screenshots
 
-![Screenshot 1](./images/screenshot-v0.png)
+![Screenshot 1](./images/screenshot-v1.png)
 
 ## Just show me the tool
 
@@ -19,7 +19,15 @@ The webpage shows 3 panels:
 - Middle panel shows the prettified code of the selected module. By default the main module is selected.
 - Right panel shows some information about the model (specifically, the module id, exports, imports and modules that import this module).
 
-The modules don't have names because these have been extracted by a bit of deobfuscation, and the original obfuscated code didn't have names. I'm working on a way to provide reasonable names to the modules. Currently I have a hacky system that allows manual renaming of modules, but it's not synced. Your edits do stay on local storage though.
+<!-- The modules don't have names because these have been extracted by a bit of deobfuscation, and the original obfuscated code didn't have names. I'm working on a way to provide reasonable names to the modules. Currently I have a hacky system that allows manual renaming of modules, but it's not synced. Your edits do stay on local storage though. -->
+
+**Module Names**: I've also named modules -- some of them manually, while most of them were automatically named using codex in a few-shot manner. Some names are not unique, and I've not dealt with that. IDs of every module are unique though.
+
+**Module Categories**: Ive similarly also categorized modules automatically (again using codex and a bit of manual labeling). The categories are not perfect, but they serve as a very good guideline for segregating modules.
+
+Some of the modules were quite interesting, so I manually annotated them (added comments and renamed variables) to make them easier to understand. These are now directly viewable in the middle panel.
+
+If you want to start browsing, here are some interesting starting points:
 
 ### Interesting modules
 
@@ -96,3 +104,5 @@ Steps 2 and 3 are optional. They're only needed if you modify the extension code
 ## Support and Warranty
 
 lmao
+
+But seriously, this is all on a best-effort basis, I might've misunderstood a few things and so the conclusions might be slightly off. If you find something, do raise an issue or a PR.
