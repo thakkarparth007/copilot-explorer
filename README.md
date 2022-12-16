@@ -15,7 +15,7 @@ You can access a version of the tool [here](codeviz/templates/code-viz.html).
 This explores version 1.57.7193 of the VSCode extension of Copilot.
 
 The webpage shows 3 panels:
-- Left most shows the module-level callgraph of the extension. The dependencies are based on imports.
+- Left most shows the module-level dependency graph of the extension. The edges are based on imports.
 - Middle panel shows the prettified code of the selected module. By default the main module is selected.
 - Right panel shows some information about the model (specifically, the module id, exports, imports and modules that import this module).
 
@@ -23,9 +23,9 @@ The webpage shows 3 panels:
 
 **Module Names**: I've also named modules -- some of them manually, while most of them were automatically named using codex in a few-shot manner. Some names are not unique, and I've not dealt with that. IDs of every module are unique though.
 
-**Module Categories**: Ive similarly also categorized modules automatically (again using codex and a bit of manual labeling). The categories are not perfect, but they serve as a very good guideline for segregating modules.
+**Module Categories**: I've similarly also categorized modules automatically (again using codex and a bit of manual labeling). The categories are not perfect, but they serve as a very good guideline for segregating modules.
 
-Some of the modules were quite interesting, so I manually annotated them (added comments and renamed variables) to make them easier to understand. These are now directly viewable in the middle panel.
+**Manual annotations:** Some of the modules were quite interesting, so I manually annotated them (added comments and renamed variables) to make them easier to understand. These are now directly viewable in the middle panel. Links below.
 
 If you want to start browsing, here are some interesting starting points:
 
