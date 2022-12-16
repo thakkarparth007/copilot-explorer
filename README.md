@@ -25,12 +25,18 @@ The modules don't have names because these have been extracted by a bit of deobf
 
 Some interesting modules I've found so far (most interesting at the **bottom**):
 - **Prompting**:
-  - [3055 (imported by 2533 and packs a ton of stuff)](codeviz/templates/code-viz.html#m3055)
-    - 3055 was actually a jumbo module that had multiple nested modules in it. I extracted them as top level modules. Each of those modules begins with 3055\<something\>.
-    - e.g., **the actual definition of `getPrompt` is in [3055312](codeviz/templates/code-viz.html#m3055312)**
-  - [2388 seems to identify the repo to which the code belongs, and also suggests Copilot has different modes of completion: "OPEN_COPILOT", "TODO_QUICK_FIX", "UNKNOWN_FUNCTION_QUICK_FIX"](codeviz/templates/code-viz.html#m2388)
-  - [9189 (does something with neighbouring tabs)](codeviz/templates/code-viz.html#m9189)  
-  - [2533 (`parsesWithoutError`, `getPrompt`, `getNodeStart`, ... all useful stuff)](codeviz/templates/code-viz.html#m2533)
+  - This is the most interesting part of the codebase to me. This is what brings all the smarts to Copilot apart from the model itself. The reason copilot can get function names right often is because of this stuff.
+  - The following modules have been manually annotated and constitute most of all the magic:
+      - [4969](codeviz/templates/code-viz.html#m4969): prompt-extractor.js -- the entry point module
+      - [3055312](codeviz/templates/code-viz.html#m3055312): get-prompt-actual.js -- this has the core logic for prompt extraction
+      - [3055670](codeviz/templates/code-viz.html#m3055670): sibling-function-fetcher.js -- this has the logic for extracting sibling functions
+      - [3055456](codeviz/templates/code-viz.html#m3055456): prompt-choices-and-wishlist.js -- this has the logic for extracting prompt choices and wishlist
+      - [3055125](codeviz/templates/code-viz.html#m3055125): neighbor-snippet-selector.js -- this has the logic for extracting neighbor snippets
+      - [3055179](codeviz/templates/code-viz.html#m3055179): imports-and-docs-extractor.js (didn't really annotate but looks simple enough and only implemented for typescript)
+  - For many languages, copilot calls the tree-sitter parser via WASM. There are some wrappers around that in [464](codeviz/templates/code-viz.html#m464).
+  - [2388 (described below) tweaks the prompt a bit depending on different completion modes. Copilot has 3 modes of completion (in copilot panel flow): "OPEN_COPILOT", "TODO_QUICK_FIX", "UNKNOWN_FUNCTION_QUICK_FIX"](codeviz/templates/code-viz.html#m2388)
+
+  - Note that there are some duplicate modules, idk why but I'm guessing webpack does something. So many modules starting with 3055... will have copies with other ids.
 
 - **Completion**:
   There appear to be two main workflows for completion:
@@ -62,13 +68,17 @@ Some interesting modules I've found so far (most interesting at the **bottom**):
   - [6333 appears to be the main Telemetry code](codeviz/templates/code-viz.html#m6333)
 
 - **Network**:
-  - [4419 (OpenAIFetcher) - this seems to be where the network communication takes place](codeviz/templates/code-viz.html#m4419)
+  - [4419 (OpenAIFetcher) - this seems to be where the network communication with the model takes place](codeviz/templates/code-viz.html#m4419)
       - [2279 (HelixFetcher. Seems to be an important library component mostly relevant to network)](codeviz/templates/code-viz.html#m2279)
       - [5413 (seems to control debouncing)](codeviz/templates/code-viz.html#m5413)
 
 - **Misc**:
   - [9496 (`vscode` - things that import it are likely important)](codeviz/templates/code-viz.html#m9496)
   - [1862 (VSCodeCopilotTokenManager! - auth stuff)](codeviz/templates/code-viz.html#m1862)
+
+- **Config/Experiments**:
+  - Copilot has some variables that are controlled via A/B tests I think. I haven't fully explored this stuff yet, but I do plan to.
+  - The main module for this is [9189](codeviz/templates/code-viz.html#m9189). Take a look at the "Features" class.
 
 ## How to run locally
 

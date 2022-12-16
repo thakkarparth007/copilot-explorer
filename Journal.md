@@ -122,3 +122,16 @@ I rewrote a bunch of m2388 code because that seemed to be important and my auto-
   - suffixMatchThreshold
   - getHiddenConfig
   Should maybe check this out and also the experiments/tasks module
+
+## Dec 16:
+
+- Finally annotated all the prompt-extraction logic.
+- This took a lot of work, and should ideally be automated. Should happen sometime in future.
+- Following modules are annotated:
+  - 4969: prompt-extractor.js -- the entry point module
+  - 3055312: get-prompt-actual.js -- this has the core logic for prompt extraction
+  - 3055670: sibling-function-fetcher.js -- this has the logic for extracting sibling functions
+  - 3055456: prompt-choices-and-wishlist.js -- this has the logic for extracting prompt choices and wishlist
+  - 3055125: neighbor-snippet-selector.js -- this has the logic for extracting neighbor snippets
+  - 3055179: imports-and-docs-extractor.js (didn't really annotate but looks simple enough and only implemented for typescript)
+
