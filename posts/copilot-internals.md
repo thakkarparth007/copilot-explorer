@@ -3,46 +3,38 @@
 
 Github Copilot has been incredibly useful to me. It can often magically read my mind and make useful suggestions. The thing that surprised me the most was its ability to correctly "guess" functions/variables from surrounding code -- including from other files. This can only happen, if the copilot extension sends valuable information from surrounding code to the Codex model. I was curious about how it worked, so I decided to take a look at the source code.
 
+In this post, I try to answer specific questions about the internals of Copilot, while also describing some interesting observations I made while combing through the code. I try to provide pointers to the relevant code for almost everything I talk about, so that interested folks can take a look at the code themselves.
+
 <!-- omit in toc -->
-## Reverse Engineering preview
+## Overview
 
-I had performed a very shallow ["reverse engineering"](https://twitter.com/parth007_96/status/1546762772708413440) of the extension couple of months back, but I'd been wanting to do a deeper dive. Finally got around to doing that in the last few weeks. Very roughly, I took the [extension.js](../muse/github.copilot-1.57.7193/dist/extension.js) file included with Copilot, performed some minor [manual changes](../muse/github.copilot-1.57.7193/dist/extension_expanded_v2.js) to ease automatic extraction of modules, wrote a bunch of [AST transforms](../index.js) to "prettify" each module, [named and classified](../codeviz/predict_module_names_and_categories.py) the modules and manually annotated a handful of most interesting modules.
+This post is organized as follows:
 
-The reverse engineered copilot codebase can be explored via this tool I built ([home page](https://thakkarparth007.github.io/copilot-explorer/), [tool itself](https://thakkarparth007.github.io/copilot-explorer/codeviz/templates/code-viz.html)). It might have some rough edges, but is largely usable. The final tool looks like this:
-
-![Copilot-Explorer](../images/screenshot-v1.png)
-
-- [Overview](#overview)
-- [Copilot -- 10,000 feet view](#copilot----10000-feet-view)
-- [Prompt engineering](#prompt-engineering)
+- [Reverse Engineering preview](#reverse-engineering-preview)
+- [Copilot: a 10,000 feet view](#copilot-a-10000-feet-view)
+- [Secret Sauce 1 - Prompt engineering](#secret-sauce-1---prompt-engineering)
   - [What does a prompt look like?](#what-does-a-prompt-look-like)
   - [How is the prompt prepared? A code walkthrough.](#how-is-the-prompt-prepared-a-code-walkthrough)
-  - [A close look at Snippet Extraction](#a-close-look-at-snippet-extraction)
-- [Model Invocation](#model-invocation)
+    - [A close look at Snippet Extraction](#a-close-look-at-snippet-extraction)
+- [Secret Sauce 2 - Model Invocation](#secret-sauce-2---model-invocation)
   - [Inline/GhostText](#inlineghosttext)
     - [Preventing poor requests via Contextual Filter](#preventing-poor-requests-via-contextual-filter)
   - [Copilot Panel](#copilot-panel)
-- [Telemetry](#telemetry)
+- [Secret Sauce 3 - Telemetry](#secret-sauce-3---telemetry)
   - [Question 1: How is the 40% number measured?](#question-1-how-is-the-40-number-measured)
   - [Question 2: Does telemetry data include code snippets?](#question-2-does-telemetry-data-include-code-snippets)
 - [Other random tidbits](#other-random-tidbits)
 - [Onwards](#onwards)
 
-## Overview
+## Reverse Engineering preview
 
-In this post, I will give a general idea of how copilot works and provide a walkthrough of the extension's code.
+I had performed a very shallow ["reverse engineering"](https://twitter.com/parth007_96/status/1546762772708413440) of the extension couple of months back, but I'd been wanting to do a deeper dive. Finally got around to doing that in the last few weeks. Very roughly, I took the [extension.js](../muse/github.copilot-1.57.7193/dist/extension.js) file included with Copilot, performed some minor [manual changes](../muse/github.copilot-1.57.7193/dist/extension_expanded_v2.js) to ease automatic extraction of modules, wrote a bunch of [AST transforms](../index.js) to "prettify" each module, [named and classified](../codeviz/predict_module_names_and_categories.py) the modules and manually annotated a handful of most interesting modules.
 
-Concretely, I'll explore the following topics:
+The reverse engineered copilot codebase can be explored via this tool I built ([home page](https://thakkarparth007.github.io/copilot-explorer/), [tool itself](https://thakkarparth007.github.io/copilot-explorer/codeviz/templates/code-viz.html)). It might have some rough edges, but you can use it to explore Copilot's code. The final tool looks like this. Do checkout the home page if you're confused about how to use it.
 
-1. **Prompt engineering**: How does the extension prepare the prompt for the model?
-2. **Model invocation**: How does the extension invoke the model?
-3. **Telemetry**: How does Github measure the success/failure rate of the suggestions?
+![Copilot-Explorer](../images/screenshot-v1.png)
 
-I'll also talk about how you can explore the codebase on your own.
-
-In the next post, I plan to discuss how I discovered these internals.
-
-## Copilot -- 10,000 feet view
+## Copilot: a 10,000 feet view
 
 There are two main components of Github Copilot:
 
@@ -50,7 +42,7 @@ There are two main components of Github Copilot:
 
 2. **Model**: The Codex-like model takes the prompt and returns suggestions that complete the prompt.
 
-## Prompt engineering
+## Secret Sauce 1 - Prompt engineering
 
 Now, Codex has been trained on a lot of public Github code, so it makes sense that it can make useful suggestions. But Codex can't possibly know what functions exist in your current project. Despite this, Copilot often produces suggestions involving functions from your project. How does it do that?
 
@@ -98,13 +90,13 @@ Roughly, the following sequence of steps are executed to generate the prompt:
    - **Suffix Caching**: One weird thing Copilot does is it [caches the suffix across calls](../codeviz/templates/code-viz.html#m3055312&pos=40:1), as long as the new suffix isn't "too far" from the cached suffix. No clue why that's being done. Or maybe I misunderstood the obfuscated code (although I can't find an alternative explanation for the code).
 
 
-### A close look at Snippet Extraction
+#### A close look at Snippet Extraction
 
 The most complete part of prompt generation, to me, appears to be snippet extraction from other files. This gets invoked [here](../codeviz/templates/code-viz.html#m3055312&pos=303:29) and is defined in [neighbor-snippet-selector.getNeighbourSnippets](../codeviz/templates/code-viz.html#m3055125&pos=46:1). Depending upon the options, this either uses a ["Fixed window Jaccard matcher"](../codeviz/templates/code-viz.html#m3055404&pos=10:1) or an ["Indentation based Jaccard Matcher"](../codeviz/templates/code-viz.html#m3055404&pos=42:1). I'm not 100% sure, but looks like the Indentation based Jaccard Matcher isn't _actually_ used.
 
 By [default](../codeviz/templates/code-viz.html#m3055312&pos=148:1), the fixed window Jaccard Matcher is used. This class slices up a given file (from which snippets are to be extracted) into [sliding windows of a fixed size](../codeviz/templates/code-viz.html#m3055404&pos=18:3). It then [computes Jaccard similarity](../codeviz/templates/code-viz.html#m3055467&pos=61:3) between each window and the reference file (the file you're typing in). Only the best window is returned from each "relevant file" (although provision to return top K snippets exists, it's never used). By default, the FixedWindowJaccardMatcher is used in ["Eager mode"](../codeviz/templates/code-viz.html#m3055125&pos=34:3) (i.e., window size of 60 lines). However, the mode is [controlled](../codeviz/templates/code-viz.html#m4969&pos=111:1) by [AB Experimentation framework](../codeviz/templates/code-viz.html#m9189&pos=364:1), so other modes might be used.
 
-## Model Invocation
+## Secret Sauce 2 - Model Invocation
 
 There are two UIs through which Copilot provides completions: (a) Inline/GhostText and (b) Copilot Panel. There are some differences in how the model is invoked in these two cases.
 
@@ -130,9 +122,9 @@ This UI requests more samples (10 by default) from the model than the inline UI.
 
 There are two main interesting things here:
 1. Depending upon the mode in which this is invoked (`OPEN_COPILOT`/`TODO_QUICK_FIX`/`UNKNOWN_FUNCTION_QUICK_FIX`), it [modifies the prompt slightly](../codeviz/templates/code-viz.html#m2388&pos=113:1). Don't ask me how these modes are activated.
-2. It requests for logprobs from the model, and the list of solutions are sorted by the mean logprobs.
+2. It requests for logprobs from the model, and the list of solutions are [sorted by the mean logprobs](../codeviz/templates/code-viz.html#m893&pos=105:5).
 
-## Telemetry
+## Secret Sauce 3 - Telemetry
 
 Github [claims](https://github.blog/2022-06-21-github-copilot-is-generally-available-to-all-developers/) that 40% of the code programmers write is written by Copilot (for popular languages like Python). I was curious how they measured this number, and so wanted to poke a bit into the telemetry code. I also wanted to know what telemetry data is being collected, especially whether code snippets are being collected. The latter was something I wanted to know because with a simple config change, we can make the extension point to FauxPilot but the extension might still end up sending telemetry to Github -- and I wanted to know if that was happening.
 
