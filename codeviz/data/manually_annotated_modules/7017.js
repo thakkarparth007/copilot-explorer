@@ -241,10 +241,6 @@ Object.defineProperty(exports, "__esModule", {
                   capturedCode: c,
                   terminationOffset: u,
                 } = await captureCode(ctx, docUri, chngTracker.offset);
-                // HMMMMMMMM what're you doing here...
-                // FIM is probably fill-in-middle. But it's set to false always
-                // maybe in this version they were still experimenting with FIM
-                // and so the code isn't complete?
                 let p;
                 p = prompt.isFimEnabled
                   ? {

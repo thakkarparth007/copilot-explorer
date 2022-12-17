@@ -267,7 +267,7 @@
             let currColor = moduleCategoryColors[category_id];
 
             var newOption = $(`
-                <span>
+                <span style='white-space: nowrap; display: inline-block'>
                     <input type='checkbox' name='show-modules-with-category' value='${category_id}' checked='checked'>
                     ${getCategoryColorBox(category_id)}
                     ${category_name}
@@ -395,9 +395,9 @@
                     springLength: 95
                 },
                 stabilization: {
-                    iterations: 50,
+                    iterations: 75,
                 },
-                // enabled: false,
+                enabled: false,
             },
             nodes: { font: { size: 14 }},
         };
@@ -503,8 +503,34 @@
             }
         };
 
+        function parseHash() {
+            let hashParts = window.location.hash.split("&");
+            let module_id = hashParts[0].substring(2);
+            let position = {
+                lineNumber: 1,
+                column: 1
+            };
+            if (hashParts.length > 1) {
+                let pos = hashParts[1].split("=")[1].split(":");
+                position = {
+                    lineNumber: parseInt(pos[0]),
+                    column: parseInt(pos[1])
+                };
+            }
+            return {
+                module_id: module_id || "main",
+                position: position
+            };
+        }
+
+        function makeHash(module_id, lineNo, colNo) {
+            lineNo = lineNo || 1;
+            colNo = colNo || 1;
+            return `#m${module_id}&pos=${lineNo}:${colNo}`;
+        }
+
         let curSelectedModule = undefined;
-        function displayModule(moduleId, dontUpdateHistory, displayState) {
+        function displayModule(moduleId, dontUpdateHistory, displayState = {}) {
             if (moduleId === curSelectedModule) {
                 return;
             }
@@ -512,12 +538,17 @@
                 // update url
                 //
                 if (window.history.state && window.history.state.module_id == curSelectedModule) {
+                    let pos = editor.getPosition();
                     window.history.replaceState({
                         module_id: curSelectedModule,
-                        position: editor.getPosition()
-                    }, '', `#m${curSelectedModule}`);
+                        position: pos,
+                    }, '', makeHash(curSelectedModule, pos.lineNumber, pos.column));
                 }
-                window.history.pushState({ module_id: moduleId }, '', `#m${moduleId}`);
+                let pos = displayState.position || {lineNumber: 1, column: 1};
+                window.history.pushState({
+                    module_id: moduleId,
+                    position: pos,
+                }, '', makeHash(moduleId, pos.lineNumber, pos.column));
             }
             network.selectNodes([moduleId]);
             highlightSelectedModule(moduleId, curSelectedModule);
@@ -533,8 +564,8 @@
             }
 
             editor.setValue(module_codes_data[moduleId]);
-            editor.setPosition(displayState ? displayState.position : {lineNumber: 1, column: 1});
-            editor.revealPositionInCenter(displayState ? displayState.position : {lineNumber: 1, column: 1});
+            editor.setPosition(displayState.position || {lineNumber: 1, column: 1});
+            editor.revealPositionInCenter(displayState.position || {lineNumber: 1, column: 1});
             editor.focus();
             displayDescriptions(moduleId);
             // // check if we have any existing monaco model showing this module
@@ -561,7 +592,7 @@
                     <h3>Imports</h3>
                     <ul>
                         ${imports.map(e =>
-                            `<li>${getCategoryColorBox(nodes.get(e) ? nodes.get(e).category : '$unk$')}<a href='#m${e}' onclick='displayModule("${e}")'>${nodes.get(e) ? nodes.get(e).name : e}</a></li>`
+                            `<li>${getCategoryColorBox(nodes.get(e) ? nodes.get(e).category : '$unk$')}<a href='#m${e}&pos=1:1' onclick='displayModule("${e}")'>${nodes.get(e) ? nodes.get(e).name : e}</a></li>`
                         ).join("")}
                     </ul>
                 </div>
@@ -569,7 +600,7 @@
                     <h3>Imported by</h3>
                     <ul>
                         ${importedBy.map(e =>
-                            `<li>${getCategoryColorBox(nodes.get(e) ? nodes.get(e).category : '$unk$')}<a href='#m${e}' onclick='displayModule("${e}")'>${nodes.get(e) ? nodes.get(e).name : e}</a></li>`
+                            `<li>${getCategoryColorBox(nodes.get(e) ? nodes.get(e).category : '$unk$')}<a href='#m${e}&pos=1:1' onclick='displayModule("${e}")'>${nodes.get(e) ? nodes.get(e).name : e}</a></li>`
                         ).join("")}
                     </ul>
                 </div>
@@ -668,11 +699,9 @@
         });
 
         /****** Load initial module ******/
-        let initialModule = window.location.hash.substring(2);
-        if (initialModule === "") {
-            initialModule = "main";
-        }
-        displayModule(initialModule, false);
+        // hash format: #m<module_id>&pos=<line>:<column>
+        let hashState = parseHash();
+        displayModule(hashState.module_id, false, hashState);
 
         /****** Snippet description ******/
         async function describeSnippet(snippet) {
