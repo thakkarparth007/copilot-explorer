@@ -100,6 +100,10 @@
     <div id="main" class="split-grid">
         <div id="left-panel">
             <div id="network-overlay">
+                <div>
+                    <name for="physics-enabled-checkbox">Enable Physics:</name>
+                    <input type="checkbox" id="physics-enabled-checkbox" />
+                </div>
                 <!-- <name for="hide-uninteresting-modules">Hide uninteresting modules:</name> -->
                 <!-- <input type="checkbox" id="hide-uninteresting-modules" checked /> -->
                 <fieldset id="show-modules-with-category-fieldset">
@@ -156,7 +160,19 @@
                 track: 3,
                 element: document.querySelector('.gutter-col-3'),
             }],
-        })
+        });
+
+        
+        if (localStorage.getItem("physics_enabled") === null) {
+            localStorage.setItem("physics_enabled", true);
+        }
+        // sync checkbox
+        $("#physics-enabled-checkbox").prop("checked", localStorage.getItem("physics_enabled") === "true");
+        
+        $("#physics-enabled-checkbox").change(function() {
+            localStorage.setItem("physics_enabled", $(this).prop("checked"));
+            location.reload();
+        });
     </script>
     <script type="text/javascript">
         // load and store annotations
@@ -397,7 +413,7 @@
                 stabilization: {
                     iterations: 75,
                 },
-                // enabled: false,
+                enabled: localStorage.getItem("physics_enabled") === "true"
             },
             nodes: { font: { size: 14 }},
         };
