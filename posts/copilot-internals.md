@@ -3,7 +3,7 @@
 
 Github Copilot has been incredibly useful to me. It can often magically read my mind and make useful suggestions. The thing that surprised me the most was its ability to correctly "guess" functions/variables from surrounding code -- including from other files. This can only happen, if the copilot extension sends valuable information from surrounding code to the Codex model. I was curious about how it worked, so I decided to take a look at the source code.
 
-In this post, I try to answer specific questions about the internals of Copilot, while also describing some interesting observations I made while combing through the code. I try to provide pointers to the relevant code for almost everything I talk about, so that interested folks can take a look at the code themselves.
+In this post, I try to answer specific questions about the internals of Copilot, while also describing some interesting observations I made as I combed through the code. I will provide pointers to the relevant code for almost everything I talk about, so that interested folks can take a look at the code themselves.
 
 <!-- omit in toc -->
 ## Overview
@@ -12,15 +12,15 @@ This post is organized as follows:
 
 - [Reverse Engineering preview](#reverse-engineering-preview)
 - [Copilot: a 10,000 feet view](#copilot-a-10000-feet-view)
-- [Secret Sauce 1 - Prompt engineering](#secret-sauce-1---prompt-engineering)
+- [**Secret Sauce 1**: Prompt engineering](#secret-sauce-1-prompt-engineering)
   - [What does a prompt look like?](#what-does-a-prompt-look-like)
   - [How is the prompt prepared? A code walkthrough.](#how-is-the-prompt-prepared-a-code-walkthrough)
     - [A close look at Snippet Extraction](#a-close-look-at-snippet-extraction)
-- [Secret Sauce 2 - Model Invocation](#secret-sauce-2---model-invocation)
+- [**Secret Sauce 2**: Model Invocation](#secret-sauce-2-model-invocation)
   - [Inline/GhostText](#inlineghosttext)
     - [Preventing poor requests via Contextual Filter](#preventing-poor-requests-via-contextual-filter)
   - [Copilot Panel](#copilot-panel)
-- [Secret Sauce 3 - Telemetry](#secret-sauce-3---telemetry)
+- [**Secret Sauce 3**: Telemetry](#secret-sauce-3-telemetry)
   - [Question 1: How is the 40% number measured?](#question-1-how-is-the-40-number-measured)
   - [Question 2: Does telemetry data include code snippets?](#question-2-does-telemetry-data-include-code-snippets)
 - [Other random tidbits](#other-random-tidbits)
@@ -42,7 +42,7 @@ There are two main components of Github Copilot:
 
 2. **Model**: The Codex-like model takes the prompt and returns suggestions that complete the prompt.
 
-## Secret Sauce 1 - Prompt engineering
+## **Secret Sauce 1**: Prompt engineering
 
 Now, Codex has been trained on a lot of public Github code, so it makes sense that it can make useful suggestions. But Codex can't possibly know what functions exist in your current project. Despite this, Copilot often produces suggestions involving functions from your project. How does it do that?
 
@@ -96,7 +96,7 @@ The most complete part of prompt generation, to me, appears to be snippet extrac
 
 By [default](../codeviz/templates/code-viz.html#m3055312&pos=148:1), the fixed window Jaccard Matcher is used. This class slices up a given file (from which snippets are to be extracted) into [sliding windows of a fixed size](../codeviz/templates/code-viz.html#m3055404&pos=18:3). It then [computes Jaccard similarity](../codeviz/templates/code-viz.html#m3055467&pos=61:3) between each window and the reference file (the file you're typing in). Only the best window is returned from each "relevant file" (although provision to return top K snippets exists, it's never used). By default, the FixedWindowJaccardMatcher is used in ["Eager mode"](../codeviz/templates/code-viz.html#m3055125&pos=34:3) (i.e., window size of 60 lines). However, the mode is [controlled](../codeviz/templates/code-viz.html#m4969&pos=111:1) by [AB Experimentation framework](../codeviz/templates/code-viz.html#m9189&pos=364:1), so other modes might be used.
 
-## Secret Sauce 2 - Model Invocation
+## **Secret Sauce 2**: Model Invocation
 
 There are two UIs through which Copilot provides completions: (a) Inline/GhostText and (b) Copilot Panel. There are some differences in how the model is invoked in these two cases.
 
@@ -124,7 +124,7 @@ There are two main interesting things here:
 1. Depending upon the mode in which this is invoked (`OPEN_COPILOT`/`TODO_QUICK_FIX`/`UNKNOWN_FUNCTION_QUICK_FIX`), it [modifies the prompt slightly](../codeviz/templates/code-viz.html#m2388&pos=113:1). Don't ask me how these modes are activated.
 2. It requests for logprobs from the model, and the list of solutions are [sorted by the mean logprobs](../codeviz/templates/code-viz.html#m893&pos=105:5).
 
-## Secret Sauce 3 - Telemetry
+## **Secret Sauce 3**: Telemetry
 
 Github [claims](https://github.blog/2022-06-21-github-copilot-is-generally-available-to-all-developers/) that 40% of the code programmers write is written by Copilot (for popular languages like Python). I was curious how they measured this number, and so wanted to poke a bit into the telemetry code.
 
@@ -158,4 +158,4 @@ One thing I've not covered in this exploration is the [worker.js](../muse/github
 
 This was a fun little project, but it required some manual annotation/reverse engineering. I'd like to automate a good amount of this so I can also explore different versions of Copilot, or explore Copilot labs...or in general just perform automatic decompilation of obfuscated JS code. My initial experiments with using ChatGPT/Codex were encouraging, but the issue is they're not reliable. I have an idea in mind to automatically check if the decompilation is correct, by basically doing a form of abstract interpretation. But that's for another day.
 
-The code for this project is available [here](https://github.com/thakkarparth007/copilot-explorer). Feel free to poke around, file issues and send PRs in case you have any suggestions or improvements (e.g., you could annotate some more interesting modules, or post your own findings there).
+The code for this project is available [here](https://github.com/thakkarparth007/copilot-explorer). Feel free to poke around, file issues and send PRs in case you have any suggestions or improvements. E.g., you could annotate some more interesting modules, or post your own findings there!.
