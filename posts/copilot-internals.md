@@ -1,25 +1,25 @@
+<!-- omit in toc -->
 # Copilot Internals
 
 Github Copilot has been incredibly useful to me. It can often magically read my mind and make useful suggestions. The thing that surprised me the most was its ability to correctly "guess" functions/variables from surrounding code -- including from other files. This can only happen, if the copilot extension sends valuable information from surrounding code to the Codex model. I was curious about how it worked, so I decided to take a look at the source code.
 
 I had performed a very shallow ["reverse engineering"](https://twitter.com/parth007_96/status/1546762772708413440) of the extension couple of months back, but I'd been wanting to do a deeper dive. Finally got around to doing that in the last few weeks. Very roughly, here's what I did -- I looked at the minified [extension.js](../muse/github.copilot-1.57.7193/dist/extension.js) file included with Copilot, performed some minor [manual changes](../muse/github.copilot-1.57.7193/dist/extension_expanded_v2.js) to ease automatic extraction of modules, wrote a bunch of [AST transforms](../index.js) to "prettify" each module, [named and classified](../codeviz/predict_module_names_and_categories.py) the modules and manually annotated a handful of most interesting modules. I plan to write a separate post describing these in detail.
 
-The reverse engineered copilot codebase can be explored via this tool I built: [copilot-explorer](https://thakkarparth007.github.io/copilot-explorer/codeviz). It might have some rough edges, but is largely usable.
+The reverse engineered copilot codebase can be explored via this tool I built: [copilot-explorer](https://thakkarparth007.github.io/copilot-explorer/codeviz/templates/code-viz.html). It might have some rough edges, but is largely usable.
 
-- [Copilot Internals](#copilot-internals)
-  - [Overview](#overview)
-  - [Copilot -- 10,000 feet view](#copilot----10000-feet-view)
-  - [Prompt engineering](#prompt-engineering)
-    - [Rough algorithm and Code Walkthrough](#rough-algorithm-and-code-walkthrough)
-  - [Model Invocation](#model-invocation)
-    - [Inline/GhostText](#inlineghosttext)
-      - [Contextual Filter](#contextual-filter)
-    - [Copilot Panel](#copilot-panel)
-  - [Telemetry](#telemetry)
-    - [Question 1: How is the 40% number measured?](#question-1-how-is-the-40-number-measured)
-    - [Question 2: Does telemetry data include code snippets?](#question-2-does-telemetry-data-include-code-snippets)
-  - [Other random tidbits](#other-random-tidbits)
-  - [Onwards](#onwards)
+- [Overview](#overview)
+- [Copilot -- 10,000 feet view](#copilot----10000-feet-view)
+- [Prompt engineering](#prompt-engineering)
+  - [Rough algorithm and Code Walkthrough](#rough-algorithm-and-code-walkthrough)
+- [Model Invocation](#model-invocation)
+  - [Inline/GhostText](#inlineghosttext)
+    - [Contextual Filter](#contextual-filter)
+  - [Copilot Panel](#copilot-panel)
+- [Telemetry](#telemetry)
+  - [Question 1: How is the 40% number measured?](#question-1-how-is-the-40-number-measured)
+  - [Question 2: Does telemetry data include code snippets?](#question-2-does-telemetry-data-include-code-snippets)
+- [Other random tidbits](#other-random-tidbits)
+- [Onwards](#onwards)
 
 ## Overview
 
@@ -133,7 +133,7 @@ Yes.
 
 [After 30s](../codeviz/templates/code-viz.html#m7017&pos=29:7) of either acceptance/rejection of a suggestion, copilot ["captures" a snapshot](../codeviz/templates/code-viz.html#m7017&pos=49:3) around the insertion point. In particular, the extension [invokes the prompt extraction](../codeviz/templates/code-viz.html#m7017&pos=84:5) mechanism to collect a "hypothetical prompt" that could've been used to make a suggestion at that point. It also captures a "hypothetical completion" by [capturing the code between insertion point and a "guessed" endpoint](../codeviz/templates/code-viz.html#m7017&pos=114:7), i.e., the point after which code irrelevant to the completion starts. I haven't really understood how it guesses this endpoint. As stated before, this happens both after [acceptance](../codeviz/templates/code-viz.html#m7017&pos=239:17) or [rejection](../codeviz/templates/code-viz.html#m7017&pos=156:9).
 
-My guess is that these snapshots can basically function as training data for further improving the model. However, 30 seconds seems like a very short time for assuming that the code has "stabilized". But I guess that even if the 30 second timeout produces noisy data points, given that the telemetry includes the github repo corresponding to the user's project, Copilot folks can perhaps clean this relatively noisy data in an offline manner. All of this is just my speculation.
+My guess is that these snapshots basically function as training data for further improving the model. However, 30 seconds seems like a very short time for assuming that the code has "stabilized". But I guess that even if the 30 second timeout produces noisy data points, given that the telemetry includes the github repo corresponding to the user's project, Copilot folks can perhaps clean this relatively noisy data in an offline manner. All of this is just my speculation.
 
 Interestingly, the rejection telemetry collection isn't invoked from the Copilot Panel UI, [only the acceptance telemetry](../codeviz/templates/code-viz.html#m2990&pos=97:13) collection is. I think this is sensible. For inline completion UI, both acceptance and rejection telemetry is collected.
 
