@@ -126,7 +126,9 @@ There are two main interesting things here:
 
 ## Secret Sauce 3 - Telemetry
 
-Github [claims](https://github.blog/2022-06-21-github-copilot-is-generally-available-to-all-developers/) that 40% of the code programmers write is written by Copilot (for popular languages like Python). I was curious how they measured this number, and so wanted to poke a bit into the telemetry code. I also wanted to know what telemetry data is being collected, especially whether code snippets are being collected. The latter was something I wanted to know because with a simple config change, we can make the extension point to FauxPilot but the extension might still end up sending telemetry to Github -- and I wanted to know if that was happening.
+Github [claims](https://github.blog/2022-06-21-github-copilot-is-generally-available-to-all-developers/) that 40% of the code programmers write is written by Copilot (for popular languages like Python). I was curious how they measured this number, and so wanted to poke a bit into the telemetry code.
+
+I also wanted to know what telemetry data is being collected, especially whether code snippets are being collected. I wanted to know this, because while we can easily point Copilot extension to the open-source [FauxPilot](https://github.com/moyix/fauxpilot) backend instead of Github's backend, the extension might still end up sending code snippets via telemetry to Github, preventing anyone paranoid about their code's privacy from using Copilot. I wanted to know if this was the case.
 
 ### Question 1: How is the 40% number measured?
 
@@ -142,13 +144,13 @@ Yes.
 
 [After 30s](../codeviz/templates/code-viz.html#m7017&pos=29:7) of either acceptance/rejection of a suggestion, copilot ["captures" a snapshot](../codeviz/templates/code-viz.html#m7017&pos=49:3) around the insertion point. In particular, the extension [invokes the prompt extraction](../codeviz/templates/code-viz.html#m7017&pos=84:5) mechanism to collect a "hypothetical prompt" that could've been used to make a suggestion at that point. It also captures a "hypothetical completion" by [capturing the code between insertion point and a "guessed" endpoint](../codeviz/templates/code-viz.html#m7017&pos=114:7), i.e., the point after which code irrelevant to the completion starts. I haven't really understood how it guesses this endpoint. As stated before, this happens both after [acceptance](../codeviz/templates/code-viz.html#m7017&pos=239:17) or [rejection](../codeviz/templates/code-viz.html#m7017&pos=156:9).
 
-My guess is that these snapshots basically function as training data for further improving the model. However, 30 seconds seems like a very short time for assuming that the code has "stabilized". But I guess that even if the 30 second timeout produces noisy data points, given that the telemetry includes the github repo corresponding to the user's project, Copilot folks can perhaps clean this relatively noisy data in an offline manner. All of this is just my speculation.
+I suspect that these snapshots basically function as training data for further improving the model. However, 30 seconds seems like a very short time for assuming that the code has "stabilized". But, I guess that even if the 30 second timeout produces noisy data points, given that the telemetry includes the github repo corresponding to the user's project, Copilot folks can perhaps clean this relatively noisy data offline. All of this is just my speculation.
 
-Interestingly, the rejection telemetry collection isn't invoked from the Copilot Panel UI, [only the acceptance telemetry](../codeviz/templates/code-viz.html#m2990&pos=97:13) collection is. I think this is sensible. For inline completion UI, both acceptance and rejection telemetry is collected.
+<!-- Interestingly, the rejection telemetry collection isn't invoked from the Copilot Panel UI, [only the acceptance telemetry](../codeviz/templates/code-viz.html#m2990&pos=97:13) collection is. I think this is sensible. For inline completion UI, both acceptance and rejection telemetry is collected. -->
 
 ## Other random tidbits
 
-I modified the extension code slightly to enable verbose logging (couldn't find a configurable parameter for this). I found out that the model is called "cushman-ml", which strongly suggests that Copilot is using a 12B parameter model instead of a 175B parameter model. That's super encouraging for open-source efforts, implying that a medium sized model can provide good suggestions like this. Of course, they'd still not have the data flywheel that Github has.
+I modified the extension code slightly to enable verbose logging (couldn't find a configurable parameter for this). I found out that the model is called "**cushman-ml**", which strongly suggests that Copilot is using a **12B parameter model instead of a 175B parameter model**. That's super encouraging for open-source efforts, implying that a medium sized model can provide good suggestions like this. Of course, they'd still not have the data flywheel that Github has.
 
 One thing I've not covered in this exploration is the [worker.js](../muse/github.copilot-1.57.7193/dist/worker_expanded.js) file that ships with the extension. At a cursory glance, it seems to basically just provide parallelized version of the prompt-extraction logic, but there could be more to it.
 
