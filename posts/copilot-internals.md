@@ -141,6 +141,8 @@ Interestingly, the rejection telemetry collection isn't invoked from the Copilot
 
 I modified the extension code slightly to enable verbose logging (couldn't find a configurable parameter for this). I found out that the model is called "cushman-ml", which strongly suggests that Copilot is using a 12B parameter model instead of a 175B parameter model. That's super encouraging for open-source efforts, implying that a medium sized model can provide good suggestions like this. Of course, they'd still not have the data flywheel that Github has.
 
+One thing I've not covered in this exploration is the [worker.js](../muse/github.copilot-1.57.7193/dist/worker_expanded.js) file that ships with the extension. At a cursory glance, it seems to basically just provide parallelized version of the prompt-extraction logic, but there could be more to it.
+
 ## Onwards
 
 This was a fun little project, but it required some manual annotation/reverse engineering. I'd like to automate a good amount of this so I can also explore different versions of Copilot, or explore Copilot labs...or in general just perform automatic decompilation of obfuscated JS code. My initial experiments with using ChatGPT/Codex were encouraging, but the issue is they're not reliable. I have an idea in mind to automatically check if the decompilation is correct, by basically doing a form of abstract interpretation. But that's for another day.
