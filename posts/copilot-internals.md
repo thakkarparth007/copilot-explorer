@@ -24,6 +24,7 @@ This post is organized as follows:
   - [Question 1: How is the 40% number measured?](#question-1-how-is-the-40-number-measured)
   - [Question 2: Does telemetry data include code snippets?](#question-2-does-telemetry-data-include-code-snippets)
 - [Other random tidbits](#other-random-tidbits)
+  - [Enabling verbose logging](#enabling-verbose-logging)
 - [Onwards](#onwards)
 
 ## Reverse Engineering preview
@@ -153,6 +154,16 @@ I suspect that these snapshots basically function as training data for further i
 I modified the extension code slightly to enable verbose logging (couldn't find a configurable parameter for this). I found out that the model is called "**cushman-ml**", which strongly suggests that Copilot is using a **12B parameter model instead of a 175B parameter model**. That's super encouraging for open-source efforts, implying that a medium sized model can provide good suggestions like this. Of course, they'd still not have the data flywheel that Github has.
 
 One thing I've not covered in this exploration is the [worker.js](../muse/github.copilot-1.57.7193/dist/worker_expanded.js) file that ships with the extension. At a cursory glance, it seems to basically just provide parallelized version of the prompt-extraction logic, but there could be more to it.
+
+### Enabling verbose logging
+
+If you wish to enable verbose logging, you can do so by modifying the extension code as follow:
+
+1. Search for the extension file. It's typically under `~/.vscode/extensions/github.copilot-<version>/dist/extension.js`.
+2. Search for the string `shouldLog(e,t,n){` (or try `shouldLog(` if you don't find it). Out of a handful of search matches, one of them will be a non-empty function definition.
+3. At the start of the function body, add `return true`.
+
+If you want a ready-made patch, just copy the [extension code](../muse/github.copilot-1.57.7193/dist/extension.js). Note that this is for version 1.57.7193.
 
 ## Onwards
 
