@@ -4,6 +4,8 @@ This is a tool meant for exploring the codebase of Github Copilot (the client si
 
 It's work in progress. See the [Journal](./Journal.md) for details on what's been done so far and my observations.
 
+There's a [blog post](posts/copilot-internals) that explains the high level findings, and provides necessary code pointers.
+
 ## Screenshots
 
 ![Screenshot 1](./images/screenshot-v1.png)
