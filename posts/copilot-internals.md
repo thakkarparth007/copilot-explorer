@@ -158,13 +158,9 @@ Yes.
 
 I suspect that these snapshots basically function as training data for further improving the model. However, 30 seconds seems like a very short time for assuming that the code has "stabilized". But, I guess that even if the 30 second timeout produces noisy data points, given that the telemetry includes the github repo corresponding to the user's project, Copilot folks can perhaps clean this relatively noisy data offline. All of this is just my speculation.
 
-<div style="border: 1px solid red; padding: 5px">
-
 ### Important Update
 
-Note that Github **does** let you [opt-out](https://github.com/settings/copilot) of your snippets being used for "product improvement". If you do this, the [telemetry points containing these snippets](../codeviz/templates/code-viz.html#m7017&pos=187:9) [**do not**](../codeviz/templates/code-viz.html#m6333&pos=389:3) get sent to the server. That is, if you opt out, the snippet information does not leave your machine at all (at least in v1.57 that I inspected, but also verified for v1.65). I checked this by looking at the code and also logging the telemetry data points just before they're sent over the network.
-</div>
-
+> :warning:  Note that Github **does** let you [opt-out](https://github.com/settings/copilot) of your snippets being used for "product improvement". If you do this, the [telemetry points containing these snippets](../codeviz/templates/code-viz.html#m7017&pos=187:9) [**do not**](../codeviz/templates/code-viz.html#m6333&pos=389:3) get sent to the server. That is, if you opt out, the snippet information does not leave your machine at all (at least in v1.57 that I inspected, but also verified for v1.65). I checked this by looking at the code and also logging the telemetry data points just before they're sent over the network.
 
 <!-- Interestingly, the rejection telemetry collection isn't invoked from the Copilot Panel UI, [only the acceptance telemetry](../codeviz/templates/code-viz.html#m2990&pos=97:13) collection is. I think this is sensible. For inline completion UI, both acceptance and rejection telemetry is collected. -->
 
