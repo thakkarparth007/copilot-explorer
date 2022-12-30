@@ -24,6 +24,7 @@ This post is organized as follows:
 - [**Secret Sauce 3**: Telemetry](#secret-sauce-3-telemetry)
   - [Question 1: How is the 40% number measured?](#question-1-how-is-the-40-number-measured)
   - [Question 2: Does telemetry data include code snippets?](#question-2-does-telemetry-data-include-code-snippets)
+  - [Important Update](#important-update)
 - [Other random tidbits](#other-random-tidbits)
   - [Enabling verbose logging](#enabling-verbose-logging)
 - [Onwards](#onwards)
@@ -156,6 +157,14 @@ Yes.
 [After 30s](../codeviz/templates/code-viz.html#m7017&pos=29:7) of either acceptance/rejection of a suggestion, copilot ["captures" a snapshot](../codeviz/templates/code-viz.html#m7017&pos=49:3) around the insertion point. In particular, the extension [invokes the prompt extraction](../codeviz/templates/code-viz.html#m7017&pos=84:5) mechanism to collect a ["hypothetical prompt"](../codeviz/templates/code-viz.html#m7017&pos=164:15) that could've been used to make a suggestion at that point. It also captures a ["hypothetical completion"](../codeviz/templates/code-viz.html#m7017&pos=173:13) by [capturing the code between insertion point and a "guessed" endpoint](../codeviz/templates/code-viz.html#m7017&pos=114:7), i.e., the point after which code irrelevant to the completion starts. I haven't really understood how it guesses this endpoint. As stated before, this happens both after [acceptance](../codeviz/templates/code-viz.html#m7017&pos=239:17) or [rejection](../codeviz/templates/code-viz.html#m7017&pos=156:9).
 
 I suspect that these snapshots basically function as training data for further improving the model. However, 30 seconds seems like a very short time for assuming that the code has "stabilized". But, I guess that even if the 30 second timeout produces noisy data points, given that the telemetry includes the github repo corresponding to the user's project, Copilot folks can perhaps clean this relatively noisy data offline. All of this is just my speculation.
+
+<div style="border: 1px solid red; padding: 5px">
+
+### Important Update
+
+Note that Github **does** let you [opt-out](https://github.com/settings/copilot) of your snippets being used for "product improvement". If you do this, the [telemetry points containing these snippets](../codeviz/templates/code-viz.html#m7017&pos=187:9) [**do not**](../codeviz/templates/code-viz.html#m6333&pos=389:3) get sent to the server. That is, if you opt out, the snippet information does not leave your machine at all (at least in v1.57 that I inspected, but also verified for v1.65). I checked this by looking at the code and also logging the telemetry data points just before they're sent over the network.
+</div>
+
 
 <!-- Interestingly, the rejection telemetry collection isn't invoked from the Copilot Panel UI, [only the acceptance telemetry](../codeviz/templates/code-viz.html#m2990&pos=97:13) collection is. I think this is sensible. For inline completion UI, both acceptance and rejection telemetry is collected. -->
 
