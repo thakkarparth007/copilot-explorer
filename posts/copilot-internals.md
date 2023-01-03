@@ -1,5 +1,5 @@
 <!-- omit in toc -->
-# Copilot Internals
+# Copilot Internals | [thakkarparth007.github.io](https://thakkarparth007.github.io)
 
 Github Copilot has been incredibly useful to me. It can often magically read my mind and make useful suggestions. The thing that surprised me the most was its ability to correctly "guess" functions/variables from surrounding code -- including from other files. This can only happen, if the copilot extension sends valuable information from surrounding code to the Codex model. I was curious about how it worked, so I decided to take a look at the source code.
 
