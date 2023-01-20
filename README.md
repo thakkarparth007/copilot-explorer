@@ -29,11 +29,16 @@ The webpage shows 3 panels:
 
 **Manual annotations:** Some of the modules were quite interesting, so I manually annotated them (added comments and renamed variables) to make them easier to understand. These are now directly viewable in the middle panel. Links below.
 
-If you want to start browsing, here are some interesting starting points:
+If you want to start browsing, below are some interesting starting points.
+
+**Navigation tips:**
+- You can use the forward and back buttons to navigate through the history of modules you've visited.
+- Within a module, use your regular VSCode shortcuts (e.g., ctrl+click will work for definitions within the same file). They don't work across modules. But I've renamed the modules to make them easier to navigate. So, e.g., in module A, if you see `M_prompt_extractor.getPrompt()`, then you know to look for `prompt-extractor` module in the right panel.
+- The modules have been color coded so you can choose to ignore the modules you don't care about.
 
 ### Interesting modules
 
-Some interesting modules I've found so far (most interesting at the **bottom**):
+Some interesting modules I've found so far (these notes were written before I wrote the blog post, so some comments might be outdated):
 - **Prompting**:
   - This is the most interesting part of the codebase to me. This is what brings all the smarts to Copilot apart from the model itself. The reason copilot can get function names right often is because of this stuff.
   - The following modules have been manually annotated and constitute most of all the magic:
