@@ -39,7 +39,7 @@ function normalizeExports(moduleId, moduleCodeRaw) {
           }
        });
        ```
-       
+
        into
 
        ```
@@ -51,7 +51,7 @@ function normalizeExports(moduleId, moduleCodeRaw) {
         moduleCodeRaw = moduleCodeRaw.replace("function", "");
         moduleCodeRaw = moduleCodeRaw.replace(")", ") =>");
     }
-    
+
     let transformedArrowFn = false;
     const moduleTransformer = {
         ArrowFunctionExpression(path) {
@@ -63,12 +63,12 @@ function normalizeExports(moduleId, moduleCodeRaw) {
 
             // at most 3 arguments: module, exports, require
             assert(node.params.length <= 3);
-            
+
             // rename the arguments from (e, t, n) to (module, exports, require)
             node.params.forEach((param, i) => {
                 path.scope.rename(param.name, ["module", "exports", "require"][i]);
             });
-            
+
             transformedArrowFn = true;
         },
         CallExpression(path) {
@@ -228,9 +228,10 @@ function makeModuleReadable(moduleId, moduleCodeRaw) {
                 // get the source code of the expression and use `eval` to evaluate it
                 // replace the expression with the result of the evaluation
 
-                let source = path.getSource();
+                let source = path.toString(); //getSource();
                 let result = eval(source);
                 path.replaceWithSourceString(result + "");
+                path.skip();
             }
         },
         VariableDeclaration(path) {
@@ -397,13 +398,13 @@ function collectModuleDepsAndExports(moduleId, moduleCodeRaw, metadata) {
 
             // at most 3 arguments: module, exports, require
             assert(node.params.length <= 3);
-            
+
             // This renaming is already done in `normalizeExports`.
             // // rename the arguments from (e, t, n) to (module, exports, require)
             // node.params.forEach((param, i) => {
             //     path.scope.rename(param.name, ["module", "exports", "require"][i]);
             // });
-            
+
             if (node.params.length == 3)
                 collectDeps(path);
             if (node.params.length >= 2)
@@ -449,7 +450,7 @@ function handleModule(moduleId, moduleAst, metadata) {
     const moduleCode2 = prettier.format(moduleCode, {
         parser: "babel",
     }).trim();
-    
+
     fs.writeFileSync(getModulePath(moduleId), moduleCode2);
 }
 
@@ -508,7 +509,7 @@ function removeModule(moduleId) {
             console.log("WARNING: " + importer + " imports " + moduleId + " but it's not in the list of modules");
             continue;
         }
-        
+
         const metadata = moduleDeps[importer];
         metadata["deps"] = metadata["deps"].filter(dep => dep != moduleId);
     }
@@ -630,7 +631,7 @@ fs.writeFileSync(
 );
 
 console.log(
-`This is where you'd call predict_annotations.py to predict names and categories for the modules. (predicting_annotations requires a bit of manual labelling first so that we can call codex in few-shot manner. That was done manually once, and there's no need to do it again.)
+`This is where you'd call predict_module_names_and_categories.py to predict names and categories for the modules. (predicting annotations requires a bit of manual labelling first so that we can call codex in few-shot manner. That was done manually once, and there's no need to do it again.)
 
 After that, you'd run the rename_modules.js to rename the modules as per the mix of gold and predicted annotations.
 `
