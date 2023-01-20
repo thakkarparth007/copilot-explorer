@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.launchSolutions = exports.normalizeCompletionText = undefined;
 const r = require(2277);
@@ -36,7 +36,7 @@ async function b(e, t, n) {
     };
   }
   const r = await n.next();
-  return !0 === r.done
+  return true === r.done
     ? (e.removeProgress(),
       {
         status: "FinishedNormally",
@@ -115,7 +115,7 @@ exports.launchSolutions = async function (e, t) {
   const R = h.isSupportedLanguageId(T.languageId);
   const M = d.contextIndentation(T, x);
   const L = {
-    stream: !0,
+    stream: true,
     extra: {
       language: T.languageId,
       next_indent: null !== (n = M.next) && undefined !== n ? n : 0,
@@ -141,7 +141,7 @@ exports.launchSolutions = async function (e, t) {
     count: t.solutionCountTarget,
     uiKind: l.CopilotUiKind.Panel,
     postOptions: L,
-    requestLogProbs: !0,
+    requestLogProbs: true,
   };
   let F;
   const j =
@@ -156,12 +156,12 @@ exports.launchSolutions = async function (e, t) {
     case i.BlockMode.Server:
       F = async (e) => {};
       L.extra.force_indent = null !== (a = M.prev) && undefined !== a ? a : -1;
-      L.extra.trim_by_indentation = !0;
+      L.extra.trim_by_indentation = true;
       break;
     case i.BlockMode.ParsingAndServer:
       F = R ? v(e, T, t.startPosition, j) : async (e) => {};
       L.extra.force_indent = null !== (w = M.prev) && undefined !== w ? w : -1;
-      L.extra.trim_by_indentation = !0;
+      L.extra.trim_by_indentation = true;
       break;
     case i.BlockMode.Parsing:
     default:
@@ -199,7 +199,7 @@ exports.launchSolutions = async function (e, t) {
     B = l.cleanupIndentChoices(B, C);
   }
   B = o.asyncIterableMapFilter(B, async (t) =>
-    m.postProcessChoice(e, "solution", T, x, t, !1, y)
+    m.postProcessChoice(e, "solution", T, x, t, false, y)
   );
   const U = o.asyncIterableMapFilter(B, async (n) => {
     let r = n.completionText;

@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.logger =
   exports.toPlainText =
@@ -96,7 +96,7 @@ class Logger {
     }
     const c = e.get(LogTarget);
     const u = c.shouldLog(e, t);
-    if (!1 === u) return;
+    if (false === u) return;
     if (undefined === u && !this.shouldLog(e, t, this.context)) return;
     const d = e.get(r.Clock).now().toISOString();
     const p = `[${a}] [${this.context}] [${d}]`;
@@ -105,9 +105,9 @@ class Logger {
   shouldLog(e, t, n) {
     var r;
     var i;
-    if (verboseLogging(e)) return !0;
+    if (verboseLogging(e)) return true;
     const s = o.getConfig(e, o.ConfigKey.DebugFilterLogCategories);
-    if (s.length > 0 && !s.includes(n)) return !1;
+    if (s.length > 0 && !s.includes(n)) return false;
     if (o.isProduction(e)) return t >= this.minLoggedLevel;
     const a = o.getConfig(e, o.ConfigKey.DebugOverrideLogLevels);
     return (
@@ -122,20 +122,20 @@ class Logger {
     );
   }
   debug(e, ...t) {
-    this.log(e, s.DEBUG, !1, ...t);
+    this.log(e, s.DEBUG, false, ...t);
   }
   info(e, ...t) {
-    this.log(e, s.INFO, !1, ...t);
+    this.log(e, s.INFO, false, ...t);
   }
   warn(e, ...t) {
-    this.log(e, s.WARN, !1, ...t);
+    this.log(e, s.WARN, false, ...t);
   }
   error(e, ...t) {
-    this.log(e, s.ERROR, !1, ...t);
+    this.log(e, s.ERROR, false, ...t);
   }
   secureError(e, t, ...n) {
-    this.log(e, s.ERROR, !1, t);
-    this.log(e, s.ERROR, !0, t, ...n);
+    this.log(e, s.ERROR, false, t);
+    this.log(e, s.ERROR, true, t, ...n);
   }
 }
 function toPlainText(e) {

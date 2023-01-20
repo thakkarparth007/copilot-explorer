@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.or =
   exports.and =
@@ -230,21 +230,21 @@ class v extends g {
   optimizeNodes() {
     super.optimizeNodes();
     const e = this.condition;
-    if (!0 === e) return this.nodes;
+    if (true === e) return this.nodes;
     let t = this.else;
     if (t) {
       const e = t.optimizeNodes();
       t = this.else = Array.isArray(e) ? new y(e) : e;
     }
     return t
-      ? !1 === e
+      ? false === e
         ? t instanceof v
           ? t
           : t.nodes
         : this.nodes.length
         ? this
         : new v(not(e), t instanceof v ? [t] : t.nodes)
-      : !1 !== e && this.nodes.length
+      : false !== e && this.nodes.length
       ? this
       : undefined;
   }

@@ -82,7 +82,7 @@ class p extends o {
       if (n && undefined !== n.compress) {
         this.compress = n.compress;
       } else {
-        this.compress = !0;
+        this.compress = true;
       }
     } else {
       this.compress = t.compress;
@@ -91,7 +91,7 @@ class p extends o {
       if (n && undefined !== n.decode) {
         this.decode = n.decode;
       } else {
-        this.decode = !0;
+        this.decode = true;
       }
     } else {
       this.decode = t.decode;
@@ -127,25 +127,25 @@ class p extends o {
 }
 Object.defineProperties(p.prototype, {
   method: {
-    enumerable: !0,
+    enumerable: true,
   },
   url: {
-    enumerable: !0,
+    enumerable: true,
   },
   headers: {
-    enumerable: !0,
+    enumerable: true,
   },
   redirect: {
-    enumerable: !0,
+    enumerable: true,
   },
   cache: {
-    enumerable: !0,
+    enumerable: true,
   },
   clone: {
-    enumerable: !0,
+    enumerable: true,
   },
   signal: {
-    enumerable: !0,
+    enumerable: true,
   },
 });
 module.exports = {

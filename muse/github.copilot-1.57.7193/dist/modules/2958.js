@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(453);
 const o = require(3487);
@@ -9,7 +9,7 @@ const a = {
   keyword: "uniqueItems",
   type: "array",
   schemaType: "boolean",
-  $data: !0,
+  $data: true,
   error: {
     message: ({ params: { i: e, j: t } }) =>
       o.str`must NOT have duplicate items (items ## ${t} and ${e} are identical)`,
@@ -41,7 +41,7 @@ const a = {
         t.if(o._`typeof ${l}[${a}] == "number"`, () => {
           t.assign(s, o._`${l}[${a}]`);
           e.error();
-          t.assign(p, !1).break();
+          t.assign(p, false).break();
         }).code(o._`${l}[${a}] = ${i}`);
       });
     }
@@ -52,7 +52,7 @@ const a = {
         t.for(o._`${a} = ${r}; ${a}--;`, () =>
           t.if(o._`${c}(${n}[${r}], ${n}[${a}])`, () => {
             e.error();
-            t.assign(p, !1).break(l);
+            t.assign(p, false).break(l);
           })
         )
       );
@@ -66,7 +66,7 @@ const a = {
           i: r,
           j: i,
         });
-        t.assign(p, !0);
+        t.assign(p, true);
         t.if(o._`${r} > 1`, () =>
           (h.length > 0 && !h.some((e) => "object" === e || "array" === e)
             ? f

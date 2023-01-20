@@ -19,12 +19,12 @@ var o = (function () {
         if ("string" == typeof n) {
           this._buffer.push(n);
           if (this._buffer.length >= this._getBatchSize()) {
-            this.triggerSend(!1);
+            this.triggerSend(false);
           } else {
             if (!this._timeoutHandle && this._buffer.length > 0) {
               this._timeoutHandle = setTimeout(function () {
                 t._timeoutHandle = null;
-                t.triggerSend(!1);
+                t.triggerSend(false);
               }, this._getBatchIntervalMs());
             }
           }

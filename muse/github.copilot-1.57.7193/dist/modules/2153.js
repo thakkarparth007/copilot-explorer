@@ -13,9 +13,9 @@ r = require(8249);
       for (n = e.sqrt(t), r = 2, undefined; r <= n; r++) {
         var n;
         var r;
-        if (!(t % r)) return !1;
+        if (!(t % r)) return false;
       }
-      return !0;
+      return true;
     }
     function n(e) {
       return (4294967296 * (e - (0 | e))) | 0;

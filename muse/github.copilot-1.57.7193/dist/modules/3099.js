@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.extendSubschemaMode =
   exports.extendSubschemaData =
@@ -60,7 +60,7 @@ exports.extendSubschemaData = function (
   const { gen: l } = t;
   if (undefined !== n) {
     const { errorPath: s, dataPathArr: a, opts: c } = t;
-    u(l.let("data", r._`${t.data}${r.getProperty(n)}`, !0));
+    u(l.let("data", r._`${t.data}${r.getProperty(n)}`, true));
     e.errorPath = r.str`${s}${o.getErrorPath(n, i, c.jsPropertySyntax)}`;
     e.parentDataProperty = r._`${n}`;
     e.dataPathArr = [...a, e.parentDataProperty];
@@ -74,7 +74,7 @@ exports.extendSubschemaData = function (
     e.dataNames = [...t.dataNames, n];
   }
   if (undefined !== s) {
-    u(s instanceof r.Name ? s : l.let("data", s, !0));
+    u(s instanceof r.Name ? s : l.let("data", s, true));
     if (undefined !== c) {
       e.propertyName = c;
     }

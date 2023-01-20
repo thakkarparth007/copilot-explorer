@@ -1,7 +1,7 @@
 if (
   "undefined" == typeof process ||
   "renderer" === process.type ||
-  !0 === process.browser ||
+  true === process.browser ||
   process.__nwjs
 ) {
   module.exports = require(1758);

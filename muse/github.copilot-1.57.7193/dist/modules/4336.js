@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(412);
 const o = require(3487);
@@ -7,7 +7,7 @@ const i = {
   keyword: "pattern",
   type: "string",
   schemaType: "string",
-  $data: !0,
+  $data: true,
   error: {
     message: ({ schemaCode: e }) => o.str`must match pattern "${e}"`,
     params: ({ schemaCode: e }) => o._`{pattern: ${e}}`,

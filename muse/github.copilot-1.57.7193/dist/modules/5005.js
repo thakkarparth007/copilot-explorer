@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.validateKeywordUsage =
   exports.validSchemaType =
@@ -34,8 +34,8 @@ exports.macroKeywordCode = function (e, t) {
   const { gen: n, keyword: o, schema: i, parentSchema: s, it: a } = e;
   const l = t.macro.call(a.self, i, s, a);
   const u = c(n, o, l);
-  if (!1 !== a.opts.validateSchema) {
-    a.self.validateSchema(l, !0);
+  if (false !== a.opts.validateSchema) {
+    a.self.validateSchema(l, true);
   }
   const d = n.name("valid");
   e.subschema(
@@ -44,11 +44,11 @@ exports.macroKeywordCode = function (e, t) {
       schemaPath: r.nil,
       errSchemaPath: `${a.errSchemaPath}/${o}`,
       topSchemaRef: u,
-      compositeRule: !0,
+      compositeRule: true,
     },
     d
   );
-  e.pass(d, () => e.error(!0));
+  e.pass(d, () => e.error(true));
 };
 exports.funcKeywordCode = function (e, t) {
   var n;
@@ -61,7 +61,7 @@ exports.funcKeywordCode = function (e, t) {
   const _ = l.let("valid");
   function y(n = t.async ? r._`await ` : r.nil) {
     const s = f.opts.passContext ? o.default.this : o.default.self;
-    const a = !(("compile" in t && !h) || !1 === t.schema);
+    const a = !(("compile" in t && !h) || false === t.schema);
     l.assign(_, r._`${n}${i.callValidateCode(e, g, s, a)}`, t.modifying);
   }
   function v(e) {
@@ -69,7 +69,7 @@ exports.funcKeywordCode = function (e, t) {
     l.if(r.not(null !== (n = t.valid) && undefined !== n ? n : _), e);
   }
   e.block$data(_, function () {
-    if (!1 === t.errors) {
+    if (false === t.errors) {
       y();
       if (t.modifying) {
         a(e);
@@ -82,7 +82,7 @@ exports.funcKeywordCode = function (e, t) {
             l.try(
               () => y(r._`await `),
               (t) =>
-                l.assign(_, !1).if(
+                l.assign(_, false).if(
                   r._`${t} instanceof ${f.ValidationError}`,
                   () => l.assign(e, r._`${t}.errors`),
                   () => l.throw(t)
@@ -119,7 +119,7 @@ exports.funcKeywordCode = function (e, t) {
   });
   e.ok(null !== (n = t.valid) && undefined !== n ? n : _);
 };
-exports.validSchemaType = function (e, t, n = !1) {
+exports.validSchemaType = function (e, t, n = false) {
   return (
     !t.length ||
     t.some((t) =>

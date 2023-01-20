@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.editorVersionHeaders =
   exports.EditorAndPluginInfo =
@@ -95,7 +95,7 @@ exports.ConfigBlockModeConfig = class extends BlockModeConfig {
           .getLanguageConfig(exports.ConfigKey.IndentationMode, n)
       ) {
         case "client":
-        case !0:
+        case true:
         case "server":
           return a.Server;
         case "clientandserver":
@@ -160,7 +160,7 @@ exports.DefaultsOnlyConfigProvider = class extends ConfigProvider {
       : getConfigDefaultForKey(e);
   }
   isDefaultSettingOverwritten(e) {
-    return !1;
+    return false;
   }
   dumpConfig() {
     return {};
@@ -230,21 +230,21 @@ exports.getEnabledConfig = function (e, n) {
 };
 exports.suffixPercent = async function (e, n, r) {
   return getHiddenConfig(e, exports.ConfigKey.DebugUseSuffix, {
-    default: !1,
+    default: false,
   })
     ? 15
     : e.get(i.Features).suffixPercent(n, r);
 };
 exports.suffixMatchThreshold = async function (e, n, r) {
   return getHiddenConfig(e, exports.ConfigKey.DebugUseSuffix, {
-    default: !1,
+    default: false,
   })
     ? 0
     : e.get(i.Features).suffixMatchThreshold(n, r);
 };
 exports.fimSuffixLengthThreshold = async function (e, n, r) {
   return getHiddenConfig(e, exports.ConfigKey.DebugUseSuffix, {
-    default: !1,
+    default: false,
   })
     ? -1
     : e.get(i.Features).fimSuffixLengthThreshold(n, r);

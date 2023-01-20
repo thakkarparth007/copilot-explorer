@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.getSchemaRefs =
   exports.resolveUrl =
@@ -30,8 +30,8 @@ const a = new Set([
   "enum",
   "const",
 ]);
-exports.inlineRef = function (e, t = !0) {
-  return "boolean" == typeof e || (!0 === t ? !l(e) : !!t && u(e) <= t);
+exports.inlineRef = function (e, t = true) {
+  return "boolean" == typeof e || (true === t ? !l(e) : !!t && u(e) <= t);
 };
 const c = new Set([
   "$ref",
@@ -42,12 +42,12 @@ const c = new Set([
 ]);
 function l(e) {
   for (const t in e) {
-    if (c.has(t)) return !0;
+    if (c.has(t)) return true;
     const n = e[t];
-    if (Array.isArray(n) && n.some(l)) return !0;
-    if ("object" == typeof n && l(n)) return !0;
+    if (Array.isArray(n) && n.some(l)) return true;
+    if ("object" == typeof n && l(n)) return true;
   }
-  return !1;
+  return false;
 }
 function u(e) {
   let t = 0;
@@ -64,7 +64,7 @@ function u(e) {
   return t;
 }
 function getFullPath(e = "", t) {
-  if (!1 !== t) {
+  if (false !== t) {
     e = normalizeId(e);
   }
   return _getFullPath(s.parse(e));
@@ -91,13 +91,13 @@ exports.getSchemaRefs = function (e, t) {
   const a = {
     "": r,
   };
-  const c = getFullPath(r, !1);
+  const c = getFullPath(r, false);
   const l = {};
   const u = new Set();
   i(
     e,
     {
-      allKeys: !0,
+      allKeys: true,
     },
     (e, t, r, o) => {
       if (undefined === o) return;

@@ -14,7 +14,7 @@ var r =
     return e;
   };
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 var o = require(9253);
 var i = require(4470);
@@ -66,14 +66,14 @@ var AutoCollectNativePerformance = (function () {
     }
   };
   e.prototype.dispose = function () {
-    this.enable(!1);
+    this.enable(false);
   };
   e.parseEnabled = function (e) {
     var t = process.env[o.ENV_nativeMetricsDisableAll];
     var n = process.env[o.ENV_nativeMetricsDisablers];
     if (t)
       return {
-        isEnabled: !1,
+        isEnabled: false,
         disabledMetrics: {},
       };
     if (n) {
@@ -83,11 +83,11 @@ var AutoCollectNativePerformance = (function () {
         for (a = 0, c = i, undefined; a < c.length; a++) {
           var a;
           var c;
-          s[c[a]] = !0;
+          s[c[a]] = true;
         }
       return "object" == typeof e
         ? {
-            isEnabled: !0,
+            isEnabled: true,
             disabledMetrics: r({}, e, s),
           }
         : {
@@ -101,12 +101,12 @@ var AutoCollectNativePerformance = (function () {
           disabledMetrics: {},
         }
       : {
-          isEnabled: !0,
+          isEnabled: true,
           disabledMetrics: e,
         };
   };
   e.prototype._trackNativeMetrics = function () {
-    var e = !0;
+    var e = true;
     if ("object" != typeof this._isEnabled) {
       e = this._isEnabled;
     }

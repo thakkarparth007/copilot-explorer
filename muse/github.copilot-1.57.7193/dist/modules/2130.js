@@ -4,10 +4,10 @@ const i = process.env;
 let s;
 function a(e) {
   const t = (function (e) {
-    if (!1 === s) return 0;
+    if (false === s) return 0;
     if (o("color=16m") || o("color=full") || o("color=truecolor")) return 3;
     if (o("color=256")) return 2;
-    if (e && !e.isTTY && !0 !== s) return 0;
+    if (e && !e.isTTY && true !== s) return 0;
     const t = s ? 1 : 0;
     if ("win32" === process.platform) {
       const e = r.release().split(".");
@@ -49,7 +49,7 @@ function a(e) {
     return (
       0 !== e && {
         level: e,
-        hasBasic: !0,
+        hasBasic: true,
         has256: e >= 2,
         has16m: e >= 3,
       }
@@ -57,10 +57,10 @@ function a(e) {
   })(t);
 }
 if (o("no-color") || o("no-colors") || o("color=false")) {
-  s = !1;
+  s = false;
 } else {
   if (o("color") || o("colors") || o("color=true") || o("color=always")) {
-    s = !0;
+    s = true;
   }
 }
 if ("FORCE_COLOR" in i) {

@@ -75,7 +75,7 @@ module.exports = {
               " provider:" +
               c[i] +
               " active:" +
-              r.inspect(t.active, !0)
+              r.inspect(t.active, true)
           );
         }
       },
@@ -136,7 +136,7 @@ module.exports = {
               " context:" +
               r.inspect(t._contexts.get(u)) +
               " active:" +
-              r.inspect(t.active, !0)
+              r.inspect(t.active, true)
           );
         }
         t._contexts.delete(n);
@@ -172,7 +172,7 @@ d.prototype.set = function (e, t) {
         " uid:" +
         u +
         " active:" +
-        r.inspect(this.active, !0)
+        r.inspect(this.active, true)
     );
   }
   this.active[e] = t;
@@ -191,7 +191,7 @@ d.prototype.get = function (e) {
           " uid:" +
           u +
           " active:" +
-          r.inspect(this.active, !0)
+          r.inspect(this.active, true)
       );
     }
     return this.active[e];
@@ -205,7 +205,7 @@ d.prototype.get = function (e) {
         " uid:" +
         u +
         " active:" +
-        r.inspect(this.active, !0)
+        r.inspect(this.active, true)
     );
   }
 };
@@ -219,7 +219,7 @@ d.prototype.createContext = function () {
         " len:" +
         this._set.length +
         "  active:" +
-        r.inspect(this.active, !0, 2, !0)
+        r.inspect(this.active, true, 2, true)
     );
   }
   let e = Object.create(this.active ? this.active : Object.prototype);
@@ -234,7 +234,7 @@ d.prototype.createContext = function () {
         " len:" +
         this._set.length +
         "  context:" +
-        r.inspect(e, !0, 2, !0)
+        r.inspect(e, true, 2, true)
     );
   }
   return e;

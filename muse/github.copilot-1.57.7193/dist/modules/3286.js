@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.normalizeIndentCharacter = undefined;
 exports.normalizeIndentCharacter = function (e, t, n) {

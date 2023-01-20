@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.validateSchemaDeps =
   exports.validatePropertyDeps =
@@ -80,7 +80,7 @@ function validateSchemaDeps(e, t = e.schema) {
           );
           e.mergeValidEvaluated(t, c);
         },
-        () => n.var(c, !0)
+        () => n.var(c, true)
       );
       e.ok(c);
     }

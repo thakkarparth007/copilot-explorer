@@ -1,6 +1,6 @@
 var n;
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.telemetryTypeToBaseType = function (e) {
   switch (e) {

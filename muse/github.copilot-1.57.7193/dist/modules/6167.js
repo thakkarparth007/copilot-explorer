@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.contentVocabulary = exports.metadataVocabulary = undefined;
 exports.metadataVocabulary = [

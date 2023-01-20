@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(4815);
 const o = require(412);
@@ -19,7 +19,7 @@ const a = {
     }
     const u = o.allSchemaProperties(n);
     for (const e of u) l.definedProperties.add(e);
-    if (l.opts.unevaluated && u.length && !0 !== l.props) {
+    if (l.opts.unevaluated && u.length && true !== l.props) {
       l.props = i.mergeEvaluated.props(t, i.toHash(u), l.props);
     }
     const d = u.filter((e) => !i.alwaysValidSchema(l, n[e]));
@@ -32,7 +32,7 @@ const a = {
         t.if(o.propertyInData(t, c, n, l.opts.ownProperties));
         f(n);
         if (l.allErrors) {
-          t.else().var(p, !0);
+          t.else().var(p, true);
         }
         t.endIf();
       }

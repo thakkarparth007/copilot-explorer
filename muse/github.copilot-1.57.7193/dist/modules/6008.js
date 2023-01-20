@@ -13,7 +13,7 @@ module.exports = function (e) {
     search: "",
     href: e,
     query: {},
-    parse_failed: !1,
+    parse_failed: false,
   };
   try {
     var n = new URL(e);
@@ -40,7 +40,7 @@ module.exports = function (e) {
     t.search = "";
     t.href = e;
     t.query = {};
-    t.parse_failed = !0;
+    t.parse_failed = true;
   }
   return t;
 };

@@ -2,7 +2,7 @@ const r = require("os");
 const o = require("fs");
 const i = require(1595);
 const s = () => {
-  if ("linux" !== process.platform) return !1;
+  if ("linux" !== process.platform) return false;
   if (r.release().toLowerCase().includes("microsoft")) return !i();
   try {
     return (
@@ -12,7 +12,7 @@ const s = () => {
         .includes("microsoft") && !i()
     );
   } catch (e) {
-    return !1;
+    return false;
   }
 };
 if (process.env.__IS_WSL_TEST__) {

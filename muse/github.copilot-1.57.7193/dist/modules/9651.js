@@ -1,12 +1,12 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(3487);
 const o = {
   keyword: "format",
   type: ["number", "string"],
   schemaType: "string",
-  $data: !0,
+  $data: true,
   error: {
     message: ({ schemaCode: e }) => r.str`must match format "${e}"`,
     params: ({ schemaCode: e }) => r._`{format: ${e}}`,
@@ -34,7 +34,7 @@ const o = {
           );
           e.fail$data(
             r.or(
-              !1 === l.strictSchema ? r.nil : r._`${a} && !${u}`,
+              false === l.strictSchema ? r.nil : r._`${a} && !${u}`,
               (function () {
                 const e = d.$async
                   ? r._`(${s}.async ? await ${u}(${o}) : ${u}(${o}))`
@@ -50,13 +50,13 @@ const o = {
           const i = p.formats[s];
           if (!i)
             return void (function () {
-              if (!1 !== l.strictSchema) throw new Error(e());
+              if (false !== l.strictSchema) throw new Error(e());
               function e() {
                 return `unknown format "${s}" ignored in schema at path "${u}"`;
               }
               p.logger.warn(e());
             })();
-          if (!0 === i) return;
+          if (true === i) return;
           const [a, c, h] = (function (e) {
             const t =
               e instanceof RegExp

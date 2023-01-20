@@ -5,7 +5,7 @@ function isTop(e) {
   return "top" === e.type;
 }
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.duplicateTree =
   exports.cutTreeAfterLine =
@@ -64,14 +64,14 @@ exports.cutTreeAfterLine = function (e, t) {
   !(function e(o) {
     if (!isVirtual(o) && !isTop(o) && o.lineNumber === t) {
       o.subs = [];
-      return !0;
+      return true;
     }
     for (let t = 0; t < o.subs.length; t++)
       if (e(o.subs[t])) {
         o.subs = o.subs.slice(0, t + 1);
-        return !0;
+        return true;
       }
-    return !1;
+    return false;
   })(e);
 };
 exports.duplicateTree = function (e) {

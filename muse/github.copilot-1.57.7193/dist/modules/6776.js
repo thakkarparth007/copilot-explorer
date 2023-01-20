@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.checkStrictMode =
   exports.getErrorPath =
@@ -34,8 +34,8 @@ function checkUnknownRules(e, t = e.schema) {
 }
 function schemaHasRules(e, t) {
   if ("boolean" == typeof e) return !e;
-  for (const n in e) if (t[n]) return !0;
-  return !1;
+  for (const n in e) if (t[n]) return true;
+  return false;
 }
 function escapeJsonPointer(e) {
   return "number" == typeof e
@@ -59,7 +59,7 @@ function l({ mergeNames: e, mergeToName: t, mergeValues: n, resultToName: o }) {
   };
 }
 function evaluatedPropsToName(e, t) {
-  if (!0 === t) return e.var("props", !0);
+  if (true === t) return e.var("props", true);
   const n = e.var("props", r._`{}`);
   if (undefined !== t) {
     setEvaluated(e, n, t);
@@ -67,11 +67,11 @@ function evaluatedPropsToName(e, t) {
   return n;
 }
 function setEvaluated(e, t, n) {
-  Object.keys(n).forEach((n) => e.assign(r._`${t}${r.getProperty(n)}`, !0));
+  Object.keys(n).forEach((n) => e.assign(r._`${t}${r.getProperty(n)}`, true));
 }
 exports.toHash = function (e) {
   const t = {};
-  for (const n of e) t[n] = !0;
+  for (const n of e) t[n] = true;
   return t;
 };
 exports.alwaysValidSchema = function (e, t) {
@@ -84,8 +84,8 @@ exports.checkUnknownRules = checkUnknownRules;
 exports.schemaHasRules = schemaHasRules;
 exports.schemaHasRulesButRef = function (e, t) {
   if ("boolean" == typeof e) return !e;
-  for (const n in e) if ("$ref" !== n && t.all[n]) return !0;
-  return !1;
+  for (const n in e) if ("$ref" !== n && t.all[n]) return true;
+  return false;
 };
 exports.schemaRefOrVal = function (
   { topSchemaRef: e, schemaPath: t },
@@ -117,22 +117,22 @@ exports.mergeEvaluated = {
       e.if(r._`${n} !== true && ${t} !== undefined`, () => {
         e.if(
           r._`${t} === true`,
-          () => e.assign(n, !0),
+          () => e.assign(n, true),
           () =>
             e.assign(n, r._`${n} || {}`).code(r._`Object.assign(${n}, ${t})`)
         );
       }),
     mergeToName: (e, t, n) =>
       e.if(r._`${n} !== true`, () => {
-        if (!0 === t) {
-          e.assign(n, !0);
+        if (true === t) {
+          e.assign(n, true);
         } else {
           e.assign(n, r._`${n} || {}`);
           setEvaluated(e, n, t);
         }
       }),
     mergeValues: (e, t) =>
-      !0 === e || {
+      true === e || {
         ...e,
         ...t,
       },
@@ -145,9 +145,9 @@ exports.mergeEvaluated = {
       ),
     mergeToName: (e, t, n) =>
       e.if(r._`${n} !== true`, () =>
-        e.assign(n, !0 === t || r._`${n} > ${t} ? ${n} : ${t}`)
+        e.assign(n, true === t || r._`${n} > ${t} ? ${n} : ${t}`)
       ),
-    mergeValues: (e, t) => !0 === e || Math.max(e, t),
+    mergeValues: (e, t) => true === e || Math.max(e, t),
     resultToName: (e, t) => e.var("items", t),
   }),
 };

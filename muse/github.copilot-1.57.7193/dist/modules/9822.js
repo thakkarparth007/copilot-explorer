@@ -7,7 +7,7 @@ const i = {
 };
 const s = new Set();
 function a() {
-  this.enabled = !1;
+  this.enabled = false;
   this.counter = 0;
 }
 function c() {
@@ -88,10 +88,10 @@ u.prototype.removeHooks = function (e) {
   this._hooks.remove(e);
 };
 u.prototype.enable = function () {
-  this._state.enabled = !0;
+  this._state.enabled = true;
   r.enable();
 };
 u.prototype.disable = function () {
-  this._state.enabled = !1;
+  this._state.enabled = false;
   r.disable();
 };

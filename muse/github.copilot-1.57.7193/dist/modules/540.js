@@ -220,28 +220,28 @@
       ),
     };
   }
-  var s = i(!1);
-  var a = i(!0);
+  var s = i(false);
+  var a = i(true);
   var c = function (e, t) {
     if (Array.isArray(e)) return e;
     if (Symbol.iterator in Object(e))
       return (function (e, t) {
         var n = [];
-        var r = !0;
-        var o = !1;
+        var r = true;
+        var o = false;
         var i = undefined;
         try {
           for (
             a = e[Symbol.iterator](), undefined;
             !(r = (s = a.next()).done) &&
             (n.push(s.value), !t || n.length !== t);
-            r = !0
+            r = true
           ) {
             var s;
             var a;
           }
         } catch (e) {
-          o = !0;
+          o = true;
           i = e;
         } finally {
           try {
@@ -379,14 +379,14 @@
     var r = 128;
     var o = 0;
     var i = 72;
-    var s = !0;
-    var a = !1;
+    var s = true;
+    var a = false;
     var c = undefined;
     try {
       for (
         p = e[Symbol.iterator](), undefined;
         !(s = (d = p.next()).done);
-        s = !0
+        s = true
       ) {
         var d;
         var p;
@@ -396,7 +396,7 @@
         }
       }
     } catch (e) {
-      a = !0;
+      a = true;
       c = e;
     } finally {
       try {
@@ -411,14 +411,14 @@
     var y = f;
     for (f && t.push("-"); y < n; ) {
       var x = l;
-      var E = !0;
-      var C = !1;
+      var E = true;
+      var C = false;
       var S = undefined;
       try {
         for (
           k = e[Symbol.iterator](), undefined;
           !(E = (T = k.next()).done);
-          E = !0
+          E = true
         ) {
           var T;
           var k;
@@ -428,7 +428,7 @@
           }
         }
       } catch (e) {
-        C = !0;
+        C = true;
         S = e;
       } finally {
         try {
@@ -445,14 +445,14 @@
       }
       o += (x - r) * P;
       r = x;
-      var A = !0;
-      var O = !1;
+      var A = true;
+      var O = false;
       var N = undefined;
       try {
         for (
           M = e[Symbol.iterator](), undefined;
           !(A = (R = M.next()).done);
-          A = !0
+          A = true
         ) {
           var R;
           var M;
@@ -472,7 +472,7 @@
           }
         }
       } catch (e) {
-        O = !0;
+        O = true;
         N = e;
       } finally {
         try {
@@ -676,7 +676,7 @@
     var t =
       arguments.length > 1 && undefined !== arguments[1] ? arguments[1] : {};
     var n = {};
-    var r = !1 !== t.iri ? a : s;
+    var r = false !== t.iri ? a : s;
     if ("suffix" === t.reference) {
       e = (t.scheme ? t.scheme + ":" : "") + "//" + e;
     }
@@ -756,7 +756,7 @@
     return n;
   }
   function $(e, t) {
-    var n = !1 !== t.iri ? a : s;
+    var n = false !== t.iri ? a : s;
     var r = [];
     if (undefined !== e.userinfo) {
       r.push(e.userinfo);
@@ -923,7 +923,7 @@
   }
   var G = {
     scheme: "http",
-    domainHost: !0,
+    domainHost: true,
     parse: function (e, t) {
       if (e.host) {
         e.error = e.error || "HTTP URIs must have a host.";
@@ -954,7 +954,7 @@
   }
   var K = {
     scheme: "ws",
-    domainHost: !0,
+    domainHost: true,
     parse: function (e, t) {
       var n = e;
       n.secure = W(n);
@@ -1206,7 +1206,7 @@
       },
       n
     );
-    return U(H(L(e, r), L(t, r), r, !0), r);
+    return U(H(L(e, r), L(t, r), r, true), r);
   };
   e.normalize = function (e, t) {
     if ("string" == typeof e) {
@@ -1240,6 +1240,6 @@
   };
   e.unescapeComponent = z;
   Object.defineProperty(e, "__esModule", {
-    value: !0,
+    value: true,
   });
 })(exports);

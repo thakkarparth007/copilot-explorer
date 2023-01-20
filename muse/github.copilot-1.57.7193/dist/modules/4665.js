@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.validateTuple = undefined;
 const r = require(3487);
@@ -13,7 +13,7 @@ const s = {
   code(e) {
     const { schema: t, it: n } = e;
     if (Array.isArray(t)) return validateTuple(e, "additionalItems", t);
-    n.items = !0;
+    n.items = true;
     if (o.alwaysValidSchema(n, t)) {
       e.ok(i.validateArray(e));
     }
@@ -24,13 +24,13 @@ function validateTuple(e, t, n = e.schema) {
   !(function (e) {
     const { opts: r, errSchemaPath: i } = l;
     const s = n.length;
-    const a = s === e.minItems && (s === e.maxItems || !1 === e[t]);
+    const a = s === e.minItems && (s === e.maxItems || false === e[t]);
     if (r.strictTuples && !a) {
       const e = `"${c}" is ${s}-tuple, but minItems or maxItems/${t} are not specified or different at path "${i}"`;
       o.checkStrictMode(l, e, r.strictTuples);
     }
   })(s);
-  if (l.opts.unevaluated && n.length && !0 !== l.items) {
+  if (l.opts.unevaluated && n.length && true !== l.items) {
     l.items = o.mergeEvaluated.items(i, n.length, l.items);
   }
   const u = i.name("valid");

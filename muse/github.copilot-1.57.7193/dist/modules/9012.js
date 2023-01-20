@@ -124,7 +124,7 @@ function parse(e, t) {
   if (t && "object" == typeof t) {
     t = {
       loose: !!t,
-      includePrerelease: !1,
+      includePrerelease: false,
     };
   }
   if (e instanceof SemVer) return e;
@@ -141,7 +141,7 @@ function SemVer(e, t) {
   if (t && "object" == typeof t) {
     t = {
       loose: !!t,
-      includePrerelease: !1,
+      includePrerelease: false,
     };
   }
   if (e instanceof SemVer) {
@@ -412,7 +412,7 @@ function re(e, t) {
   if (t && "object" == typeof t) {
     t = {
       loose: !!t,
-      includePrerelease: !1,
+      includePrerelease: false,
     };
   }
   if (e instanceof re) {
@@ -445,7 +445,7 @@ exports.patch = function (e, t) {
 };
 exports.compare = compare;
 exports.compareLoose = function (e, t) {
-  return compare(e, t, !0);
+  return compare(e, t, true);
 };
 exports.rcompare = function (e, t, n) {
   return compare(t, e, n);
@@ -473,7 +473,7 @@ function ie(e, t) {
   if (t && "object" == typeof t) {
     t = {
       loose: !!t,
-      includePrerelease: !1,
+      includePrerelease: false,
     };
   }
   if (e instanceof ie)
@@ -523,25 +523,25 @@ function ae(e, t, n, r, o, i, s, a, c, l, u, d, p) {
   ).trim();
 }
 function ce(e, t, r) {
-  for (var o = 0; o < e.length; o++) if (!e[o].test(t)) return !1;
+  for (var o = 0; o < e.length; o++) if (!e[o].test(t)) return false;
   if (t.prerelease.length && !r.includePrerelease) {
     for (o = 0; o < e.length; o++) {
       n(e[o].semver);
       if (e[o].semver !== oe && e[o].semver.prerelease.length > 0) {
         var i = e[o].semver;
         if (i.major === t.major && i.minor === t.minor && i.patch === t.patch)
-          return !0;
+          return true;
       }
     }
-    return !1;
+    return false;
   }
-  return !0;
+  return true;
 }
 function le(e, t, n) {
   try {
     t = new ie(t, n);
   } catch (e) {
-    return !1;
+    return false;
   }
   return t.test(e);
 }
@@ -569,7 +569,7 @@ function ue(e, t, n, r) {
     default:
       throw new TypeError('Must provide a hilo val of "<" or ">"');
   }
-  if (le(e, t, r)) return !1;
+  if (le(e, t, r)) return false;
   for (var l = 0; l < t.set.length; ++l) {
     var u = t.set[l];
     var d = null;
@@ -589,10 +589,10 @@ function ue(e, t, n, r) {
       }
     });
     if (d.operator === a || d.operator === c) return !1;
-    if ((!p.operator || p.operator === a) && i(e, p.semver)) return !1;
-    if (p.operator === c && s(e, p.semver)) return !1;
+    if ((!p.operator || p.operator === a) && i(e, p.semver)) return false;
+    if (p.operator === c && s(e, p.semver)) return false;
   }
-  return !0;
+  return true;
 }
 re.prototype.parse = function (e) {
   var t = this.options.loose ? o[F] : o[j];
@@ -625,7 +625,7 @@ re.prototype.intersects = function (e, t) {
   if (t && "object" == typeof t) {
     t = {
       loose: !!t,
-      includePrerelease: !1,
+      includePrerelease: false,
     };
   }
   if ("" === this.operator)
@@ -994,13 +994,13 @@ exports.toComparators = function (e, t) {
   });
 };
 ie.prototype.test = function (e) {
-  if (!e) return !1;
+  if (!e) return false;
   if ("string" == typeof e) {
     e = new SemVer(e, this.options);
   }
   for (var t = 0; t < this.set.length; t++)
-    if (ce(this.set[t], e, this.options)) return !0;
-  return !1;
+    if (ce(this.set[t], e, this.options)) return true;
+  return false;
 };
 exports.satisfies = le;
 exports.maxSatisfying = function (e, t, n) {

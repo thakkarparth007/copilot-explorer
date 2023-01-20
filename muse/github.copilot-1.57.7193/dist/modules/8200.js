@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(4783);
 const o = require(2924);
@@ -17,7 +17,7 @@ const m = require(4200);
 const g = require(1125);
 const _ = require(9434);
 const y = require(6552);
-exports.default = function (e = !1) {
+exports.default = function (e = false) {
   const t = [
     h.default,
     f.default,

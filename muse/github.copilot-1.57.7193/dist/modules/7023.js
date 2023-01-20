@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.regexpCode =
   exports.getProperty =
@@ -29,7 +29,7 @@ class Name extends _CodeOrName {
     return this.str;
   }
   emptyStr() {
-    return !1;
+    return false;
   }
   get names() {
     return {
@@ -47,7 +47,7 @@ class _Code extends _CodeOrName {
     return this.str;
   }
   emptyStr() {
-    if (this._items.length > 1) return !1;
+    if (this._items.length > 1) return false;
     const e = this._items[0];
     return "" === e || '""' === e;
   }

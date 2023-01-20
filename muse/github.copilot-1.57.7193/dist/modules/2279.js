@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.postRequest =
   exports.Response =
@@ -15,7 +15,7 @@ const s = require(1133);
 const a = require(5413);
 const c = require(6333);
 let l;
-let u = !1;
+let u = false;
 exports.init = function (e) {
   if (u) {
     if (e !== l)
@@ -24,7 +24,7 @@ exports.init = function (e) {
       );
   } else {
     l = e;
-    u = !0;
+    u = true;
   }
 };
 class Fetcher {}
@@ -60,7 +60,7 @@ exports.HelixFetcher = class extends Fetcher {
     var t;
     const n = e.get(s.BuildInfo);
     if (
-      !1 ===
+      false ===
       (null === (t = this._proxySettings) || undefined === t
         ? undefined
         : t.rejectUnauthorized)

@@ -15,19 +15,19 @@ module.exports = function () {
     e.init.call(s, a, 0, null, null);
     o[0] = function () {
       e.pre.call(s, a);
-      let t = !0;
+      let t = true;
       try {
         i.apply(this, arguments);
-        t = !1;
+        t = false;
       } finally {
         if (t && process.listenerCount("uncaughtException") > 0) {
           process.once("uncaughtException", function () {
-            e.post.call(s, a, !0);
+            e.post.call(s, a, true);
             e.destroy.call(null, a);
           });
         }
       }
-      e.post.call(s, a, !1);
+      e.post.call(s, a, false);
       e.destroy.call(null, a);
     };
     return r.apply(process, o);

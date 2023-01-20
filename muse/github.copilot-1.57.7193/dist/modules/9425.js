@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.VSCodeEditorInfo =
   exports.makeVscInfo =
@@ -87,7 +87,7 @@ class VSCodeConfigProvider extends o.ConfigProvider {
   updateEnabledConfig(e, t, n) {
     const r = e.get(o.ConfigProvider).getConfig(o.ConfigKey.Enable);
     r[t] = n;
-    return this.config.update(o.ConfigKey.Enable, r, !0);
+    return this.config.update(o.ConfigKey.Enable, r, true);
   }
 }
 let u;

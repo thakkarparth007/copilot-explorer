@@ -4,21 +4,21 @@ const n = new Set([
 ]);
 const r = new Set([500, 502, 503, 504]);
 const o = {
-  date: !0,
-  connection: !0,
-  "keep-alive": !0,
-  "proxy-authenticate": !0,
-  "proxy-authorization": !0,
-  te: !0,
-  trailer: !0,
-  "transfer-encoding": !0,
-  upgrade: !0,
+  date: true,
+  connection: true,
+  "keep-alive": true,
+  "proxy-authenticate": true,
+  "proxy-authorization": true,
+  te: true,
+  trailer: true,
+  "transfer-encoding": true,
+  upgrade: true,
 };
 const i = {
-  "content-length": !0,
-  "content-encoding": !0,
-  "transfer-encoding": !0,
-  "content-range": !0,
+  "content-length": true,
+  "content-encoding": true,
+  "transfer-encoding": true,
+  "content-range": true,
 };
 function s(e) {
   const t = parseInt(e, 10);
@@ -38,7 +38,7 @@ function c(e) {
   let t = [];
   for (const n in e) {
     const r = e[n];
-    t.push(!0 === r ? n : n + "=" + r);
+    t.push(true === r ? n : n + "=" + r);
   }
   if (t.length) return t.join(", ");
 }
@@ -59,7 +59,7 @@ module.exports = class {
       if (!t || !t.headers) throw Error("Response headers missing");
       this._assertRequestHasHeaders(e);
       this._responseTime = this.now();
-      this._isShared = !1 !== n;
+      this._isShared = false !== n;
       this._cacheHeuristic = undefined !== r ? r : 0.1;
       this._immutableMinTtl = undefined !== o ? o : 864e5;
       this._status = "status" in t ? t.status : 200;
@@ -87,7 +87,7 @@ module.exports = class {
         null == t.headers["cache-control"] &&
         /no-cache/.test(t.headers.pragma)
       ) {
-        this._rescc["no-cache"] = !0;
+        this._rescc["no-cache"] = true;
       }
     }
   }
@@ -140,10 +140,11 @@ module.exports = class {
         (!t["max-stale"] ||
           this._rescc["must-revalidate"] ||
           !(
-            !0 === t["max-stale"] || t["max-stale"] > this.age() - this.maxAge()
+            true === t["max-stale"] ||
+            t["max-stale"] > this.age() - this.maxAge()
           ))
       ) &&
-      this._requestMatches(e, !1)
+      this._requestMatches(e, false)
     );
   }
   _requestMatches(e, t) {
@@ -162,14 +163,14 @@ module.exports = class {
     );
   }
   _varyMatches(e) {
-    if (!this._resHeaders.vary) return !0;
-    if ("*" === this._resHeaders.vary) return !1;
+    if (!this._resHeaders.vary) return true;
+    if ("*" === this._resHeaders.vary) return false;
     const t = this._resHeaders.vary
       .trim()
       .toLowerCase()
       .split(/\s*,\s*/);
-    for (const n of t) if (e.headers[n] !== this._reqHeaders[n]) return !1;
-    return !0;
+    for (const n of t) if (e.headers[n] !== this._reqHeaders[n]) return false;
+    return true;
   }
   _copyWithoutHopByHopHeaders(e) {
     const t = {};
@@ -341,9 +342,9 @@ module.exports = class {
         policy: this,
       };
     if (!t || !t.headers) throw Error("Response headers missing");
-    let n = !1;
+    let n = false;
     if (undefined !== t.status && 304 != t.status) {
-      n = !1;
+      n = false;
     } else {
       if (t.headers.etag && !/^\s*W\//.test(t.headers.etag)) {
         n =
@@ -365,7 +366,7 @@ module.exports = class {
               t.headers.etag ||
               t.headers["last-modified"]
             ) {
-              n = !0;
+              n = true;
             }
           }
         }
@@ -391,8 +392,8 @@ module.exports = class {
         cacheHeuristic: this._cacheHeuristic,
         immutableMinTimeToLive: this._immutableMinTtl,
       }),
-      modified: !1,
-      matches: !0,
+      modified: false,
+      matches: true,
     };
   }
 };

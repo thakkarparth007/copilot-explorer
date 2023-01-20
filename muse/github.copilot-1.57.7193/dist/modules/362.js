@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.refreshToken =
   exports.CopilotTokenManagerFromGitHubToken =
@@ -212,7 +212,7 @@ function refreshToken(e, n, r) {
       let i = "";
       try {
         d--;
-        await n.getCopilotToken(e, !0);
+        await n.getCopilotToken(e, true);
         r = "success";
         n.tokenRefreshEventEmitter.emit(exports.TOKEN_REFRESHED_EVENT);
       } catch (e) {
@@ -240,7 +240,7 @@ exports.FixedCopilotTokenManager = class extends CopilotTokenManager {
   constructor(e) {
     super();
     this.tokenInfo = e;
-    this.wasReset = !1;
+    this.wasReset = false;
     setTelemetryConfigFromTokenInfo(e);
   }
   async getGitHubToken() {
@@ -250,7 +250,7 @@ exports.FixedCopilotTokenManager = class extends CopilotTokenManager {
     return this.tokenInfo;
   }
   resetCopilotToken(e, t) {
-    this.wasReset = !0;
+    this.wasReset = true;
   }
   async checkCopilotToken(e) {
     return {

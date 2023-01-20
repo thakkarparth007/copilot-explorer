@@ -9,7 +9,7 @@ function a(e, t, n, r, o) {
   this.column = null == t ? null : t;
   this.source = null == n ? null : n;
   this.name = null == o ? null : o;
-  this[s] = !0;
+  this[s] = true;
   if (null != r) {
     this.add(r);
   }
@@ -181,7 +181,7 @@ a.prototype.toStringWithSourceMap = function (e) {
     column: 0,
   };
   var n = new r(e);
-  var o = !1;
+  var o = false;
   var i = null;
   var s = null;
   var a = null;
@@ -207,7 +207,7 @@ a.prototype.toStringWithSourceMap = function (e) {
       s = r.line;
       a = r.column;
       c = r.name;
-      o = !0;
+      o = true;
     } else {
       if (o) {
         n.addMapping({
@@ -217,7 +217,7 @@ a.prototype.toStringWithSourceMap = function (e) {
           },
         });
         i = null;
-        o = !1;
+        o = false;
       }
     }
     for (l = 0, u = e.length, undefined; l < u; l++) {
@@ -228,7 +228,7 @@ a.prototype.toStringWithSourceMap = function (e) {
         t.column = 0;
         if (l + 1 === u) {
           i = null;
-          o = !1;
+          o = false;
         } else {
           if (o) {
             n.addMapping({

@@ -1,12 +1,12 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.ChangeTracker = undefined;
 const r = require(3136);
 exports.ChangeTracker = class {
   constructor(e, t, n) {
     this._referenceCount = 0;
-    this._isDisposed = !1;
+    this._isDisposed = false;
     this._offset = n;
     const o = e.get(r.TextDocumentManager);
     this._tracker = o.onDidChangeTextDocument(async (e) => {
@@ -30,7 +30,7 @@ exports.ChangeTracker = class {
       this._referenceCount--;
       if (0 === this._referenceCount) {
         this._tracker.dispose();
-        this._isDisposed = !0;
+        this._isDisposed = true;
       }
     }, t);
   }

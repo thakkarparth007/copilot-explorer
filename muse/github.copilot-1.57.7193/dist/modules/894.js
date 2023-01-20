@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 var r = require(5282);
 var o = require(7396);
@@ -44,10 +44,10 @@ var CorrelationContextManager = (function () {
       if (this.isNodeVersionCompatible()) {
         if (e.hasEverEnabled) {
           this.forceClsHooked = t;
-          this.hasEverEnabled = !0;
+          this.hasEverEnabled = true;
           if (undefined === this.cls) {
             if (
-              !0 === e.forceClsHooked ||
+              true === e.forceClsHooked ||
               (undefined === e.forceClsHooked && e.shouldUseClsHooked())
             ) {
               this.cls = require(9562);
@@ -60,14 +60,14 @@ var CorrelationContextManager = (function () {
             return e.session.bind(t);
           });
         }
-        this.enabled = !0;
+        this.enabled = true;
       } else {
-        this.enabled = !1;
+        this.enabled = false;
       }
     }
   };
   e.disable = function () {
-    this.enabled = !1;
+    this.enabled = false;
   };
   e.reset = function () {
     if (e.hasEverEnabled) {
@@ -90,8 +90,8 @@ var CorrelationContextManager = (function () {
     var r = parseInt(e[0]) > 4 || (parseInt(e[0]) >= 4 && parseInt(e[1]) >= 7);
     return !(t && n) && r;
   };
-  e.enabled = !1;
-  e.hasEverEnabled = !1;
+  e.enabled = false;
+  e.hasEverEnabled = false;
   e.forceClsHooked = undefined;
   e.CONTEXT_NAME = "ApplicationInsights-Context";
   return e;

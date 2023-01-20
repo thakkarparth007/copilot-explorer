@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.validateUnion =
   exports.validateArray =
@@ -41,7 +41,7 @@ exports.checkReportMissingProp = function (e, t) {
       {
         missingProperty: r._`${t}`,
       },
-      !0
+      true
     );
     e.error();
   });
@@ -62,7 +62,7 @@ exports.reportMissingProp = function (e, t) {
     {
       missingProperty: t,
     },
-    !0
+    true
   );
   e.error();
 };
@@ -113,11 +113,11 @@ exports.validateArray = function (e) {
   const { gen: t, data: n, keyword: i, it: s } = e;
   const a = t.name("valid");
   if (s.allErrors) {
-    const e = t.let("valid", !0);
-    c(() => t.assign(e, !1));
+    const e = t.let("valid", true);
+    c(() => t.assign(e, false));
     return e;
   }
-  t.var(a, !0);
+  t.var(a, true);
   c(() => t.break());
   return a;
   function c(s) {
@@ -139,7 +139,7 @@ exports.validateUnion = function (e) {
   const { gen: t, schema: n, keyword: i, it: s } = e;
   if (!Array.isArray(n)) throw new Error("ajv implementation error");
   if (n.some((e) => o.alwaysValidSchema(s, e)) && !s.opts.unevaluated) return;
-  const a = t.let("valid", !1);
+  const a = t.let("valid", false);
   const c = t.name("_valid");
   t.block(() =>
     n.forEach((n, o) => {
@@ -147,7 +147,7 @@ exports.validateUnion = function (e) {
         {
           keyword: i,
           schemaProp: o,
-          compositeRule: !0,
+          compositeRule: true,
         },
         c
       );
@@ -160,6 +160,6 @@ exports.validateUnion = function (e) {
   e.result(
     a,
     () => e.reset(),
-    () => e.error(!0)
+    () => e.error(true)
   );
 };

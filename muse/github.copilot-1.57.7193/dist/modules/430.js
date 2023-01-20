@@ -1,12 +1,12 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(3487);
 const o = {
   keyword: "multipleOf",
   type: "number",
   schemaType: "number",
-  $data: !0,
+  $data: true,
   error: {
     message: ({ schemaCode: e }) => r.str`must be multiple of ${e}`,
     params: ({ schemaCode: e }) => r._`{multipleOf: ${e}}`,

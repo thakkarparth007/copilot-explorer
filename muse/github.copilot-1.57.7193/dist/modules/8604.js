@@ -14,7 +14,7 @@ var r =
     return e;
   };
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 var o = require(4953);
 exports.AzureMonitorSymbol = "Azure_Monitor_Tracer";
@@ -56,7 +56,7 @@ exports.azureCoreTracing = {
         return o;
       };
       s.addSpanProcessor(new i());
-      s[exports.AzureMonitorSymbol] = !0;
+      s[exports.AzureMonitorSymbol] = true;
       e.setTracer(s);
     } catch (e) {}
     return e;

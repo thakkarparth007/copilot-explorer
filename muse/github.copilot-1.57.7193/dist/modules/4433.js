@@ -8,7 +8,7 @@ function h(e) {
   }
   this._file = o.getArg(e, "file", null);
   this._sourceRoot = o.getArg(e, "sourceRoot", null);
-  this._skipValidation = o.getArg(e, "skipValidation", !1);
+  this._skipValidation = o.getArg(e, "skipValidation", false);
   this._sources = new i();
   this._names = new i();
   this._mappings = new s();

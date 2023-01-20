@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(3487);
 const o = require(6776);
@@ -8,7 +8,7 @@ const i = {
   type: "array",
   schemaType: ["object", "boolean"],
   before: "uniqueItems",
-  trackErrors: !0,
+  trackErrors: true,
   error: {
     message: ({ params: { min: e, max: t } }) =>
       undefined === t
@@ -51,11 +51,11 @@ const i = {
       }
       return void e.pass(t);
     }
-    a.items = !0;
+    a.items = true;
     const h = t.name("valid");
     if (undefined === l && 1 === c) f(h, () => t.if(h, () => t.break()));
     else {
-      t.let(h, !1);
+      t.let(h, false);
       const e = t.name("_valid");
       const n = t.let("count", 0);
       f(e, () =>
@@ -63,13 +63,13 @@ const i = {
           (function (e) {
             t.code(r._`${e}++`);
             if (undefined === l) {
-              t.if(r._`${e} >= ${c}`, () => t.assign(h, !0).break());
+              t.if(r._`${e} >= ${c}`, () => t.assign(h, true).break());
             } else {
-              t.if(r._`${e} > ${l}`, () => t.assign(h, !1).break());
+              t.if(r._`${e} > ${l}`, () => t.assign(h, false).break());
               if (1 === c) {
-                t.assign(h, !0);
+                t.assign(h, true);
               } else {
-                t.if(r._`${e} >= ${c}`, () => t.assign(h, !0));
+                t.if(r._`${e} >= ${c}`, () => t.assign(h, true));
               }
             }
           })(n)
@@ -83,7 +83,7 @@ const i = {
             keyword: "contains",
             dataProp: t,
             dataPropType: o.Type.Num,
-            compositeRule: !0,
+            compositeRule: true,
           },
           n
         );

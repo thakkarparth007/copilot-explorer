@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.getNeighborSnippets = exports.neighborOptionToSelection = undefined;
 const r = require(3055417);

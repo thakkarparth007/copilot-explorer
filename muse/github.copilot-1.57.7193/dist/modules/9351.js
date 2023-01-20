@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(412);
 const o = require(3487);
@@ -9,8 +9,8 @@ const a = {
   keyword: "additionalProperties",
   type: ["object"],
   schemaType: ["boolean", "object"],
-  allowUndefined: !0,
-  trackErrors: !0,
+  allowUndefined: true,
+  trackErrors: true,
   error: {
     message: "must NOT have additional properties",
     params: ({ params: e }) =>
@@ -27,7 +27,7 @@ const a = {
     } = e;
     if (!l) throw new Error("ajv implementation error");
     const { allErrors: d, opts: p } = u;
-    u.props = !0;
+    u.props = true;
     if ("all" !== p.removeAdditional && (0, s.alwaysValidSchema)(u, n)) return;
     const h = r.allSchemaProperties(a.properties);
     const f = r.allSchemaProperties(a.patternProperties);
@@ -35,10 +35,10 @@ const a = {
       t.code(o._`delete ${c}[${e}]`);
     }
     function g(r) {
-      if ("all" === p.removeAdditional || (p.removeAdditional && !1 === n))
+      if ("all" === p.removeAdditional || (p.removeAdditional && false === n))
         m(r);
       else {
-        if (!1 === n) {
+        if (false === n) {
           e.setParams({
             additionalProperty: r,
           });
@@ -48,7 +48,7 @@ const a = {
         if ("object" == typeof n && !s.alwaysValidSchema(u, n)) {
           const n = t.name("valid");
           if ("failing" === p.removeAdditional) {
-            _(r, n, !1);
+            _(r, n, false);
             t.if(o.not(n), () => {
               e.reset();
               m(r);
@@ -68,11 +68,11 @@ const a = {
         dataProp: t,
         dataPropType: s.Type.Str,
       };
-      if (!1 === r) {
+      if (false === r) {
         Object.assign(o, {
-          compositeRule: !0,
-          createErrors: !1,
-          allErrors: !1,
+          compositeRule: true,
+          createErrors: false,
+          allErrors: false,
         });
       }
       e.subschema(o, n);

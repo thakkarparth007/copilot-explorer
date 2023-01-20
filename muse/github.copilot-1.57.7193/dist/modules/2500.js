@@ -22,7 +22,7 @@ class a extends i {
     return r.from(this[s].bufferedBody);
   }
   get bodyUsed() {
-    return !1;
+    return false;
   }
   async buffer() {
     return this[s].bufferedBody;

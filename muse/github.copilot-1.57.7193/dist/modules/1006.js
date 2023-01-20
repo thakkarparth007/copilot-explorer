@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.ghostTextScoreQuantile = exports.ghostTextScoreConfidence = undefined;
 const r = require(9899);

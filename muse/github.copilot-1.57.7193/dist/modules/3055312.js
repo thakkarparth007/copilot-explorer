@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.getPrompt =
   exports.newLineEnded =
@@ -182,7 +182,7 @@ exports.newLineEnded = newLineEnded;
 exports.getPrompt = async function (e, n, g = {}, y = []) {
   var w;
   const E = new PromptOptions(e, g);
-  let T = !1;
+  let T = false;
   const { source: k, offset: I } = n;
   if (I < 0 || I > k.length) throw new Error(`Offset ${I} is out of range.`);
   n.languageId = normalizeLanguageId(n.languageId);
@@ -327,7 +327,7 @@ exports.getPrompt = async function (e, n, g = {}, y = []) {
         p.tokens.length === u.tokens.length &&
         p.tokens.every((e, t) => e === u.tokens[t])
       ) {
-        T = !0;
+        T = true;
       }
     } else {
       if (
@@ -345,10 +345,10 @@ exports.getPrompt = async function (e, n, g = {}, y = []) {
           E.suffixMatchThreshold *
             Math.min(exports.MAX_EDIT_DISTANCE_LENGTH, p.tokens.length)
       ) {
-        T = !0;
+        T = true;
       }
     }
-    if (!0 === T && u.tokens.length <= c) {
+    if (true === T && u.tokens.length <= c) {
       if (u.tokens.length <= c - 3) {
         o = r - u.tokens.length;
         i = $.fulfill(o);

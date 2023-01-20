@@ -128,7 +128,7 @@ l.prototype.createSocket = function (e, t) {
   var i = p({}, n.proxyOptions, {
     method: "CONNECT",
     path: e.host + ":" + e.port,
-    agent: !1,
+    agent: false,
     headers: {
       host: e.host + ":" + e.port,
     },
@@ -170,9 +170,9 @@ l.prototype.createSocket = function (e, t) {
         (n.sockets[n.sockets.indexOf(o)] = a),
         t(a));
   }
-  s.useChunkedEncodingByDefault = !1;
+  s.useChunkedEncodingByDefault = false;
   s.once("response", function (e) {
-    e.upgrade = !0;
+    e.upgrade = true;
   });
   s.once("upgrade", function (e, t, n) {
     process.nextTick(function () {

@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.registerDefaultHandlers = undefined;
 const r = require(2279);
@@ -9,10 +9,10 @@ exports.registerDefaultHandlers = function (e, t) {
     console.error("uncaughtException", t);
     o.telemetryException(e, t, "uncaughtException");
   });
-  let n = !1;
+  let n = false;
   process.addListener("unhandledRejection", (i, s) => {
     if (n) return;
-    n = !0;
+    n = true;
     if ("vscode" === t && !i) return;
     if ("aborted" === i.type || r.isAbortError(i)) return;
     if (
@@ -45,7 +45,7 @@ exports.registerDefaultHandlers = function (e, t) {
           origin: "unhandledRejection",
           reason: "Unhandled rejection logged to restricted telemetry",
         }),
-        !1
+        false
       );
       o.telemetryError(
         e,
@@ -54,9 +54,9 @@ exports.registerDefaultHandlers = function (e, t) {
           origin: "unhandledRejection",
           reason: a,
         }),
-        !0
+        true
       );
-      n = !1;
+      n = false;
     }
   });
 };

@@ -41,7 +41,7 @@ var i =
     return n;
   };
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 var s = require(4953);
 exports.winston3 = {

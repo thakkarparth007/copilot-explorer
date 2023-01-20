@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.rebuildTree =
   exports.foldTree =
@@ -83,8 +83,8 @@ exports.resetLineNumbers = function (e) {
 exports.visitTree = visitTree;
 exports.visitTreeConditionally = function (e, t, n) {
   !(function e(r) {
-    if ("topDown" === n && !t(r)) return !1;
-    let o = !0;
+    if ("topDown" === n && !t(r)) return false;
+    let o = true;
     r.subs.forEach((t) => {
       o = o && e(t);
     });

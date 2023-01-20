@@ -90,9 +90,9 @@ module.exports = {
     }
   },
   isPlainObject: (e) => {
-    if (!e || "object" != typeof e) return !1;
-    if ("[object Object]" !== Object.prototype.toString.call(e)) return !1;
-    if (null === Object.getPrototypeOf(e)) return !0;
+    if (!e || "object" != typeof e) return false;
+    if ("[object Object]" !== Object.prototype.toString.call(e)) return false;
+    if (null === Object.getPrototypeOf(e)) return true;
     let t = e;
     for (; null !== Object.getPrototypeOf(t); ) t = Object.getPrototypeOf(t);
     return Object.getPrototypeOf(e) === t;

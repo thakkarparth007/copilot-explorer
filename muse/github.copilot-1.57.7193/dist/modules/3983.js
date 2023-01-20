@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(3487);
 const o = r.operators;
@@ -34,7 +34,7 @@ const a = {
   keyword: Object.keys(i),
   type: "number",
   schemaType: "number",
-  $data: !0,
+  $data: true,
   error: s,
   code(e) {
     const { keyword: t, data: n, schemaCode: o } = e;

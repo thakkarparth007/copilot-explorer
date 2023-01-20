@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(3487);
 const o = require(6776);
@@ -25,12 +25,12 @@ const i = {
           data: n,
           dataTypes: ["string"],
           propertyName: n,
-          compositeRule: !0,
+          compositeRule: true,
         },
         a
       );
       t.if(r.not(a), () => {
-        e.error(!0);
+        e.error(true);
         if (s.allErrors) {
           t.break();
         }

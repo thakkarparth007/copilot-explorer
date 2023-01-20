@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 var r = require(4953);
 exports.redis = {
@@ -28,7 +28,7 @@ exports.redis = {
               n.apply(this, arguments);
             }
           });
-          e.callback.pubsubBound = !0;
+          e.callback.pubsubBound = true;
         }
       }
       return t.call(this, e);

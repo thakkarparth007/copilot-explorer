@@ -90,7 +90,7 @@ module.exports = {
         if (c && "PROMISE" === o) {
           h(
             r.inspect(a, {
-              showHidden: !0,
+              showHidden: true,
             })
           );
           const s = a.parentId;
@@ -100,9 +100,9 @@ module.exports = {
             )}INIT RESOURCE-PROMISE [${o}] (${e}) parentId:${s} asyncId:${n} currentUid:${l} triggerId:${i} active:${r.inspect(
               t.active,
               {
-                showHidden: !0,
+                showHidden: true,
                 depth: 2,
-                colors: !0,
+                colors: true,
               }
             )} resource:${a}`
           );
@@ -243,9 +243,9 @@ u.prototype.set = function (e, t) {
         l +
         " active:" +
         r.inspect(this.active, {
-          showHidden: !0,
+          showHidden: true,
           depth: 2,
-          colors: !0,
+          colors: true,
         })
     );
   }
@@ -269,9 +269,9 @@ u.prototype.get = function (e) {
           l +
           " active:" +
           r.inspect(this.active, {
-            showHidden: !0,
+            showHidden: true,
             depth: 2,
-            colors: !0,
+            colors: true,
           })
       );
       h(

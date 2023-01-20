@@ -1,6 +1,6 @@
 function n(e, r, o, i, s, a) {
   var c = Math.floor((r - e) / 2) + e;
-  var l = s(o, i[c], !0);
+  var l = s(o, i[c], true);
   return 0 === l
     ? c
     : l > 0
@@ -25,6 +25,6 @@ exports.search = function (e, r, o, i) {
   if (0 === r.length) return -1;
   var s = n(-1, r.length, e, r, o, i || exports.GREATEST_LOWER_BOUND);
   if (s < 0) return -1;
-  for (; s - 1 >= 0 && 0 === o(r[s], r[s - 1], !0); ) --s;
+  for (; s - 1 >= 0 && 0 === o(r[s], r[s - 1], true); ) --s;
   return s;
 };

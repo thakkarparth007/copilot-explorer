@@ -2,12 +2,12 @@ module.exports = (e, t, n) => {
   const r = (n) =>
     Object.defineProperty(e, t, {
       value: n,
-      enumerable: !0,
-      writable: !0,
+      enumerable: true,
+      writable: true,
     });
   Object.defineProperty(e, t, {
-    configurable: !0,
-    enumerable: !0,
+    configurable: true,
+    enumerable: true,
     get() {
       const e = n();
       r(e);

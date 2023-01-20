@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.getNodeStart =
   exports.isBlockBodyFinished =
@@ -124,7 +124,7 @@ function a(e, t) {
   if (/^\s*$/.test(o)) return o;
 }
 function c(e, t, n) {
-  if (t.startPosition.row <= e.startPosition.row) return !1;
+  if (t.startPosition.row <= e.startPosition.row) return false;
   const r = a(e, n);
   const o = a(t, n);
   return undefined !== r && undefined !== o && r.startsWith(o);
@@ -171,20 +171,20 @@ class l extends o {
     var i;
     if (t > e.length) throw new RangeError("Invalid offset");
     for (let n = t; n < e.length && "\n" != e.charAt(n); n++)
-      if (/\S/.test(e.charAt(n))) return !1;
+      if (/\S/.test(e.charAt(n))) return false;
     t = s(e, t);
     const a = await r.parseTree(this.languageId, e);
     try {
       const r = a.rootNode.descendantForIndex(t - 1);
-      if (null == r) return !1;
-      if (this.curlyBraceLanguage && "}" == r.type) return !1;
+      if (null == r) return false;
+      if (this.curlyBraceLanguage && "}" == r.type) return false;
       if (
         ("javascript" == this.languageId || "typescript" == this.languageId) &&
         r.parent &&
         "object" == r.parent.type &&
         "{" == r.parent.text.trim()
       )
-        return !0;
+        return true;
       if ("typescript" == this.languageId) {
         let n = r;
         for (; n.parent; ) {
@@ -218,7 +218,7 @@ class l extends o {
         d = d.parent;
       }
       if (null != l) {
-        if (!l.parent || !this.nodeMatch[l.parent.type]) return !1;
+        if (!l.parent || !this.nodeMatch[l.parent.type]) return false;
         if ("python" == this.languageId) {
           const e = l.previousSibling;
           if (
@@ -226,7 +226,7 @@ class l extends o {
             e.hasError() &&
             (e.text.startsWith('"""') || e.text.startsWith("'''"))
           )
-            return !0;
+            return true;
         }
         return this.isBlockEmpty(l, t);
       }
@@ -241,7 +241,7 @@ class l extends o {
               ? undefined
               : o.type)
         )
-          return !0;
+          return true;
         const e = [...s.children].reverse();
         const a = e.find((e) => this.startKeywords.includes(e.type));
         let c = e.find((e) => e.type == this.blockNodeType);
@@ -262,32 +262,34 @@ class l extends o {
               if (t && a.endIndex <= t.startIndex && t.nextSibling) {
                 if ("def" == a.type) {
                   const e = t.nextSibling;
-                  if ('"' == e.type || "'" == e.type) return !0;
+                  if ('"' == e.type || "'" == e.type) return true;
                   if ("ERROR" == e.type && ('"""' == e.text || "'''" == e.text))
-                    return !0;
+                    return true;
                 }
-                return !1;
+                return false;
               }
               break;
             }
             case "javascript": {
               const t = e.find((e) => "formal_parameters" == e.type);
-              if ("class" == a.type && t) return !0;
+              if ("class" == a.type && t) return true;
               const n = e.find((e) => "{" == e.type);
               if (n && n.startIndex > a.endIndex && null != n.nextSibling)
-                return !1;
-              if (e.find((e) => "do" == e.type) && "while" == a.type) return !1;
+                return false;
+              if (e.find((e) => "do" == e.type) && "while" == a.type)
+                return false;
               if ("=>" == a.type && a.nextSibling && "{" != a.nextSibling.type)
-                return !1;
+                return false;
               break;
             }
             case "typescript": {
               const t = e.find((e) => "{" == e.type);
               if (t && t.startIndex > a.endIndex && null != t.nextSibling)
-                return !1;
-              if (e.find((e) => "do" == e.type) && "while" == a.type) return !1;
+                return false;
+              if (e.find((e) => "do" == e.type) && "while" == a.type)
+                return false;
               if ("=>" == a.type && a.nextSibling && "{" != a.nextSibling.type)
-                return !1;
+                return false;
               break;
             }
           }
@@ -309,11 +311,11 @@ class l extends o {
             t.type != this.blockNodeType &&
             t.type != this.emptyStatementType
           )
-            return !1;
+            return false;
         }
-        return !0;
+        return true;
       }
-      return !1;
+      return false;
     } finally {
       a.delete();
     }
@@ -351,7 +353,7 @@ const u = {
     ],
     "block",
     null,
-    !1
+    false
   ),
   javascript: new l(
     "javascript",
@@ -402,7 +404,7 @@ const u = {
     ],
     "statement_block",
     "empty_statement",
-    !0
+    true
   ),
   typescript: new l(
     "typescript",
@@ -457,7 +459,7 @@ const u = {
     ],
     "statement_block",
     "empty_statement",
-    !0
+    true
   ),
   go: new i(
     "go",

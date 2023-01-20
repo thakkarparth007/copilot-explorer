@@ -11,7 +11,7 @@ function shouldUseRule(e, t) {
   );
 }
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.shouldUseRule =
   exports.shouldUseGroup =
@@ -19,7 +19,7 @@ exports.shouldUseRule =
     undefined;
 exports.schemaHasRulesForType = function ({ schema: e, self: t }, r) {
   const o = t.RULES.types[r];
-  return o && !0 !== o && shouldUseGroup(e, o);
+  return o && true !== o && shouldUseGroup(e, o);
 };
 exports.shouldUseGroup = shouldUseGroup;
 exports.shouldUseRule = shouldUseRule;

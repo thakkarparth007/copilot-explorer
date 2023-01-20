@@ -1,4 +1,5 @@
 codeviz/.openai-api-key
+codeviz/__pycache__/
 
 # Logs
 logs

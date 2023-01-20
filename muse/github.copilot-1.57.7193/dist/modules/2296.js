@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(412);
 const o = require(3487);
@@ -16,12 +16,12 @@ const a = {
     const p = d.filter((e) => i.alwaysValidSchema(l, n[e]));
     if (
       0 === d.length ||
-      (p.length === d.length && (!l.opts.unevaluated || !0 === l.props))
+      (p.length === d.length && (!l.opts.unevaluated || true === l.props))
     )
       return;
     const h = u.strictSchema && !u.allowMatchingProperties && c.properties;
     const f = t.name("valid");
-    if (!0 === l.props || l.props instanceof o.Name) {
+    if (true === l.props || l.props instanceof o.Name) {
       l.props = s.evaluatedPropsToName(t, l.props);
     }
     const { props: m } = l;
@@ -49,8 +49,8 @@ const a = {
               f
             );
           }
-          if (l.opts.unevaluated && !0 !== m) {
-            t.assign(o._`${m}[${i}]`, !0);
+          if (l.opts.unevaluated && true !== m) {
+            t.assign(o._`${m}[${i}]`, true);
           } else {
             if (r || l.allErrors) {
               t.if(o.not(f), () => t.break());
@@ -67,7 +67,7 @@ const a = {
         if (l.allErrors) {
           _(e);
         } else {
-          t.var(f, !0);
+          t.var(f, true);
           _(e);
           t.if(f);
         }

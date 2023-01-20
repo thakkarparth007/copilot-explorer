@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.extendErrors =
   exports.resetErrorsCount =
@@ -26,7 +26,7 @@ function a(e, t) {
     n.throw(r._`new ${e.ValidationError}(${t})`);
   } else {
     n.assign(r._`${o}.errors`, t);
-    n.return(!1);
+    n.return(false);
   }
 }
 exports.keywordError = {
@@ -102,7 +102,7 @@ const c = {
 };
 function l(e, t, n) {
   const { createErrors: o } = e.it;
-  return !1 === o
+  return false === o
     ? r._`{}`
     : (function (e, t, n = {}) {
         const { gen: o, it: s } = e;

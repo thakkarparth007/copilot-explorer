@@ -6,16 +6,16 @@ module.exports = () => (
       (function () {
         try {
           r.statSync("/.dockerenv");
-          return !0;
+          return true;
         } catch (e) {
-          return !1;
+          return false;
         }
       })() ||
       (function () {
         try {
           return r.readFileSync("/proc/self/cgroup", "utf8").includes("docker");
         } catch (e) {
-          return !1;
+          return false;
         }
       })()),
   o

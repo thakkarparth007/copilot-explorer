@@ -5,16 +5,16 @@ function o() {
   this.format = new c();
   this.version = require(2301).i8;
 }
-var i = !1;
+var i = false;
 o.prototype.callSite = function e(t) {
   if (t) {
     t = {};
   }
-  i = !0;
+  i = true;
   var n = {};
   Error.captureStackTrace(n, e);
   var r = n.stack;
-  i = !1;
+  i = false;
   r = r.slice(t.slice || 0);
   if (t.extend) {
     r = this.extend._modify(n, r);
@@ -45,7 +45,7 @@ a.prototype.attach = function (e) {
 };
 a.prototype.deattach = function (e) {
   var t = this._modifiers.indexOf(e);
-  return -1 !== t && (this._modifiers.splice(t, 1), !0);
+  return -1 !== t && (this._modifiers.splice(t, 1), true);
 };
 c.prototype.replace = function (e) {
   if (e) {
@@ -72,7 +72,7 @@ c.prototype._roolback = function () {
 if (Error.prepareStackTrace) {
   s.format.replace(Error.prepareStackTrace);
 }
-var l = !1;
+var l = false;
 function u(e, t) {
   if (i) return t;
   if (l) return r(e, t);
@@ -88,9 +88,9 @@ function u(e, t) {
       mutated: n,
     };
   }
-  l = !0;
+  l = true;
   var o = s.format._formater(e, n);
-  l = !1;
+  l = false;
   return o;
 }
 Object.defineProperty(Error, "prepareStackTrace", {
@@ -114,10 +114,10 @@ Object.defineProperty(Error.prototype, "callSite", {
   set: function (e) {
     Object.defineProperty(this, "callSite", {
       value: e,
-      writable: !0,
-      configurable: !0,
+      writable: true,
+      configurable: true,
     });
   },
-  configurable: !0,
+  configurable: true,
 });
 module.exports = s;

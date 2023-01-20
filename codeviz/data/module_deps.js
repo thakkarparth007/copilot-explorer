@@ -1016,7 +1016,7 @@ let module_deps_data = {
       "\"fs\""
     ],
     "exports": [
-      "$complex-export$ () =&gt; (undefined === o && (o = function () {\n  try {\n    r.statSync(\"/.dockerenv\");\n    return !0;\n  } catch (e) {\n    return !1;\n  }\n}() || function () {\n  try {\n    return r.readFileSync(\"/proc/self/cgroup\", \"utf8\").includes(\"docker\");\n  } catch (e) {\n    return !1;\n  }\n}()), o) $complex-export$"
+      "$complex-export$ () =&gt; (undefined === o && (o = function () {\n  try {\n    r.statSync(\"/.dockerenv\");\n    return true;\n  } catch (e) {\n    return false;\n  }\n}() || function () {\n  try {\n    return r.readFileSync(\"/proc/self/cgroup\", \"utf8\").includes(\"docker\");\n  } catch (e) {\n    return false;\n  }\n}()), o) $complex-export$"
     ],
     "importedBy": [
       "2818",
@@ -2232,7 +2232,7 @@ let module_deps_data = {
       "\"events\""
     ],
     "exports": [
-      "$complex-export$ () =&gt; {\n  const e = {};\n  const t = new r();\n  t.setMaxListeners(0);\n  return {\n    acquire: n => new Promise(r => {\n      if (!e[n]) {\n        e[n] = !0;\n        return void r();\n      }\n      const o = i => {\n        if (e[n]) {\n          e[n] = !0;\n          t.removeListener(n, o);\n          r(i);\n        }\n      };\n      t.on(n, o);\n    }),\n    release: (n, r) => {\n      Reflect.deleteProperty(e, n);\n      setImmediate(() => t.emit(n, r));\n    }\n  };\n} $complex-export$"
+      "$complex-export$ () =&gt; {\n  const e = {};\n  const t = new r();\n  t.setMaxListeners(0);\n  return {\n    acquire: n => new Promise(r => {\n      if (!e[n]) {\n        e[n] = true;\n        return void r();\n      }\n      const o = i => {\n        if (e[n]) {\n          e[n] = true;\n          t.removeListener(n, o);\n          r(i);\n        }\n      };\n      t.on(n, o);\n    }),\n    release: (n, r) => {\n      Reflect.deleteProperty(e, n);\n      setImmediate(() => t.emit(n, r));\n    }\n  };\n} $complex-export$"
     ],
     "importedBy": [
       "9575"
@@ -2390,7 +2390,7 @@ let module_deps_data = {
       "2531",
       "3510"
     ],
-    "lines": 29
+    "lines": 30
   },
   "4087": {
     "deps": [
@@ -3441,7 +3441,7 @@ let module_deps_data = {
     "importedBy": [
       "4193"
     ],
-    "lines": 398
+    "lines": 399
   },
   "6239": {
     "deps": [
@@ -4060,7 +4060,7 @@ let module_deps_data = {
     "importedBy": [
       "9575"
     ],
-    "lines": 252
+    "lines": 253
   },
   "7300": {
     "deps": [],
@@ -5619,7 +5619,7 @@ let module_deps_data = {
     "importedBy": [
       "4723"
     ],
-    "lines": 518
+    "lines": 520
   },
   "9958": {
     "deps": [
@@ -5995,7 +5995,7 @@ let module_deps_data = {
     "importedBy": [
       "3055563"
     ],
-    "lines": 518
+    "lines": 520
   },
   "3055617": {
     "deps": [

@@ -7,12 +7,12 @@ module.exports = () => {
     acquire: (n) =>
       new Promise((r) => {
         if (!e[n]) {
-          e[n] = !0;
+          e[n] = true;
           return void r();
         }
         const o = (i) => {
           if (e[n]) {
-            e[n] = !0;
+            e[n] = true;
             t.removeListener(n, o);
             r(i);
           }

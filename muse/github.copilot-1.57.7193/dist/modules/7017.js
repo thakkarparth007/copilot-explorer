@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.postInsertionTasks =
   exports.postRejectionTasks =
@@ -17,28 +17,28 @@ const d = new i.Logger(i.LogLevel.INFO, "post-insertion");
 const p = [
   {
     seconds: 15,
-    captureCode: !1,
-    captureRejection: !1,
+    captureCode: false,
+    captureRejection: false,
   },
   {
     seconds: 30,
-    captureCode: !0,
-    captureRejection: !0,
+    captureCode: true,
+    captureRejection: true,
   },
   {
     seconds: 120,
-    captureCode: !1,
-    captureRejection: !1,
+    captureCode: false,
+    captureRejection: false,
   },
   {
     seconds: 300,
-    captureCode: !1,
-    captureRejection: !1,
+    captureCode: false,
+    captureRejection: false,
   },
   {
     seconds: 600,
-    captureCode: !1,
-    captureRejection: !1,
+    captureCode: false,
+    captureRejection: false,
   },
 ];
 async function captureCode(e, t, n) {
@@ -52,7 +52,7 @@ async function captureCode(e, t, n) {
       prompt: {
         prefix: "",
         suffix: "",
-        isFimEnabled: !1,
+        isFimEnabled: false,
         promptElementRanges: [],
       },
       capturedCode: "",
@@ -69,7 +69,7 @@ async function captureCode(e, t, n) {
       : {
           prefix: i,
           suffix: "",
-          isFimEnabled: !1,
+          isFimEnabled: false,
           promptElementRanges: [],
         };
   const h = o.substring(n);
@@ -145,7 +145,7 @@ exports.postRejectionTasks = function (e, t, n, i, s) {
         `${t}.capturedAfterRejected choiceIndex: ${o.properties.choiceIndex}`,
         m
       );
-      l.telemetry(e, t + ".capturedAfterRejected", m, !0);
+      l.telemetry(e, t + ".capturedAfterRejected", m, true);
     }, 1e3 * r.seconds);
   });
 };

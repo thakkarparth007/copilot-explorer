@@ -23,12 +23,12 @@ const i = r
   ? n.AbortController
   : class {
       constructor() {
-        this.aborted = !1;
+        this.aborted = false;
         this._listeners = [];
       }
       dispatchEvent(e) {
         if ("abort" === e) {
-          this.aborted = !0;
+          this.aborted = true;
           const t = {
             type: e,
             target: this,
@@ -227,7 +227,7 @@ class g {
   }
   getRemainingTTL(e) {
     return this.has(e, {
-      updateAgeOnHas: !1,
+      updateAgeOnHas: false,
     })
       ? 1 / 0
       : 0;
@@ -276,7 +276,7 @@ class g {
   updateItemAge(e) {}
   setItemTTL(e, t, n) {}
   isStale(e) {
-    return !1;
+    return false;
   }
   initializeSizeTracking() {
     this.calculatedSize = 0;
@@ -302,7 +302,7 @@ class g {
     this.addItemSize = (e, t) => {
       this.sizes[e] = t;
       const n = this.maxSize - this.sizes[e];
-      for (; this.calculatedSize > n; ) this.evict(!0);
+      for (; this.calculatedSize > n; ) this.evict(true);
       this.calculatedSize += this.sizes[e];
     };
   }
@@ -374,20 +374,20 @@ class g {
     return this.purgeStale;
   }
   purgeStale() {
-    let e = !1;
+    let e = false;
     for (const t of this.rindexes({
-      allowStale: !0,
+      allowStale: true,
     }))
       if (this.isStale(t)) {
         this.delete(this.keyList[t]);
-        e = !0;
+        e = true;
       }
     return e;
   }
   dump() {
     const e = [];
     for (const n of this.indexes({
-      allowStale: !0,
+      allowStale: true,
     })) {
       const r = this.keyList[n];
       const o = this.valList[n];
@@ -442,7 +442,7 @@ class g {
       this.tail = c;
       this.size++;
       this.addItemSize(c, i);
-      a = !1;
+      a = false;
     } else {
       const n = this.valList[c];
       if (t !== n) {
@@ -477,7 +477,7 @@ class g {
     return 0 === this.size
       ? this.tail
       : this.size === this.max && 0 !== this.max
-      ? this.evict(!1)
+      ? this.evict(false)
       : 0 !== this.free.length
       ? this.free.pop()
       : this.initialFill++;
@@ -485,7 +485,7 @@ class g {
   pop() {
     if (this.size) {
       const e = this.valList[this.head];
-      this.evict(!0);
+      this.evict(true);
       return e;
     }
   }
@@ -515,7 +515,7 @@ class g {
   has(e, { updateAgeOnHas: t = this.updateAgeOnHas } = {}) {
     const n = this.keyMap.get(e);
     return (
-      undefined !== n && !this.isStale(n) && (t && this.updateItemAge(n), !0)
+      undefined !== n && !this.isStale(n) && (t && this.updateItemAge(n), true)
     );
   }
   peek(e, { allowStale: t = this.allowStale } = {}) {
@@ -584,7 +584,7 @@ class g {
       noUpdateTTL: c = this.noUpdateTTL,
       noDeleteOnFetchRejection: l = this.noDeleteOnFetchRejection,
       fetchContext: u = this.fetchContext,
-      forceRefresh: d = !1,
+      forceRefresh: d = false,
     } = {}
   ) {
     if (!this.fetchMethod)
@@ -674,11 +674,11 @@ class g {
     return this.delete;
   }
   delete(e) {
-    let t = !1;
+    let t = false;
     if (0 !== this.size) {
       const n = this.keyMap.get(e);
       if (undefined !== n) {
-        t = !0;
+        t = true;
         if (1 === this.size) this.clear();
         else {
           this.removeItemSize(n);
@@ -716,7 +716,7 @@ class g {
   }
   clear() {
     for (const e of this.rindexes({
-      allowStale: !0,
+      allowStale: true,
     })) {
       const t = this.valList[e];
       if (this.isBackgroundFetch(t)) t.__abortController.abort();

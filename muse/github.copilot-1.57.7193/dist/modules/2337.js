@@ -1,5 +1,5 @@
 module.exports = function (e, t) {
-  if (!0 === t) {
+  if (true === t) {
     t = 0;
   }
   var n = "";

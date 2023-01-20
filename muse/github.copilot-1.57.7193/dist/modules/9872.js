@@ -100,7 +100,7 @@ Object.defineProperties(
   ].reduce(
     (e, t) => (
       (e[t] = {
-        enumerable: !0,
+        enumerable: true,
       }),
       e
     ),

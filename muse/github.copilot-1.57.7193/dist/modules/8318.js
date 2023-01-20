@@ -12,10 +12,10 @@ const h = (() => {
   return async function () {
     if (t) return t;
     const n = "/etc/wsl.conf";
-    let r = !1;
+    let r = false;
     try {
       await i.access(n, s.F_OK);
-      r = !0;
+      r = true;
     } catch {}
     if (!r) return e;
     const o = await i.readFile(n, {
@@ -41,10 +41,10 @@ const f = async (e, t) => {
 };
 const m = async (e) => {
   e = {
-    wait: !1,
-    background: !1,
-    newInstance: !1,
-    allowNonzeroExitCode: !1,
+    wait: false,
+    background: false,
+    newInstance: false,
+    allowNonzeroExitCode: false,
     ...e,
   };
   if (Array.isArray(e.app))
@@ -96,7 +96,7 @@ const m = async (e) => {
       "-EncodedCommand"
     );
     if (a) {
-      p.windowsVerbatimArguments = !0;
+      p.windowsVerbatimArguments = true;
     }
     const i = ["Start"];
     if (e.wait) {
@@ -121,10 +121,10 @@ const m = async (e) => {
     if (n) t = n;
     else {
       const e = "/" === __dirname;
-      let n = !1;
+      let n = false;
       try {
         await i.access(u, s.X_OK);
-        n = !0;
+        n = true;
       } catch {}
       t =
         process.versions.electron || "android" === d || e || !n
@@ -136,7 +136,7 @@ const m = async (e) => {
     }
     if (e.wait) {
       p.stdio = "ignore";
-      p.detached = !0;
+      p.detached = true;
     }
   }
   if (e.target) {

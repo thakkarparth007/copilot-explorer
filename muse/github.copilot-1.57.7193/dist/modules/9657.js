@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.isRepetitive = exports.RepetitionFilterMode = undefined;
 const n = [
@@ -41,8 +41,8 @@ function o(e) {
       r.last_tokens_to_consider - 1 - t[r.last_tokens_to_consider - 1] <=
         r.max_token_sequence_length
     )
-      return !0;
-  return !1;
+      return true;
+  return false;
 }
 !(function (e) {
   e.CLIENT = "client";

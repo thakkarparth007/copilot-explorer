@@ -53,7 +53,8 @@ module.exports = {
       let h = _[o];
       if (!h || h.closed || h.destroyed) {
         const t = !(
-          !1 === e.options.rejectUnauthorized || !1 === g.rejectUnauthorized
+          false === e.options.rejectUnauthorized ||
+          false === g.rejectUnauthorized
         );
         const n = {
           ...g,
@@ -61,7 +62,7 @@ module.exports = {
         };
         if (C && !C.inUse) {
           n.createConnection = () => (
-            s(`reusing socket #${C.id} (${C.servername})`), (C.inUse = !0), C
+            s(`reusing socket #${C.id} (${C.servername})`), (C.inUse = true), C
           );
         }
         const i = !(!v && !b);

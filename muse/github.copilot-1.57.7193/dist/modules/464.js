@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.getFunctionPositions =
   exports.getFirstPrecedingComment =
@@ -245,14 +245,14 @@ exports.isFunctionDefinition = function (e, t) {
         "generator_function_declaration" === t.type ||
         "method_definition" === t.type
       )
-        return !0;
+        return true;
       if (
         "lexical_declaration" === t.type ||
         "variable_declaration" === t.type
       ) {
-        if (t.namedChildCount > 1) return !1;
+        if (t.namedChildCount > 1) return false;
         let n = t.namedChild(0);
-        if (null == n) return !1;
+        if (null == n) return false;
         let r = n.namedChild(1);
         return null !== r && isFunction(e, r);
       }
@@ -263,7 +263,7 @@ exports.isFunctionDefinition = function (e, t) {
           return null !== t && isFunction(e, t);
         }
       }
-      return !1;
+      return false;
   }
 };
 exports.getFirstPrecedingComment = function (e) {

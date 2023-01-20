@@ -17,7 +17,7 @@ function l(e) {
 const u = new TextEncoder("utf-8");
 const d =
   /'s|'t|'re|'ve|'m|'ll|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+/gu;
-let p = !1;
+let p = false;
 const h = {};
 let f;
 let m = {};
@@ -66,7 +66,7 @@ function v() {
   g.forEach(function (e, t, n) {
     _.set(e, t);
   });
-  p = !0;
+  p = true;
 }
 function b(e) {
   if (y.has(e)) return y.get(e);

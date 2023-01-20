@@ -39,8 +39,8 @@ module.exports = function (e) {
     a.extend = r;
     a.destroy = t.destroy;
     Object.defineProperty(a, "enabled", {
-      enumerable: !0,
-      configurable: !1,
+      enumerable: true,
+      configurable: false,
       get: () =>
         null !== s
           ? s
@@ -95,14 +95,14 @@ module.exports = function (e) {
       }
   };
   t.enabled = function (e) {
-    if ("*" === e[e.length - 1]) return !0;
+    if ("*" === e[e.length - 1]) return true;
     let n;
     let r;
     for (n = 0, r = t.skips.length; n < r; n++)
-      if (t.skips[n].test(e)) return !1;
+      if (t.skips[n].test(e)) return false;
     for (n = 0, r = t.names.length; n < r; n++)
-      if (t.names[n].test(e)) return !0;
-    return !1;
+      if (t.names[n].test(e)) return true;
+    return false;
   };
   t.humanize = require(7824);
   t.destroy = function () {

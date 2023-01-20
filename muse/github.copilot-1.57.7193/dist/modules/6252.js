@@ -11,9 +11,9 @@ var s = require(5420);
 function a(e, t) {
   return e.require(t);
 }
-var c = !1;
-var l = !1;
-var u = !1;
+var c = false;
+var l = false;
+var u = false;
 var d = "auto";
 var p = {};
 var h = {};
@@ -70,7 +70,7 @@ m.push(function (e) {
       }
     } else {
       var n = new XMLHttpRequest();
-      n.open("GET", e, !1);
+      n.open("GET", e, false);
       n.send(null);
       if (4 === n.readyState && 200 === n.status) {
         t = n.responseText;
@@ -161,7 +161,7 @@ function C() {
   }
   var o = "";
   var i = this.getFunctionName();
-  var s = !0;
+  var s = true;
   var a = this.isConstructor();
   if (this.isToplevel() || a) {
     if (a) {
@@ -171,7 +171,7 @@ function C() {
         o += i;
       } else {
         o += t;
-        s = !1;
+        s = false;
       }
     }
   } else {
@@ -317,7 +317,7 @@ function P(e) {
     if ("object" == typeof process && null !== process) return process.stderr;
   })();
   if (n && n._handle && n._handle.setBlocking) {
-    n._handle.setBlocking(!0);
+    n._handle.setBlocking(true);
   }
   if (t) {
     console.error();
@@ -339,7 +339,7 @@ g.push(function (e) {
     if (_())
       try {
         var n = new XMLHttpRequest();
-        n.open("GET", e, !1);
+        n.open("GET", e, false);
         n.send(null);
         t = 4 === n.readyState ? n.responseText : null;
         var r =
@@ -419,7 +419,7 @@ exports.install = function (t) {
     u = "emptyCacheBetweenOperations" in t && t.emptyCacheBetweenOperations;
   }
   if (c) {
-    c = !0;
+    c = true;
     Error.prepareStackTrace = k;
   }
   if (!l) {

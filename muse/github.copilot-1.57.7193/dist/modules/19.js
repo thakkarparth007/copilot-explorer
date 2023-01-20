@@ -1,10 +1,10 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = {
   keyword: "anyOf",
   schemaType: "array",
-  trackErrors: !0,
+  trackErrors: true,
   code: require(412).validateUnion,
   error: {
     message: "must match a schema in anyOf",

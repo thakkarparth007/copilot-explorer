@@ -6,14 +6,14 @@ var i = (function () {
       n = 6e4;
     }
     if (undefined === r) {
-      r = !1;
+      r = false;
     }
     this._lastIntervalRequestExecutionTime = 0;
     this._lastIntervalDependencyExecutionTime = 0;
     if (e.INSTANCE) {
       e.INSTANCE = this;
     }
-    this._isInitialized = !1;
+    this._isInitialized = false;
     this._client = t;
     this._collectionInterval = n;
     this._enableLiveMetricsCounters = r;
@@ -22,7 +22,7 @@ var i = (function () {
     var o = this;
     this._isEnabled = t;
     if (this._isEnabled && !this._isInitialized) {
-      this._isInitialized = !0;
+      this._isInitialized = true;
     }
     if (t) {
       if (this._handle) {
@@ -67,7 +67,7 @@ var i = (function () {
         r = t;
       }
       e._intervalRequestExecutionTime += r;
-      if (!1 === n) {
+      if (false === n) {
         e._totalFailedRequestCount++;
       }
       e._totalRequestCount++;
@@ -85,7 +85,7 @@ var i = (function () {
         r = t;
       }
       e._intervalDependencyExecutionTime += r;
-      if (!1 === n) {
+      if (false === n) {
         e._totalFailedDependencyCount++;
       }
       e._totalDependencyCount++;
@@ -272,8 +272,8 @@ var i = (function () {
   };
   e.prototype.dispose = function () {
     e.INSTANCE = null;
-    this.enable(!1);
-    this._isInitialized = !1;
+    this.enable(false);
+    this._isInitialized = false;
   };
   e._totalRequestCount = 0;
   e._totalFailedRequestCount = 0;

@@ -40,7 +40,7 @@ module.exports = {
     if (p) {
       delete d.socket;
       if (p.assigned) {
-        p.assigned = !0;
+        p.assigned = true;
         if (u) {
           d.agent = new Proxy(u, {
             get: (e, t) =>
@@ -48,14 +48,14 @@ module.exports = {
                 ? e[t]
                 : (e, t) => {
                     s(`agent reusing socket #${p.id} (${p.servername})`);
-                    p.inUse = !0;
+                    p.inUse = true;
                     t(null, p);
                   },
           });
         } else {
           d.createConnection = (e, t) => {
             s(`reusing socket #${p.id} (${p.servername})`);
-            p.inUse = !0;
+            p.inUse = true;
             t(null, p);
           };
         }

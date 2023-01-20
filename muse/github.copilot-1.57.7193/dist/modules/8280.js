@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.callRef = exports.getValidate = undefined;
 const r = require(6646);
@@ -33,7 +33,7 @@ const l = {
       : (function (r) {
           const o = t.scopeValue(
             "schema",
-            !0 === p.code.source
+            true === p.code.source
               ? {
                   ref: r,
                   code: i.stringify(r),
@@ -87,7 +87,7 @@ function callRef(e, t, n, r) {
       null === (t = null == n ? undefined : n.validate) || undefined === t
         ? undefined
         : t.evaluated;
-    if (!0 !== l.props)
+    if (true !== l.props)
       if (r && !r.dynamicProps) {
         if (undefined !== r.props) {
           l.props = c.mergeEvaluated.props(a, r.props, l.props);
@@ -96,7 +96,7 @@ function callRef(e, t, n, r) {
         const t = a.var("props", i._`${e}.evaluated.props`);
         l.props = c.mergeEvaluated.props(a, t, l.props, i.Name);
       }
-    if (!0 !== l.items)
+    if (true !== l.items)
       if (r && !r.dynamicItems) {
         if (undefined !== r.items) {
           l.items = c.mergeEvaluated.items(a, r.items, l.items);
@@ -115,14 +115,14 @@ function callRef(e, t, n, r) {
           a.code(i._`await ${o.callValidateCode(e, t, h)}`);
           m(t);
           if (u) {
-            a.assign(n, !0);
+            a.assign(n, true);
           }
         },
         (e) => {
           a.if(i._`!(${e} instanceof ${l.ValidationError})`, () => a.throw(e));
           f(e);
           if (u) {
-            a.assign(n, !1);
+            a.assign(n, false);
           }
         }
       );

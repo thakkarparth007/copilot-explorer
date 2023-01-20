@@ -3,7 +3,7 @@ var o;
 var i = require(6372).wrap;
 var s = [];
 var a = 0;
-var c = !1;
+var c = false;
 var l = [];
 function u(e, t) {
   var n = e.length;
@@ -13,10 +13,10 @@ function u(e, t) {
   for (var i = 0; i < n; i++) o[i] = e[i];
   if (0 === r) return o;
   for (var s = 0; s < r; s++) {
-    var a = !0;
+    var a = true;
     for (i = 0; i < n; i++)
       if (e[i].uid === t[s].uid) {
-        a = !1;
+        a = false;
         break;
       }
     if (a) {
@@ -27,12 +27,12 @@ function u(e, t) {
 }
 if (process._fatalException) {
   var d;
-  var p = !1;
+  var p = false;
   r = function (e) {
     var t = s.length;
-    if (p || 0 === t) return !1;
-    var n = !1;
-    p = !0;
+    if (p || 0 === t) return false;
+    var n = false;
+    p = true;
     for (var r = 0; r < t; ++r) {
       var o = s[r];
       if (0 != (8 & o.flags)) {
@@ -40,7 +40,7 @@ if (process._fatalException) {
         n = o.error(i, e) || n;
       }
     }
-    p = !1;
+    p = false;
     if (l.length > 0) {
       s = l.pop();
     }
@@ -49,7 +49,7 @@ if (process._fatalException) {
   };
   o = function (e, t, n) {
     var r = [];
-    c = !0;
+    c = true;
     for (var o = 0; o < n; ++o) {
       var i = t[o];
       r[i.uid] = i.data;
@@ -58,23 +58,23 @@ if (process._fatalException) {
         void 0 !== a && (r[i.uid] = a);
       }
     }
-    c = !1;
+    c = false;
     return function () {
       d = r;
       l.push(s);
       s = u(t, s);
-      c = !0;
+      c = true;
       for (var o = 0; o < n; ++o)
         if ((2 & t[o].flags) > 0) {
           t[o].before(this, r[t[o].uid]);
         }
-      c = !1;
+      c = false;
       var i = e.apply(this, arguments);
-      for (c = !0, o = 0; o < n; ++o)
+      for (c = true, o = 0; o < n; ++o)
         if ((4 & t[o].flags) > 0) {
           t[o].after(this, r[t[o].uid]);
         }
-      c = !1;
+      c = false;
       s = l.pop();
       d = undefined;
       return i;
@@ -86,10 +86,10 @@ if (process._fatalException) {
     };
   });
 } else {
-  var h = !1;
+  var h = false;
   r = function (e) {
     if (h) throw e;
-    for (t = !1, n = s.length, r = 0, undefined; r < n; ++r) {
+    for (t = false, n = s.length, r = 0, undefined; r < n; ++r) {
       var t;
       var n;
       var r;
@@ -102,7 +102,7 @@ if (process._fatalException) {
   };
   o = function (e, t, n) {
     var o = [];
-    c = !0;
+    c = true;
     for (var i = 0; i < n; ++i) {
       var a = t[i];
       o[a.uid] = a.data;
@@ -111,28 +111,28 @@ if (process._fatalException) {
         void 0 !== d && (o[a.uid] = d);
       }
     }
-    c = !1;
+    c = false;
     return function () {
       var i;
-      var a = !1;
-      var d = !1;
+      var a = false;
+      var d = false;
       l.push(s);
       s = u(t, s);
-      c = !0;
+      c = true;
       for (var p = 0; p < n; ++p)
         if ((2 & t[p].flags) > 0) {
           t[p].before(this, o[t[p].uid]);
         }
-      c = !1;
+      c = false;
       try {
         i = e.apply(this, arguments);
       } catch (e) {
-        for (a = !0, p = 0; p < n; ++p)
+        for (a = true, p = 0; p < n; ++p)
           if (0 != (8 & s[p].flags))
             try {
               d = s[p].error(o[t[p].uid], e) || d;
             } catch (e) {
-              throw ((h = !0), e);
+              throw ((h = true), e);
             }
         if (!d)
           throw (
@@ -144,11 +144,11 @@ if (process._fatalException) {
           );
       } finally {
         if (!a || d) {
-          for (c = !0, p = 0; p < n; ++p)
+          for (c = true, p = 0; p < n; ++p)
             if ((4 & t[p].flags) > 0) {
               t[p].after(this, o[t[p].uid]);
             }
-          c = !1;
+          c = false;
         }
         s = l.pop();
       }
@@ -193,11 +193,11 @@ process.createAsyncListener = m;
 process.addAsyncListener = function (e, t) {
   var n;
   n = e instanceof f ? e : m(e, t);
-  for (r = !1, o = 0, undefined; o < s.length; o++) {
+  for (r = false, o = 0, undefined; o < s.length; o++) {
     var r;
     var o;
     if (n === s[o]) {
-      r = !0;
+      r = true;
       break;
     }
   }
@@ -222,14 +222,14 @@ module.exports = function (e) {
     if (n[r].flags > 0) return o(e, n, t);
   }
   return (function (e, t, n) {
-    c = !0;
+    c = true;
     for (var r = 0; r < n; ++r) {
       var o = t[r];
       if (o.create) {
         o.create(o.data);
       }
     }
-    c = !1;
+    c = false;
     return function () {
       l.push(s);
       s = u(t, s);

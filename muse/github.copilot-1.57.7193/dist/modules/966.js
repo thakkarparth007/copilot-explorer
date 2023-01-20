@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(3487);
 const o = require(6776);
@@ -7,7 +7,7 @@ const i = require(3510);
 const s = {
   keyword: "enum",
   schemaType: "array",
-  $data: !0,
+  $data: true,
   error: {
     message: "must be equal to one of the allowed values",
     params: ({ schemaCode: e }) => r._`{allowedValues: ${e}}`,
@@ -21,9 +21,9 @@ const s = {
     if (u || s) {
       p = t.let("valid");
       e.block$data(p, function () {
-        t.assign(p, !1);
+        t.assign(p, false);
         t.forOf("v", c, (e) =>
-          t.if(r._`${d}(${n}, ${e})`, () => t.assign(p, !0).break())
+          t.if(r._`${d}(${n}, ${e})`, () => t.assign(p, true).break())
         );
       });
     } else {

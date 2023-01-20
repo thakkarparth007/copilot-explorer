@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.VSCodeCopilotTokenManager =
   exports.ExtensionNotificationSender =
@@ -15,7 +15,7 @@ const c = require(47);
 exports.telemetryAcceptanceKey = `github.copilot.telemetryAccepted.${i.LAST_TELEMETRY_TERMS_UPDATE}`;
 const l = new s.Logger(s.LogLevel.INFO, "auth");
 let u;
-let d = !1;
+let d = false;
 exports.setExtensionContext = function (e) {
   u = e;
 };
@@ -75,7 +75,7 @@ class VSCodeCopilotTokenManager extends o.CopilotTokenManager {
         if ("failure" === s.kind && "HTTP401" === s.reason) {
           const e =
             "Your GitHub token is invalid. Please sign out from your GitHub account using VSCode UI and try again.";
-          throw (d || ((d = !0), r.window.showWarningMessage(e)), Error(e));
+          throw (d || ((d = true), r.window.showWarningMessage(e)), Error(e));
         }
         if ("failure" === s.kind) throw Error("Failed to get copilot token");
         if (
@@ -83,15 +83,15 @@ class VSCodeCopilotTokenManager extends o.CopilotTokenManager {
           !(await (async function (e) {
             var n;
             const o = null == u ? undefined : u.globalState;
-            if (!o) return !1;
+            if (!o) return false;
             const s =
               null === (n = c.getGithubAccount()) || undefined === n
                 ? undefined
                 : n.label;
-            if (!s) return !1;
+            if (!s) return false;
             const l = s;
             const d = o.get(exports.telemetryAcceptanceKey, undefined);
-            if (d && d === s) return !0;
+            if (d && d === s) return true;
             const p = await r.window.showWarningMessage(
               `I agree to these [telemetry terms](${i.TELEMETRY_TERMS_URL}) as part of the GitHub Copilot technical preview.`,
               "Cancel",
@@ -102,14 +102,14 @@ class VSCodeCopilotTokenManager extends o.CopilotTokenManager {
                 choice: null != p ? p : "undefined",
               });
               a.telemetry(e, "auth.telemetry_terms_rejected", t);
-              return !1;
+              return false;
             }
             o.update(exports.telemetryAcceptanceKey, l);
             const h = a.TelemetryData.createAndMarkAsIssued({
               terms_date: i.LAST_TELEMETRY_TERMS_UPDATE,
             });
             a.telemetry(e, "auth.telemetry_terms_accepted", h);
-            return !0;
+            return true;
           })(e))
         )
           throw Error("User did not agree to telemetry");

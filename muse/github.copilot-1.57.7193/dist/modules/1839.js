@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.registerDocumentTracker = exports.sortByAccessTimes = undefined;
 const r = require(3136);

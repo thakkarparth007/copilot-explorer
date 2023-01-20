@@ -23,7 +23,7 @@ module.exports = function () {
           try {
             return t.apply(this, arguments);
           } finally {
-            e.post.call(n, r, !1);
+            e.post.call(n, r, false);
             e.destroy.call(null, r);
           }
         };
@@ -33,6 +33,6 @@ module.exports = function () {
     const a = new t();
     const c = --n.counter;
     e.init.call(a, c, 0, null, null);
-    return o.call(this, i(r, a, c, !0), i(s, a, c, !1));
+    return o.call(this, i(r, a, c, true), i(s, a, c, false));
   };
 };

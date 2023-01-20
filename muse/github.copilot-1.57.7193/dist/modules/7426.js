@@ -1,11 +1,11 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 class n extends Error {
   constructor(e) {
     super("validation failed");
     this.errors = e;
-    this.ajv = this.validation = !0;
+    this.ajv = this.validation = true;
   }
 }
 exports.default = n;

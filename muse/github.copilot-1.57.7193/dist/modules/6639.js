@@ -16,7 +16,7 @@ var t = (function () {
   e.prototype.enable = function (t) {
     var n = this;
     if (t) {
-      this._isInitialized = !0;
+      this._isInitialized = true;
       if (!this._exceptionListenerHandle) {
         var r = function (t, r, o) {
           void 0 === o && (o = new Error(e._FALLBACK_ERROR_MESSAGE)),
@@ -76,8 +76,8 @@ var t = (function () {
   };
   e.prototype.dispose = function () {
     e.INSTANCE = null;
-    this.enable(!1);
-    this._isInitialized = !1;
+    this.enable(false);
+    this._isInitialized = false;
   };
   e.INSTANCE = null;
   e.UNCAUGHT_EXCEPTION_MONITOR_HANDLER_NAME = "uncaughtExceptionMonitor";
@@ -86,7 +86,7 @@ var t = (function () {
   e._RETHROW_EXIT_MESSAGE = "Application Insights Rethrow Exception Handler";
   e._FALLBACK_ERROR_MESSAGE =
     "A promise was rejected without providing an error. Application Insights generated this error stack for you.";
-  e._canUseUncaughtExceptionMonitor = !1;
+  e._canUseUncaughtExceptionMonitor = false;
   return e;
 })();
 module.exports = t;

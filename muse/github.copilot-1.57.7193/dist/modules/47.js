@@ -1,11 +1,11 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.getGithubAccount = exports.getSession = undefined;
 const r = require("vscode");
 const o = ["read:user"];
 let i;
-let s = !1;
+let s = false;
 function a(e) {
   if ("true" === process.env.CODESPACES && process.env.GITHUB_TOKEN) {
     const e = process.env.GITHUB_USER || "codespace-user";
@@ -22,9 +22,9 @@ function a(e) {
   });
 }
 exports.getSession = async function () {
-  let e = await a(!1);
+  let e = await a(false);
   if (e || s) {
-    s = !0;
+    s = true;
     if (
       "Sign in to GitHub" ===
       (await r.window.showInformationMessage(
@@ -32,7 +32,7 @@ exports.getSession = async function () {
         "Sign in to GitHub"
       ))
     ) {
-      e = await a(!0);
+      e = await a(true);
     }
   }
   if (e) {

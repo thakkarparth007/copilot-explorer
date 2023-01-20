@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.getData = exports.KeywordCxt = exports.validateFunctionCode = undefined;
 const r = require(5667);
@@ -81,8 +81,8 @@ function g(e, t) {
 }
 function _({ schema: e, self: t }) {
   if ("boolean" == typeof e) return !e;
-  for (const n in e) if (t.RULES.all[n]) return !0;
-  return !1;
+  for (const n in e) if (t.RULES.all[n]) return true;
+  return false;
 }
 function y(e) {
   return "boolean" != typeof e.schema;
@@ -101,13 +101,13 @@ function v(e) {
   })(e);
 }
 function b(e, t) {
-  if (e.opts.jtd) return x(e, [], !1, t);
+  if (e.opts.jtd) return x(e, [], false, t);
   const n = o.getSchemaTypes(e.schema);
   x(e, n, !o.coerceAndCheckDataType(e, n), t);
 }
 function w({ gen: e, schemaEnv: t, schema: n, errSchemaPath: r, opts: o }) {
   const i = n.$comment;
-  if (!0 === o.$comment) e.code(u._`${d.default.self}.logger.log(${i})`);
+  if (true === o.$comment) e.code(u._`${d.default.self}.logger.log(${i})`);
   else if ("function" == typeof o.$comment) {
     const n = u.str`${r}/$comment`;
     const o = e.scopeValue("root", {
@@ -310,7 +310,7 @@ class KeywordCxt {
       !(0, c.validSchemaType)(this.schema, t.schemaType, t.allowUndefined))
     )
       throw new Error(`${n} value must be ${JSON.stringify(t.schemaType)}`);
-    if ("code" in t ? t.trackErrors : !1 !== t.errors) {
+    if ("code" in t ? t.trackErrors : false !== t.errors) {
       this.errsCount = e.gen.const("_errs", d.default.errors);
     }
   }
@@ -344,7 +344,7 @@ class KeywordCxt {
   fail(e) {
     if (undefined === e) {
       this.error();
-      return void (this.allErrors || this.gen.if(!1));
+      return void (this.allErrors || this.gen.if(false));
     }
     this.gen.if(e);
     this.error();
@@ -401,13 +401,13 @@ class KeywordCxt {
     const { gen: n, schemaCode: r, schemaType: o, def: i } = this;
     n.if(u.or(u._`${r} === undefined`, t));
     if (e !== u.nil) {
-      n.assign(e, !0);
+      n.assign(e, true);
     }
     if (o.length || i.validateSchema) {
       n.elseIf(this.invalid$data());
       this.$dataError();
       if (e !== u.nil) {
-        n.assign(e, !1);
+        n.assign(e, false);
       }
     }
     n.else();
@@ -480,19 +480,19 @@ class KeywordCxt {
   mergeEvaluated(e, t) {
     const { it: n, gen: r } = this;
     if (n.opts.unevaluated) {
-      if (!0 !== n.props && undefined !== e.props) {
+      if (true !== n.props && undefined !== e.props) {
         n.props = h.mergeEvaluated.props(r, e.props, n.props, t);
       }
-      if (!0 !== n.items && undefined !== e.items) {
+      if (true !== n.items && undefined !== e.items) {
         n.items = h.mergeEvaluated.items(r, e.items, n.items, t);
       }
     }
   }
   mergeValidEvaluated(e, t) {
     const { it: n, gen: r } = this;
-    if (n.opts.unevaluated && (!0 !== n.props || !0 !== n.items)) {
+    if (n.opts.unevaluated && (true !== n.props || true !== n.items)) {
       r.if(t, () => this.mergeEvaluated(e, u.Name));
-      return !0;
+      return true;
     }
   }
 }

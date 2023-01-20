@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.prepareSolutionForReturn =
   exports.processSSE =
@@ -199,11 +199,11 @@ exports.processSSE = async function* (e, t, n, r, c) {
 };
 exports.prepareSolutionForReturn = function (e, t, n) {
   let r = t.solution.text.join("");
-  let o = !1;
+  let o = false;
   if (undefined !== t.finishOffset) {
     s.debug(e, `solution ${t.index}: early finish at offset ${t.finishOffset}`);
     r = r.substring(0, t.finishOffset);
-    o = !0;
+    o = true;
   }
   s.info(
     e,

@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 var r = require(4953);
 var o = require("stream");
@@ -9,21 +9,21 @@ exports.console = {
     var t = new o.Writable();
     var n = new o.Writable();
     t.write = function (e) {
-      if (!e) return !0;
+      if (!e) return true;
       var t = e.toString();
       r.channel.publish("console", {
         message: t,
       });
-      return !0;
+      return true;
     };
     n.write = function (e) {
-      if (!e) return !0;
+      if (!e) return true;
       var t = e.toString();
       r.channel.publish("console", {
         message: t,
-        stderr: !0,
+        stderr: true,
       });
-      return !0;
+      return true;
     };
     for (
       i = new e.Console(t, n),

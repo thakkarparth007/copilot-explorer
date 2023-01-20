@@ -145,7 +145,7 @@ const T = async (e, t, n) => {
   if (0 === e.options.maxCacheSize) return n;
   if (!E.includes(t.method)) return n;
   const r = new _(t, n, {
-    shared: !1,
+    shared: false,
   });
   if (r.storable()) {
     const o = await y(n);
@@ -195,7 +195,7 @@ class P {
     this.eventEmitter = new r();
     this.options.h2 = this.options.h2 || {};
     if (undefined === this.options.h2.enablePush) {
-      this.options.h2.enablePush = !0;
+      this.options.h2.enablePush = true;
     }
     const { enablePush: i } = this.options.h2;
     if (i) {
@@ -267,7 +267,7 @@ class P {
           ...e,
           alpnProtocols: [this.context.ALPN_HTTP1_1],
           h1: {
-            keepAlive: !0,
+            keepAlive: true,
           },
         }).api(),
       h1NoCache: (e = {}) =>
@@ -282,7 +282,7 @@ class P {
           maxCacheSize: 0,
           alpnProtocols: [this.context.ALPN_HTTP1_1],
           h1: {
-            keepAlive: !0,
+            keepAlive: true,
           },
         }).api(),
       reset: async () => this.context.reset(),
@@ -310,7 +310,7 @@ class P {
         if (t && t.satisfiesWithoutRevalidation(r)) {
           n.headers = new c(t.responseHeaders(n));
           const e = n.clone();
-          e.fromCache = !0;
+          e.fromCache = true;
           return e;
         }
       }

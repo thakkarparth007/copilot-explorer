@@ -54,7 +54,7 @@ var d = (function () {
   };
   e.prototype._initialize = function () {
     var t = this;
-    this._isInitialized = !0;
+    this._isInitialized = true;
     var n = function (n) {
       if (n) {
         if ("function" != typeof n)
@@ -68,7 +68,7 @@ var d = (function () {
             var a = t._generateCorrelationContext(s);
             l.CorrelationContextManager.runWithContext(a, function () {
               if (t._isEnabled) {
-                r[e.alreadyAutoCollectedFlag] = !0;
+                r[e.alreadyAutoCollectedFlag] = true;
                 e.trackRequest(
                   t._client,
                   {
@@ -201,10 +201,10 @@ var d = (function () {
   };
   e.prototype.dispose = function () {
     e.INSTANCE = null;
-    this.enable(!1);
-    this._isInitialized = !1;
+    this.enable(false);
+    this._isInitialized = false;
     l.CorrelationContextManager.disable();
-    this._isAutoCorrelating = !1;
+    this._isAutoCorrelating = false;
   };
   e.alreadyAutoCollectedFlag = "_appInsightsAutoCollected";
   return e;

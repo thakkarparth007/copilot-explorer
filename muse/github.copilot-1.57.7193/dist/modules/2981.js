@@ -82,25 +82,25 @@ class d extends r {
 }
 Object.defineProperties(d.prototype, {
   url: {
-    enumerable: !0,
+    enumerable: true,
   },
   status: {
-    enumerable: !0,
+    enumerable: true,
   },
   ok: {
-    enumerable: !0,
+    enumerable: true,
   },
   redirected: {
-    enumerable: !0,
+    enumerable: true,
   },
   statusText: {
-    enumerable: !0,
+    enumerable: true,
   },
   headers: {
-    enumerable: !0,
+    enumerable: true,
   },
   clone: {
-    enumerable: !0,
+    enumerable: true,
   },
 });
 module.exports = {

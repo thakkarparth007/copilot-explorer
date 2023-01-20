@@ -22,8 +22,8 @@ const x = [g, v, y];
 const E = `helix-fetch/${m}`;
 const C = {
   method: "GET",
-  compress: !0,
-  decode: !0,
+  compress: true,
+  decode: true,
 };
 let S = 0;
 const T = d();
@@ -61,7 +61,7 @@ const k = (e, t) =>
       s.off("error", d);
       S += 1;
       s.id = S;
-      s.secureConnecting = !1;
+      s.secureConnecting = false;
       a(`established TLS connection: #${s.id} (${s.servername})`);
       n(s);
     });
@@ -198,9 +198,9 @@ module.exports = {
             options: { rejectUnauthorized: i, h1: s = {}, h2: a = {} },
           } = e;
           const c = !(
-            !1 === i ||
-            !1 === s.rejectUnauthorized ||
-            !1 === a.rejectUnauthorized
+            false === i ||
+            false === s.rejectUnauthorized ||
+            false === a.rejectUnauthorized
           );
           const l = {
             servername: t.hostname,

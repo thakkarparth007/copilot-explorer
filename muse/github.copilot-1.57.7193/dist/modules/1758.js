@@ -74,10 +74,10 @@ exports.storage = (function () {
   } catch (e) {}
 })();
 exports.destroy = (() => {
-  let e = !1;
+  let e = false;
   return () => {
     if (e) {
-      e = !0;
+      e = true;
       console.warn(
         "Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`."
       );

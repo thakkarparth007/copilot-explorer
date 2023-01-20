@@ -1,12 +1,12 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(3487);
 const o = require(6776);
 const i = require(3510);
 const s = {
   keyword: "const",
-  $data: !0,
+  $data: true,
   error: {
     message: "must be equal to constant",
     params: ({ schemaCode: e }) => r._`{allowedValue: ${e}}`,

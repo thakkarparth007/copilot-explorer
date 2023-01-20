@@ -34,13 +34,13 @@ var t = (function () {
         if (2 !== c.length) return null;
         if (!e.validateKeyChars(c[0])) return null;
         if (r[c[0]]) return null;
-        r[c[0]] = !0;
+        r[c[0]] = true;
         n.push(a);
       }
     }
     return n;
   };
-  e.strict = !0;
+  e.strict = true;
   return e;
 })();
 module.exports = t;

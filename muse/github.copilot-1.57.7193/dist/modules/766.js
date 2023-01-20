@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.ComputationStatus =
   exports.getRepoUrlFromConfigText =
@@ -34,7 +34,7 @@ exports.getUserKind = async function (e) {
   var n;
   const r =
     null !==
-      (t = (await e.get(s.CopilotTokenManager).getCopilotToken(e, !1))
+      (t = (await e.get(s.CopilotTokenManager).getCopilotToken(e, false))
         .organization_list) && undefined !== t
       ? t
       : [];
@@ -94,12 +94,12 @@ async function d(e, t) {
     const o = e.get(r.FileSystem);
     for (; t.length > 1 && t.length < n.length; ) {
       const e = i.join(t, ".git", "config");
-      let r = !1;
+      let r = false;
       try {
         await o.stat(e);
-        r = !0;
+        r = true;
       } catch (e) {
-        r = !1;
+        r = false;
       }
       if (r) return t;
       n = t;
@@ -154,7 +154,7 @@ function getRepoUrlFromConfigText(e) {
   const i = /^\s*\[/;
   let s;
   let a;
-  let c = !1;
+  let c = false;
   for (const l of e.split("\n"))
     if (c && undefined !== s) {
       s += l;
@@ -172,7 +172,7 @@ function getRepoUrlFromConfigText(e) {
             s = e[1];
             if (s.endsWith("\\")) {
               s = s.substring(0, s.length - 1);
-              c = !0;
+              c = true;
             } else if ("origin" === a) return s;
           }
         }

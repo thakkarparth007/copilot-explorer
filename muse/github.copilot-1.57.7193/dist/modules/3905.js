@@ -7,7 +7,7 @@ function r(e) {
 }
 var o = r(require(6008));
 const i = (e, t) => t.some((t) => (t instanceof RegExp ? t.test(e) : t === e));
-const s = (e, t = !1) => {
+const s = (e, t = false) => {
   const n =
     /^(?:([a-z_][a-z0-9_-]{0,31})@|https?:\/\/)([\w\.\-@]+)[\/:]([\~,\.\w,\-,\_,\/]+?(?:\.git|\/)?)$/;
   const r = (t) => {
@@ -25,24 +25,24 @@ const s = (e, t = !1) => {
   if (t) {
     if ("object" != typeof t) {
       t = {
-        stripHash: !1,
+        stripHash: false,
       };
     }
     e = (function (e, t) {
       t = {
         defaultProtocol: "http:",
-        normalizeProtocol: !0,
-        forceHttp: !1,
-        forceHttps: !1,
-        stripAuthentication: !0,
-        stripHash: !1,
-        stripTextFragment: !0,
-        stripWWW: !0,
+        normalizeProtocol: true,
+        forceHttp: false,
+        forceHttps: false,
+        stripAuthentication: true,
+        stripHash: false,
+        stripTextFragment: true,
+        stripWWW: true,
         removeQueryParameters: [/^utm_\w+/i],
-        removeTrailingSlash: !0,
-        removeSingleSlash: !0,
-        removeDirectoryIndex: !1,
-        sortQueryParameters: !0,
+        removeTrailingSlash: true,
+        removeSingleSlash: true,
+        removeDirectoryIndex: false,
+        sortQueryParameters: true,
         ...t,
       };
       e = e.trim();
@@ -124,7 +124,7 @@ const s = (e, t = !1) => {
         try {
           r.pathname = decodeURI(r.pathname);
         } catch {}
-      if (!0 === t.removeDirectoryIndex) {
+      if (true === t.removeDirectoryIndex) {
         t.removeDirectoryIndex = [/^index\.[a-z]+$/];
       }
       if (
@@ -148,7 +148,7 @@ const s = (e, t = !1) => {
       if (Array.isArray(t.removeQueryParameters))
         for (const e of [...r.searchParams.keys()])
           i(e, t.removeQueryParameters) && r.searchParams.delete(e);
-      if (!0 === t.removeQueryParameters) {
+      if (true === t.removeQueryParameters) {
         r.search = "";
       }
       if (t.sortQueryParameters) {
@@ -196,7 +196,7 @@ const s = (e, t = !1) => {
       a.host = e[2];
       a.user = e[1];
       a.pathname = `/${e[3]}`;
-      a.parse_failed = !1;
+      a.parse_failed = false;
     } else {
       r("URL parsing failed.");
     }

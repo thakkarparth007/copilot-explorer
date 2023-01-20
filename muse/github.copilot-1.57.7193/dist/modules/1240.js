@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(3487);
 const o = require(9306);
@@ -25,7 +25,7 @@ const i = {
       throw new Error("discriminator: requires propertyName");
     if (i.mapping) throw new Error("discriminator: mapping is not supported");
     if (!c) throw new Error("discriminator: requires oneOf keyword");
-    const u = t.let("valid", !1);
+    const u = t.let("valid", false);
     const d = t.const("tag", r._`${n}${r.getProperty(l)}`);
     function p(n) {
       const o = t.name("valid");
@@ -47,7 +47,7 @@ const i = {
             var e;
             const t = {};
             const n = o(s);
-            let r = !0;
+            let r = true;
             for (let t = 0; t < c.length; t++) {
               const s = c[t];
               const a =
@@ -84,13 +84,13 @@ const i = {
               t[e] = n;
             }
           })();
-          t.if(!1);
+          t.if(false);
           for (const e in n) {
             t.elseIf(r._`${d} === ${e}`);
             t.assign(u, p(n[e]));
           }
           t.else();
-          e.error(!1, {
+          e.error(false, {
             discrError: o.DiscrError.Mapping,
             tag: d,
             tagName: l,
@@ -98,7 +98,7 @@ const i = {
           t.endIf();
         })(),
       () =>
-        e.error(!1, {
+        e.error(false, {
           discrError: o.DiscrError.Tag,
           tag: d,
           tagName: l,

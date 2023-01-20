@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.validateAdditionalItems = undefined;
 const r = require(3487);
@@ -29,9 +29,9 @@ const i = {
 };
 function validateAdditionalItems(e, t) {
   const { gen: n, schema: i, data: s, keyword: a, it: c } = e;
-  c.items = !0;
+  c.items = true;
   const l = n.const("len", r._`${s}.length`);
-  if (!1 === i) {
+  if (false === i) {
     e.setParams({
       len: t.length,
     });

@@ -14,7 +14,7 @@ var r =
     return e;
   };
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 var o = require(4953);
 exports.mongo2 = {
@@ -47,14 +47,14 @@ exports.mongo2 = {
           return o.channel.publish("mongodb", {
             startedData: t,
             event: e,
-            succeeded: !0,
+            succeeded: true,
           });
         });
       } else {
         o.channel.publish("mongodb", {
           startedData: t,
           event: e,
-          succeeded: !0,
+          succeeded: true,
         });
       }
     });
@@ -68,14 +68,14 @@ exports.mongo2 = {
           return o.channel.publish("mongodb", {
             startedData: t,
             event: e,
-            succeeded: !1,
+            succeeded: false,
           });
         });
       } else {
         o.channel.publish("mongodb", {
           startedData: t,
           event: e,
-          succeeded: !1,
+          succeeded: false,
         });
       }
     });
@@ -108,7 +108,7 @@ exports.mongo3 = {
           return o.channel.publish("mongodb", {
             startedData: t,
             event: e,
-            succeeded: !0,
+            succeeded: true,
           });
         });
         delete i[e.requestId];
@@ -124,7 +124,7 @@ exports.mongo3 = {
           return o.channel.publish("mongodb", {
             startedData: t,
             event: e,
-            succeeded: !1,
+            succeeded: false,
           });
         });
         delete i[e.requestId];
@@ -179,7 +179,7 @@ exports.mongo330 = {
           return o.channel.publish("mongodb", {
             startedData: t,
             event: e,
-            succeeded: !0,
+            succeeded: true,
           });
         });
         delete r[e.requestId];
@@ -195,7 +195,7 @@ exports.mongo330 = {
           return o.channel.publish("mongodb", {
             startedData: t,
             event: e,
-            succeeded: !1,
+            succeeded: false,
           });
         });
         delete r[e.requestId];

@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 var r = require(4350);
 var o = require(5290);
@@ -16,5 +16,5 @@ exports.performanceMetricsTelemetryProcessor = function (e, t) {
       var i = e.data.baseData;
       r.countDependency(i.duration, i.success);
   }
-  return !0;
+  return true;
 };

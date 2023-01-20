@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 var r;
 var o = require(894);
@@ -30,22 +30,22 @@ var v;
 var b;
 var w;
 var x;
-var E = !0;
-var C = !1;
-var S = !0;
-var T = !0;
-var k = !0;
-var I = !0;
-var P = !0;
-var A = !0;
-var O = !1;
-var N = !0;
+var E = true;
+var C = false;
+var S = true;
+var T = true;
+var k = true;
+var I = true;
+var P = true;
+var A = true;
+var O = false;
+var N = true;
 var R = undefined;
 var M = undefined;
-var L = !1;
+var L = false;
 function start() {
   if (exports.defaultClient) {
-    L = !0;
+    L = true;
     g.enable(E, C);
     _.enable(S);
     y.enable(T);
@@ -95,7 +95,7 @@ var Configuration = (function () {
   };
   e.setAutoCollectConsole = function (t, n) {
     if (undefined === n) {
-      n = !1;
+      n = false;
     }
     E = t;
     C = n;
@@ -113,7 +113,7 @@ var Configuration = (function () {
   };
   e.setAutoCollectPerformance = function (t, n) {
     if (undefined === n) {
-      n = !0;
+      n = true;
     }
     T = t;
     var r = h.AutoCollectNativePerformance.parseEnabled(n);
@@ -158,10 +158,10 @@ var Configuration = (function () {
   };
   e.setInternalLogging = function (t, n) {
     if (undefined === t) {
-      t = !1;
+      t = false;
     }
     if (undefined === n) {
-      n = !0;
+      n = true;
     }
     d.enableDebug = t;
     d.disableWarnings = !n;
@@ -169,14 +169,14 @@ var Configuration = (function () {
   };
   e.setSendLiveMetrics = function (n) {
     if (undefined === n) {
-      n = !1;
+      n = false;
     }
     return exports.defaultClient
       ? (!exports.liveMetricsClient && n
           ? ((exports.liveMetricsClient = new p(
               exports.defaultClient.config.instrumentationKey
             )),
-            (x = new a(exports.liveMetricsClient, 1e3, !0)),
+            (x = new a(exports.liveMetricsClient, 1e3, true)),
             exports.liveMetricsClient.addCollector(x),
             (exports.defaultClient.quickPulseClient =
               exports.liveMetricsClient))
@@ -194,7 +194,7 @@ var Configuration = (function () {
 exports.Configuration = Configuration;
 exports.dispose = function () {
   exports.defaultClient = null;
-  L = !1;
+  L = false;
   if (g) {
     g.dispose();
   }
@@ -214,8 +214,8 @@ exports.dispose = function () {
     w.dispose();
   }
   if (exports.liveMetricsClient) {
-    exports.liveMetricsClient.enable(!1);
-    O = !1;
+    exports.liveMetricsClient.enable(false);
+    O = false;
     exports.liveMetricsClient = undefined;
   }
 };

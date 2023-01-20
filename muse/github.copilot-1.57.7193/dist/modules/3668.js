@@ -6,16 +6,16 @@ var a = require(3580);
 var c = require(4470);
 var l = (function () {
   function e(e, t) {
-    this._isCollectingData = !1;
+    this._isCollectingData = false;
     this._lastSuccessTime = Date.now();
-    this._lastSendSucceeded = !0;
+    this._lastSendSucceeded = true;
     this._metrics = {};
     this._documents = [];
     this._collectors = [];
     this.config = new o(e);
     this.context = t || new c();
     this._sender = new s(this.config);
-    this._isEnabled = !1;
+    this._isEnabled = false;
   }
   e.prototype.addCollector = function (e) {
     this._collectors.push(e);
@@ -31,11 +31,11 @@ var l = (function () {
   };
   e.prototype.enable = function (e) {
     if (e && !this._isEnabled) {
-      this._isEnabled = !0;
+      this._isEnabled = true;
       this._goQuickPulse();
     } else {
       if (!e && this._isEnabled) {
-        this._isEnabled = !1;
+        this._isEnabled = false;
         clearTimeout(this._handle);
         this._handle = undefined;
       }
@@ -91,7 +91,7 @@ var l = (function () {
       Date.now() - this._lastSuccessTime >= e.MAX_POST_WAIT_TIME &&
       !this._lastSendSucceeded
     ) {
-      this._isCollectingData = !1;
+      this._isCollectingData = false;
       o = e.FALLBACK_INTERVAL;
     } else {
       if (
@@ -121,12 +121,12 @@ var l = (function () {
       this._isCollectingData = e;
       if (t && t.statusCode < 300 && t.statusCode >= 200) {
         this._lastSuccessTime = Date.now();
-        this._lastSendSucceeded = !0;
+        this._lastSendSucceeded = true;
       } else {
-        this._lastSendSucceeded = !1;
+        this._lastSendSucceeded = false;
       }
     } else {
-      this._lastSendSucceeded = !1;
+      this._lastSendSucceeded = false;
     }
   };
   e.MAX_POST_WAIT_TIME = 2e4;

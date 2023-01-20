@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.boolOrEmptySchema = exports.topBoolOrEmptySchema = undefined;
 const r = require(4181);
@@ -14,9 +14,9 @@ function a(e, t) {
     gen: n,
     keyword: "false schema",
     data: o,
-    schema: !1,
-    schemaCode: !1,
-    schemaValue: !1,
+    schema: false,
+    schemaCode: false,
+    schemaValue: false,
     params: {},
     it: e,
   };
@@ -24,23 +24,23 @@ function a(e, t) {
 }
 exports.topBoolOrEmptySchema = function (e) {
   const { gen: t, schema: n, validateName: r } = e;
-  if (!1 === n) {
-    a(e, !1);
+  if (false === n) {
+    a(e, false);
   } else {
-    if ("object" == typeof n && !0 === n.$async) {
+    if ("object" == typeof n && true === n.$async) {
       t.return(i.default.data);
     } else {
       t.assign(o._`${r}.errors`, null);
-      t.return(!0);
+      t.return(true);
     }
   }
 };
 exports.boolOrEmptySchema = function (e, t) {
   const { gen: n, schema: r } = e;
-  if (!1 === r) {
-    n.var(t, !1);
+  if (false === r) {
+    n.var(t, false);
     a(e);
   } else {
-    n.var(t, !0);
+    n.var(t, true);
   }
 };

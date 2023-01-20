@@ -1,11 +1,11 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(6776);
 const o = {
   keyword: "not",
   schemaType: ["object", "boolean"],
-  trackErrors: !0,
+  trackErrors: true,
   code(e) {
     const { gen: t, schema: n, it: o } = e;
     if (r.alwaysValidSchema(o, n)) return void e.fail();
@@ -13,9 +13,9 @@ const o = {
     e.subschema(
       {
         keyword: "not",
-        compositeRule: !0,
-        createErrors: !1,
-        allErrors: !1,
+        compositeRule: true,
+        createErrors: false,
+        allErrors: false,
       },
       i
     );

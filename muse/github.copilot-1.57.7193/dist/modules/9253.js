@@ -20,7 +20,7 @@ var a = (function () {
       "/v2/track";
     this.maxBatchSize = 250;
     this.maxBatchIntervalMs = 15e3;
-    this.disableAppInsights = !1;
+    this.disableAppInsights = false;
     this.samplingPercentage = 100;
     this.correlationIdRetryIntervalMs = 3e4;
     this.correlationHeaderExcludedDomains = [
@@ -62,8 +62,8 @@ var a = (function () {
       this.correlationId = r.correlationIdPrefix;
       r.queryCorrelationId(this, this.setCorrelationId);
     },
-    enumerable: !0,
-    configurable: !0,
+    enumerable: true,
+    configurable: true,
   });
   Object.defineProperty(e.prototype, "quickPulseHost", {
     get: function () {
@@ -72,8 +72,8 @@ var a = (function () {
     set: function (e) {
       this._quickPulseHost = e;
     },
-    enumerable: !0,
-    configurable: !0,
+    enumerable: true,
+    configurable: true,
   });
   e._getInstrumentationKey = function () {
     var t =

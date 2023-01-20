@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.CodeGen =
   exports.Name =
@@ -93,7 +93,7 @@ function y(e) {
   var x;
   const E = e.strict;
   const C = null === (t = e.code) || undefined === t ? undefined : t.optimize;
-  const S = !0 === C || undefined === C ? 1 : C || 0;
+  const S = true === C || undefined === C ? 1 : C || 0;
   return {
     strictSchema:
       null === (r = null !== (n = e.strictSchema) && undefined !== n ? n : E) ||
@@ -160,13 +160,13 @@ class v {
       lines: n,
     });
     this.logger = (function (e) {
-      if (!1 === e) return T;
+      if (false === e) return T;
       if (undefined === e) return console;
       if (e.log && e.warn && e.error) return e;
       throw new Error("logger must implement log, warn and error methods");
     })(e.logger);
     const r = e.validateFormats;
-    e.validateFormats = !1;
+    e.validateFormats = false;
     this.RULES = a.getRules();
     b.call(this, g, e, "NOT SUPPORTED");
     b.call(this, _, e, "DEPRECATED", "warn");
@@ -199,7 +199,7 @@ class v {
       delete r.$id;
     }
     if (t && e) {
-      this.addMetaSchema(r, r[n], !1);
+      this.addMetaSchema(r, r[n], false);
     }
   }
   defaultMeta() {
@@ -240,7 +240,7 @@ class v {
           {
             $ref: e,
           },
-          !0
+          true
         );
       }
     }
@@ -291,15 +291,15 @@ class v {
     }
     t = u.normalizeId(t || o);
     this._checkUnique(t);
-    this.schemas[t] = this._addSchema(e, n, t, r, !0);
+    this.schemas[t] = this._addSchema(e, n, t, r, true);
     return this;
   }
   addMetaSchema(e, t, n = this.opts.validateSchema) {
-    this.addSchema(e, t, !0, n);
+    this.addSchema(e, t, true, n);
     return this;
   }
   validateSchema(e, t) {
-    if ("boolean" == typeof e) return !0;
+    if ("boolean" == typeof e) return true;
     let n;
     n = e.$schema;
     if (void 0 !== n && "string" != typeof n)
@@ -508,7 +508,7 @@ class v {
       this.refs[n] = a;
     }
     if (r) {
-      this.validateSchema(e, !0);
+      this.validateSchema(e, true);
     }
     return a;
   }
@@ -612,7 +612,7 @@ function P(e, t, n) {
     };
     i.rules.push(s);
   }
-  i.keywords[e] = !0;
+  i.keywords[e] = true;
   if (!t) return;
   const a = {
     keyword: e,
@@ -647,7 +647,7 @@ function O(e) {
     if (e.$data && this.opts.$data) {
       t = R(t);
     }
-    e.validateSchema = this.compile(t, !0);
+    e.validateSchema = this.compile(t, true);
   }
 }
 const N = {

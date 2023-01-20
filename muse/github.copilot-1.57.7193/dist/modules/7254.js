@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.CopilotStatusBar = undefined;
 const r = require("vscode");
@@ -10,7 +10,7 @@ const a = require(3060);
 exports.CopilotStatusBar = class {
   constructor(e) {
     this.ctx = e;
-    this.showingMessage = !1;
+    this.showingMessage = false;
     this.status = "Normal";
     this.errorMessage = "";
     this.disabledColor = new r.ThemeColor("statusBarItem.warningBackground");
@@ -36,7 +36,7 @@ exports.CopilotStatusBar = class {
     this.updateDisplay();
   }
   checkEnabledForLanguage() {
-    return i.getEnabledConfig(this.ctx) || !1;
+    return i.getEnabledConfig(this.ctx) || false;
   }
   updateDisplay() {
     switch (this.status) {
@@ -111,9 +111,9 @@ exports.CopilotStatusBar = class {
       languageId: o || "*",
     });
     if (i.getEnabledConfig(this.ctx, "*") == i.getEnabledConfig(this.ctx, o)) {
-      this.showingMessage = !0;
+      this.showingMessage = true;
       setTimeout(() => {
-        this.showingMessage = !1;
+        this.showingMessage = false;
       }, 15e3);
       const e = n ? "Disable" : "Enable";
       const i = `${e} Globally`;
@@ -126,7 +126,7 @@ exports.CopilotStatusBar = class {
         )
         .then((e) => {
           const l = e === i;
-          this.showingMessage = !1;
+          this.showingMessage = false;
           if (void 0 === e)
             return void (0, s.telemetry)(this.ctx, "statusBar.cancelToggle");
           s.telemetry(
@@ -157,13 +157,13 @@ exports.CopilotStatusBar = class {
   }
   showActivationErrors(e) {
     if (this.showingMessage) return;
-    this.showingMessage = !0;
+    this.showingMessage = true;
     const t = ["Show output log"];
     if (this.errorRetry) {
       t.push("Retry");
     }
     r.window.showWarningMessage(this.errorMessage, ...t).then((t) => {
-      this.showingMessage = !1;
+      this.showingMessage = false;
       if ("Show Output log" === t) {
         e.show();
       }

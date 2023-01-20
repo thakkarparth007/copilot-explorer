@@ -10,7 +10,7 @@ const d = async (e) => {
   if (e[u].disturbed) throw new TypeError("Already read");
   if (e[u].error)
     throw new TypeError(`Stream had error: ${e[u].error.message}`);
-  e[u].disturbed = !0;
+  e[u].disturbed = true;
   const { stream: t } = e[u];
   return null === t ? l : c(t);
 };
@@ -33,7 +33,7 @@ class p {
         : o.from(String(e));
     this[u] = {
       stream: t,
-      disturbed: !1,
+      disturbed: false,
       error: null,
     };
     if (e instanceof o) {
@@ -75,19 +75,19 @@ class p {
 }
 Object.defineProperties(p.prototype, {
   body: {
-    enumerable: !0,
+    enumerable: true,
   },
   bodyUsed: {
-    enumerable: !0,
+    enumerable: true,
   },
   arrayBuffer: {
-    enumerable: !0,
+    enumerable: true,
   },
   json: {
-    enumerable: !0,
+    enumerable: true,
   },
   text: {
-    enumerable: !0,
+    enumerable: true,
   },
 });
 module.exports = {

@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(3487);
 const o = require(6776);
@@ -18,7 +18,7 @@ const a = {
   code(e) {
     const { schema: t, parentSchema: n, it: r } = e;
     const { prefixItems: a } = n;
-    r.items = !0;
+    r.items = true;
     if (o.alwaysValidSchema(r, t)) {
       if (a) {
         s.validateAdditionalItems(e, a);

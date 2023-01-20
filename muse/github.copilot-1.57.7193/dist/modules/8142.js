@@ -1,7 +1,7 @@
 var n;
 var r;
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.FilterSettings =
   exports.telmetryNames =
@@ -46,8 +46,8 @@ class FilterSettings {
   }
   extends(e) {
     for (const [t, n] of Object.entries(e.filters))
-      if (this.filters[t] !== n) return !1;
-    return !0;
+      if (this.filters[t] !== n) return false;
+    return true;
   }
   addToTelemetry(e) {
     for (const [n, r] of Object.entries(this.filters)) {

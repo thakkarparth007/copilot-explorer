@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 var r = require(4953);
 exports.bunyan = {
@@ -11,7 +11,7 @@ exports.bunyan = {
       if (!n) {
         var i = o;
         if (i) {
-          i = t.call(this, e, !0);
+          i = t.call(this, e, true);
         }
         r.channel.publish("bunyan", {
           level: e.level,

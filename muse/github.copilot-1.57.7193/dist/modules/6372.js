@@ -5,9 +5,9 @@ var n = console.error.bind(console);
 function r(e, t, n) {
   var r = !!e[t] && e.propertyIsEnumerable(t);
   Object.defineProperty(e, t, {
-    configurable: !0,
+    configurable: true,
     enumerable: r,
-    writable: !0,
+    writable: true,
     value: n,
   });
 }
@@ -35,7 +35,7 @@ function i(e, o, i) {
           r(e, o, s);
         }
       });
-      r(a, "__wrapped", !0);
+      r(a, "__wrapped", true);
       r(e, o, a);
       return a;
     }

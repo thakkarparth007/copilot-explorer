@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.getGhostText =
   exports.completionCache =
@@ -53,7 +53,7 @@ async function A(e, n, r, o, i, s, a) {
   })(e, n);
   const _ = f.getTemperatureForSamples(e, g);
   const y = {
-    stream: !0,
+    stream: true,
     n: g,
     temperature: _,
     extra: {
@@ -126,7 +126,7 @@ async function A(e, n, r, o, i, s, a) {
         type: "canceled",
         reason: "network request aborted",
         telemetryData: T.mkCanceledResultTelemetry(r, {
-          cancelledNetworkRequest: !0,
+          cancelledNetworkRequest: true,
         }),
       };
     exports.ghostTextLogger.error(e, `Error on ghost text request ${n}`);
@@ -188,7 +188,7 @@ function $(e, t, n) {
         completionIndex: e,
         completionText: t,
         displayText: t.substr(n.length),
-        displayNeedsWsOffset: !1,
+        displayNeedsWsOffset: false,
       };
     {
       const r = t.substr(0, t.length - t.trimLeft().length);
@@ -197,13 +197,13 @@ function $(e, t, n) {
             completionIndex: e,
             completionText: t,
             displayText: t.trimLeft(),
-            displayNeedsWsOffset: !0,
+            displayNeedsWsOffset: true,
           }
         : {
             completionIndex: e,
             completionText: t,
             displayText: t,
-            displayNeedsWsOffset: !1,
+            displayNeedsWsOffset: false,
           };
     }
   }
@@ -211,7 +211,7 @@ function $(e, t, n) {
     completionIndex: e,
     completionText: t,
     displayText: t,
-    displayNeedsWsOffset: !1,
+    displayNeedsWsOffset: false,
   };
 }
 function D(e, n) {
@@ -301,7 +301,7 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
       case c.BlockMode.Server:
         return {
           blockMode: c.BlockMode.Server,
-          requestMultiline: !0,
+          requestMultiline: true,
           isCyclingRequest: i,
           finishedCb: async (e) => {},
         };
@@ -328,13 +328,13 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
                 (await g.isEmptyBlockStart(t, t.lineAt(n).range.end))
               );
           }
-          return !1;
+          return false;
         })(e, t, n, s);
         return c
           ? {
               blockMode: a,
-              requestMultiline: !0,
-              isCyclingRequest: !1,
+              requestMultiline: true,
+              isCyclingRequest: false,
               finishedCb: async (r) => {
                 let i;
                 i =
@@ -352,7 +352,7 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
             }
           : {
               blockMode: a,
-              requestMultiline: !1,
+              requestMultiline: false,
               isCyclingRequest: i,
               finishedCb: async (e) => {},
             };
@@ -380,7 +380,7 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
       const s = [];
       o.forEach((e) => {
         const t = O(e, {
-          forceSingleLine: !1,
+          forceSingleLine: false,
         });
         if (t.completionText.startsWith(i)) {
           t.completionText = t.completionText.substring(i.length);
@@ -451,9 +451,9 @@ exports.getGhostText = async function (e, n, s, u, d, f) {
   const Z = await e.get(l.Features).debouncePredict();
   const ee = await e.get(l.Features).contextualFilterEnable();
   const te = await e.get(l.Features).contextualFilterAcceptThreshold();
-  let ne = !1;
+  let ne = false;
   if (Z || ee) {
-    ne = !0;
+    ne = true;
   }
   const re = (function (e, t, n, r, o, i, s) {
     const a = e.get(E.LocationFactory);

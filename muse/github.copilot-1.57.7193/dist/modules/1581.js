@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.CodeGen =
   exports.Name =
@@ -27,7 +27,7 @@ class l extends r.default {
     super._addDefaultMetaSchema();
     if (!this.opts.meta) return;
     const e = this.opts.$data ? this.$dataMetaSchema(s, a) : s;
-    this.addMetaSchema(e, c, !1);
+    this.addMetaSchema(e, c, false);
     this.refs["http://json-schema.org/schema"] = c;
   }
   defaultMeta() {
@@ -37,7 +37,7 @@ class l extends r.default {
 }
 module.exports = exports = l;
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.default = l;
 var u = require(4815);

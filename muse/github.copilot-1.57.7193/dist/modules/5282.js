@@ -20,9 +20,9 @@ var t = (function () {
       console.warn(e.TAG + t, n);
     }
   };
-  e.enableDebug = !1;
-  e.disableWarnings = !1;
-  e.disableErrors = !1;
+  e.enableDebug = false;
+  e.disableWarnings = false;
+  e.disableErrors = false;
   e.TAG = "ApplicationInsights:";
   return e;
 })();

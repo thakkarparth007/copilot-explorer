@@ -1,7 +1,7 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
-process.env.APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = !0;
+process.env.APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true;
 var r = require("fs");
 var o = require("os");
 var i = require("path");
@@ -12,8 +12,8 @@ var c = (function () {
     var a = this;
     this.extensionId = e;
     this.extensionVersion = t;
-    this.firstParty = !1;
-    this.userOptIn = !1;
+    this.firstParty = false;
+    this.userOptIn = false;
     this.firstParty = !!o;
     var c = process.env.VSCODE_LOGS || "";
     if (c && e && "trace" === process.env.VSCODE_LOG_LEVEL) {
@@ -21,7 +21,7 @@ var c = (function () {
       this.logStream = r.createWriteStream(c, {
         flags: "a",
         encoding: "utf8",
-        autoClose: !0,
+        autoClose: true,
       });
     }
     this.updateUserOptIn(n);
@@ -39,7 +39,7 @@ var c = (function () {
     var n = s.workspace.getConfiguration(e.TELEMETRY_CONFIG_ID);
     var r =
       undefined === s.env.isTelemetryEnabled
-        ? n.get(e.TELEMETRY_CONFIG_ENABLED_ID, !0)
+        ? n.get(e.TELEMETRY_CONFIG_ENABLED_ID, true)
         : s.env.isTelemetryEnabled;
     if (this.userOptIn !== r) {
       this.userOptIn = r;
@@ -53,16 +53,16 @@ var c = (function () {
   e.prototype.createAppInsightsClient = function (e) {
     if (a.defaultClient) {
       this.appInsightsClient = new a.TelemetryClient(e);
-      this.appInsightsClient.channel.setUseDiskRetryCaching(!0);
+      this.appInsightsClient.channel.setUseDiskRetryCaching(true);
     } else {
       a.setup(e)
-        .setAutoCollectRequests(!1)
-        .setAutoCollectPerformance(!1)
-        .setAutoCollectExceptions(!1)
-        .setAutoCollectDependencies(!1)
-        .setAutoDependencyCorrelation(!1)
-        .setAutoCollectConsole(!1)
-        .setUseDiskRetryCaching(!0)
+        .setAutoCollectRequests(false)
+        .setAutoCollectPerformance(false)
+        .setAutoCollectExceptions(false)
+        .setAutoCollectDependencies(false)
+        .setAutoDependencyCorrelation(false)
+        .setAutoCollectConsole(false)
+        .setUseDiskRetryCaching(true)
         .start();
       this.appInsightsClient = a.defaultClient;
     }
@@ -78,7 +78,7 @@ var c = (function () {
     if (e && 0 === e.indexOf("AIF-")) {
       this.appInsightsClient.config.endpointUrl =
         "https://vortex.data.microsoft.com/collect/v1";
-      this.firstParty = !0;
+      this.firstParty = true;
     }
   };
   e.prototype.getCommonProperties = function () {
@@ -139,8 +139,8 @@ var c = (function () {
       }
       return this._extension;
     },
-    enumerable: !1,
-    configurable: !0,
+    enumerable: false,
+    configurable: true,
   });
   e.prototype.cloneAndChange = function (e, t) {
     if (null === e || "object" != typeof e) return e;

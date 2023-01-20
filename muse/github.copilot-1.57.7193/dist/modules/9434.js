@@ -1,12 +1,12 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(3487);
 const o = require(6776);
 const i = {
   keyword: "if",
   schemaType: ["object", "boolean"],
-  trackErrors: !0,
+  trackErrors: true,
   error: {
     message: ({ params: e }) => r.str`must match "${e.ifClause}" schema`,
     params: ({ params: e }) => r._`{failingKeyword: ${e.ifClause}}`,
@@ -19,15 +19,15 @@ const i = {
     const a = s(i, "then");
     const c = s(i, "else");
     if (!a && !c) return;
-    const l = t.let("valid", !0);
+    const l = t.let("valid", true);
     const u = t.name("_valid");
     (function () {
       const t = e.subschema(
         {
           keyword: "if",
-          compositeRule: !0,
-          createErrors: !1,
-          allErrors: !1,
+          compositeRule: true,
+          createErrors: false,
+          allErrors: false,
         },
         u
       );
@@ -60,7 +60,7 @@ const i = {
         }
       };
     }
-    e.pass(l, () => e.error(!0));
+    e.pass(l, () => e.error(true));
   },
 };
 function s(e, t) {

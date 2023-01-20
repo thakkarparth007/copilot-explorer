@@ -18,7 +18,7 @@ var s = (function () {
     var l = this;
     var u = JSON.stringify(t);
     var d =
-      (((a = {})[o.disableCollectionRequestOption] = !0),
+      (((a = {})[o.disableCollectionRequestOption] = true),
       (a.host = this._config.quickPulseHost),
       (a.method = "POST"),
       (a.path =

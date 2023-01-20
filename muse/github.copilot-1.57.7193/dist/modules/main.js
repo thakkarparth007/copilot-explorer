@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.deactivate = exports.activate = exports.init = undefined;
 const t = require(3055563);
@@ -64,7 +64,7 @@ exports.activate = async function (e) {
   n.set(s.Clock, new s.Clock());
   n.set(a.BuildInfo, new a.BuildInfo());
   n.set(a.EditorAndPluginInfo, new N.VSCodeEditorInfo());
-  n.set(g.LogVerbose, new g.LogVerbose(!1));
+  n.set(g.LogVerbose, new g.LogVerbose(false));
   n.set(m.GhostTextDebounceManager, new m.GhostTextDebounceManager());
   n.set(f.ContextualFilterManager, new f.ContextualFilterManager());
   const r = new g.MultiLog([
@@ -84,7 +84,7 @@ exports.activate = async function (e) {
   if (e.extensionMode === o.ExtensionMode.Test) {
     n.set(i.CopilotTokenManager, C.makeTestingCopilotTokenManager());
     n.set(a.VscInfo, a.getTestVscInfo());
-    n.set(S.RuntimeMode, S.RuntimeMode.fromEnvironment(!0));
+    n.set(S.RuntimeMode, S.RuntimeMode.fromEnvironment(true));
     n.set(h.ExpConfigMaker, new h.ExpConfigNone());
     n.set(E.TelemetryReporters, E.setupStandardReporters(n, "copilot-test"));
     n.set(P.UrlOpener, new T.TestUrlOpener());
@@ -93,7 +93,7 @@ exports.activate = async function (e) {
     n.set(a.VscInfo, N.makeVscInfo());
     n.set(v.OpenAIFetcher, new v.LiveOpenAIFetcher());
     n.set(a.BlockModeConfig, new a.ConfigBlockModeConfig());
-    n.set(S.RuntimeMode, S.RuntimeMode.fromEnvironment(!1));
+    n.set(S.RuntimeMode, S.RuntimeMode.fromEnvironment(false));
     n.set(h.ExpConfigMaker, new h.ExpConfigFromTAS());
     n.set(E.TelemetryReporters, j.activate(n, e));
     n.set(P.UrlOpener, new P.RealUrlOpener());
@@ -119,7 +119,7 @@ exports.activate = async function (e) {
       ))
     );
   if (W || V) {
-    o.commands.executeCommand("setContext", "github.copilot.nightly", !0);
+    o.commands.executeCommand("setContext", "github.copilot.nightly", true);
   }
   const K = (function (e, t) {
     const n = new F.CopilotStatusBar(e);
@@ -156,11 +156,11 @@ exports.activate = async function (e) {
       return void o.commands.executeCommand(
         "setContext",
         "github.copilot.activated",
-        !1
+        false
       );
     }
     K.forceNormal();
-    o.commands.executeCommand("setContext", "github.copilot.activated", !0);
+    o.commands.executeCommand("setContext", "github.copilot.activated", true);
     e.subscriptions.push(
       z(n, R.CMDOpenPanel, () => {
         o.commands.executeCommand("editor.action.inlineSuggest.hide");
@@ -214,7 +214,7 @@ exports.activate = async function (e) {
       if (undefined === (null == r ? undefined : r.globalValue)) {
         t.update(
           "editor.inlineSuggest.enabled",
-          !0,
+          true,
           o.ConfigurationTarget.Global
         );
       }

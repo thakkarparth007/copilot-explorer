@@ -2,7 +2,7 @@ var n;
 var r;
 var o;
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.DEFAULT_BREEZE_ENDPOINT = "https://dc.services.visualstudio.com";
 exports.DEFAULT_LIVEMETRICS_ENDPOINT = "https://rt.services.visualstudio.com";

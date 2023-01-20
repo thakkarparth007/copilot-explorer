@@ -88,7 +88,7 @@ r = (() => {
       var r = {
         resolve: function () {
           for (
-            r = "", o = !1, i = arguments.length - 1, undefined;
+            r = "", o = false, i = arguments.length - 1, undefined;
             i >= -1 && !o;
             i--
           ) {
@@ -216,7 +216,7 @@ r = (() => {
             n = e.charCodeAt(0),
               r = 47 === n,
               o = -1,
-              i = !0,
+              i = true,
               s = e.length - 1,
               undefined;
             s >= 1;
@@ -232,7 +232,7 @@ r = (() => {
                 o = s;
                 break;
               }
-            } else i = !1;
+            } else i = false;
           }
           return -1 === o
             ? r
@@ -249,7 +249,7 @@ r = (() => {
           var r;
           var o = 0;
           var i = -1;
-          var s = !0;
+          var s = true;
           if (undefined !== n && n.length > 0 && n.length <= e.length) {
             if (n.length === e.length && n === e) return "";
             var a = n.length - 1;
@@ -263,7 +263,7 @@ r = (() => {
                 }
               } else {
                 if (-1 === c) {
-                  s = !1;
+                  s = false;
                   c = r + 1;
                 }
                 if (a >= 0) {
@@ -294,7 +294,7 @@ r = (() => {
                 break;
               }
             } else if (-1 === i) {
-              s = !1;
+              s = false;
               i = r + 1;
             }
           return -1 === i ? "" : e.slice(o, i);
@@ -302,7 +302,7 @@ r = (() => {
         extname: function (e) {
           t(e);
           for (
-            n = -1, r = 0, o = -1, i = !0, s = 0, a = e.length - 1, undefined;
+            n = -1, r = 0, o = -1, i = true, s = 0, a = e.length - 1, undefined;
             a >= 0;
             --a
           ) {
@@ -315,7 +315,7 @@ r = (() => {
             var c = e.charCodeAt(a);
             if (47 !== c) {
               if (-1 === o) {
-                i = !1;
+                i = false;
                 o = a + 1;
               }
               if (46 === c) {
@@ -375,7 +375,7 @@ r = (() => {
             r = 0;
           }
           for (
-            s = -1, a = 0, c = -1, l = !0, u = e.length - 1, d = 0, undefined;
+            s = -1, a = 0, c = -1, l = true, u = e.length - 1, d = 0, undefined;
             u >= r;
             --u
           ) {
@@ -387,7 +387,7 @@ r = (() => {
             var d;
             if (47 !== (o = e.charCodeAt(u))) {
               if (-1 === c) {
-                l = !1;
+                l = false;
                 c = u + 1;
               }
               if (46 === o) {
@@ -494,7 +494,7 @@ r = (() => {
       var f = (function () {
         function e(e, t, n, r, o, i) {
           if (undefined === i) {
-            i = !1;
+            i = false;
           }
           if ("object" == typeof e) {
             this.scheme = e.scheme || d;
@@ -570,10 +570,10 @@ r = (() => {
         };
         Object.defineProperty(e.prototype, "fsPath", {
           get: function () {
-            return b(this, !1);
+            return b(this, false);
           },
-          enumerable: !1,
-          configurable: !0,
+          enumerable: false,
+          configurable: true,
         });
         e.prototype.with = function (e) {
           if (!e) return this;
@@ -627,7 +627,7 @@ r = (() => {
         };
         e.parse = function (e, t) {
           if (undefined === t) {
-            t = !1;
+            t = false;
           }
           var n = h.exec(e);
           return n
@@ -659,7 +659,7 @@ r = (() => {
         };
         e.prototype.toString = function (e) {
           if (undefined === e) {
-            e = !1;
+            e = false;
           }
           return w(this, e);
         };
@@ -690,20 +690,20 @@ r = (() => {
         Object.defineProperty(t.prototype, "fsPath", {
           get: function () {
             if (this._fsPath) {
-              this._fsPath = b(this, !1);
+              this._fsPath = b(this, false);
             }
             return this._fsPath;
           },
-          enumerable: !1,
-          configurable: !0,
+          enumerable: false,
+          configurable: true,
         });
         t.prototype.toString = function (e) {
           if (undefined === e) {
-            e = !1;
+            e = false;
           }
           return e
-            ? w(this, !0)
-            : (this._formatted || (this._formatted = w(this, !1)),
+            ? w(this, true)
+            : (this._formatted || (this._formatted = w(this, false)),
               this._formatted);
         };
         t.prototype.toJSON = function () {
@@ -886,15 +886,15 @@ r = (() => {
               s = String.fromCharCode(d + 32) + ":" + s.substr(2);
             }
           }
-          r += n(s, !0);
+          r += n(s, true);
         }
         if (a) {
           r += "?";
-          r += n(a, !1);
+          r += n(a, false);
         }
         if (c) {
           r += "#";
-          r += t ? c : y(c, !1);
+          r += t ? c : y(c, false);
         }
         return r;
       }
@@ -990,7 +990,7 @@ r = (() => {
     for (var r in t)
       if (n.o(t, r) && !n.o(e, r)) {
         Object.defineProperty(e, r, {
-          enumerable: !0,
+          enumerable: true,
           get: t[r],
         });
       }
@@ -1003,7 +1003,7 @@ r = (() => {
       });
     }
     Object.defineProperty(e, "__esModule", {
-      value: !0,
+      value: true,
     });
   };
   return n(447);

@@ -1,11 +1,11 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 var r = require(7424);
 var o = require(7424);
 exports.makePatchingRequire = o.makePatchingRequire;
 var i = function (e) {
-  return !0;
+  return true;
 };
 var s = (function () {
   function e() {
@@ -15,7 +15,7 @@ var s = (function () {
       return e;
     };
     this.knownPatches = {};
-    this.currentlyPublishing = !1;
+    this.currentlyPublishing = false;
   }
   e.prototype.shouldPublish = function (e) {
     var t = this.subscribers[e];
@@ -23,7 +23,7 @@ var s = (function () {
       !!t &&
       t.some(function (e) {
         var t = e.filter;
-        return !t || t(!1);
+        return !t || t(false);
       })
     );
   };
@@ -35,17 +35,17 @@ var s = (function () {
           timestamp: Date.now(),
           data: t,
         };
-        this.currentlyPublishing = !0;
+        this.currentlyPublishing = true;
         n.forEach(function (e) {
           var t = e.listener;
           var n = e.filter;
           try {
-            if (n && n(!0)) {
+            if (n && n(true)) {
               t(r);
             }
           } catch (e) {}
         });
-        this.currentlyPublishing = !1;
+        this.currentlyPublishing = false;
       }
     }
   };
@@ -70,9 +70,9 @@ var s = (function () {
       for (var o = 0; o < r.length; ++o)
         if (r[o].listener === t && r[o].filter === n) {
           r.splice(o, 1);
-          return !0;
+          return true;
         }
-    return !1;
+    return false;
   };
   e.prototype.reset = function () {
     var e = this;

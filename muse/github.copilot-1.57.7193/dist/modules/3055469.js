@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.parseTree =
   exports.registerLanguageSpecificParser =
@@ -154,8 +154,8 @@ exports.groupBlocks = function (e, t = r.isBlank, n) {
     const o = [];
     let i;
     let s = [];
-    let a = !1;
-    function c(e = !1) {
+    let a = false;
+    function c(e = false) {
       if (undefined !== i && (o.length > 0 || !e)) {
         const e = r.virtualNode(i, s, n);
         o.push(e);
@@ -174,7 +174,7 @@ exports.groupBlocks = function (e, t = r.isBlank, n) {
         i = null != i ? i : o.indentation;
       }
     }
-    c(!0);
+    c(true);
     e.subs = o;
     return e;
   });

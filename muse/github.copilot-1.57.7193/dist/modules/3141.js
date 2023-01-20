@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.getRules = exports.isJSONType = undefined;
 const n = new Set([
@@ -36,9 +36,9 @@ exports.getRules = function () {
   return {
     types: {
       ...e,
-      integer: !0,
-      boolean: !0,
-      null: !0,
+      integer: true,
+      boolean: true,
+      null: true,
     },
     rules: [
       {

@@ -1,4 +1,4 @@
 module.exports = function () {
-  this.hasFullStack = !0;
+  this.hasFullStack = true;
   this.parsedStack = [];
 };

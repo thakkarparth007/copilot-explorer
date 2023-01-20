@@ -34,14 +34,14 @@ var h = (function () {
   };
   e.prototype._initialize = function () {
     var t = this;
-    this._isInitialized = !0;
+    this._isInitialized = true;
     r.get;
     var n = r.request;
     var i = o.request;
     var s = function (n, r) {
       var o =
         !r[e.disableCollectionRequestOption] && !n[e.alreadyAutoCollectedFlag];
-      n[e.alreadyAutoCollectedFlag] = !0;
+      n[e.alreadyAutoCollectedFlag] = true;
       if (n && r && o) {
         l.CorrelationContextManager.wrapEmitter(n);
         e.trackRequest(t._client, {
@@ -191,8 +191,8 @@ var h = (function () {
   };
   e.prototype.dispose = function () {
     e.INSTANCE = null;
-    this.enable(!1);
-    this._isInitialized = !1;
+    this.enable(false);
+    this._isInitialized = false;
   };
   e.disableCollectionRequestOption = "disableAppInsightsAutoCollection";
   e.requestNumber = 1;

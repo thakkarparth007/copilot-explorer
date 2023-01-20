@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.resolveSchema =
   exports.getCompilingSchema =
@@ -70,7 +70,7 @@ function compileSchema(e) {
     definedProperties: new Set(),
     topSchemaRef: d.scopeValue(
       "schema",
-      !0 === this.opts.code.source
+      true === this.opts.code.source
         ? {
             ref: e.schema,
             code: r.stringify(e.schema),
@@ -112,9 +112,9 @@ function compileSchema(e) {
     n.schema = e.schema;
     n.schemaEnv = e;
     if (e.$async) {
-      n.$async = !0;
+      n.$async = true;
     }
-    if (!0 === this.opts.code.source) {
+    if (true === this.opts.code.source) {
       n.source = {
         validateName: f,
         validateCode: t,

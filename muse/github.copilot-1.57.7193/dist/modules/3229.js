@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(3487);
 const o = require(6776);
@@ -8,7 +8,7 @@ const s = {
   keyword: ["maxLength", "minLength"],
   type: "string",
   schemaType: "number",
-  $data: !0,
+  $data: true,
   error: {
     message({ keyword: e, schemaCode: t }) {
       const n = "maxLength" === e ? "more" : "fewer";
@@ -20,7 +20,7 @@ const s = {
     const { keyword: t, data: n, schemaCode: s, it: a } = e;
     const c = "maxLength" === t ? r.operators.GT : r.operators.LT;
     const l =
-      !1 === a.opts.unicode
+      false === a.opts.unicode
         ? r._`${n}.length`
         : r._`${o.useFunc(e.gen, i.default)}(${n})`;
     e.fail$data(r._`${l} ${c} ${s}`);

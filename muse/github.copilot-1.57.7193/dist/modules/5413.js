@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.getDebounceLimit = exports.GhostTextDebounceManager = undefined;
 const r = require(9189);

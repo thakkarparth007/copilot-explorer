@@ -5,9 +5,9 @@ var s = "wrap@before";
 function a(e, t, n) {
   var r = !!e[t] && e.propertyIsEnumerable(t);
   Object.defineProperty(e, t, {
-    configurable: !0,
+    configurable: true,
     enumerable: r,
-    writable: !0,
+    writable: true,
     value: n,
   });
 }
@@ -119,6 +119,6 @@ module.exports = function (e, t, n) {
       delete e[s];
       delete e.__wrapped;
     });
-    a(e, "__wrapped", !0);
+    a(e, "__wrapped", true);
   }
 };

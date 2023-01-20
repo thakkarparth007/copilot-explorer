@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.initProxyEnvironment = undefined;
 const r = require("net");
@@ -16,7 +16,7 @@ exports.initProxyEnvironment = function (e, t) {
   if (n) {
     const t = {};
     const s = i.workspace.getConfiguration("http").get("proxyAuthorization");
-    const a = i.workspace.getConfiguration("http").get("proxyStrictSSL", !0);
+    const a = i.workspace.getConfiguration("http").get("proxyStrictSSL", true);
     if (s) {
       t["Proxy-Authorization"] = s;
     }

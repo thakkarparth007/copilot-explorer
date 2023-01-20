@@ -1,12 +1,12 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(3487);
 const o = {
   keyword: ["maxProperties", "minProperties"],
   type: "object",
   schemaType: "number",
-  $data: !0,
+  $data: true,
   error: {
     message({ keyword: e, schemaCode: t }) {
       const n = "maxProperties" === e ? "more" : "fewer";

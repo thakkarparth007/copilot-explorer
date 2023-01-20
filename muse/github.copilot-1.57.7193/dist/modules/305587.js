@@ -19,8 +19,8 @@ if (
       var l = function (e, t) {
         throw t;
       };
-      var u = !1;
-      var d = !1;
+      var u = false;
+      var d = false;
       u = "object" == typeof window;
       d = "function" == typeof importScripts;
       o =
@@ -47,7 +47,7 @@ if (
           return m.readFileSync(e, t ? null : "utf8");
         };
         f = function (e) {
-          var t = p(e, !0);
+          var t = p(e, true);
           if (t.buffer) {
             t = new Uint8Array(t);
           }
@@ -113,14 +113,14 @@ if (
                 : "";
             p = function (e) {
               var t = new XMLHttpRequest();
-              t.open("GET", e, !1);
+              t.open("GET", e, false);
               t.send(null);
               return t.responseText;
             };
             if (d) {
               f = function (e) {
                 var t = new XMLHttpRequest();
-                t.open("GET", e, !1);
+                t.open("GET", e, false);
                 t.responseType = "arraybuffer";
                 t.send(null);
                 return new Uint8Array(t.response);
@@ -128,7 +128,7 @@ if (
             }
             h = function (e, t, n) {
               var r = new XMLHttpRequest();
-              r.open("GET", e, !0);
+              r.open("GET", e, true);
               r.responseType = "arraybuffer";
               r.onload = function () {
                 if (200 == r.status || (0 == r.status && r.response)) {
@@ -255,7 +255,7 @@ if (
         E = i.wasmBinary;
       }
       var T;
-      var k = i.noExitRuntime || !0;
+      var k = i.noExitRuntime || true;
       function I(e, t, n, r) {
         switch (
           ("*" === (n = n || "i8").charAt(n.length - 1) && (n = "i32"), n)
@@ -318,7 +318,7 @@ if (
       if ("object" != typeof WebAssembly) {
         se("no native wasm support detected");
       }
-      var A = !1;
+      var A = false;
       function O(e, t) {
         if (e) {
           se("Assertion failed: " + t);
@@ -456,7 +456,7 @@ if (
       var Q = [];
       var Y = [];
       var Z = [];
-      var ee = !1;
+      var ee = false;
       var te = 0;
       var ne = null;
       var re = null;
@@ -480,7 +480,7 @@ if (
         throw (
           (i.onAbort && i.onAbort(e),
           y((e += "")),
-          (A = !0),
+          (A = true),
           (e = "abort(" + e + "). Build with -s ASSERTIONS=1 for more info."),
           new WebAssembly.RuntimeError(e))
         );
@@ -518,7 +518,7 @@ if (
           if (me[t]) {
             me[t] = new WebAssembly.Global({
               value: "i32",
-              mutable: !0,
+              mutable: true,
             });
           }
           return me[t];
@@ -635,16 +635,16 @@ if (
         (function (e) {
           for (var t in e)
             if (!Ce(t)) {
-              var n = !1;
+              var n = false;
               var r = e[t];
               if (t.startsWith("orig$")) {
                 t = t.split("$")[1];
-                n = !0;
+                n = true;
               }
               if (me[t]) {
                 me[t] = new WebAssembly.Global({
                   value: "i32",
-                  mutable: !0,
+                  mutable: true,
                 });
               }
               if (n || 0 == me[t].value) {
@@ -738,7 +738,7 @@ if (
                 : (e[t] = function () {
                     if (n) {
                       n = (function (e) {
-                        var t = ke(e, !1);
+                        var t = ke(e, false);
                         if (t) {
                           t = s[e];
                         }
@@ -826,20 +826,20 @@ if (
             refcount: 1 / 0,
             name: "__main__",
             module: i.asm,
-            global: !0,
+            global: true,
           };
           we.loadedLibNames.__main__ = -1;
         }
         t = t || {
-          global: !0,
-          nodelete: !0,
+          global: true,
+          nodelete: true,
         };
         var n;
         var r = we.loadedLibNames[e];
         if (r) {
           n = we.loadedLibs[r];
           if (t.global && !n.global) {
-            n.global = !0;
+            n.global = true;
             if ("loading" !== n.module) {
               Pe(n.module);
             }
@@ -914,14 +914,14 @@ if (
       function Oe() {
         for (var e in me)
           if (0 == me[e].value) {
-            var t = ke(e, !0);
+            var t = ke(e, true);
             if ("function" == typeof t) {
               me[e].value = x(t, t.sig);
             } else {
               if ("number" == typeof t) {
                 me[e].value = t;
               } else {
-                O(!1, "bad export type for `" + e + "`: " + typeof t);
+                O(false, "bad export type for `" + e + "`: " + typeof t);
               }
             }
           }
@@ -931,7 +931,7 @@ if (
       var Re = new WebAssembly.Global(
         {
           value: "i32",
-          mutable: !0,
+          mutable: true,
         },
         5250832
       );
@@ -950,7 +950,7 @@ if (
         : function () {
             return performance.now();
           };
-      var Le = !0;
+      var Le = true;
       function $e(e, t) {
         var n;
         if (0 === e) n = Date.now();
@@ -996,7 +996,7 @@ if (
         emscripten_resize_heap: function (e) {
           var t;
           var n = M.length;
-          if ((e >>>= 0) > 2147483648) return !1;
+          if ((e >>>= 0) > 2147483648) return false;
           for (var r = 1; r <= 4; r *= 2) {
             var o = n * (1 + 0.2 / r);
             o = Math.min(o, e + 100663296);
@@ -1012,7 +1012,7 @@ if (
             )
               return !0;
           }
-          return !1;
+          return false;
         },
         exit: Fe,
         memory: T,
@@ -1684,14 +1684,14 @@ if (
           re = e;
         }
       };
-      var Je = !1;
+      var Je = false;
       function Xe(e) {
         function t() {
           if (qe) {
-            qe = !0;
-            i.calledRun = !0;
+            qe = true;
+            i.calledRun = true;
             if (A) {
-              ee = !0;
+              ee = true;
               _e(Q);
               _e(Y);
               if (i.onRuntimeInitialized) {
@@ -1707,7 +1707,7 @@ if (
                     for (var o = 1; o < n; o++) $[(r >> 2) + o] = V(e[o - 1]);
                     $[(r >> 2) + n] = 0;
                     try {
-                      Qe(t(n, r), !0);
+                      Qe(t(n, r), true);
                     } catch (e) {
                       if (e instanceof Ke) return;
                       if ("unwind" == e) return;
@@ -1748,10 +1748,10 @@ if (
                   return void S.reduce(function (e, t) {
                     return e.then(function () {
                       return Ae(t, {
-                        loadAsync: !0,
-                        global: !0,
-                        nodelete: !0,
-                        allowUndefined: !0,
+                        loadAsync: true,
+                        global: true,
+                        nodelete: true,
+                        allowUndefined: true,
                       });
                     });
                   }, Promise.resolve()).then(function () {
@@ -1761,15 +1761,15 @@ if (
                 }
                 S.forEach(function (e) {
                   Ae(e, {
-                    global: !0,
-                    nodelete: !0,
-                    allowUndefined: !0,
+                    global: true,
+                    nodelete: true,
+                    allowUndefined: true,
                   });
                 });
                 Oe();
               } else Oe();
             })(),
-            (Je = !0),
+            (Je = true),
             te > 0))
         ) {
           (function () {
@@ -1806,7 +1806,7 @@ if (
             if (i.onExit) {
               i.onExit(e);
             }
-            A = !0;
+            A = true;
           }
           l(e, new Ke(e));
         }
@@ -1819,9 +1819,9 @@ if (
 
         )
           i.preInit.pop()();
-      var Ye = !0;
+      var Ye = true;
       if (i.noInitialRun) {
-        Ye = !1;
+        Ye = false;
       }
       Xe();
       const Ze = i;
@@ -2642,7 +2642,7 @@ if (
           return t
             .then((e) =>
               r(e, {
-                loadAsync: !0,
+                loadAsync: true,
               })
             )
             .then((e) => {
@@ -2674,7 +2674,7 @@ if (
           this.setProperties = i;
           this.assertedProperties = s;
           this.refutedProperties = a;
-          this.exceededMatchLimit = !1;
+          this.exceededMatchLimit = false;
         }
         delete() {
           Ze._ts_query_delete(this[0]);

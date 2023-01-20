@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(412);
 const o = require(3487);
@@ -8,7 +8,7 @@ const s = {
   keyword: "required",
   type: "object",
   schemaType: "array",
-  $data: !0,
+  $data: true,
   error: {
     message: ({ params: { missingProperty: e } }) =>
       o.str`must have required property '${e}'`,
@@ -29,7 +29,7 @@ const s = {
       (function () {
         const i = t.let("missing");
         if (d || c) {
-          const n = t.let("valid", !0);
+          const n = t.let("valid", true);
           e.block$data(n, () =>
             (function (n, i) {
               e.setParams({

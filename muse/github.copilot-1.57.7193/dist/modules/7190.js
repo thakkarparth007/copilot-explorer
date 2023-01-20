@@ -6,7 +6,7 @@ const a = new Map();
 const c = new Map();
 const l = new Map();
 let u = null;
-let d = !1;
+let d = false;
 function p(e, t, n, o, i, s, a) {
   const c = r[n];
   const l = r[o];
@@ -24,23 +24,23 @@ function p(e, t, n, o, i, s, a) {
     n[0] = function () {
       u = h;
       e.pre.call(l, p);
-      let t = !0;
+      let t = true;
       try {
         o.apply(this, arguments);
-        t = !1;
+        t = false;
       } finally {
         if (t && process.listenerCount("uncaughtException") > 0) {
           process.once("uncaughtException", function () {
-            e.post.call(l, p, !0);
+            e.post.call(l, p, true);
             s.delete(h);
             e.destroy.call(null, p);
           });
         }
       }
-      e.post.call(l, p, !1);
+      e.post.call(l, p, false);
       u = null;
       if (a || d) {
-        d = !1;
+        d = false;
         s.delete(h);
         e.destroy.call(null, p);
       }
@@ -50,7 +50,7 @@ function p(e, t, n, o, i, s, a) {
     return h;
   };
   r[o] = function (t) {
-    if (u === t && null !== t) d = !0;
+    if (u === t && null !== t) d = true;
     else if (s.has(t)) {
       const n = s.get(t);
       s.delete(t);
@@ -60,9 +60,9 @@ function p(e, t, n, o, i, s, a) {
   };
 }
 module.exports = function () {
-  p(this._hooks, this._state, "setTimeout", "clearTimeout", o, a, !0);
-  p(this._hooks, this._state, "setInterval", "clearInterval", i, c, !1);
-  p(this._hooks, this._state, "setImmediate", "clearImmediate", s, l, !0);
+  p(this._hooks, this._state, "setTimeout", "clearTimeout", o, a, true);
+  p(this._hooks, this._state, "setInterval", "clearInterval", i, c, false);
+  p(this._hooks, this._state, "setImmediate", "clearImmediate", s, l, true);
   global.setTimeout = r.setTimeout;
   global.setInterval = r.setInterval;
   global.setImmediate = r.setImmediate;

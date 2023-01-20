@@ -11,7 +11,7 @@ var d = (function () {
     this._config = t;
     this._onSuccess = n;
     this._onError = o;
-    this._enableDiskRetryMode = !1;
+    this._enableDiskRetryMode = false;
     this._resendInterval = e.WAIT_BETWEEN_RESEND;
     this._maxBytesOnDisk = e.MAX_BYTES_ON_DISK;
     this._numConsecutiveFailures = 0;
@@ -36,7 +36,7 @@ var d = (function () {
       this._maxBytesOnDisk = Math.floor(r);
     }
     if (t && !e.OS_PROVIDES_FILE_PROTECTION) {
-      this._enableDiskRetryMode = !1;
+      this._enableDiskRetryMode = false;
       c.warn(
         e.TAG,
         "Ignoring request to enable disk retry mode. Sufficient file protection capabilities were not detected."
@@ -48,7 +48,7 @@ var d = (function () {
     var o = this._config.endpointUrl;
     var i = {
       method: "POST",
-      withCredentials: !1,
+      withCredentials: false,
       headers: {
         "Content-Type": "application/x-json-stream",
       },
@@ -64,7 +64,7 @@ var d = (function () {
         i.headers["Content-Length"] = a.length;
       }
       c.info(e.TAG, i);
-      i[l.disableCollectionRequestOption] = !0;
+      i[l.disableCollectionRequestOption] = true;
       var p = u.makeRequest(r._config, o, i, function (o) {
         o.setEncoding("utf-8");
         var i = "";
@@ -136,7 +136,7 @@ var d = (function () {
   };
   e.prototype._runICACLS = function (t, n) {
     var r = a.spawn(e.ICACLS_PATH, t, {
-      windowsHide: !0,
+      windowsHide: true,
     });
     r.on("error", function (e) {
       return n(e);
@@ -159,7 +159,7 @@ var d = (function () {
         "Could not synchronously call ICACLS under current version of Node.js"
       );
     var n = a.spawnSync(e.ICACLS_PATH, t, {
-      windowsHide: !0,
+      windowsHide: true,
     });
     if (n.error) throw n.error;
     if (0 !== n.status)
@@ -178,7 +178,7 @@ var d = (function () {
         "[System.Security.Principal.WindowsIdentity]::GetCurrent().Name",
       ],
       {
-        windowsHide: !0,
+        windowsHide: true,
         stdio: ["ignore", "pipe", "pipe"],
       }
     );
@@ -213,7 +213,7 @@ var d = (function () {
           "[System.Security.Principal.WindowsIdentity]::GetCurrent().Name",
         ],
         {
-          windowsHide: !0,
+          windowsHide: true,
           stdio: ["ignore", "pipe", "pipe"],
         }
       );
@@ -252,10 +252,10 @@ var d = (function () {
                   "Setting ACL restrictions did not succeed (cached result)"
                 )
           )
-        : ((e.ACLED_DIRECTORIES[t] = !1),
+        : ((e.ACLED_DIRECTORIES[t] = false),
           void this._getACLIdentity(function (o, i) {
             if (o) {
-              e.ACLED_DIRECTORIES[t] = !1;
+              e.ACLED_DIRECTORIES[t] = false;
               return n(o);
             }
             r._runICACLS(r._getACLArguments(t, i), function (r) {
@@ -271,7 +271,7 @@ var d = (function () {
         this._runICACLSSync(
           this._getACLArguments(t, this._getACLIdentitySync())
         );
-        return void (e.ACLED_DIRECTORIES[t] = !0);
+        return void (e.ACLED_DIRECTORIES[t] = true);
       }
       if (!e.ACLED_DIRECTORIES[t])
         throw new Error(
@@ -459,7 +459,7 @@ var d = (function () {
   e.MAX_BYTES_ON_DISK = 5e7;
   e.MAX_CONNECTION_FAILURES_BEFORE_WARN = 5;
   e.TEMPDIR_PREFIX = "appInsights-node";
-  e.OS_PROVIDES_FILE_PROTECTION = !1;
+  e.OS_PROVIDES_FILE_PROTECTION = false;
   e.USE_ICACLS = "Windows_NT" === o.type();
   return e;
 })();

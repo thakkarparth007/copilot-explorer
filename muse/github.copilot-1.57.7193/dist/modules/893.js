@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.CopilotListDocument = undefined;
 const r = require(106);
@@ -14,7 +14,7 @@ class CopilotListDocument {
     this._solutionCount = 0;
     this.solutionCountTarget = 0;
     this._solutions = [];
-    this._wasCancelled = !1;
+    this._wasCancelled = false;
     this._updateHandlers = new Set();
     this.savedTelemetryData = i.TelemetryData.createAndMarkAsIssued();
     this.debouncedEventFire = r.debounce(10, () =>
@@ -78,7 +78,7 @@ class CopilotListDocument {
     }
   }
   reportCancelled() {
-    this._wasCancelled = !0;
+    this._wasCancelled = true;
     this.debouncedEventFire();
   }
   getCancellationToken() {

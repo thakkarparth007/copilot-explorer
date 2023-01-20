@@ -97,7 +97,7 @@ var f = (function () {
     this._telemetryProcessors = [];
   };
   e.prototype.runTelemetryProcessors = function (e, t) {
-    var n = !0;
+    var n = true;
     var r = this._telemetryProcessors.length;
     if (0 === r) return n;
     (t = t || {}).correlationContext =
@@ -105,12 +105,12 @@ var f = (function () {
     for (var o = 0; o < r; ++o)
       try {
         var i = this._telemetryProcessors[o];
-        if (i && !1 === i.apply(null, [e, t])) {
-          n = !1;
+        if (i && false === i.apply(null, [e, t])) {
+          n = false;
           break;
         }
       } catch (t) {
-        n = !0;
+        n = true;
         p.warn(
           "One of telemetry processors failed, telemetry item will be sent.",
           t,

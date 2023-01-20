@@ -1,7 +1,7 @@
 var r = require(2728);
 function H() {
   this._array = [];
-  this._sorted = !0;
+  this._sorted = true;
   this._last = {
     generatedLine: -1,
     generatedColumn: 0,
@@ -30,14 +30,14 @@ H.prototype.add = function (e) {
     this._last = e;
     this._array.push(e);
   } else {
-    this._sorted = !1;
+    this._sorted = false;
     this._array.push(e);
   }
 };
 H.prototype.toArray = function () {
   if (this._sorted) {
     this._array.sort(r.compareByGeneratedPositionsInflated);
-    this._sorted = !0;
+    this._sorted = true;
   }
   return this._array;
 };

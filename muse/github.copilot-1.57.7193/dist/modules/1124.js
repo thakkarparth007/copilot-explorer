@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.checkSuffix = exports.postProcessChoice = undefined;
 const r = require(9189);
@@ -13,7 +13,7 @@ exports.postProcessChoice = async function (e, t, n, c, l, u, d) {
   ) {
     const t = i.TelemetryData.createAndMarkAsIssued();
     t.extendWithRequestId(l.requestId);
-    i.telemetry(e, "repetition.detected", t, !0);
+    i.telemetry(e, "repetition.detected", t, true);
     return void d.info(e, "Filtered out repetitive solution");
   }
   const p = {
@@ -28,7 +28,7 @@ exports.postProcessChoice = async function (e, t, n, c, l, u, d) {
         if (r === n.trim()) return !0;
         o++;
       }
-      return !1;
+      return false;
     })(n, c, p.completionText)
   ) {
     const t = i.TelemetryData.createAndMarkAsIssued();
@@ -40,7 +40,7 @@ exports.postProcessChoice = async function (e, t, n, c, l, u, d) {
       t.extendedBy({
         completionTextJson: JSON.stringify(p.completionText),
       }),
-      !0
+      true
     );
     return void d.info(e, "Filtered out solution matching next line");
   }
@@ -86,7 +86,7 @@ exports.postProcessChoice = async function (e, t, n, c, l, u, d) {
 exports.checkSuffix = function (e, t, n) {
   const r = e.lineAt(t.line).text.substring(t.character);
   if (r.length > 0) {
-    if (-1 !== n.completionText.indexOf(r)) return !0;
+    if (-1 !== n.completionText.indexOf(r)) return true;
     {
       let e = 0;
       for (const t of r) {
@@ -100,5 +100,5 @@ exports.checkSuffix = function (e, t, n) {
       return -1 !== e;
     }
   }
-  return !1;
+  return false;
 };

@@ -189,15 +189,15 @@ var u = (function () {
   };
   e.canIncludeCorrelationHeader = function (e, t) {
     var n = e && e.config && e.config.correlationHeaderExcludedDomains;
-    if (!n || 0 == n.length || !t) return !0;
+    if (!n || 0 == n.length || !t) return true;
     for (var r = 0; r < n.length; r++)
       if (
         new RegExp(n[r].replace(/\./g, ".").replace(/\*/g, ".*")).test(
           s.parse(t).hostname
         )
       )
-        return !1;
-    return !0;
+        return false;
+    return true;
   };
   e.getCorrelationContextTarget = function (e, t) {
     var n = e.headers && e.headers[l.requestContextHeader];

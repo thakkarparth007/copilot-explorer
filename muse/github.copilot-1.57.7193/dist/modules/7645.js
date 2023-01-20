@@ -48,7 +48,7 @@ if (u && !h._normalizeArgs) {
     } else {
       if (
         "string" == typeof (t = r) &&
-        !1 === ((n = t), (n = Number(n)) >= 0 && n)
+        false === ((n = t), (n = Number(n)) >= 0 && n)
       ) {
         o.path = r;
       } else {
@@ -71,7 +71,7 @@ if (u && !h._normalizeArgs) {
       } else {
         if (
           "string" == typeof e[0] &&
-          !1 === ((t = e[0]), (t = Number(t)) >= 0 && t)
+          false === ((t = e[0]), (t = Number(t)) >= 0 && t)
         ) {
           n.path = e[0];
         } else {
@@ -274,11 +274,11 @@ var P =
 if (P) {
   var A = process.addAsyncListener({
     create: function () {
-      P = !1;
+      P = false;
     },
   });
-  global.Promise.resolve(!0).then(function () {
-    P = !1;
+  global.Promise.resolve(true).then(function () {
+    P = false;
   });
   process.removeAsyncListener(A);
 }
@@ -398,11 +398,11 @@ if (P) {
         o = this;
         i = [
           function (t) {
-            r(s, !1);
+            r(s, false);
             return e(t);
           },
           function (e) {
-            r(s, !1);
+            r(s, false);
             return t(e);
           },
         ];
@@ -425,12 +425,12 @@ if (P) {
       try {
         return {
           returnVal: (a = n.call(t, i)),
-          error: !1,
+          error: false,
         };
       } catch (e) {
         return {
           errorVal: e,
-          error: !0,
+          error: true,
         };
       } finally {
         if (a instanceof e) {
@@ -438,7 +438,7 @@ if (P) {
             return (a.__asl_wrapper || o).apply(this, arguments);
           };
         } else {
-          r(s, !0);
+          r(s, true);
         }
       }
     }

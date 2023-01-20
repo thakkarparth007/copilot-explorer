@@ -1,12 +1,12 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 const r = require(3487);
 const o = {
   keyword: ["maxItems", "minItems"],
   type: "array",
   schemaType: "number",
-  $data: !0,
+  $data: true,
   error: {
     message({ keyword: e, schemaCode: t }) {
       const n = "maxItems" === e ? "more" : "fewer";

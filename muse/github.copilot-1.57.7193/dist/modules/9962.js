@@ -16,7 +16,7 @@ var i = (function () {
         if (e.pendingLookups[i]) {
           var n = {
             method: "GET",
-            disableAppInsightsAutoCollection: !0,
+            disableAppInsightsAutoCollection: true,
           };
           o.info(e.TAG, n);
           var a = r.makeRequest(t, i, n, function (n) {
@@ -106,7 +106,7 @@ var i = (function () {
   };
   e.TAG = "CorrelationIdManager";
   e.correlationIdPrefix = "cid-v1:";
-  e.w3cEnabled = !1;
+  e.w3cEnabled = false;
   e.pendingLookups = {};
   e.completedLookups = {};
   e.requestIdMaxLength = 1024;

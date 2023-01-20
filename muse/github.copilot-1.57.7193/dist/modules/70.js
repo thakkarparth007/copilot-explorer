@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.isVerboseLoggingEnabled =
   exports.isDebugEnabled =
@@ -38,7 +38,7 @@ function o(e) {
     const t = e.COPILOT_AGENT_VERBOSE;
     return "1" === t || "true" === t;
   }
-  return !1;
+  return false;
 }
 function i(e, t) {
   var n;

@@ -6,7 +6,7 @@ var r =
           r = n;
         }
         Object.defineProperty(e, r, {
-          enumerable: !0,
+          enumerable: true,
           get: function () {
             return t[n];
           },
@@ -27,7 +27,7 @@ var o =
       }
   };
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.createWorker =
   exports.FileSystem =

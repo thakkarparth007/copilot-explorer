@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.forceSendingTelemetry =
   exports.dropTelemetryConfig =
@@ -237,7 +237,7 @@ class TelemetryData {
           })
         : ((r.problem = "both"), (r.error += `; ${e}`));
     }
-    if (undefined === r) return !0;
+    if (undefined === r) return true;
     if (c.shouldFailForDebugPurposes(e))
       throw new Error(
         `Invalid telemetry data: ${r.problem} ${
@@ -268,10 +268,10 @@ class TelemetryData {
               ? n
               : "unknown",
         }),
-        !1
+        false
       );
     }
-    return !1;
+    return false;
   }
   async makeReadyForSending(e, t, n) {
     this.extendWithConfigProperties(e);
@@ -303,7 +303,7 @@ function now() {
 }
 exports.TelemetryData = TelemetryData;
 TelemetryData.ajv = new r.default({
-  strictNumbers: !1,
+  strictNumbers: false,
 });
 TelemetryData.validateTelemetryProperties = TelemetryData.ajv.compile({
   type: "object",
@@ -317,11 +317,11 @@ TelemetryData.validateTelemetryMeasurements = TelemetryData.ajv.compile({
   properties: {
     meanLogProb: {
       type: "number",
-      nullable: !0,
+      nullable: true,
     },
     meanAlternativeLogProb: {
       type: "number",
-      nullable: !0,
+      nullable: true,
     },
   },
   additionalProperties: {
@@ -411,11 +411,11 @@ exports.configureReporter = configureReporter;
 exports.telemetry = telemetry;
 exports.telemetryExpProblem = async function (e, t) {
   const n = TelemetryData.createAndMarkAsIssued(t, {});
-  await n.makeReadyForSending(e, !1, "SkipExp");
-  f(e, !1, "expProblem", n);
+  await n.makeReadyForSending(e, false, "SkipExp");
+  f(e, false, "expProblem", n);
 };
 exports.telemetryRaw = async function (e, t, n, r) {
-  f(e, !1, t, {
+  f(e, false, t, {
     properties: n,
     measurements: r,
   });
@@ -430,14 +430,14 @@ exports.telemetryException = async function (e, t, n, r) {
       : "Exception, not logged due to opt-out",
     ...r,
   });
-  await s.makeReadyForSending(e, !1, "IncludeExp");
-  f(e, !1, "exception", s);
+  await s.makeReadyForSending(e, false, "IncludeExp");
+  f(e, false, "exception", s);
   if (!i) return;
   const a = TelemetryData.createAndMarkAsIssued({
     origin: n,
     ...r,
   });
-  await a.makeReadyForSending(e, !0, "IncludeExp");
+  await a.makeReadyForSending(e, true, "IncludeExp");
   (function (e, t, n, r) {
     const o = e.get(TelemetryReporters).getSecureReporter(e);
     if (o) {
@@ -461,7 +461,7 @@ exports.logEngineCompletion = async function (e, t, n, r, o) {
       s.properties["logprobs_" + e] =
         null !== (i = JSON.stringify(t)) && undefined !== i ? i : "unset";
   s.extendWithRequestId(r);
-  await telemetry(e, "engine.completion", s, !0);
+  await telemetry(e, "engine.completion", s, true);
 };
 exports.logEnginePrompt = async function (e, t, n) {
   let r;
@@ -476,7 +476,7 @@ exports.logEnginePrompt = async function (e, t, n) {
         promptElementRanges: JSON.stringify(t.promptElementRanges),
       };
   const o = n.extendedBy(r);
-  await telemetry(e, "engine.prompt", o, !0);
+  await telemetry(e, "engine.prompt", o, true);
 };
 exports.setTelemetryConfig = function (e) {
   d = e;
@@ -488,7 +488,7 @@ exports.forceSendingTelemetry = function (e, n) {
   const r = n.getReporter(e);
   if (r) {
     const n = r;
-    n.userOptIn = !0;
+    n.userOptIn = true;
     n.createAppInsightsClient(exports.APP_INSIGHTS_KEY);
     configureReporter(e, r);
   }
@@ -496,7 +496,7 @@ exports.forceSendingTelemetry = function (e, n) {
     const r = n.getSecureReporter(e);
     if (r) {
       const n = r;
-      n.userOptIn = !0;
+      n.userOptIn = true;
       n.createAppInsightsClient(exports.APP_INSIGHTS_KEY_SECURE);
       configureReporter(e, r);
     }

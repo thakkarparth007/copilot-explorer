@@ -27,7 +27,7 @@ var i = (function (e) {
   function t() {
     var t = e.call(this) || this;
     t.ver = 2;
-    t.success = !0;
+    t.success = true;
     t.properties = {};
     t.measurements = {};
     return t;

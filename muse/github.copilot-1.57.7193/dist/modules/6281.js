@@ -20,7 +20,7 @@ var o = (function () {
   };
   e.prototype.dispose = function () {
     e.INSTANCE = null;
-    this.enable(!1, !1);
+    this.enable(false, false);
   };
   e._methodNames = ["debug", "info", "log", "warn", "error"];
   return e;

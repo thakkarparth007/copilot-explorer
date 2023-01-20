@@ -32,8 +32,8 @@ function l(e, t) {
     .map(function (e) {
       return c && r.isAbsolute(c) && r.isAbsolute(e) ? r.relative(c, e) : e;
     });
-  this._names = i.fromArray(a.map(String), !0);
-  this._sources = i.fromArray(s, !0);
+  this._names = i.fromArray(a.map(String), true);
+  this._sources = i.fromArray(s, true);
   this._absoluteSources = this._sources.toArray().map(function (e) {
     return r.computeSourceURL(c, e, t);
   });
@@ -89,8 +89,8 @@ SourceMapConsumer.fromSourceMap = function (e, t) {
 SourceMapConsumer.prototype._version = 3;
 SourceMapConsumer.prototype.__generatedMappings = null;
 Object.defineProperty(SourceMapConsumer.prototype, "_generatedMappings", {
-  configurable: !0,
-  enumerable: !0,
+  configurable: true,
+  enumerable: true,
   get: function () {
     if (this.__generatedMappings) {
       this._parseMappings(this._mappings, this.sourceRoot);
@@ -100,8 +100,8 @@ Object.defineProperty(SourceMapConsumer.prototype, "_generatedMappings", {
 });
 SourceMapConsumer.prototype.__originalMappings = null;
 Object.defineProperty(SourceMapConsumer.prototype, "_originalMappings", {
-  configurable: !0,
-  enumerable: !0,
+  configurable: true,
+  enumerable: true,
   get: function () {
     if (this.__originalMappings) {
       this._parseMappings(this._mappings, this.sourceRoot);
@@ -207,8 +207,8 @@ l.prototype._findSourceIndex = function (e) {
 };
 l.fromSourceMap = function (e, t) {
   var n = Object.create(l.prototype);
-  var o = (n._names = i.fromArray(e._names.toArray(), !0));
-  var s = (n._sources = i.fromArray(e._sources.toArray(), !0));
+  var o = (n._names = i.fromArray(e._names.toArray(), true));
+  var s = (n._sources = i.fromArray(e._sources.toArray(), true));
   n.sourceRoot = e._sourceRoot;
   n.sourcesContent = e._generateSourcesContent(
     n._sources.toArray(),
@@ -520,7 +520,7 @@ d.prototype.hasContentsOfAllSources = function () {
 };
 d.prototype.sourceContentFor = function (e, t) {
   for (var n = 0; n < this._sections.length; n++) {
-    var r = this._sections[n].consumer.sourceContentFor(e, !0);
+    var r = this._sections[n].consumer.sourceContentFor(e, true);
     if (r) return r;
   }
   if (t) return null;

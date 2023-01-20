@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", {
-  value: !0,
+  value: true,
 });
 exports.reportTypeError =
   exports.checkDataTypes =
@@ -27,12 +27,12 @@ function getJSONTypes(e) {
 exports.getSchemaTypes = function (e) {
   const t = getJSONTypes(e.type);
   if (t.includes("null")) {
-    if (!1 === e.nullable)
+    if (false === e.nullable)
       throw new Error("type: null contradicts nullable: false");
   } else {
     if (!t.length && undefined !== e.nullable)
       throw new Error('"nullable" cannot be used without "type"');
-    if (!0 === e.nullable) {
+    if (true === e.nullable) {
       t.push("null");
     }
   }
@@ -99,9 +99,9 @@ exports.coerceAndCheckDataType = function (e, t) {
               case "boolean":
                 return void r
                   .elseIf(s._`${o} === "false" || ${o} === 0 || ${o} === null`)
-                  .assign(c, !1)
+                  .assign(c, false)
                   .elseIf(s._`${o} === "true" || ${o} === 1`)
-                  .assign(c, !0);
+                  .assign(c, true);
               case "null":
                 r.elseIf(s._`${o} === "" || ${o} === 0 || ${o} === false`);
                 return void r.assign(c, null);

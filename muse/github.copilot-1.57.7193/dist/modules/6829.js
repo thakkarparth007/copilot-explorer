@@ -5,7 +5,7 @@ class i {
     this[o] = {
       eventEmitter: new r(),
       onabort: null,
-      aborted: !1,
+      aborted: false,
     };
   }
   get aborted() {
@@ -38,25 +38,25 @@ class i {
     this[o].eventEmitter.emit(e, t);
   }
   fire() {
-    this[o].aborted = !0;
+    this[o].aborted = true;
     this.dispatchEvent("abort");
   }
 }
 Object.defineProperties(i.prototype, {
   addEventListener: {
-    enumerable: !0,
+    enumerable: true,
   },
   removeEventListener: {
-    enumerable: !0,
+    enumerable: true,
   },
   dispatchEvent: {
-    enumerable: !0,
+    enumerable: true,
   },
   aborted: {
-    enumerable: !0,
+    enumerable: true,
   },
   onabort: {
-    enumerable: !0,
+    enumerable: true,
   },
 });
 class s extends i {
@@ -74,7 +74,7 @@ class s extends i {
 }
 Object.defineProperties(s.prototype, {
   clear: {
-    enumerable: !0,
+    enumerable: true,
   },
 });
 const a = Symbol("AbortController internals");
@@ -98,10 +98,10 @@ class c {
 }
 Object.defineProperties(c.prototype, {
   signal: {
-    enumerable: !0,
+    enumerable: true,
   },
   abort: {
-    enumerable: !0,
+    enumerable: true,
   },
 });
 module.exports = {
