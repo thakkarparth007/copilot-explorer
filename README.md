@@ -109,6 +109,15 @@ Steps 2 and 3 are optional. They're only needed if you modify the extension code
 5. Run `python3 code-viz/app.py` to start the app.
 6. Head to `localhost:5000` in your browser.
 
+
+### Manual annotations
+
+The tool supports 3 types of annotations: (a) module names (b) module categories (c) module code.
+
+You can change the first two annotations (rename/recategorize modules) by the UI. These annotations persist in your localstorage. If you want to export them, you can use browser console to do so. I know this isn't ideal, but hey this is a hacky repo. I doubt anyone will reannotate stuff seriously.
+
+For module code -- if you find a particular module interesting and want to add your comments, you can do that and save the annotated module under `codeviz/data/manually_annotated_modules/<module_id>.js`. Finally, run `codeviz/compress_annotated_codes.js` which takes all the annotated modules and puts them in a single file that's loaded in the browser...so that your annotations show up in the UI.
+
 ## Support and Warranty
 
 lmao
