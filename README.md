@@ -105,9 +105,10 @@ If you want to play with the code (different transformations, different visualiz
 
 Steps 2 and 3 are optional. They're only needed if you modify the extension code or the transformation code. The repo already contains the processed modules.
 
-4. Create a file named `code-viz/.openai-api-key` storing your OpenAI API key. You can keep this empty if you're not going to predict names and categories, or going to use the `select-snippet -> right-click -> Describe this snippet` feature (which doesn't work that well anyway).
-5. Run `python3 code-viz/app.py` to start the app.
-6. Head to `localhost:5000` in your browser.
+4. Install [manifest](https://github.com/HazyResearch/manifest) using `pip install manifest-ml`.
+5. Create a file named `codeviz/.openai-api-key` storing your OpenAI API key. You can keep this empty if you're not going to predict names and categories, or going to use the `select-snippet -> right-click -> Describe this snippet` feature (which doesn't work that well anyway).
+6. Run `python3 codeviz/app.py` to start the app.
+7. Head to `localhost:5000` in your browser.
 
 
 ### Manual annotations
