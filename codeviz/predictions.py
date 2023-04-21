@@ -13,7 +13,7 @@ M = Manifest(
     client_connection = open(cur_dir / ".openai-api-key").read().strip(),
     cache_name = "sqlite",
     cache_connection = "codeviz_openai_cache.db",
-    engine = "code-davinci-002",
+    engine = "text-davinci-003",
 )
 
 def predict_with_retries(*args, **kwargs):
@@ -93,7 +93,7 @@ def get_prompt_with_examples_for_module_name_prediction(module_id):
 
 def predict_module_name(module_id, example_names: list = []):
     prompt = get_prompt_with_examples_for_module_name_prediction(module_id)
-    responses = predict_with_retries(prompt, max_tokens=20, temperature=0.4, stop_token="\n", n=3, top_k_return=3)
+    responses = predict_with_retries(prompt, max_tokens=20, temperature=0.4, stop_token="\n", n=3, top_k=3)
 
     return list(set(responses))
 
@@ -150,7 +150,7 @@ def get_prompt_with_examples_for_module_category_prediction(module_id, module_na
 
 def predict_module_category(module_id, module_name):
     prompt = get_prompt_with_examples_for_module_category_prediction(module_id, module_name)
-    responses = predict_with_retries(prompt, max_tokens=10, temperature=0.1, stop_token="\n", n=3, top_k_return=3)
+    responses = predict_with_retries(prompt, max_tokens=10, temperature=0.1, stop_token="\n", n=3, top_k=3)
 
     return list(set(responses))
 
@@ -167,7 +167,7 @@ The above snippet is from module `{module_name}`. Here's a good docstring for th
 """
     print(prompt)
     responses = predict_with_retries(
-        prompt, max_tokens=150, temperature=0.1, stop_token="*/", n=1, top_k_return=1
+        prompt, max_tokens=150, temperature=0.1, stop_token="*/", n=1, top_k=1
     )
 
     return "/**\n " + responses + "*/"
